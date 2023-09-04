@@ -1,18 +1,17 @@
 {
-  "name": "@bst/components",
+  "name": "low-code",
   "version": "0.0.7",
-  "description": "贝斯特前端组件库",
+  "description": "低代码",
   "keywords": [
-    "react",
-    "@bst/components"
+    "react"
   ],
-  "homepage": "http://137.168.102.216/code/frontend-business-pc",
+  "homepage": "https://github.com/lawxy/low-code.git",
   "bugs": {
-    "url": "http://137.168.102.216/code/frontend-business-pc"
+    "url": "https://github.com/lawxy/low-code.git"
   },
   "repository": {
     "type": "gitlab",
-    "url": "http://137.168.102.216/code/frontend-business-pc"
+    "url": "https://github.com/lawxy/low-code.git"
   },
   "license": "MIT",
   "sideEffects": [
@@ -106,9 +105,6 @@
     "antd": "^5.8.1",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
-  },
-  "publishConfig": {
-    "registry": "http://137.168.102.216:8081/repository/npm-hosted/"
   },
   "authors": []
 }
