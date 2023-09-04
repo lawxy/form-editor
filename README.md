@@ -1,9 +1,4 @@
-# front-business-pc
-
-[![NPM version](https://img.shields.io/npm/v/front-business-pc.svg?style=flat)](https://npmjs.org/package/front-business-pc)
-[![NPM downloads](http://img.shields.io/npm/dm/front-business-pc.svg?style=flat)](https://npmjs.org/package/front-business-pc)
-
-贝斯特前端组件库
+# low code
 
 ## Usage
 
