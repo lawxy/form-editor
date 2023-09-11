@@ -1,5 +1,5 @@
 import React from 'react'
-import { BstEditor } from '@bst/components'
+import { BstEditor } from 'low-code'
 const Comp = () => {
   return (
     <BstEditor

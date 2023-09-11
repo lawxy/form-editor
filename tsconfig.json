@@ -9,9 +9,9 @@
     "paths": {
       "@@/*": [".dumi/tmp/*"],
       "@/*": ["src/*"],
-      "@bst/components": ["src/components/index.ts"],
-      "@bst/components/*": ["./src/*", "*"],
-      "@bst/components/es/*": ["src/*"]
+      "low-code": ["src/components/index.ts"],
+      "low-code/*": ["./src/*", "*"],
+      "low-code/es/*": ["src/*"]
     }
   },
   "include": [".dumi/**/*", ".dumirc.ts", "src/**/*"]
