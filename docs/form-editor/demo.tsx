@@ -1,8 +1,8 @@
 import React from 'react'
-import { BstEditor } from 'low-code'
+import { FormEditor } from 'low-code'
 const Comp = () => {
   return (
-    <BstEditor
+    <FormEditor
     />
   )
 }

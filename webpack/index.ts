@@ -7,7 +7,7 @@ const chainWebpack = (config: any) => {
   // config
   //   .plugin('auto-export')
   //   .use(AutoExportPlugin, [{
-  //     source: '/src/components/bst-editor/elements'
+  //     source: '/src/components/form-editor/elements'
   //   }])
 
 

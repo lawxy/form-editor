@@ -6,5 +6,5 @@ export function getRandomString(): string {
  * 生成id
  */
 export function idCreator(): string {
-  return `bst${getRandomString()}`;
+  return `form-${getRandomString()}`;
 }

@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo, useEffect, useRef, useState } from 'react'
 import { useDrop } from 'react-dnd';
 import { observer } from 'mobx-react-lite';
 import { Row, Col } from 'antd';
@@ -11,22 +11,45 @@ import { WrapEl } from './wrap-el';
 import { ElementsList } from '../../../elements/export';
 import type { IBaseElement, IEditorCanvasProp } from '../../../types';
 import { CanvasWrapDiv, CanvasDiv } from './styled'
+import Sortable from 'sortablejs'
 
-const EditorCanvas = React.forwardRef<ConnectDropTarget | undefined, React.PropsWithChildren<IEditorCanvasProp>
->(({ mode, virtualElement, actions }, dropRef) => {
-  const { isProcessForm, formId, formName, status, horizontalGap, verticalGap } = store.formAttrs
+const EditorCanvas: React.PropsWithChildren<IEditorCanvasProp> = ({ mode, actions }) => {
+  const { horizontalGap, verticalGap } = store.formAttrs
+  const el = useRef<any>()
+
+  useEffect(() => {
+    // console.log(el.current)
+    const rowEl = el.current.querySelector('.ant-row')
+    new Sortable(rowEl, {
+      animation: 150,
+      group: 'list',
+      onAdd(e: any) {
+        console.log(e)
+        // e.preventDefault()
+        const { newIndex, item } = e;
+        console.log(item)
+        console.log(item.dataset.type)
+        if (item.parentNode) item.parentNode.removeChild(item)
+        store.insertEl({ type: item.dataset.type, id: idCreator() }, newIndex)
+      },
+      // onEnd(e: any) {
+      //   console.log('123')
+      //   // const { newIndex, oldIndex } = e;
+      //   // moveElement(oldIndex, newIndex)
+      // }
+    })
+  }, [])
   return (
     <CanvasWrapDiv>
       {
         actions && <>{actions}</>
       }
       <CanvasDiv
-        // @ts-ignore
-        ref={dropRef || null}
+        ref={el}
       >
-        <Row gutter={[horizontalGap, verticalGap]}>
+        <Row gutter={[horizontalGap, verticalGap]} style={{height: '100%'}}>
           {
-            store.formElements.concat(virtualElement as IBaseElement).filter(Boolean).map((item: IBaseElement) => {
+            store.formElements.map((item: IBaseElement) => {
               // @ts-ignore
               const Component = ElementsList[item.type]?.render
               if (!Component) return null
@@ -52,6 +75,6 @@ const EditorCanvas = React.forwardRef<ConnectDropTarget | undefined, React.Props
       </CanvasDiv>
     </CanvasWrapDiv>
   )
-})
+}
 
 export default observer(EditorCanvas)

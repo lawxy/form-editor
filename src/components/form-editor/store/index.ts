@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { toJS } from 'mobx';
 import { idCreator } from '@/utils';
 import type { IBaseElement, IFormAttributesProps } from '../types';
+import  {arrayMoveImmutable} from 'array-move';
 class Store {
   constructor() {
     makeAutoObservable(this);
@@ -53,14 +54,16 @@ class Store {
    * 移动元素
   */
   moveEl(fromIndex: number, toIndex: number) {
-    if (fromIndex < toIndex) {
-        toIndex--;
-    }
-    const [el] = this.formElements.splice(fromIndex, 1);
+    // if (fromIndex < toIndex) {
+    //     toIndex--;
+    // }
+    // const [el] = this.formElements.splice(fromIndex, 1);
 
-    this.formElements.splice(toIndex, 0, el);
+    // this.formElements.splice(toIndex, 0, el);
 
-    this.setSelectedElement(el)
+    // this.setSelectedElement(el)
+    this.formElements = arrayMoveImmutable(this.formElements, fromIndex, toIndex)
+    console.log(JSON.stringify(this.formElements))
   }
 
   /**

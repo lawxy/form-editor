@@ -16,10 +16,19 @@ export const ElementWrap = styled.div(() => {
     gap: 8px;
   `
 })
+export const Title = styled.div(() => {
+  return `
+    height: 40px;
+    line-height: 40px;
+    padding: 2px;
+    border-bottom: 2px solid rgb(245, 245, 245);
+    margin-bottom: 12px;
+  `
+})
 
 export const StyledItemDiv = styled.div(() => {
   return `
-    width: 48%;
+    width: 144px;
     text-align: center;
     align-items: center;
     background: #f4f6fc;

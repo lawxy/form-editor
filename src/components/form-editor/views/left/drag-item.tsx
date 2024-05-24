@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
-import { useDrag } from 'react-dnd';
 import { observer } from 'mobx-react-lite';
 import { idCreator } from '@/utils';
 import type { IDragElementProp } from '../../types';
@@ -14,24 +13,15 @@ const DragItem: React.FC<{
     return { type, ...initialData }
   }, [type, initialData])
 
-  const [{ isDragging }, dragRef, connectDragPreview] = useDrag(() => {
-    return {
-      type: 'test',
-      item: currentItem,
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    };
-  }, [type])
 
-  useEffect(() => {
-    // if(store.formElements.length) return
-    if(isDragging) {
-      store.setDraggingEl(currentItem)
-    }else {
-      store.setDraggingEl({})
-    }
-  }, [isDragging, currentItem])
+  // useEffect(() => {
+  //   // if(store.formElements.length) return
+  //   if(isDragging) {
+  //     store.setDraggingEl(currentItem)
+  //   }else {
+  //     store.setDraggingEl({})
+  //   }
+  // }, [isDragging, currentItem])
 
   const handleClick = useCallback(() => {
     store.appendEl({...currentItem, id: idCreator()})
@@ -39,8 +29,9 @@ const DragItem: React.FC<{
 
   return (
     <StyledItemDiv
-      ref={dragRef}
+      // ref={dragRef}
       onClick={handleClick}
+      data-type={type}
     >
       {text}
     </StyledItemDiv>

@@ -12,7 +12,7 @@ const StyledDiv = styled.div(() => {
       display: 'flex',
       zIndex: 20
     }).join(';')}
-    .bst-editor-selected-action{
+    .form-editor-selected-action{
       ${css({
         marginRight: 6,
         borderColor: '#409EFF',
@@ -48,7 +48,7 @@ export const SelectedActions = () => {
   return (
     <StyledDiv>
       <div 
-        className='bst-editor-selected-action copy-action'
+        className='form-editor-selected-action copy-action'
         onClick={() => {
           const newEl = store.copyEl(store.selectedElement)
           store.setSelectedElement(newEl)
@@ -57,7 +57,7 @@ export const SelectedActions = () => {
         <CopyOutlined />
       </div>
       <div 
-        className='bst-editor-selected-action delete-action'
+        className='form-editor-selected-action delete-action'
         onClick={() => {
           store.deleteEl(store.selectedElement)
           store.setSelectedElement({})

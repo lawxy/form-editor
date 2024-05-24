@@ -10,7 +10,7 @@ const proxyMap = {
 export default defineConfig({
   outputPath: 'docs-dist',
   themeConfig: {
-    name: '贝斯特',
+    name: 'luo',
   },
   chainWebpack,
   proxy: Object.entries(proxyMap).reduce((memo, cur) => {

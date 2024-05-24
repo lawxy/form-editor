@@ -11,7 +11,7 @@ const StyledDiv = styled.div<{required: boolean}>(({required}) => {
     align-items: center;
     padding: 0 4px;
     margin-bottom: 20px;
-    .bst-editor-setting-item-label {
+    .form-editor-setting-item-label {
       width: 100px;
       text-align: right;
       &::after{
@@ -41,7 +41,7 @@ export const SettingItem: React.FC<{
 }> = ({label, children, required}) => {
   return (
     <StyledDiv required={!!required}>
-      <div className="bst-editor-setting-item-label">{label}</div>
+      <div className="form-editor-setting-item-label">{label}</div>
       <div style={{flex: 1}}>{children}</div>
     </StyledDiv>
   )
