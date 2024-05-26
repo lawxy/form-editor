@@ -1,6 +1,6 @@
 {
-  "name": "low-code",
-  "version": "0.0.7",
+  "name": "gfpage",
+  "version": "0.0.1",
   "description": "低代码",
   "keywords": [
     "react"
@@ -65,9 +65,6 @@
     ]
   },
   "dependencies": {
-    "@dnd-kit/core": "^6.1.0",
-    "@dnd-kit/modifiers": "^7.0.0",
-    "@dnd-kit/sortable": "^8.0.0",
     "@types/styled-components": "^5.1.9",
     "ahooks": "^3.7.8",
     "array-move": "^4.0.0",
@@ -78,16 +75,13 @@
     "parse-json": "^7.0.0",
     "react-ace": "^10.1.0",
     "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
-    "react-grid-layout": "^1.4.4",
-    "react-resizable": "^3.0.5",
-    "react-sortable-hoc": "^2.0.0",
     "sortablejs": "^1.15.2",
     "styled-components": "^5.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@types/lodash-es": "^4.17.12",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/sortablejs": "^1.15.8",

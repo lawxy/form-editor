@@ -8,10 +8,10 @@
     "baseUrl": "./",
     "paths": {
       "@@/*": [".dumi/tmp/*"],
-      "@/*": ["src/*"],
-      "low-code": ["src/components/index.ts"],
-      "low-code/*": ["./src/*", "*"],
-      "low-code/es/*": ["src/*"]
+      "@/*": ["src/form-editor/*"],
+      "gfpage": ["src/index.ts"],
+      "gfpage/*": ["./src/*", "*"],
+      "gfpage/es/*": ["src/*"]
     }
   },
   "include": [".dumi/**/*", ".dumirc.ts", "src/**/*"]

@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormEditor } from 'low-code'
+import { FormEditor } from 'gfpage'
 const Comp = () => {
   return (
     <FormEditor

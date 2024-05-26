@@ -5,7 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const componentsDir = path.join(__dirname, '../src/components/form-editor/elements');
+const componentsDir = path.join(__dirname, '../src/form-editor/elements');
 const exportFile = path.join(componentsDir, 'export.ts');
 
 // 由于文件目录会自己根据首字母排序， 这里要自己排序一下([文件名大写]_TEXT)
@@ -16,7 +16,8 @@ const sort = [
   'TIME_TEXT',    // 时间
   'SELECT_TEXT',  // 下拉
   'RADIO_TEXT',   // 单选
-  'CHECKBOX_TEXT' // 多选
+  'CHECKBOX_TEXT', // 多选
+  'TABLE_TEXT'     // 表格
 ]
 
 fs.readdir(componentsDir, (err, files) => {

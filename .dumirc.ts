@@ -25,6 +25,6 @@ export default defineConfig({
     };
   }, {}),
   alias: {
-    '@': '/src',
+    '@': '/src/form-editor',
   },
 });
