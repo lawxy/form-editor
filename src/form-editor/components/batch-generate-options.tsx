@@ -7,7 +7,8 @@ import type { TOption } from '@/types';
 export const BatchGenerateOptions: FC<{
   options: TOption[];
   setOptions: (v: TOption[]) => void;
-}> = ({ options, setOptions }) => {
+  field?: string;
+}> = ({ options, setOptions, field = 'option' }) => {
   const [open, setOpen] = useState(false);
   const [tempOptions, setTempOptions] = useState(options);
 
@@ -30,11 +31,11 @@ export const BatchGenerateOptions: FC<{
       return {
         label,
         value: '',
-        id: idCreator('option')
+        id: idCreator(field)
       }
     })
-    console.log('newOptions')
-    console.log(newOptions)
+    // console.log('newOptions')
+    // console.log(newOptions)
     setTempOptions(newOptions)
   }
 

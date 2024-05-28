@@ -19,7 +19,7 @@ const columns: TableColumnProps<TOption>[] = [
   },
 ]
 
-const OptionSetting:FC<PropsWithChildren> = ({ children }) => {
+const OptionSetting:FC = () => {
   return (
     <>
       <SettingItem label='排列方式'>

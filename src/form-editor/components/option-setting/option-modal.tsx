@@ -2,13 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Modal, Table, Space, Button, Input, message, type TableColumnProps } from 'antd'
 import { MinusCircleOutlined, PlusCircleOutlined, MenuOutlined } from '@ant-design/icons'
-import { observer } from "mobx-react-lite";
 import Sortable from 'sortablejs'
 import { arrayMoveImmutable } from 'array-move';
 import { cloneDeep } from 'lodash-es'
-import { SettingItem } from '@/components/setting-item';
-import { BatchGenerateOptions } from './batch-generate-options';
-
+import { BatchGenerateOptions } from '../batch-generate-options';
 import store from '@/store';
 import type { TOption } from '@/types';
 import { idCreator } from '@/utils';
