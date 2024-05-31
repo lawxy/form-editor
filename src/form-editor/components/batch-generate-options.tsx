@@ -8,7 +8,7 @@ type TOption = Record<string, any>;
 export const BatchGenerateOptions: FC<{
   title: string;
   options: TOption[];
-  setOptions: Dispatch<SetStateAction<TOption[]>>
+  setOptions: Dispatch<SetStateAction<any[]>>;
   field: string;
 }> = ({ title, options, setOptions, field}) => {
   const [open, setOpen] = useState(false);
@@ -25,13 +25,12 @@ export const BatchGenerateOptions: FC<{
   }, [tempOptions])
 
   const handleChange = (str: string) => {
-    const labels = str.split('\n')
-    const newOptions = labels.map(label => {
-      const oldOpt = options.find(item => item[field] === label)
+    const values = str.split('\n')
+    const newOptions = values.map(value => {
+      const oldOpt = options.find(item => item[field] === value)
       if (oldOpt) return oldOpt;
       return {
-        label,
-        value: '',
+        [field]: value,
         id: idCreator('option')
       }
     })
@@ -55,7 +54,7 @@ export const BatchGenerateOptions: FC<{
           setOpen(false);
         }}
         onOk={() => {
-          setOptions(tempOptions.filter(item => Boolean(item.label)))
+          setOptions(tempOptions.filter(item => Boolean(item[field])))
           setOpen(false);
         }}
         destroyOnClose

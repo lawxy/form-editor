@@ -1,4 +1,4 @@
-import type { TableColumnProps } from 'react';
+import type { TableColumnProps } from 'antd';
 export interface IDragElementProp {
   type: string;
   render: React.FC<any>;
@@ -84,7 +84,10 @@ export interface IBaseElement {
    * 选项排列方式
    */
   alignDirection?: TDirection;
-  tableColumns: TableColumnProps<Record<string, any>[]>;
+  /**
+   * 表格column
+   */
+  tableColumns: Record<string, any>[];
 }
 
 export interface IFormAttributesProps {

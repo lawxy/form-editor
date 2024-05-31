@@ -3,8 +3,8 @@ import { observer } from "mobx-react-lite";
 import { Popconfirm, Modal, Button, Form, message } from 'antd';
 import { toJS } from 'mobx';
 import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-github';
+// import 'ace-builds/src-noconflict/mode-json';
+// import 'ace-builds/src-noconflict/theme-github';
 import { EditorForm } from '../canvas';
 
 import { ActionGroupWrap, GroupItem } from './styled'
@@ -80,7 +80,7 @@ const ActionGroup = () => {
         <div style={{marginTop: 20}}>
           <AceEditor
             mode="json"
-            theme="github"
+            // theme="github"
             value={JSON.stringify(store.getFormJson(), null, 2)}
 
             width="100%"
@@ -89,14 +89,15 @@ const ActionGroup = () => {
             name="code"
             showPrintMargin={false}
             fontSize={14}
-            seTOption={{
-              readOnly: true,
-              enableBasicAutocompletion: true,
-              enableLiveAutocompletion: true,
-              enableSnippets: true,
-              showLineNumbers: true,
-              tabSize: 2,
-            }}
+            readOnly
+            // seTOption={{
+            //   readOnly: true,
+            //   enableBasicAutocompletion: true,
+            //   enableLiveAutocompletion: true,
+            //   enableSnippets: true,
+            //   showLineNumbers: true,
+            //   tabSize: 2,
+            // }}
           />
         </div>
       </Modal>

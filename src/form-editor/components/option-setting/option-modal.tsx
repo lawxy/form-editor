@@ -78,7 +78,7 @@ const OptionModal:FC<PropsWithChildren> = ({ children }) => {
       }
     },
     {
-      title: '属性',
+      title: '选项名',
       dataIndex: 'label',
       render(val: string, _: any, idx: number) {
         return <Input value={val} onChange={(e) => {
