@@ -1,14 +1,16 @@
 import React, { useState, useMemo, useEffect } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 import type { FC } from 'react';
 import { Modal, Button, Input } from 'antd';
 import { idCreator } from '@/utils';
-import type { TOption } from '@/types';
 
+type TOption = Record<string, any>;
 export const BatchGenerateOptions: FC<{
+  title: string;
   options: TOption[];
-  setOptions: (v: TOption[]) => void;
-  field?: string;
-}> = ({ options, setOptions, field = 'option' }) => {
+  setOptions: Dispatch<SetStateAction<TOption[]>>
+  field: string;
+}> = ({ title, options, setOptions, field}) => {
   const [open, setOpen] = useState(false);
   const [tempOptions, setTempOptions] = useState(options);
 
@@ -18,20 +20,19 @@ export const BatchGenerateOptions: FC<{
 
   const text = useMemo(() => {
     return tempOptions.reduce((memo: string, cur: TOption, idx: number) => {
-      const { label } = cur;
-      return memo + (idx === 0 ? '' : '\n') + label
+      return memo + (idx === 0 ? '' : '\n') + cur[field]
     }, '')
   }, [tempOptions])
 
   const handleChange = (str: string) => {
     const labels = str.split('\n')
     const newOptions = labels.map(label => {
-      const oldOpt = options.find(item => item.label === label)
-      if(oldOpt) return oldOpt;
+      const oldOpt = options.find(item => item[field] === label)
+      if (oldOpt) return oldOpt;
       return {
         label,
         value: '',
-        id: idCreator(field)
+        id: idCreator('option')
       }
     })
     // console.log('newOptions')
@@ -41,6 +42,12 @@ export const BatchGenerateOptions: FC<{
 
   return (
     <>
+      <div style={{ display: 'flex', justifyContent: 'space-between', paddingRight: 30 }}>
+        <div>{title}</div>
+        <div>
+          <Button onClick={() => { setOpen(true) }}>批量编辑</Button>
+        </div>
+      </div>
       <Modal
         open={open}
         title='批量编辑'
@@ -53,8 +60,8 @@ export const BatchGenerateOptions: FC<{
         }}
         destroyOnClose
       >
-        <Input.TextArea 
-          value={text} 
+        <Input.TextArea
+          value={text}
           autoSize={{
             maxRows: 10
           }}
@@ -63,7 +70,6 @@ export const BatchGenerateOptions: FC<{
           }}
         />
       </Modal>
-      <Button onClick={() => { setOpen(true) }}>批量编辑</Button>    
     </>
   )
 }

@@ -29,7 +29,7 @@ const columns: TableColumnProps<IColoumnProp>[] = [
   }
 ]
 
-export const ColumnsModal: FC<PropsWithChildren<{}>> = ({children}) => {
+export const ColumnsModal: FC<PropsWithChildren> = ({children}) => {
   const [open, setOpen] = useState(false)
   return (
     <>

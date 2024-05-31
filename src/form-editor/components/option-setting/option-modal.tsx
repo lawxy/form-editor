@@ -5,6 +5,7 @@ import { MinusCircleOutlined, PlusCircleOutlined, MenuOutlined } from '@ant-desi
 import Sortable from 'sortablejs'
 import { arrayMoveImmutable } from 'array-move';
 import { cloneDeep } from 'lodash-es'
+import { observer } from "mobx-react-lite";
 import { BatchGenerateOptions } from '../batch-generate-options';
 import store from '@/store';
 import type { TOption } from '@/types';
@@ -12,10 +13,14 @@ import { idCreator } from '@/utils';
 
 const OptionModal:FC<PropsWithChildren> = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [valueOptions, setOption] = useState(store.selectedElement.valueOptions || [])
+  const [valueOptions, setOption] = useState<TOption[]>([])
   const tableRef = useRef<any>();
   const valueOptionsRef = useRef<TOption[]>();
   valueOptionsRef.current = valueOptions;
+
+  useEffect(() => {
+    setOption(store.selectedElement?.valueOptions || [])
+  }, [store.selectedElement.valueOptions])
 
   const handleInputChange = (idx: number, field: keyof TOption, value: any) => {
     const newOptions = cloneDeep(valueOptions)
@@ -130,10 +135,7 @@ const OptionModal:FC<PropsWithChildren> = ({ children }) => {
       <Modal
         open={open}
         title={(
-          <div style={{display: 'flex', justifyContent: 'space-between', paddingRight: 30}}>
-            <div>属性设置</div>
-            <div><BatchGenerateOptions options={valueOptions} setOptions={setOption}/></div>
-          </div>
+          <BatchGenerateOptions title='属性设置' options={valueOptions} setOptions={setOption} field='label'/>
         )}
         maskClosable={false}
         onCancel={() => {
@@ -161,4 +163,4 @@ const OptionModal:FC<PropsWithChildren> = ({ children }) => {
   )
 }
 
-export default OptionModal
+export default observer(OptionModal)
