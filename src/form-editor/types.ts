@@ -87,7 +87,7 @@ export interface IBaseElement {
   /**
    * 表格column
    */
-  tableColumns: Record<string, any>[];
+  tableColumns?: string;
 }
 
 export interface IFormAttributesProps {

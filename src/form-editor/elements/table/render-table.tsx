@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Table } from 'antd';
 import { observer } from 'mobx-react-lite';
 import type { IBaseElement } from '@/types';
@@ -9,10 +9,21 @@ const RenderTableContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({fieldValue, element = {}}) => {
-  const { id, elementName, dateFormat } = element;
+  const { tableColumns = '[]' } = element;
+  const columns = useMemo(() => {
+    // 解析 JSX 语法的 JavaScript 代码
+    let cols = [];
+    eval(`cols = ${tableColumns}`)
+    console.log('cols')
+    console.log(cols)
+    return cols
+  }, [tableColumns])
+
   return (
     <ElementLayout element={element}>
       <Table 
+        columns={columns}
+        dataSource={fieldValue || []}
       />
     </ElementLayout>
   )

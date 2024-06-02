@@ -12,7 +12,7 @@ const StyledDiv = styled.div<{required: boolean}>(({required}) => {
     margin-bottom: 20px;
     position: relative;
     .form-editor-setting-item-label {
-      width: 100px;
+      width: 110px;
       text-align: right;
       &::after{
         content: ":";
@@ -35,7 +35,7 @@ const StyledDiv = styled.div<{required: boolean}>(({required}) => {
 })
 
 export const SettingItem: React.FC<{
-  label: string;
+  label: React.ReactNode | string;
   children: React.ReactNode;
   required?: boolean;
 }> = ({label, children, required}) => {
