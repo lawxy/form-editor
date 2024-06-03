@@ -1,4 +1,5 @@
 import type { TableColumnProps } from 'antd';
+import { CSSProperties } from 'styled-components';
 export interface IDragElementProp {
   type: string;
   render: React.FC<any>;
@@ -57,6 +58,14 @@ export interface IBaseElement {
    */
   textType?: 'single' | 'multiple';
   /**
+   * placeholder
+  */
+  placeholder?: string;
+  /**
+   * 自定义css
+  */
+  customCss?: CSSProperties;
+  /**
    * 最小行数
    */
   minRows?: number;
@@ -84,6 +93,10 @@ export interface IBaseElement {
    * 选项排列方式
    */
   alignDirection?: TDirection;
+  /**
+   * 表格设置
+  */
+  tableAttributes?: Record<string, any>;
   /**
    * 表格column
    */

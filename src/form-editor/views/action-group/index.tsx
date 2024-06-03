@@ -6,6 +6,7 @@ import AceEditor from 'react-ace';
 // import 'ace-builds/src-noconflict/mode-json';
 // import 'ace-builds/src-noconflict/theme-github';
 import { EditorForm } from '../canvas';
+import MonacoEditor from "@monaco-editor/react";
 
 import { ActionGroupWrap, GroupItem } from './styled'
 import store from '@/store';
@@ -69,6 +70,7 @@ const ActionGroup = () => {
       </Popconfirm>
 
       <Modal
+        width={600}
         open={openCode}
         onCancel={() => {
           setOpenCode(false)
@@ -78,26 +80,14 @@ const ActionGroup = () => {
         }
       >
         <div style={{marginTop: 20}}>
-          <AceEditor
-            mode="json"
-            // theme="github"
-            value={JSON.stringify(store.getFormJson(), null, 2)}
-
+          <MonacoEditor
+            defaultLanguage="json"
+            defaultValue={JSON.stringify(store.getFormJson(), null, 2)}
             width="100%"
             height="560px"
-            onChange={() => {}}
-            name="code"
-            showPrintMargin={false}
-            fontSize={14}
-            readOnly
-            // seTOption={{
-            //   readOnly: true,
-            //   enableBasicAutocompletion: true,
-            //   enableLiveAutocompletion: true,
-            //   enableSnippets: true,
-            //   showLineNumbers: true,
-            //   tabSize: 2,
-            // }}
+            options={{
+              readOnly: true
+            }}
           />
         </div>
       </Modal>

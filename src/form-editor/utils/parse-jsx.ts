@@ -1,15 +1,18 @@
 import React from 'react'
 import * as Antd from 'antd';
-const Babel = require("@babel/standalone")
-
-console.log('Antd')
-console.log(Antd)
-console.log(Object.keys(Antd))
+import * as AntdIcons from '@ant-design/icons'
+const Babel = require("@babel/standalone");
 
 export const parseJSX = (code: string) => {
   const transformedCode = Babel.transform(code, {
     plugins: ['transform-react-jsx']
   }).code;
-  const func = new Function('React', 'Antd', `return ${transformedCode}`);
-  return func(React, Antd);
+  const componentNames = Object.keys(Antd);
+
+  // @ts-ignore
+  const componentParams = componentNames.map((name) => Antd[name])
+  
+  // @ts-ignore
+  const func = new Function('React', 'Antd', 'AntdIcons', ...componentNames, `return ${transformedCode}`);
+  return func(React, Antd, AntdIcons, ...componentParams,);
 };

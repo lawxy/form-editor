@@ -10,7 +10,7 @@ const RenderInputContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({fieldValue, element = {}}) => {
-  const { textType, minRows, maxRows, id, autoSize } = element
+  const { textType, minRows, maxRows, id, autoSize, placeholder } = element
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     store.setFieldValue(id as string, e.target.value)
   }, [id])
@@ -23,6 +23,8 @@ const RenderInputContent: React.FC<{
             value={fieldValue} 
             style={{width: '100%'}} 
             onChange={handleChange}
+            placeholder={placeholder}
+            id={id}
           />
         ):(
           <Input.TextArea
@@ -32,6 +34,8 @@ const RenderInputContent: React.FC<{
             }}
             onChange={handleChange}
             value={fieldValue}
+            placeholder={placeholder}
+            id={id}
           />
         )
       }

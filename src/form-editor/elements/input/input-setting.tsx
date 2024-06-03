@@ -3,7 +3,9 @@ import { observer } from "mobx-react-lite";
 import { Select, Switch, InputNumber } from 'antd';
 import BasicInfo from '@/components/basic-info';
 import { SettingItem } from '@/components/setting-item';
+import PlaceholderSetting from '@/components/placeholder-setting'
 import store from '@/store';
+import CustomCssSetting from '@/components/custom-css-setting';
 
 const typeOptions = [{label: '单行文本', value: 'single'}, {label: '多行文本', value: 'multiple'}]
 const SettingInputContent = () => {
@@ -11,6 +13,8 @@ const SettingInputContent = () => {
   return (
     <div>
       <BasicInfo />
+      <PlaceholderSetting />
+      <CustomCssSetting />
       <SettingItem label='文本类型'>
         <Select 
           value={textType} 

@@ -1,21 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react'
 import type { FC, PropsWithChildren } from 'react';
-import { Table, Button, Modal, Input, message } from 'antd'
+import { Table, Button, Modal, Input, message, Popover } from 'antd'
 import { observer } from "mobx-react-lite";
-import store from '@/store';
-import serialize from 'serialize-javascript';
-import { deserialize, ModalPromisify } from '@/utils';
-// import Editor from '@/components/monaco-editor';
 import MonacoEditor from "@monaco-editor/react";
 
-export const ColumnsModal: FC<PropsWithChildren> = observer(({children}) => {
+export const AttributesSetting: FC<PropsWithChildren<{
+  title: string | React.ReactNode;
+  defaultValue: any;
+  onOk: (v: any) => void;
+  editorType: string;
+}>> = observer(({children, title, defaultValue, onOk, editorType}) => {
   const [open, setOpen] = useState(false)
   const [val, setVal] = useState<string>('');
   const isJsonValidate = useRef<boolean>(true);
 
   useEffect(() => {
-    setVal(store.selectedElement.tableColumns || '[]')
-  }, [store.selectedElement.tableColumns])
+    setVal(defaultValue)
+  }, [defaultValue])
 
   return (
     <>
@@ -26,26 +27,24 @@ export const ColumnsModal: FC<PropsWithChildren> = observer(({children}) => {
           })
       }
       <Modal
+        width={600}
         open={open}
-        title='列表项设置'
+        title={title}
         onCancel={() => {
           setOpen(false)
         }}
         onOk={() => {
-      
-         
-
           if(isJsonValidate.current) {
-            store.setSelectedProp('tableColumns', val)
+            onOk(val)
             setOpen(false)
             return
           }
-          message.error('json格式不对')
+          message.error('格式不对')
         }}
       >
         <MonacoEditor 
           height='400px'
-          defaultLanguage="javascript"
+          defaultLanguage={editorType}
           defaultValue={val}
           onChange={setVal}
           onValidate={errors => {
@@ -57,18 +56,6 @@ export const ColumnsModal: FC<PropsWithChildren> = observer(({children}) => {
             tabSize: 2
           }}
         />
-          {/* <AceEditor
-            mode="json"
-            // theme="github"
-            value={val}
-            width="100%"
-            height="560px"
-            onChange={setVal}
-            name="code"
-            showPrintMargin={false}
-            fontSize={14}
-          /> */}
-
       </Modal>
     </>
   )

@@ -6,5 +6,6 @@ export const initialData: Partial<IBaseElement> = {
   elementName: '文本框',
   textType: 'single',
   gridSpan: 24,
-  autoSize: true
+  autoSize: true,
+  placeholder: '请输入'
 }
