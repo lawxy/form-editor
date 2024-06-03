@@ -65,6 +65,8 @@
     ]
   },
   "dependencies": {
+    "@babel/core": "^7.24.6",
+    "@babel/standalone": "^7.24.6",
     "@monaco-editor/react": "^4.6.0",
     "@types/styled-components": "^5.1.9",
     "ahooks": "^3.7.8",

@@ -1,19 +1,27 @@
 import React, { useMemo } from 'react'
-import { Table } from 'antd';
+import * as Antd from 'antd';
+import { Table } from 'antd'
 import { observer } from 'mobx-react-lite';
 import type { IBaseElement } from '@/types';
 import store from '@/store';
+import { parseJSX } from '@/utils'
 import ElementLayout from '@/components/element-layout';
+const Babel = require("@babel/standalone")
+
 
 const RenderTableContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({fieldValue, element = {}}) => {
   const { tableColumns = '[]' } = element;
+
   const columns = useMemo(() => {
-    // 解析 JSX 语法的 JavaScript 代码
+
+    // console.log(transformedCode)
+   
     let cols = [];
-    eval(`cols = ${tableColumns}`)
+    cols = parseJSX(`(${tableColumns})`);
+
     console.log('cols')
     console.log(cols)
     return cols
@@ -23,7 +31,8 @@ const RenderTableContent: React.FC<{
     <ElementLayout element={element}>
       <Table 
         columns={columns}
-        dataSource={fieldValue || []}
+        // dataSource={fieldValue || []}
+        dataSource={[{}]}
       />
     </ElementLayout>
   )

@@ -8,8 +8,6 @@ import { deserialize, ModalPromisify } from '@/utils';
 // import Editor from '@/components/monaco-editor';
 import MonacoEditor from "@monaco-editor/react";
 
-import AceEditor from 'react-ace';
-
 export const ColumnsModal: FC<PropsWithChildren> = observer(({children}) => {
   const [open, setOpen] = useState(false)
   const [val, setVal] = useState<string>('');
@@ -34,6 +32,9 @@ export const ColumnsModal: FC<PropsWithChildren> = observer(({children}) => {
           setOpen(false)
         }}
         onOk={() => {
+      
+         
+
           if(isJsonValidate.current) {
             store.setSelectedProp('tableColumns', val)
             setOpen(false)
