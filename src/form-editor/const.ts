@@ -1,4 +1,4 @@
-export const prefixCls = (className: any) => `form-editor-${className}`
+export const prefixCls = (className: any) => `fm-${className}`
 export const DirectionOpions = [
   {
     label: '垂直方向',

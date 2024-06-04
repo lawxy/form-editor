@@ -1,1 +1,1 @@
-export const prefixCls = (className: any) => `form-editor-${className}`
+export const prefixCls = (className: any) => `fm-${className}`

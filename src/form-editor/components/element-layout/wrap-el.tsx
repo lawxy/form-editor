@@ -1,16 +1,14 @@
-import { idCreator } from '@/utils';
 import { observer } from 'mobx-react-lite';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, type PropsWithChildren } from 'react';
 import store from '@/store';
-import type { IBaseElement } from '@/types';
+import type { IBaseElement, TMode } from '@/types';
 import { SelectedActions } from './selected-actions';
-import { DesignWrapDiv, HoverLine, Mask } from './styled';
+import { DesignWrapDiv, Mask } from './styled';
 
-export const WrapEl: React.FC<{
+const WrapDesignEl: React.FC<PropsWithChildren<{
   el: IBaseElement;
-  children: React.ReactNode;
-  isVirtual?: boolean;
-}> = observer(({ children, el, isVirtual }) => {
+}>> = observer(({ children, el }) => {
+
   const ref = useRef<HTMLDivElement>(null);
 
   const handleSelect = useCallback(() => {
@@ -22,8 +20,6 @@ export const WrapEl: React.FC<{
     <DesignWrapDiv
       selected={store.selectedElement?.id === el.id}
       onMouseDownCapture={handleSelect}
-      isVirtual={!!isVirtual}
-      // style={{width: `${el.widthPercent}%`}}
       ref={ref}
     >
       <Mask
@@ -35,3 +31,12 @@ export const WrapEl: React.FC<{
     </DesignWrapDiv>
   );
 });
+
+export const WrapEl: React.FC<PropsWithChildren<{
+  el: IBaseElement;
+  mode: TMode;
+}>> = ({ children, el, mode }) => {
+  if(mode !== 'design') return <>{children}</>
+
+  return <WrapDesignEl el={el}>{children}</WrapDesignEl>
+};

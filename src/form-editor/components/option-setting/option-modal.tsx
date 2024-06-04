@@ -43,8 +43,12 @@ const OptionModal:FC<PropsWithChildren> = ({ children }) => {
   }
 
   useEffect(() => {
-    if(!open) return;
+    if(!tableRef.current) return;
+    console.log('tableRef')
+    console.log(tableRef)
     const rowEl = tableRef.current.querySelector('.ant-table-tbody')
+    console.log('rowEl')
+    console.log(rowEl)
     const sortIns = new Sortable(rowEl, {
       animation: 150,
       group: 'table',
@@ -58,7 +62,7 @@ const OptionModal:FC<PropsWithChildren> = ({ children }) => {
     return () => {
       sortIns?.destroy?.()
     }
-  }, [open])
+  }, [tableRef.current])
 
   const columns: TableColumnProps<TOption>[] = [
     { 

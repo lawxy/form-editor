@@ -35,11 +35,8 @@ export const Mask = styled.div<{ horizontal: number; vertical: number }>(
 
 export const DesignWrapDiv = styled.div<{
   selected: boolean;
-  isVirtual: boolean;
-}>(({ selected, isVirtual }) => {
+}>(({ selected }) => {
   return `
-    background-color: rgb(242, 246, 255);
-    padding: 4px;
     border-radius: 4px;
     &:hover {
       border: 1px dashed #3370ff;
@@ -49,7 +46,6 @@ export const DesignWrapDiv = styled.div<{
       border: selected
         ? '1px solid #3370ff !important'
         : '1px solid transparent',
-      pointerEvents: isVirtual ? 'none' : 'auto',
     }).join(';')}
   `;
 });

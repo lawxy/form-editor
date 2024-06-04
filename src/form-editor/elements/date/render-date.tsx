@@ -3,14 +3,15 @@ import { DatePicker } from 'antd';
 import { observer } from 'mobx-react-lite';
 import dayjs from 'dayjs'
 import ElementLayout from '@/components/element-layout';
-import type { IBaseElement } from '@/types';
+import type { IBaseElement, TMode } from '@/types';
 import store from '@/store';
 
 const RenderDateContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({fieldValue, element = {}}) => {
-  const { id, elementName, dateFormat } = element;
+  mode: TMode;
+}> = ({fieldValue, element, mode}) => {
+  const { id, dateFormat } = element;
 
   const showTime = useMemo(() => {
     const timeFormat = dateFormat?.split(' ')
@@ -22,7 +23,7 @@ const RenderDateContent: React.FC<{
     return res
   }, [dateFormat])
   return (
-    <ElementLayout element={element}>
+    <ElementLayout element={element} mode={mode}>
       <DatePicker 
         style={{width: '100%'}}
         format={dateFormat}

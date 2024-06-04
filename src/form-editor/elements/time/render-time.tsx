@@ -2,17 +2,18 @@ import React from 'react'
 import { TimePicker  } from 'antd';
 import { observer } from 'mobx-react-lite';
 import dayjs from 'dayjs'
-import type { IBaseElement } from '@/types';
+import type { IBaseElement, TMode } from '@/types';
 import store from '@/store';
 import ElementLayout from '@/components/element-layout';
 
 const RenderTimeContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({fieldValue, element = {}}) => {
+  mode: TMode
+}> = ({fieldValue, element, mode}) => {
   const { id, dateFormat } = element
   return (
-    <ElementLayout element={element}>
+    <ElementLayout element={element} mode={mode}>
       <TimePicker  
         style={{width: '100%'}}
         format={dateFormat}

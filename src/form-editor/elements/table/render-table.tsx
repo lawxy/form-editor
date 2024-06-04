@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Table } from 'antd'
 import { observer } from 'mobx-react-lite';
-import type { IBaseElement } from '@/types';
+import type { IBaseElement, TMode } from '@/types';
 import store from '@/store';
 import { parseJSX } from '@/utils'
 import ElementLayout from '@/components/element-layout';
@@ -9,11 +9,12 @@ import ElementLayout from '@/components/element-layout';
 const RenderTableContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({fieldValue = [], element = {}}) => {
+  mode: TMode;
+}> = ({fieldValue = [], element, mode}) => {
   const { tableColumns = '[]', tableAttributes = '{}' } = element;
 
   return (
-    <ElementLayout element={element}>
+    <ElementLayout element={element} mode={mode}>
       <Table 
         columns={parseJSX(tableColumns)}
         // dataSource={fieldValue || []}

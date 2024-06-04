@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Input } from 'antd';
 import { observer } from 'mobx-react-lite';
-import type { IBaseElement } from '@/types';
+import type { IBaseElement, TMode } from '@/types';
 import { convertCSStoReactStyle } from '@/utils'
 import store from '@/store';
 import ElementLayout from '@/components/element-layout';
@@ -9,21 +9,23 @@ import ElementLayout from '@/components/element-layout';
 const RenderInputContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({fieldValue, element = {}}) => {
-  const { textType, minRows, maxRows, id, autoSize, placeholder, customCss } = element
+  mode: TMode;
+}> = ({fieldValue, element = {}, mode}) => {
+  const { textType, minRows, maxRows, id, autoSize, placeholder, customCss = '' } = element
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     store.setFieldValue(id as string, e.target.value)
   }, [id])
 
-  // const style = convertCSStoReactStyle(customCss)
+  const style = convertCSStoReactStyle(customCss, true)
+  console.log(style)
 
   return (
-    <ElementLayout element={element}>
+    <ElementLayout element={element} mode={mode}>
       {
         textType === 'single' ? (
           <Input 
             value={fieldValue} 
-            style={{width: '100%'}} 
+            style={{ ...style}} 
             onChange={handleChange}
             placeholder={placeholder}
             id={id}

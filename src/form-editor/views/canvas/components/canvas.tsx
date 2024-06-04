@@ -1,10 +1,9 @@
-import React, { useMemo, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite';
-import { Row, Col } from 'antd';
+import { Row } from 'antd';
 import Sortable from 'sortablejs'
 import { idCreator } from '@/utils';
 import store from '@/store';
-import { WrapEl } from './wrap-el';
 import { ElementsList } from '@/elements/export';
 import type { IBaseElement, IEditorCanvasProp } from '@/types';
 import { prefixCls } from '@/const';
@@ -23,7 +22,7 @@ const EditorCanvas: React.FC<IEditorCanvasProp> = ({ mode, actions }) => {
       onSort: function (e: any) {
         const { newIndex, item, oldIndex } = e;
         // 新增
-        if(item.classList.contains('form-editor-drag-item')) {
+        if(item.classList.contains('fm-drag-item')) {
           if (item.parentNode) item.parentNode.removeChild(item)
           const element = ElementsList[item.dataset.type]
           const { initialData } = element
@@ -52,20 +51,7 @@ const EditorCanvas: React.FC<IEditorCanvasProp> = ({ mode, actions }) => {
               const Component = ElementsList[item.type]?.render
               if (!Component) return null
               return (
-                <Col
-                  key={item.id || String(+new Date())}
-                  span={item.gridSpan}
-                >
-                  {
-                    mode === 'design' ? (
-                      <WrapEl el={item} key={item.id} isVirtual={!item.id}>
-                        <Component fieldValue={store.fieldValues[item.id as string]} element={item} />
-                      </WrapEl>
-                    ) : (
-                      <Component fieldValue={store.fieldValues[item.id as string]} element={item} />
-                    )
-                  }
-                </Col>
+                <Component mode={mode} key={item.id || String(+new Date())} fieldValue={store.fieldValues[item.id as string]} element={item} />
               )
             })
           }
