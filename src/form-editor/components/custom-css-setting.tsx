@@ -7,9 +7,10 @@ import { AttributesSetting } from './attributes-setting'
 
 const CustomCssSetting = () => {
   const defaultValue = useMemo(() => {
-    return `#${store.selectedElement.id}{
-  ${JSON.stringify(store.selectedElement.customCss, null, 2) || ''}
-}`
+    if(!store.selectedElement.customCss) {
+      return `#${store.selectedElement.id}{}`
+    }
+    return store.selectedElement.customCss
   }, [store.selectedElement.customCss])
   return (
     <SettingItem label='自定义CSS'>
@@ -18,7 +19,7 @@ const CustomCssSetting = () => {
         defaultValue={defaultValue}
         title='CSS设置'
         onOk={(val) => {
-          store.setSelectedProp('customCss', JSON.parse(val))
+          store.setSelectedProp('customCss', val)
         }}
       >
         <Button style={{position: 'absolute', right: 8, top: 3}} size='small'>编辑</Button>

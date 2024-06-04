@@ -75,8 +75,6 @@
     "lodash-es": "^4.17.21",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
-    "react-ace": "^10.1.0",
-    "react-dnd": "^16.0.1",
     "serialize-javascript": "^6.0.2",
     "sortablejs": "^1.15.2",
     "styled-components": "^5.3.0"

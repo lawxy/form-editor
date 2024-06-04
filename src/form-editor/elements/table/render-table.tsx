@@ -9,17 +9,19 @@ import ElementLayout from '@/components/element-layout';
 const RenderTableContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({fieldValue, element = {}}) => {
-  const { tableColumns = '[]', tableAttributes } = element;
+}> = ({fieldValue = [], element = {}}) => {
+  const { tableColumns = '[]', tableAttributes = '{}' } = element;
 
   return (
     <ElementLayout element={element}>
       <Table 
-        columns={parseJSX(`${tableColumns}`)}
+        columns={parseJSX(tableColumns)}
         // dataSource={fieldValue || []}
         rowKey='id'
-        dataSource={[{id: 1}]}
-        {...tableAttributes}
+        dataSource={fieldValue}
+        {
+          ...(parseJSX(`[${tableAttributes}]`)[0])
+        }
       />
     </ElementLayout>
   )

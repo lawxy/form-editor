@@ -64,7 +64,7 @@ export interface IBaseElement {
   /**
    * 自定义css
   */
-  customCss?: CSSProperties;
+  customCss?: string;
   /**
    * 最小行数
    */
@@ -96,7 +96,7 @@ export interface IBaseElement {
   /**
    * 表格设置
   */
-  tableAttributes?: Record<string, any>;
+  tableAttributes?: string;
   /**
    * 表格column
    */

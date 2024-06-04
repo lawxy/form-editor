@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import type { FC, PropsWithChildren } from 'react';
-import { Table, Button, Modal, Input, message, Popover } from 'antd'
+import { Modal, message } from 'antd'
 import { observer } from "mobx-react-lite";
 import MonacoEditor from "@monaco-editor/react";
 
@@ -48,8 +48,8 @@ export const AttributesSetting: FC<PropsWithChildren<{
           defaultValue={val}
           onChange={setVal}
           onValidate={errors => {
-            console.log('errors')
-            console.log(errors)
+            // console.log('errors')
+            // console.log(errors)
             isJsonValidate.current = errors.length === 0
           }}
           options={{

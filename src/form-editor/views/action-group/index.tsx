@@ -1,10 +1,6 @@
 import React, { useCallback, useState, useMemo } from 'react';
 import { observer } from "mobx-react-lite";
 import { Popconfirm, Modal, Button, Form, message } from 'antd';
-import { toJS } from 'mobx';
-import AceEditor from 'react-ace';
-// import 'ace-builds/src-noconflict/mode-json';
-// import 'ace-builds/src-noconflict/theme-github';
 import { EditorForm } from '../canvas';
 import MonacoEditor from "@monaco-editor/react";
 
@@ -101,9 +97,11 @@ const ActionGroup = () => {
           <Button onClick={() => setOpenForm(false)}>关闭</Button>
         }
         width={1200}
-        bodyStyle={{
-          height: 400,
-          overflow: 'auto'
+        styles={{
+          body: {
+            height: 400,
+            overflow: 'auto'
+          }
         }}
       >
         <EditorForm />

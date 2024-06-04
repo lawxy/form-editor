@@ -24,10 +24,10 @@ const SettingTableContent = () => {
         </>}>
         <AttributesSetting
           editorType='json'
-          defaultValue={JSON.stringify(store.selectedElement.tableAttributes, null, 2)}
+          defaultValue={store.selectedElement.tableAttributes}
           title='表格配置'
           onOk={(val) => {
-            store.setSelectedProp('tableAttributes', JSON.parse(val))
+            store.setSelectedProp('tableAttributes', val)
           }}
         >
           <Button style={{position: 'absolute', right: 8, top: 3}} size='small'>编辑</Button>

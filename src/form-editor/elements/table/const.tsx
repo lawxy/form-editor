@@ -5,7 +5,7 @@ export const TABLE_TEXT = '表格'
 export const initialData: Partial<IBaseElement> = {
   elementName: TABLE_TEXT,
   gridSpan: 24,
-  tableAttributes: {},
+  tableAttributes: '{}',
   tableColumns: `[
   {
     title: '列名', 
