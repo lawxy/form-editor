@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite';
-import { Row } from 'antd';
+import { Row, Form } from 'antd';
 import Sortable from 'sortablejs'
 import { idCreator } from '@/utils';
 import store from '@/store';
@@ -11,7 +11,7 @@ import './style.less'
 
 const EditorCanvas: React.FC<IEditorCanvasProp> = ({ mode, actions }) => {
   const { horizontalGap, verticalGap } = store.formAttrs
-  const el = useRef<any>()
+  const el = useRef<any>();
 
   useEffect(() => {
     if(mode !== 'design') return;
@@ -43,19 +43,24 @@ const EditorCanvas: React.FC<IEditorCanvasProp> = ({ mode, actions }) => {
       }
       <div className={prefixCls('canvas')}
         ref={el}
-      >
-        <Row gutter={[horizontalGap, verticalGap]} style={{height: '100%'}}>
-          {
-            store.formElements.map((item: IBaseElement) => {
-              // @ts-ignore
-              const Component = ElementsList[item.type]?.render
-              if (!Component) return null
-              return (
-                <Component mode={mode} key={item.id || String(+new Date())} fieldValue={store.fieldValues[item.id as string]} element={item} />
-              )
-            })
-          }
-        </Row>
+        >
+        {
+          mode === 'design' && <div style={{height: 10, background: '#f3f3f3'}}/>
+        }
+        <Form style={{height: '100%'}}>
+          <Row gutter={[horizontalGap, verticalGap]} style={{height: '100%'}}>
+            {
+              store.formElements.map((item: IBaseElement) => {
+                // @ts-ignore
+                const Component = ElementsList[item.type]?.render
+                if (!Component) return null
+                return (
+                  <Component mode={mode} key={item.id || String(+new Date())} fieldValue={store.fieldValues[item.id as string]} element={item} />
+                )
+              })
+            }
+          </Row>
+        </Form>
       </div>
     </div>
   )

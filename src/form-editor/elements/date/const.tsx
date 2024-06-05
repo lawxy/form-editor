@@ -5,5 +5,5 @@ export const DATE_TEXT = '日期'
 export const initialData: Partial<IBaseElement> = {
   elementName: '日期',
   dateFormat: 'YYYY-MM-DD',
-  gridSpan: 24
+  gridSpan: 4
 }

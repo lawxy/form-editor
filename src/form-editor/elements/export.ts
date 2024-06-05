@@ -10,6 +10,9 @@
 
 import type { IDragElementProp } from '../types'
   
+import { ELEMENT_BUTTON, RenderButton, SettingButton, BUTTON_TEXT, initialData as Button_initData } from './button'
+export { ELEMENT_BUTTON, RenderButton, SettingButton, BUTTON_TEXT } from './button'
+        
 import { ELEMENT_CHECKBOX, RenderCheckbox, SettingCheckbox, CHECKBOX_TEXT, initialData as Checkbox_initData } from './checkbox'
 export { ELEMENT_CHECKBOX, RenderCheckbox, SettingCheckbox, CHECKBOX_TEXT } from './checkbox'
         
@@ -42,6 +45,14 @@ export const ElementsList: Record<string, IDragElementProp> = {
     setting: SettingInput,
     text: INPUT_TEXT,
     initialData: Input_initData
+  },
+
+  [ELEMENT_BUTTON]: {
+    type: ELEMENT_BUTTON,
+    render: RenderButton,
+    setting: SettingButton,
+    text: BUTTON_TEXT,
+    initialData: Button_initData
   },
 
   [ELEMENT_NUMBER]: {

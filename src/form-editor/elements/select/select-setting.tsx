@@ -1,11 +1,11 @@
 import React from 'react'
 import { observer } from "mobx-react-lite";
-import BasicInfo from '@/components/basic-info';
+import { CommonTabsSetting } from '@/components/common-tabs-setting';
 
 const SettingSelectContent = () => {
   return (
     <div>
-      <BasicInfo />
+      <CommonTabsSetting />
     </div>
   )
 }

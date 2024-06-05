@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react-lite'
-import { Input, Slider, Form, Select } from 'antd'
+import { Input, Slider, Select } from 'antd'
 import type { TDirection } from '../types'
 import { SettingItem } from './setting-item'
 import { DirectionOpions } from '../const'
 import store from '../store'
 
-const mock = [{label: '选项一', value: '1'}, {label: '选项二', value: '2'}]
-
 const BasicInfo = () => {
-  const { gridSpan, id } = store.selectedElement;
+  const { gridSpan, id, gridOffset } = store.selectedElement;
   return (
     <>
+      <SettingItem label='元素id'>
+        <div>{id}</div>
+      </SettingItem>
       <SettingItem label='元素名称'>
         <Input
           value={store.selectedElement.elementName?.replace(/&nbsp;/g, ' ')}
@@ -41,7 +42,19 @@ const BasicInfo = () => {
             }} 
           />
         </div>
+      </SettingItem>
 
+      <SettingItem label='元素偏移'>
+        <div style={{width: '90%'}}>
+          <Slider 
+            value={gridOffset}
+            max={24}
+            min={0}
+            onChange={v => {
+              store.setSelectedProp('gridOffset', v)
+            }} 
+          />
+        </div>
       </SettingItem>
     </>
   )

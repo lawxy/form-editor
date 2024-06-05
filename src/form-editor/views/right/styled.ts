@@ -6,14 +6,16 @@ export const StyledRightDiv = styled.div(() => {
     background-color: white;
     height: 100%;
     overflow: auto;
+    .fm-form-setting-tab > .ant-tabs-nav {
+      margin-bottom: 0;
+    }
     .ant-tabs-nav {
       height: 40px;
     }
     .ant-tabs-tab {
-      padding: 0 30%;
+      padding: 0 12%;
     }
     .ant-tabs-content {
-      padding-right: 8px;
     }
     .ant-select, .ant-input {
       width: 100%;
@@ -25,11 +27,11 @@ export const StyledRightDiv = styled.div(() => {
       position: absolute;
       z-index: 10;
     }
+    .fm-attr-setting-btn {
+      position: absolute;
+      right: 8px;
+      top: 3px;
+    }
   `
 })
 
-export const SettingWrap = styled.div(() => {
-  return `
-    padding: 2px;
-  `
-})

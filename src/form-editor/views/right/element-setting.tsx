@@ -1,7 +1,6 @@
 import React, { useMemo, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Form } from 'antd'
-import { SettingWrap } from './styled'
 import store from '@/store'
 import { ElementsList } from '@/elements'
 
@@ -13,13 +12,13 @@ const ElementSetting = () => {
     return ElementsList[store.selectedElement.type ]?.setting
   }, [store.selectedElement?.id])
   return (
-    <SettingWrap>
+    <div>
       {
         store.selectedElement?.id ? (
           <Component />
         ): null
       }
-    </SettingWrap>
+    </div>
   )
 }
 

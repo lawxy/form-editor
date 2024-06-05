@@ -33,7 +33,7 @@ const OptionSetting:FC = () => {
       </SettingItem>
       <SettingItem label='选项'>
         <OptionModal>
-          <Button style={{position: 'absolute', right: 8, top: 3}} size='small'>编辑</Button>
+          <Button className='fm-attr-setting-btn' size='small'>编辑</Button>
         </OptionModal>
       </SettingItem>
       <Table

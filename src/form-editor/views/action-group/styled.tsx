@@ -4,7 +4,6 @@ export const ActionGroupWrap = styled.div(() => {
   return `
     display: flex;
     height: 40px;
-    margin-bottom: 10px;
     background-color: white;
     align-items: center;
     justify-content: flex-end;

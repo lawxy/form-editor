@@ -1,6 +1,6 @@
-const ColAttrs = ['width', 'marginLeft', 'marginRight', 'marginTop', 'marginBottom']
+// const ColAttrs = ['width', 'marginLeft', 'marginRight', 'marginTop', 'marginBottom']
 
-export function convertCSStoReactStyle(cssString: string, filterColAttrs?: boolean) {
+export function convertCSStoReactStyle(cssString: string) {
   const style: Record<string, any> = {};
   // const cssWithoutSelector = cssString.replace(/^[^{]*{\s*|\s*}[^}]*$/g, '');
   const cssWithoutSelector = cssString.substring(cssString.indexOf('{') + 1, cssString.lastIndexOf('}')).trim();
@@ -13,7 +13,7 @@ export function convertCSStoReactStyle(cssString: string, filterColAttrs?: boole
       // Convert property from kebab-case to camelCase
       const camelCaseProperty = property.replace(/-([a-z])/g, g => g[1].toUpperCase());
 
-      if(filterColAttrs && ColAttrs.includes(camelCaseProperty)) return 
+      // if(filterColAttrs && ColAttrs.includes(camelCaseProperty)) return 
       style[camelCaseProperty] = value;
     }
   });

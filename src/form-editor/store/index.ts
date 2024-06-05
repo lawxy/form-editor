@@ -1,17 +1,17 @@
 import { makeAutoObservable } from 'mobx';
-import { toJS } from 'mobx';
 import { idCreator } from '@/utils';
 import type { IBaseElement, IFormAttributesProps } from '../types';
 import { arrayMoveImmutable } from 'array-move';
 class Store {
+
   constructor() {
     makeAutoObservable(this);
   }
 
   /**
-   * 储存传入编辑器的所有属性和方法
+   * 储存所有元素的map
   */
-  context: Record<string, any> = {}
+  elementsMap = new Map();
 
   /**
    * 表单元素集合
@@ -35,11 +35,19 @@ class Store {
   }
 
   /**
+   * 通过id获取元素
+  */
+  getElFromId(id: string) {
+    return this.elementsMap.get(id);
+  }
+
+  /**
    * 新增元素
   */
   appendEl(el: IBaseElement) {
     this.formElements.push(el);
-    this.setSelectedElement(el)
+    this.setSelectedElement(el);
+    this.elementsMap.set(el.id, el);
   }
 
   /**
@@ -48,6 +56,7 @@ class Store {
   insertEl(el: IBaseElement, idx: number) {
     this.formElements.splice(idx, 0, el)
     this.setSelectedElement(el)
+    this.elementsMap.set(el.id, el);
   }
 
   /**
@@ -63,6 +72,7 @@ class Store {
    deleteEl(el: IBaseElement) {
     const idx = this.formElements.findIndex(item => item.id === el.id)
     this.formElements.splice(idx, 1)
+    this.elementsMap.delete(el.id);
   }
 
   /**
@@ -143,5 +153,8 @@ class Store {
   //   return null
   // }
 }
+
+
+
 
 export default new Store();

@@ -3,30 +3,17 @@ import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
 import { SettingItem } from '@/components/setting-item';
 import store from '@/store';
-import type { IFormAttributesProps } from '@/types';
-import { SettingWrap } from './styled';
 
 const FormSetting = () => {
   const {
-    isProcessForm,
     formId,
     formName,
-    status,
     horizontalGap,
     verticalGap,
   } = store.formAttrs;
 
-  const handleChange = useCallback(
-    (field: keyof IFormAttributesProps, value: any) => {
-      return () => {
-        store.setFormAttr(field, value);
-      };
-    },
-    [],
-  );
-
   return (
-    <SettingWrap>
+    <div style={{marginTop: 16}}>
       <SettingItem label="表单id">
         <Input value={formId} readOnly />
       </SettingItem>
@@ -57,7 +44,7 @@ const FormSetting = () => {
           }}
         />
       </SettingItem>
-    </SettingWrap>
+    </div>
   );
 };
 

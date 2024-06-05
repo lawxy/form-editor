@@ -1,5 +1,4 @@
-import type { TableColumnProps } from 'antd';
-import { CSSProperties } from 'styled-components';
+export type TConstructor<T = object> = new (...args: any[]) => T;
 export interface IDragElementProp {
   type: string;
   render: React.FC<any>;
@@ -47,8 +46,11 @@ export interface IBaseElement {
   /**
    * 元素栅格
    */
-  // widthPercent?: number;
   gridSpan?: number;
+  /**
+   * 元素偏移
+  */
+  gridOffset?: number;
   /**
    * 日期元素格式
    */

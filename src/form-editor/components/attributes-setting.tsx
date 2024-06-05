@@ -6,17 +6,17 @@ import MonacoEditor from "@monaco-editor/react";
 
 export const AttributesSetting: FC<PropsWithChildren<{
   title: string | React.ReactNode;
-  defaultValue: any;
+  value: any;
   onOk: (v: any) => void;
   editorType: string;
-}>> = observer(({children, title, defaultValue, onOk, editorType}) => {
+}>> = observer(({children, title, value, onOk, editorType}) => {
   const [open, setOpen] = useState(false)
   const [val, setVal] = useState<string>('');
   const isJsonValidate = useRef<boolean>(true);
 
   useEffect(() => {
-    setVal(defaultValue)
-  }, [defaultValue])
+    setVal(value)
+  }, [value])
 
   return (
     <>
@@ -45,11 +45,9 @@ export const AttributesSetting: FC<PropsWithChildren<{
         <MonacoEditor 
           height='400px'
           defaultLanguage={editorType}
-          defaultValue={val}
+          value={val}
           onChange={setVal}
           onValidate={errors => {
-            // console.log('errors')
-            // console.log(errors)
             isJsonValidate.current = errors.length === 0
           }}
           options={{

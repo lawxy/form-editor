@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Modal, Table, Space, Button, Input, message, type TableColumnProps } from 'antd'
 import { MinusCircleOutlined, PlusCircleOutlined, MenuOutlined } from '@ant-design/icons'
+import { findDOMNode } from 'react-dom';
+
 import Sortable from 'sortablejs'
 import { arrayMoveImmutable } from 'array-move';
 import { cloneDeep } from 'lodash-es'
@@ -43,26 +45,23 @@ const OptionModal:FC<PropsWithChildren> = ({ children }) => {
   }
 
   useEffect(() => {
-    if(!tableRef.current) return;
-    console.log('tableRef')
-    console.log(tableRef)
-    const rowEl = tableRef.current.querySelector('.ant-table-tbody')
-    console.log('rowEl')
-    console.log(rowEl)
+    if(!open || !tableRef.current) return;
+    const rowEl = tableRef.current.offsetParent.querySelector('.ant-table-tbody')
     const sortIns = new Sortable(rowEl, {
       animation: 150,
       group: 'table',
       handle: '.draggble-btn',
       onSort: function (e: any) {
         const { newIndex, oldIndex } = e;
-        const newValueOptions = arrayMoveImmutable(valueOptionsRef.current || [],oldIndex, newIndex)
+        // 为什么这里的索引都会比真实的大1 ？？
+        const newValueOptions = arrayMoveImmutable(valueOptionsRef.current || [],oldIndex - 1, newIndex - 1)
         setOption(newValueOptions)
       },
     })
     return () => {
       sortIns?.destroy?.()
     }
-  }, [tableRef.current])
+  }, [open, tableRef.current])
 
   const columns: TableColumnProps<TOption>[] = [
     { 

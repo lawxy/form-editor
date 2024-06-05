@@ -1,7 +1,5 @@
 import React from "react";
-import { Input } from 'antd';
-
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const StyledDiv = styled.div<{required: boolean}>(({required}) => {
   return `
@@ -11,8 +9,9 @@ const StyledDiv = styled.div<{required: boolean}>(({required}) => {
     padding: 0 4px;
     margin-bottom: 20px;
     position: relative;
+    font-size: 13px;
     .fm-setting-item-label {
-      width: 110px;
+      width: 85px;
       text-align: right;
       &::after{
         content: ":";
@@ -31,6 +30,9 @@ const StyledDiv = styled.div<{required: boolean}>(({required}) => {
         content: "*";
       }
     }
+    .fm-setting-item-value {
+      flex: 1;
+    }
   `
 })
 
@@ -42,7 +44,7 @@ export const SettingItem: React.FC<{
   return (
     <StyledDiv required={!!required}>
       <div className="fm-setting-item-label">{label}</div>
-      <div style={{flex: 1}}>{children}</div>
+      <div className="fm-setting-item-value">{children}</div>
     </StyledDiv>
   )
 }
