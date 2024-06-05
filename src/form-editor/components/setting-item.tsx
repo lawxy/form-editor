@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type FC, type PropsWithChildren } from "react";
 import styled from 'styled-components'
 
 const StyledDiv = styled.div<{required: boolean}>(({required}) => {
@@ -36,11 +36,11 @@ const StyledDiv = styled.div<{required: boolean}>(({required}) => {
   `
 })
 
-export const SettingItem: React.FC<{
+export const SettingItem: FC<PropsWithChildren<{
   label: React.ReactNode | string;
   children: React.ReactNode;
   required?: boolean;
-}> = ({label, children, required}) => {
+}>> = ({label, children, required}) => {
   return (
     <StyledDiv required={!!required}>
       <div className="fm-setting-item-label">{label}</div>

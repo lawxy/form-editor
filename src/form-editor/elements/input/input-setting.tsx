@@ -5,6 +5,7 @@ import { SettingItem } from '@/components/setting-item';
 import PlaceholderSetting from '@/components/placeholder-setting'
 import store from '@/store';
 import { CommonTabsSetting } from '@/components/common-tabs-setting';
+import { EventCommon } from '@/components/event-common';
 
 const typeOptions = [{label: '单行文本', value: 'single'}, {label: '多行文本', value: 'multiple'}]
 const SettingInputContent = () => {
@@ -65,6 +66,9 @@ const SettingInputContent = () => {
               )
             }
           </>
+        }
+        events={
+          <EventCommon />
         }
       />
     </div>

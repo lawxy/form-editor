@@ -7,10 +7,6 @@ import type { FC, ReactNode } from 'react';
 
 import { Tabs } from 'antd';
 
-const { TabPane } = Tabs;
-
-
-
 export const CommonTabsSetting: FC<{
   attributes?: ReactNode;
   events?: ReactNode;
@@ -33,32 +29,13 @@ export const CommonTabsSetting: FC<{
     {
       key: 'event',
       label: '事件',
-      children: <>事件</>
+      children: <>{events}</>
     }
-  ].filter(Boolean);
+  ].filter(Boolean) as TabsProps['items'];
 
   return (
     <div className="element-props-setting-section">
-      <Tabs defaultActiveKey="attribute" items={items}/>
-        {/* <TabPane tab="属性" key="1">
-          <BasicInfo />
-          {attributes}
-        </TabPane>
-        {
-          !hideCss && (
-            <TabPane tab="样式" key="2">
-              <CustomCssSetting />
-            </TabPane>
-          )
-        }
-        {
-          events && (
-            <TabPane tab="事件" key="3">
-              {events}
-            </TabPane>
-          )
-        }
-      </Tabs> */}
+      <Tabs defaultActiveKey="event" items={items}/>
     </div>
   );
 };

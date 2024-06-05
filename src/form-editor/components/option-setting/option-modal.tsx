@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Modal, Table, Space, Button, Input, message, type TableColumnProps } from 'antd'
 import { MinusCircleOutlined, PlusCircleOutlined, MenuOutlined } from '@ant-design/icons'
-import { findDOMNode } from 'react-dom';
 
 import Sortable from 'sortablejs'
 import { arrayMoveImmutable } from 'array-move';

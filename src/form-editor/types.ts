@@ -10,6 +10,13 @@ export interface IDragElementProp {
 export type TDirection = 'vertical' | 'horizontal';
 export type TMode = 'design' | 'form';
 export type TOption = { label: string; value: string | number; id?: string };
+export enum EEventsType {
+  CLICK,
+  DOUBLE_CLICK,
+  VALUE_CHANGE,
+  FOCUS,
+  BLUR
+}
 
 export interface IEditorCanvasProp {
   /**
