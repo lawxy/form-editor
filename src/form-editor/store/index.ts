@@ -119,9 +119,9 @@ class Store {
   /**
    * 属性tab值
   */
-  formSettingTab: 'element' | 'form' = 'element'
+  formSettingTab: 'element' | 'form' | 'service' = 'element'
 
-  setFormSettingTab(tab: 'element' | 'form') {
+  setFormSettingTab(tab: 'element' | 'form' | 'service') {
     this.formSettingTab = tab
   }
 
@@ -152,6 +152,9 @@ class Store {
   //   }
   //   return null
   // }
+  /**
+   * 事件
+  */
 }
 
 

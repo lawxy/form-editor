@@ -47,20 +47,18 @@ const EditorCanvas: React.FC<IEditorCanvasProp> = ({ mode, actions }) => {
         {
           mode === 'design' && <div style={{height: 10, background: '#f3f3f3'}}/>
         }
-        <Form style={{height: '100%'}}>
-          <Row gutter={[horizontalGap, verticalGap]} style={{height: '100%'}}>
-            {
-              store.formElements.map((item: IBaseElement) => {
-                // @ts-ignore
-                const Component = ElementsList[item.type]?.render
-                if (!Component) return null
-                return (
-                  <Component mode={mode} key={item.id || String(+new Date())} fieldValue={store.fieldValues[item.id as string]} element={item} />
-                )
-              })
-            }
-          </Row>
-        </Form>
+        <Row gutter={[horizontalGap, verticalGap]} style={{height: '100%'}}>
+          {
+            store.formElements.map((item: IBaseElement) => {
+              // @ts-ignore
+              const Component = ElementsList[item.type]?.render
+              if (!Component) return null
+              return (
+                <Component mode={mode} key={item.id || String(+new Date())} fieldValue={store.fieldValues[item.id as string]} element={item} />
+              )
+            })
+          }
+        </Row>
       </div>
     </div>
   )

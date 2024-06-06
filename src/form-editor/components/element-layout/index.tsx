@@ -1,9 +1,12 @@
-import React, { type FC, type PropsWithChildren } from 'react'
+import React, { useMemo, type FC, type PropsWithChildren, type CSSProperties } from 'react'
 import styled, { css } from 'styled-components'
 import { observer } from 'mobx-react-lite';
 import { Col, Form } from 'antd';
+import { convertCSStoReactStyle } from '@/utils';
 import type { IBaseElement, TDirection, TMode } from '../../types'
 import { WrapEl } from './wrap-el';
+import { EventEmitter } from 'events';
+
 
 const StyledDiv = styled.div<{ elementNameDisplay?: TDirection }>(({ elementNameDisplay }) => {
   return `
@@ -18,37 +21,15 @@ const StyledDiv = styled.div<{ elementNameDisplay?: TDirection }>(({ elementName
 const ElementLayout: FC<PropsWithChildren<{
   element: IBaseElement;
   mode: TMode;
-}>> = ({ element, children, mode }) => {
+  contaninerCss?: React.CSSProperties;
+}>> = ({ element, children, mode, contaninerCss = {} }) => {
   const { elementName, elementNameDisplay, id, gridOffset, gridSpan } = element;
-  // const colStyle: CSSProperties = useMemo(() => {
-  //   const customStyle = convertCSStoReactStyle(customCss)
-  //   const style: CSSProperties = {};
-  //   Object.entries(customStyle).forEach(([attr, value]) => {
-  //     switch (attr) {
-  //       case 'width':
-  //         Object.assign(style, {
-  //           width: value,
-  //           flex: 'none',
-  //           maxWidth: 'none'
-  //         })
-  //         break;
-  //       case 'marginLeft':
-  //       case 'marginRight':
-  //       case 'marginTop':
-  //       case 'marginBottom':
-  //         Object.assign(style, {
-  //           [attr]: value,
-  //         })
-  //         break;
-  //     }
-  //   })
-  //   return style
-  // }, [customCss])
+ 
   return (
     <Col
       span={gridSpan}
       offset={gridOffset || 0}
-      // style={colStyle}
+      style={contaninerCss}
     >
       <Form.Item name={id} style={{marginBottom: 0}}>
         <WrapEl el={element} mode={mode}>

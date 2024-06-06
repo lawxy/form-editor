@@ -4,7 +4,7 @@ hero:
   description: 低代码
   actions:
     - text: 进入
-      link: /organization-select/demo
+      link: /form-editor/demo
 features:
   - title: 低
     emoji: 💎

@@ -3,6 +3,7 @@
     "strict": true,
     "declaration": true,
     "skipLibCheck": true,
+    "module": "commonjs",
     "esModuleInterop": true,
     "jsx": "react",
     "baseUrl": "./",

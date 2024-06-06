@@ -1,21 +1,33 @@
-import React, { useMemo, useState, useRef } from 'react'
+import React, { useMemo, useState, useRef, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Button, message } from 'antd'
-import MonacoEditor from "@monaco-editor/react";
+import MonacoEditor, { useMonaco } from "@monaco-editor/react";
+
 import { SettingItem } from './setting-item'
 import store from '../store'
 
 const CustomCssSetting = () => {
+  const [canSave, setCanSave] = useState(false);
+  const isJsonValidate = useRef<boolean>(true);
+  const tempVal = useRef('');
+  const monaco = useMonaco();
+
   const value = useMemo(() => {
     if (!store.selectedElement.customCss) {
-      return `#${store.selectedElement.id}{}`
+      return `/* 组件样式 */\n#${store.selectedElement.id}{\n} \n /* 容器样式 */\n#${store.selectedElement.id?.replace(/^el-/, 'container-')}{\n}`
     }
     return store.selectedElement.customCss
   }, [store.selectedElement.customCss])
 
-  const [canSave, setCanSave] = useState(false);
-  const isJsonValidate = useRef<boolean>(true);
-  const tempVal = useRef('');
+  useEffect(() => {
+    if(!monaco) return;
+    monaco.languages.css.cssDefaults.setDiagnosticsOptions({
+      validate: true,
+      lint: {
+        emptyRules: 'ignore', // 忽略空规则校验
+      },
+    });
+  }, [monaco])
 
   const handleSave = () => {
     if (isJsonValidate.current) {
@@ -54,6 +66,7 @@ const CustomCssSetting = () => {
           tabSize: 2
         }}
       />
+
     </>
 
   )

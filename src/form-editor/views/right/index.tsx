@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import type { TabsProps } from 'antd';
 import store from '@/store';
 import { prefixCls } from '@/const';
+import { FormService } from '@/components/form-service';
 import ElementSetting from './element-setting';
 import FormSetting from './form-setting';
 import { StyledRightDiv } from './styled'
@@ -21,13 +22,20 @@ const items: TabsProps['items'] = [
     closable: false,
     children: <FormSetting />,
   },
+  {
+    key: 'service',
+    label: `表单服务`,
+    closable: false,
+    children: <FormService />,
+  }
 ];
 
 const Right = () => {
   return (
     <StyledRightDiv>
       <Tabs 
-        activeKey={store.formSettingTab} 
+        // activeKey={store.formSettingTab}
+        defaultActiveKey='service' 
         type="editable-card"
         hideAdd
         items={items}

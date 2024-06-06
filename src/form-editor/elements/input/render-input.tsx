@@ -15,15 +15,15 @@ const RenderInputContent: React.FC<{
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     store.setFieldValue(id as string, e.target.value)
   }, [id])
-  const { customStyle } = useElementCommon(element);
+  const { elCss, contaninerCss } = useElementCommon(element);
 
   return (
-    <ElementLayout element={element} mode={mode}>
+    <ElementLayout element={element} mode={mode} contaninerCss={contaninerCss}>
       {
         textType === 'single' ? (
           <Input 
             value={fieldValue} 
-            style={{ ...customStyle}} 
+            style={{ ...elCss}} 
             onChange={handleChange}
             placeholder={placeholder}
             id={id}
@@ -34,7 +34,7 @@ const RenderInputContent: React.FC<{
               minRows,
               maxRows
             }}
-            style={{ ...customStyle}} 
+            style={{ ...elCss}} 
             onChange={handleChange}
             value={fieldValue}
             placeholder={placeholder}

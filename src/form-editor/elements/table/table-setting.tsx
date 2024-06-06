@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from "mobx-react-lite";
-import { Button, Popover  } from 'antd'
+import { Button, Popover } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { SettingItem } from '@/components/setting-item';
 import { AttributesSetting } from '@/components/attributes-setting';
@@ -26,7 +26,7 @@ const SettingTableContent = () => {
               </>}>
               <AttributesSetting
                 editorType='json'
-                defaultValue={store.selectedElement.tableAttributes}
+                value={store.selectedElement.tableAttributes}
                 title='表格配置'
                 onOk={(val) => {
                   store.setSelectedProp('tableAttributes', val)
@@ -48,13 +48,13 @@ const SettingTableContent = () => {
               </>}>
               <AttributesSetting
                 editorType='javascript'
-                defaultValue={store.selectedElement.tableColumns}
+                value={store.selectedElement.tableColumns}
                 title={
                   <>
                     列表项设置&nbsp;
                     <Popover
                       content={<>
-                        在render函数中可直接使用antd组件及AntdIcons.XXX的方式使用icon图标
+                        render函数中可直接使用antd组件及AntdIcons.XXX的方式使用icon图标
                       </>}
                     >
                       <QuestionCircleOutlined style={{cursor: 'pointer'}}/>

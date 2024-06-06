@@ -1,6 +1,7 @@
+import React, { useEffect } from 'react';
 import { Input, InputNumber } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useCallback } from 'react';
+import { idCreator } from '@/utils';
 import { SettingItem } from '@/components/setting-item';
 import store from '@/store';
 
@@ -12,10 +13,16 @@ const FormSetting = () => {
     verticalGap,
   } = store.formAttrs;
 
+  useEffect(() => {
+    if(!formId){
+      store.setFormAttr('formId', idCreator('form'))
+    }
+  }, [formId])
+
   return (
     <div style={{marginTop: 16}}>
       <SettingItem label="表单id">
-        <Input value={formId} readOnly />
+        { formId }
       </SettingItem>
       <SettingItem label="表单名称">
         <Input
