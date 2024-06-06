@@ -3,7 +3,6 @@ import type { FC, PropsWithChildren } from 'react';
 import { Modal, Form, Input, Select } from 'antd';
 import { prefixCls } from '@/const';
 import { SelectComponent } from './select-component';
-import MonacoEditor, { useMonaco } from "@monaco-editor/react";
 
 const methodOptions = ['GET', 'POST', 'PUT', 'DELETE'].map((item) => ({label: item, value: item}))
 
@@ -38,23 +37,12 @@ export const ServiceModal: FC<PropsWithChildren> = ({ children }) => {
           <Form.Item name='method' label='请求方法' required rules={[{required: true}]}>
             <Select options={methodOptions}/>
           </Form.Item>
-          <Form.Item label='参数'>
-            <MonacoEditor
-              defaultLanguage="javascript"
-              defaultValue="{}"
-              width="100%"
-              height="50px"
-              options={{
-                lineNumbers: 'off', // 隐藏行号
-              }}
+          <Form.Item name='previewData' label='预览参数' initialValue='{}'>
+            <Input.TextArea
             />
           </Form.Item>
           <Form.Item label='headers'>
-              <MonacoEditor
-                defaultLanguage="json"
-                defaultValue="{}"
-                width="100%"
-              />
+           
           </Form.Item>
         </Form>
       </Modal>
