@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { idCreator } from '@/utils';
-import type { IBaseElement, IFormAttributesProps } from '../types';
+import type { IBaseElement, IFormAttributesProps, TFormSerive } from '../types';
 import { arrayMoveImmutable } from 'array-move';
 class Store {
 
@@ -22,7 +22,8 @@ class Store {
     return {
       formElements: this.formElements,
       fieldValues: this.fieldValues,
-      formAttrs: this.formAttrs
+      formAttrs: this.formAttrs,
+      formServices: this.formServices
     }
   }
 
@@ -155,6 +156,39 @@ class Store {
   /**
    * 事件
   */
+ /**
+  * 服务
+ */
+  formServices: TFormSerive[] = [];
+
+  /**
+   * 新增服务
+  */
+  addService(serv: TFormSerive) {
+    this.formServices.push(serv)
+  }
+  /**
+   * 删除服务
+  */
+  deleteService(id: string) {
+    const idx = this.formServices.findIndex(item => item.id === id)
+    this.formServices.splice(idx, 1)
+  }
+  /**
+   * 复制服务
+  */
+  copyService(serv: TFormSerive) {
+    const idx = this.formServices.findIndex(item => item.id === serv.id)
+    const newServ:TFormSerive =  { ...serv, id: idCreator('service') }
+    this.formServices.splice(idx+1, 0, newServ)
+  }
+  /**
+   * 设置服务属性
+  */
+  setService(id: string, servAttr: Partial<TFormSerive>){
+    const idx = this.formServices.findIndex(item => item.id === id)
+    this.formServices[idx] = { ...this.formServices[idx], ...servAttr }
+  }
 }
 
 

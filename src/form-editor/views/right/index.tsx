@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import type { TabsProps } from 'antd';
 import store from '@/store';
 import { prefixCls } from '@/const';
-import { FormService } from '@/components/form-service';
+import FormService from '@/components/form-service';
 import ElementSetting from './element-setting';
 import FormSetting from './form-setting';
 import { StyledRightDiv } from './styled'

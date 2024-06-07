@@ -72,6 +72,7 @@
     "ahooks": "^3.7.8",
     "array-move": "^4.0.0",
     "immer": "^10.0.2",
+    "json5": "^2.2.3",
     "lodash-es": "^4.17.21",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",

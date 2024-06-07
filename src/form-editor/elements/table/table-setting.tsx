@@ -28,7 +28,7 @@ const SettingTableContent = () => {
                 editorType='json'
                 value={store.selectedElement.tableAttributes}
                 title='表格配置'
-                onOk={(val) => {
+                onChange={(val) => {
                   store.setSelectedProp('tableAttributes', val)
                 }}
               >
@@ -61,7 +61,7 @@ const SettingTableContent = () => {
                     </Popover>
                   </>
                 }
-                onOk={(val) => {
+                onChange={(val) => {
                   store.setSelectedProp('tableColumns', val)
                 }}
               >

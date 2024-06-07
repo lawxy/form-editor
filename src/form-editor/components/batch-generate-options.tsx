@@ -6,11 +6,12 @@ import { idCreator } from '@/utils';
 
 type TOption = Record<string, any>;
 export const BatchGenerateOptions: FC<{
-  title: string;
+  title: string | React.ReactNode;
   options: TOption[];
   setOptions: Dispatch<SetStateAction<any[]>>;
-  field: string;
-}> = ({ title, options, setOptions, field}) => {
+  labelField: string;
+  valueField: string;
+}> = ({ title, options, setOptions, labelField, valueField}) => {
   const [open, setOpen] = useState(false);
   const [tempOptions, setTempOptions] = useState(options);
 
@@ -20,17 +21,19 @@ export const BatchGenerateOptions: FC<{
 
   const text = useMemo(() => {
     return tempOptions.reduce((memo: string, cur: TOption, idx: number) => {
-      return memo + (idx === 0 ? '' : '\n') + cur[field]
+      return memo + (idx === 0 ? '' : '\n') + cur[labelField] + (cur[valueField] ? `:${cur[valueField]}` : '')
     }, '')
   }, [tempOptions])
 
   const handleChange = (str: string) => {
-    const values = str.split('\n')
-    const newOptions = values.map(value => {
-      const oldOpt = options.find(item => item[field] === value)
+    const couples = str.split('\n')
+    const newOptions = couples.map(couple => {
+      const [label = '', value = ''] = couple.split(':')
+      const oldOpt = options.find(item => item[labelField] === label)
       if (oldOpt) return oldOpt;
       return {
-        [field]: value,
+        [labelField]: label.trim(),
+        [valueField]: value.trim(),
         id: idCreator('option')
       }
     })
@@ -54,13 +57,13 @@ export const BatchGenerateOptions: FC<{
           setOpen(false);
         }}
         onOk={() => {
-          setOptions(tempOptions.filter(item => Boolean(item[field])))
+          setOptions(tempOptions.filter(item => Boolean(item[labelField])))
           setOpen(false);
         }}
         destroyOnClose
       >
         <Input.TextArea
-          value={text}
+          defaultValue={text}
           autoSize={{
             maxRows: 10
           }}

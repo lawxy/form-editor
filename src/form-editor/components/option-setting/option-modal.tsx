@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
-import { Modal, Table, Space, Button, Input, message, type TableColumnProps } from 'antd'
-import { MinusCircleOutlined, PlusCircleOutlined, MenuOutlined } from '@ant-design/icons'
+import { Modal, Table, Space, Button, Input, message, Popover, type TableColumnProps } from 'antd'
+import { MinusCircleOutlined, PlusCircleOutlined, MenuOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 
 import Sortable from 'sortablejs'
 import { arrayMoveImmutable } from 'array-move';
@@ -45,7 +45,7 @@ const OptionModal:FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if(!open || !tableRef.current) return;
-    const rowEl = tableRef.current.offsetParent.querySelector('.ant-table-tbody')
+    const rowEl = tableRef.current.querySelector('.ant-table-tbody')
     const sortIns = new Sortable(rowEl, {
       animation: 150,
       group: 'table',
@@ -137,7 +137,22 @@ const OptionModal:FC<PropsWithChildren> = ({ children }) => {
       <Modal
         open={open}
         title={(
-          <BatchGenerateOptions title='属性设置' options={valueOptions} setOptions={setOption} field='label'/>
+          <BatchGenerateOptions 
+              title={(
+                <>
+                属性设置&nbsp;
+                  <Popover
+                    content='格式: 属性名: 属性值, 多字段换行分隔'
+                  >
+                    <QuestionCircleOutlined style={{cursor: 'pointer'}}/>
+                  </Popover>
+                </>
+              )}
+              options={valueOptions} 
+              setOptions={setOption} 
+              labelField='label' 
+              valueField='value'
+            />
         )}
         maskClosable={false}
         onCancel={() => {
@@ -152,14 +167,17 @@ const OptionModal:FC<PropsWithChildren> = ({ children }) => {
           setOpen(false)
         }}
       >
-        <Table<TOption>
+        <div
           ref={tableRef}
-          columns={columns}
-          rowKey='id'
-          dataSource={valueOptions}
-          pagination={false}
-          scroll={{y: 300}}
-        />
+        >
+          <Table<TOption>
+            columns={columns}
+            rowKey='id'
+            dataSource={valueOptions}
+            pagination={false}
+            scroll={{y: 300}}
+          />
+        </div>
       </Modal>
     </>
   )

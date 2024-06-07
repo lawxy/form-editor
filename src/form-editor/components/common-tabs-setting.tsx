@@ -35,7 +35,7 @@ export const CommonTabsSetting: FC<{
 
   return (
     <div className="element-props-setting-section">
-      <Tabs defaultActiveKey="event" items={items}/>
+      <Tabs defaultActiveKey="attribute" items={items}/>
     </div>
   );
 };

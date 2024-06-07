@@ -6,10 +6,10 @@ import MonacoEditor from "@monaco-editor/react";
 
 export const AttributesSetting: FC<PropsWithChildren<{
   title: string | React.ReactNode;
-  value: any;
-  onOk: (v: any) => void;
+  value?: any;
+  onChange?: (v: any) => void;
   editorType: string;
-}>> = observer(({children, title, value, onOk, editorType}) => {
+}>> = observer(({children, title, value, onChange, editorType}) => {
   const [open, setOpen] = useState(false)
   const [val, setVal] = useState<string>('');
   const isJsonValidate = useRef<boolean>(true);
@@ -19,7 +19,7 @@ export const AttributesSetting: FC<PropsWithChildren<{
   }, [value])
 
   return (
-    <>
+    <div>
       {
         React.isValidElement(children) &&
           React.cloneElement<any>(children, {
@@ -35,7 +35,9 @@ export const AttributesSetting: FC<PropsWithChildren<{
         }}
         onOk={() => {
           if(isJsonValidate.current) {
-            onOk(val)
+            console.log('val')
+            console.log(val)
+            onChange?.(val)
             setOpen(false)
             return
           }
@@ -55,6 +57,6 @@ export const AttributesSetting: FC<PropsWithChildren<{
           }}
         />
       </Modal>
-    </>
+    </div>
   )
 })

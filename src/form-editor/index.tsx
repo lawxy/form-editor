@@ -24,10 +24,11 @@ export const FormEditor = () => {
   useEffect(() => {
     if(localStorage.getItem('formJson')) {
       //@ts-ignore
-      const { formElements = [], fieldValues = {}, formAttrs ={} } = JSON.parse(localStorage.getItem('formJson'))
+      const { formElements = [], fieldValues = {}, formAttrs ={}, formServices } = JSON.parse(localStorage.getItem('formJson'))
       store.setFormElements(formElements)
       store.setFieldsValues(fieldValues)
       store.setFormAttrs(formAttrs)
+      store.formServices = formServices;
     }
   }, [])
 

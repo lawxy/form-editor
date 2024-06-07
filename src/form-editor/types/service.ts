@@ -1,4 +1,5 @@
 export type TFormSerive = {
+  id: string;
   name: string;
   url: string;
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';

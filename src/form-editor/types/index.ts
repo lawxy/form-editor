@@ -1,3 +1,5 @@
+export * from './event'
+export * from './service'
 export type TConstructor<T = object> = new (...args: any[]) => T;
 export interface IDragElementProp {
   type: string;
