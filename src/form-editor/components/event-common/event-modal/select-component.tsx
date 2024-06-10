@@ -2,29 +2,14 @@ import React from 'react';
 import { prefixCls } from '@/const';
 import c from 'classnames';
 import { Menu } from 'antd';
-import type { MenuProps } from 'antd';
-
-type MenuItem = Required<MenuProps>['items'][number];
-
-const items: MenuItem[] = [
-  {
-    key: 'change',
-    label: '值发生变化'
-  },
-  {
-    key: 'focus',
-    label: '获取焦点'
-  },
-  {
-    key: 'blur',
-    label: '失去焦点'
-  }
-];
+import type { MenuItem } from './event-modal'
 
 export const SelectComponent: React.FC<{
   className?: string;
   title: string;
-}> = ({ className = '', title }) => {
+  menuItems: MenuItem[];
+  onChange: (key: any) => void; 
+}> = ({ className = '', title, menuItems, onChange }) => {
   return (
     <div className={c(prefixCls('event-select-wrap'), className)}>
       <div className={prefixCls('event-select-title')}>
@@ -32,12 +17,11 @@ export const SelectComponent: React.FC<{
       </div>
       <div className={prefixCls('event-list')}>
         <Menu
-          // onClick={onClick}
-          // style={{ width: 256 }}
-          // defaultSelectedKeys={['1']}
-          // defaultOpenKeys={['sub1']}
+          onClick={({key}) => {
+            onChange(key)
+          }}
           mode="inline"
-          items={items}
+          items={menuItems}
         />
       </div>
     </div>

@@ -6,8 +6,10 @@ import PlaceholderSetting from '@/components/placeholder-setting'
 import store from '@/store';
 import { CommonTabsSetting } from '@/components/common-tabs-setting';
 import { EventCommon } from '@/components/event-common';
+import { EEventAction } from '@/types';
 
 const typeOptions = [{label: '单行文本', value: 'single'}, {label: '多行文本', value: 'multiple'}]
+const eventActions = [ EEventAction.ON_CHANGE, EEventAction.ON_FOCUS, EEventAction.ON_BLUR ]
 const SettingInputContent = () => {
   const { textType, minRows, maxRows, autoSize } = store.selectedElement
   return (
@@ -68,7 +70,9 @@ const SettingInputContent = () => {
           </>
         }
         events={
-          <EventCommon />
+          <EventCommon 
+            eventActions={eventActions}
+          />
         }
       />
     </div>

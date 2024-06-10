@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import type { FC, PropsWithChildren } from 'react';
 import { Modal, message } from 'antd'
 import { observer } from "mobx-react-lite";
-import MonacoEditor from "@monaco-editor/react";
+import MonacoEditor, { useMonaco } from "@monaco-editor/react";
 
 export const AttributesSetting: FC<PropsWithChildren<{
   title: string | React.ReactNode;
@@ -13,6 +13,7 @@ export const AttributesSetting: FC<PropsWithChildren<{
   const [open, setOpen] = useState(false)
   const [val, setVal] = useState<string>('');
   const isJsonValidate = useRef<boolean>(true);
+  const monaco = useMonaco();
 
   useEffect(() => {
     setVal(value)
@@ -35,8 +36,6 @@ export const AttributesSetting: FC<PropsWithChildren<{
         }}
         onOk={() => {
           if(isJsonValidate.current) {
-            console.log('val')
-            console.log(val)
             onChange?.(val)
             setOpen(false)
             return
@@ -50,10 +49,12 @@ export const AttributesSetting: FC<PropsWithChildren<{
           value={val}
           onChange={setVal}
           onValidate={errors => {
-            isJsonValidate.current = errors.length === 0
+            console.log(errors)
+            // 参数变量未使用时不校验
+            isJsonValidate.current = errors.filter(item => item?.code !== '6133').length === 0
           }}
           options={{
-            tabSize: 2
+            tabSize: 2,
           }}
         />
       </Modal>

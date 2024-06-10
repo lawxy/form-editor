@@ -7,7 +7,7 @@ import Left from './views/left';
 import Right from './views/right';
 import { EditorDesign, EditorForm } from './views/canvas';
 import store from './store';
-import './elements'
+import './index.less'
 
 const StyledDiv = styled.div(() => {
   return `

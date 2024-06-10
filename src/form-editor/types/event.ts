@@ -1,14 +1,17 @@
 export type CustomEvent = {
   // 触发事件的动作
-  eventAction: EEventAction;
+  eventAction?: EEventAction;
   // 事件的类型
-  eventType: EEventType;
+  eventType?: EEventType;
   // 事件的目标
-  eventTargets: IEventTarget;
+  eventTargets?: IEventTarget;
+  // post服务传入参数
+  eventParams?: Record<string, any>;
+  // 服务url拼接参数
+  appendUrl?: Record<string, any>;
 };
 
 export type CustomEvents = CustomEvent[];
-
 
 export enum EEventAction {
   // 鼠标点击
@@ -38,13 +41,25 @@ export const eventActionInChinese = {
  */
 export enum EEventType {
   /**
-   * 触发组件服务
+   * 刷新服务
    */
-  REFRESH_ELEMENT = 'refreshElement',
+  REFRESH_SERVICE = 'refreshService',
+  /**
+   * 关联服务
+  */
+  LINK_SERVICE = 'linkService',
+  // 显示/隐藏
+  // CHANGE_VISIBILITY = 'changeVisibility',
+  /**
+   * 设置组件值
+  */
+  SETTING_VALUE = 'settingValue',
 }
 
 export const eventTypeChinese = {
-  [EEventType.REFRESH_ELEMENT]: '触发组件服务',
+  [EEventType.REFRESH_SERVICE]: '刷新服务',
+  [EEventType.LINK_SERVICE]: '关联服务',
+  [EEventType.SETTING_VALUE]: '设置组件值',
 };
 
 export interface IEventTarget {

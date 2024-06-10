@@ -1,22 +1,32 @@
 import { makeAutoObservable } from 'mobx';
 import { idCreator } from '@/utils';
 import type { IBaseElement, IFormAttributesProps, TFormSerive } from '../types';
-import { arrayMoveImmutable } from 'array-move';
+import { IBaseStore } from './types';
+import serviceStore from './serviceStore';
+import elementStore from './elementStore';
+
+const extendStore = (store: Record<string, any>, _this: any) => {
+  Object.entries(store).forEach(([key, value]) => {
+    if(typeof value === 'function') {
+      _this[key] = value.bind(_this)
+    }else {
+      _this[key] = value
+    }
+  })
+}
+
+const baseStore: IBaseStore = Object.assign({},
+  serviceStore,
+  elementStore,
+  ) as IBaseStore;
+
 class Store {
+  [key: string]: any;
 
   constructor() {
-    makeAutoObservable(this);
+  extendStore(baseStore, this),
+  makeAutoObservable(this);
   }
-
-  /**
-   * 储存所有元素的map
-  */
-  elementsMap = new Map();
-
-  /**
-   * 表单元素集合
-  */
-  formElements: IBaseElement[] = [];
 
   getFormJson() {
     return {
@@ -25,83 +35,6 @@ class Store {
       formAttrs: this.formAttrs,
       formServices: this.formServices
     }
-  }
-
-  setFormElements(els: IBaseElement[]){
-    this.formElements = els;
-  }
-
-  clearAllElements() {
-    this.formElements = [];
-  }
-
-  /**
-   * 通过id获取元素
-  */
-  getElFromId(id: string) {
-    return this.elementsMap.get(id);
-  }
-
-  /**
-   * 新增元素
-  */
-  appendEl(el: IBaseElement) {
-    this.formElements.push(el);
-    this.setSelectedElement(el);
-    this.elementsMap.set(el.id, el);
-  }
-
-  /**
-   * 插入元素
-  */
-  insertEl(el: IBaseElement, idx: number) {
-    this.formElements.splice(idx, 0, el)
-    this.setSelectedElement(el)
-    this.elementsMap.set(el.id, el);
-  }
-
-  /**
-   * 移动元素
-  */
-  moveEl(fromIndex: number, toIndex: number) {
-    this.formElements = arrayMoveImmutable(this.formElements, fromIndex, toIndex)
-  }
-
-  /**
-   * 删除元素
-  */
-   deleteEl(el: IBaseElement) {
-    const idx = this.formElements.findIndex(item => item.id === el.id)
-    this.formElements.splice(idx, 1)
-    this.elementsMap.delete(el.id);
-  }
-
-  /**
-   * 复制元素
-  */
-  copyEl(el: IBaseElement){
-    const idx = this.formElements.findIndex(item => item.id === el.id)
-    const newEl:IBaseElement =  { ...el, id: idCreator() }
-    this.formElements.splice(idx+1, 0,newEl)
-    return newEl
-  }
-
-  /**
-   * 当前选中的元素
-  */
-  selectedElement: IBaseElement = {};
-  
-  setSelectedElement(el: IBaseElement) {
-    this.selectedElement = el;
-  }
-
-  /**
-   * 设置当前元素属性
-  */
-  setSelectedProp<T extends keyof IBaseElement>(field: T, value: IBaseElement[T]) {
-    this.selectedElement[field] = value;
-    const elInForm = this.formElements.find((item) => item.id === this.selectedElement.id) as IBaseElement
-    elInForm[field] = value;
   }
 
   /**
@@ -156,42 +89,6 @@ class Store {
   /**
    * 事件
   */
- /**
-  * 服务
- */
-  formServices: TFormSerive[] = [];
-
-  /**
-   * 新增服务
-  */
-  addService(serv: TFormSerive) {
-    this.formServices.push(serv)
-  }
-  /**
-   * 删除服务
-  */
-  deleteService(id: string) {
-    const idx = this.formServices.findIndex(item => item.id === id)
-    this.formServices.splice(idx, 1)
-  }
-  /**
-   * 复制服务
-  */
-  copyService(serv: TFormSerive) {
-    const idx = this.formServices.findIndex(item => item.id === serv.id)
-    const newServ:TFormSerive =  { ...serv, id: idCreator('service') }
-    this.formServices.splice(idx+1, 0, newServ)
-  }
-  /**
-   * 设置服务属性
-  */
-  setService(id: string, servAttr: Partial<TFormSerive>){
-    const idx = this.formServices.findIndex(item => item.id === id)
-    this.formServices[idx] = { ...this.formServices[idx], ...servAttr }
-  }
 }
-
-
-
 
 export default new Store();

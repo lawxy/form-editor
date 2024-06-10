@@ -35,7 +35,7 @@ const Right = () => {
     <StyledRightDiv>
       <Tabs 
         // activeKey={store.formSettingTab}
-        defaultActiveKey='service' 
+        defaultActiveKey='element' 
         type="editable-card"
         hideAdd
         items={items}

@@ -1,34 +1,24 @@
-import { useMonaco } from '@monaco-editor/react';
+import React, { useEffect, useState } from 'react';
 import { Button, Flex, Form, Input, Modal, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import type { FC, PropsWithChildren } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
-import { AttributesSetting } from '../attributes-setting';
-
 import { prefixCls } from '@/const';
 import store from '@/store';
 import { idCreator } from '@/utils';
+import { TFormSerive } from '@/types';
+import { AttributesSetting } from '../attributes-setting';
 
 const methodOptions = ['GET', 'POST', 'PUT', 'DELETE'].map((item) => ({
   label: item,
   value: item,
 }));
 
-const ServiceModal: FC<PropsWithChildren> = ({ children }) => {
+const ServiceModal: FC<PropsWithChildren<{
+  service?: TFormSerive
+}>> = ({ children, service }) => {
   const [open, setOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [form] = Form.useForm();
-  const isParamsValidate = useRef(true);
-  const isHeadersValidate = useRef(true);
-  const monaco = useMonaco();
-
-  useEffect(() => {
-    if (!monaco) return;
-    monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
-      noSemanticValidation: false, // 禁用语义错误校验
-      noSyntaxValidation: false, // 保留语法错误校验
-    });
-  }, [monaco]);
 
   return (
     <>
@@ -49,7 +39,7 @@ const ServiceModal: FC<PropsWithChildren> = ({ children }) => {
       ></Modal>
       <Modal
         open={open}
-        title="新增服务"
+        title={`${service ? '编辑' : '新增'}服务`}
         maskClosable={false}
         styles={{
           body: {
@@ -63,8 +53,12 @@ const ServiceModal: FC<PropsWithChildren> = ({ children }) => {
         onOk={async () => {
           await form.validateFields();
           const serviceValue = form.getFieldsValue()
-          serviceValue.id = idCreator('service')
-          store.addService(serviceValue);
+          if(service) {
+            store.setService(service.id, serviceValue)
+          }else {
+            serviceValue.id = idCreator('service')
+            store.addService(serviceValue);
+          }
           setOpen(false);
         }}
         footer={(_, { OkBtn, CancelBtn }) => (
@@ -82,7 +76,7 @@ const ServiceModal: FC<PropsWithChildren> = ({ children }) => {
           </>
         )}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} layout="vertical" initialValues={service}>
           <Form.Item
             name="name"
             label="名称"
@@ -93,7 +87,7 @@ const ServiceModal: FC<PropsWithChildren> = ({ children }) => {
           </Form.Item>
           <Form.Item
             name="url"
-            label="接口"
+            label="接口名"
             required
             rules={[{ required: true }]}
           >
@@ -115,8 +109,8 @@ const ServiceModal: FC<PropsWithChildren> = ({ children }) => {
                 <span>headers</span>
                 <AttributesSetting
                   title="headers"
-                  editorType="typescript"
-                  value="export default {}"
+                  editorType="javascript"
+                  value={`export default (axiosReq) => {\n  return {\n  } \n}`}
                   onChange={(v) => {
                     form.setFieldValue('headers', v);
                   }}
@@ -131,7 +125,29 @@ const ServiceModal: FC<PropsWithChildren> = ({ children }) => {
 
           <Form.Item
             className={prefixCls('service-modal-form-item')}
-            name="data"
+            name='callback'
+            label={
+              <Flex style={{ width: '100%' }} justify="space-between">
+                <span>回调函数</span>
+                <AttributesSetting
+                  title="headers"
+                  editorType="javascript"
+                  value={`export default {\n  success(res) {\n  }, \n  fail(err) {\n  } \n}`}
+                  onChange={(v) => {
+                    form.setFieldValue('callback', v);
+                  }}
+                >
+                  <Button size="small">编辑</Button>
+                </AttributesSetting>
+              </Flex>
+            }
+          >
+            <Input.TextArea readOnly />
+          </Form.Item>
+
+          <Form.Item
+            className={prefixCls('service-modal-form-item')}
+            name="previewData"
             label={
               <Flex style={{ width: '100%' }} justify="space-between">
                 <span>预览参数</span>
@@ -140,7 +156,7 @@ const ServiceModal: FC<PropsWithChildren> = ({ children }) => {
                   editorType="typescript"
                   value="export default {}"
                   onChange={(v) => {
-                    form.setFieldValue('data', v);
+                    form.setFieldValue('previewData', v);
                   }}
                 >
                   <Button size="small">编辑</Button>
