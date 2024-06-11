@@ -33,6 +33,7 @@ export interface IElementStore {
 
 export interface IServiceStore {
   formServices: TFormSerive[],
+  getFormServices: () => TFormSerive[],
   addService: (serv: TFormSerive) => void;
   deleteService: (id: string) => void;
   copyService: (serv: TFormSerive) => void;

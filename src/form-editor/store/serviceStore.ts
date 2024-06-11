@@ -7,6 +7,12 @@ export default {
   * 服务
   */
    formServices: [],
+  /**
+  * 获取服务
+  */
+   getFormServices() {
+    return this.formServices
+   },
 
    /**
     * 新增服务

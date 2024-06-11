@@ -62,9 +62,34 @@ export const eventTypeChinese = {
   [EEventType.SETTING_VALUE]: '设置组件值',
 };
 
+/**
+ * 改变组件状态动作，包括显示隐藏，允许、禁止编辑，
+ */
+ export enum EChangeStatePayload {
+  SHOW = 'show',
+  HIDDEN = 'hidden',
+  DISABLE = 'disable',
+  REFRESH = 'refresh',
+  LINK = 'link',
+  EDIT = 'edit',
+  CLEAR = 'clear'
+}
+
+export const changeStatePayloadInChinese = {
+  [EChangeStatePayload.EDIT]: '修改',
+  [EChangeStatePayload.CLEAR]: '清空',
+}
 export interface IEventTarget {
   /**
    * 目标组件id
    */
   targetComponentId: string;
+  /**
+   * 目标服务id
+  */
+  targetServiceId: string;
+  /**
+   * 目标执行动作
+   */
+   targetPayload?: EChangeStatePayload[];
 }

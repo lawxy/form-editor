@@ -5,7 +5,7 @@ import type { MenuProps } from 'antd';
 import { EEventAction, eventActionInChinese, CustomEvent, EEventType, eventTypeChinese } from '@/types';
 import { prefixCls } from '@/const';
 import { SelectComponent } from './select-component';
-import { ActionConfig } from './action-config';
+import { ActionConfig } from '../action-config';
 
 export type MenuItem = Required<MenuProps>['items'][number];
 
@@ -79,6 +79,8 @@ export const EventModal: FC<PropsWithChildren<{
             <ActionConfig 
               className={prefixCls('event-relation-config')} 
               title='动作相关配置'
+              action={tempEvent.eventAction}
+              type={tempEvent.eventType}
             />
           </div>
         </div>
