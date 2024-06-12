@@ -1,9 +1,10 @@
+import { Input, Select, Space } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useState } from 'react';
+import { MinusCircleOutlined, PlusCircleOutlined, MenuOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { prefixCls } from '@/const';
 import store from '@/store';
 import { changeStatePayloadInChinese, EChangeStatePayload } from '@/types';
-import { Input, Select } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
 
 const actions = Object.entries(changeStatePayloadInChinese).map(
   ([value, label]) => ({ label, value }),
@@ -13,10 +14,10 @@ const refreshOptions = [
   { label: '不刷新', value: 0 },
 ];
 const RefreshService = () => {
-  const [actionVal, setActionVal] = useState(EChangeStatePayload.EDIT);
+  const [actionVal, setActionVal] = useState(EChangeStatePayload.UPDATE);
   const [refreshVal, setRefreshVal] = useState(1);
   return (
-    <div>
+    <div style={{lineHeight: '40px'}}>
       <div>
         目标服务 ={' '}
         <Select
@@ -24,14 +25,14 @@ const RefreshService = () => {
           className={prefixCls('event-input')}
           options={store.getFormServices()}
           fieldNames={{ label: 'name', value: 'id' }}
+          style={{width: 200}}
         />
       </div>
 
       <div>
-        事件发生时，
-        {actionVal === EChangeStatePayload.EDIT ? (
+        {actionVal === EChangeStatePayload.UPDATE ? (
           <>
-            传入组件元素的值以&nbsp;
+            传入组件元素值&nbsp;
             <Select
               value={actionVal}
               className={prefixCls('event-input')}
@@ -40,7 +41,7 @@ const RefreshService = () => {
               key='action'
             />&nbsp;
             <Input className={prefixCls('event-input')} />
-            &nbsp;字段
+            &nbsp;字段，
           </>
         ) : (
           <>
@@ -51,7 +52,7 @@ const RefreshService = () => {
               onChange={setActionVal}
               key='action'
             />
-            &nbsp;所有字段
+            &nbsp;所有字段，
           </>
         )}
       </div>

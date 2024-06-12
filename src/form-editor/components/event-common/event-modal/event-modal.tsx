@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Modal } from 'antd';
 import type { MenuProps } from 'antd';
-import { EEventAction, eventActionInChinese, CustomEvent, EEventType, eventTypeChinese } from '@/types';
+import { EEventAction, eventActionInChinese, CustomEvent, EEventType, eventTypeChinese, IEventTarget } from '@/types';
 import { prefixCls } from '@/const';
 import { SelectComponent } from './select-component';
 import { ActionConfig } from '../action-config';
@@ -31,6 +31,7 @@ export const EventModal: FC<PropsWithChildren<{
     })
   }, [eventActions])
 
+
   const handleActionChange = (key: EEventAction) => {
     setTempEvent(prev => ({
       ...prev,
@@ -44,6 +45,20 @@ export const EventModal: FC<PropsWithChildren<{
       eventType: key
     }))
   }
+  const handleConfigChange = (val: IEventTarget[]) => {
+    setTempEvent(prev => ({
+      ...prev,
+      eventTargets: val
+    }))
+  }
+
+  // const handleChange = <T>(field: keyof CustomEvent) => (val: T) => {
+  //   setTempEvent(prev => ({
+  //     ...prev,
+  //     [field]: val
+  //   }))
+  // }
+
   return (
     <>
       {React.isValidElement(children) &&
@@ -81,6 +96,7 @@ export const EventModal: FC<PropsWithChildren<{
               title='动作相关配置'
               action={tempEvent.eventAction}
               type={tempEvent.eventType}
+              onChange={handleConfigChange}
             />
           </div>
         </div>

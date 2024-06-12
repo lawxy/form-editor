@@ -18,11 +18,12 @@
     height: 456px;
     display: flex;
   } 
-  &-event-modal-title {
+  &-event-modal-column {
     display: flex;
     flex-direction: column;
+    overflow: auto;
   }
-  &-event-modal-title-text {
+  &-event-modal-title {
     background: #f4f6fc;
     box-shadow: inset 0 -1px 0 0 #DDDDDD;
     height: 40px;
@@ -43,6 +44,10 @@
     flex: 1;
     border-right: none;
   }
+  &-event-relation-config {
+    flex: 1;
+    border-right: none;
+  }
   &-event-list {
     flex: 1;
     border-right: 1px solid #ddd;
@@ -56,7 +61,16 @@
     }
   }
   &-event-input {
-    width: 100px;
+    width: 90px;
   }
-
+  &-event-action-config {
+    display: flex;
+    justify-content: space-between;
+    // background: #A3E3FF;
+    background: #F5F5F5;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    margin: 8px;
+    padding: 8px;
+  }
 }

@@ -11,8 +11,8 @@ export const SelectComponent: React.FC<{
   onChange: (key: any) => void; 
 }> = ({ className = '', title, menuItems, onChange }) => {
   return (
-    <div className={c(prefixCls('event-modal-title'), className)}>
-      <div className={prefixCls('event-modal-title-text')}>
+    <div className={c(prefixCls('event-modal-column'), className)}>
+      <div className={prefixCls('event-modal-title')}>
         {title}
       </div>
       <div className={prefixCls('event-list')}>

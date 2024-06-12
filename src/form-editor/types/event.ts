@@ -4,11 +4,7 @@ export type CustomEvent = {
   // 事件的类型
   eventType?: EEventType;
   // 事件的目标
-  eventTargets?: IEventTarget;
-  // post服务传入参数
-  eventParams?: Record<string, any>;
-  // 服务url拼接参数
-  appendUrl?: Record<string, any>;
+  eventTargets?: IEventTarget[];
 };
 
 export type CustomEvents = CustomEvent[];
@@ -71,14 +67,15 @@ export const eventTypeChinese = {
   DISABLE = 'disable',
   REFRESH = 'refresh',
   LINK = 'link',
-  EDIT = 'edit',
+  UPDATE = 'update',
   CLEAR = 'clear'
 }
 
 export const changeStatePayloadInChinese = {
-  [EChangeStatePayload.EDIT]: '修改',
+  [EChangeStatePayload.UPDATE]: '更新',
   [EChangeStatePayload.CLEAR]: '清空',
 }
+
 export interface IEventTarget {
   /**
    * 目标组件id
@@ -91,5 +88,13 @@ export interface IEventTarget {
   /**
    * 目标执行动作
    */
-   targetPayload?: EChangeStatePayload[];
+  targetPayload?: EChangeStatePayload;
+  /**
+   * post服务传入参数
+   * */ 
+  eventParams?: Record<string, any>;
+  /**
+   * 服务url拼接参数
+   * */ 
+  appendUrl?: Record<string, any>;
 }
