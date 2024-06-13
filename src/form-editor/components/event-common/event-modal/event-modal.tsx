@@ -97,6 +97,7 @@ export const EventModal: FC<PropsWithChildren<{
               action={tempEvent.eventAction}
               type={tempEvent.eventType}
               onChange={handleConfigChange}
+              event={tempEvent}
             />
           </div>
         </div>

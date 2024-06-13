@@ -76,23 +76,35 @@ export const changeStatePayloadInChinese = {
   [EChangeStatePayload.CLEAR]: '清空',
 }
 
+export enum EServiceRefesh {
+  REFRESH = 1,
+  NOT_REFRESH = 0
+}
+export const refreshOptions = [
+  { label: '刷新', value: EServiceRefesh.REFRESH },
+  { label: '不刷新', value: EServiceRefesh.NOT_REFRESH },
+];
 export interface IEventTarget {
   /**
    * 目标组件id
    */
-  targetComponentId: string;
+  targetComponentId?: string;
   /**
    * 目标服务id
   */
-  targetServiceId: string;
+  targetServiceId?: string;
   /**
    * 目标执行动作
    */
   targetPayload?: EChangeStatePayload;
   /**
-   * post服务传入参数
+   * 是否刷新服务
+  */
+  refreshFlag?: EServiceRefesh;
+  /**
+   * 服务更新的参数字段
    * */ 
-  eventParams?: Record<string, any>;
+  updateField?: string;
   /**
    * 服务url拼接参数
    * */ 

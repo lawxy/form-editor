@@ -1,5 +1,5 @@
 import { prefixCls } from '@/const';
-import { EEventAction, EEventType } from '@/types';
+import { EEventAction, EEventType, IEventTarget, CustomEvent } from '@/types';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Popconfirm, Space } from 'antd';
 import c from 'classnames';
@@ -9,10 +9,12 @@ import RefreshService from './refresh-service';
 const ActionItem: React.FC<{
   type: EEventType;
   action: EEventAction;
-}> = ({ type, action }) => {
+  onChange: (v: IEventTarget) => void;
+  eventTarget: IEventTarget;
+}> = ({ type, action, onChange, eventTarget }) => {
   return (
     <div className={prefixCls('event-action-config')}>
-      <RefreshService />
+      <RefreshService onChange={onChange} eventTarget={eventTarget}/>
       <Space>
         <Popconfirm title="确认删除">
           <span
@@ -43,7 +45,12 @@ export const ActionConfig: React.FC<{
   className?: string;
   type?: EEventType;
   action?: EEventAction;
-}> = ({ title, className, type, action }) => {
+  onChange: (v: IEventTarget[]) => void;
+  event: CustomEvent;
+}> = ({ title, className, type, action, event }) => {
+  const handleChange = (v: IEventTarget) => {
+
+  }
   return (
     <div className={c(prefixCls('event-modal-column'), className)}>
       <div
@@ -52,9 +59,13 @@ export const ActionConfig: React.FC<{
       >
         {title}
       </div>
-      {action && type && (
+      {action && type && event?.eventTargets?.length && (
         <>
-          <ActionItem type={type} action={action} />
+          {
+            event?.eventTargets?.map(eventTarget => (
+              <ActionItem type={type} action={action} onChange={handleChange} eventTarget={eventTarget}/>
+            ))
+          }
         </>
       )}
     </div>
