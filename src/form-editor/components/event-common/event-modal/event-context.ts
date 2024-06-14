@@ -3,6 +3,10 @@ import type { CustomEvent } from '@/types';
 
 interface IEventContext {
   currentEvent: CustomEvent;
+  handleChangeEvent: <T extends keyof CustomEvent>(
+    field: T,
+    value: CustomEvent[T],
+  ) => void;
 }
 
 // @ts-ignore

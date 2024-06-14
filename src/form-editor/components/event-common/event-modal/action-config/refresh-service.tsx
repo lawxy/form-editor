@@ -21,8 +21,9 @@ const RefreshService: React.FC<{
 }> = ({ onChange, eventTarget }) => {
   const { 
     targetServiceId, 
-    targetPayload = EChangeStatePayload.UPDATE, 
-    refreshFlag = EServiceRefesh.REFRESH 
+    targetPayload, 
+    refreshFlag,
+    updateField
   } = eventTarget || {}
 
   return (
@@ -55,7 +56,13 @@ const RefreshService: React.FC<{
               }}
             />
             &nbsp;
-            <Input className={prefixCls('event-input')} />
+            <Input 
+              className={prefixCls('event-input')}
+              defaultValue={updateField} 
+              onChange={e => {
+                onChange({ updateField: e.target.value });
+              }}
+            />
             &nbsp;字段，
           </>
         ) : (

@@ -24,7 +24,6 @@ class Store {
   [key: string]: any;
 
   constructor() {
-    /* eslint-disable */
     extendStore(baseStore, this),
     makeAutoObservable(this);
   }
@@ -92,4 +91,5 @@ class Store {
   */
 }
 
-export default new Store();
+// @ts-ignore
+export default new Store() as IBaseStore;

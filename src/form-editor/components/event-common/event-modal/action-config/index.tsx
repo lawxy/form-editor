@@ -1,11 +1,12 @@
 import { prefixCls } from '@/const';
-import { EEventAction, EEventType, IEventTarget, CustomEvent } from '@/types';
+import { EEventType, IEventTarget } from '@/types';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Popconfirm, Space } from 'antd';
 import c from 'classnames';
-import React, { useContext } from 'react';
-import RefreshService from './refresh-service';
+import { produce } from 'immer';
+import React, { useContext, useEffect } from 'react';
 import { EventContext } from '../event-context';
+import RefreshService from './refresh-service';
 
 const ActionItem: React.FC<{
   type: EEventType;
@@ -14,13 +15,10 @@ const ActionItem: React.FC<{
 }> = ({ type, onChange, eventTarget }) => {
   return (
     <div className={prefixCls('event-action-config')}>
-      <RefreshService onChange={onChange} eventTarget={eventTarget}/>
+      <RefreshService onChange={onChange} eventTarget={eventTarget} />
       <Space>
         <Popconfirm title="确认删除">
-          <span
-            onClick={() => {
-            }}
-          >
+          <span onClick={() => {}}>
             <MinusCircleOutlined
               style={{ color: '#D40000', cursor: 'pointer' }}
             />
@@ -37,14 +35,35 @@ const ActionItem: React.FC<{
 export const ActionConfig: React.FC<{
   title: string;
   className?: string;
-  onChange: (v: IEventTarget[]) => void;
 }> = ({ title, className }) => {
-  const { currentEvent: event } = useContext(EventContext)
-  
-  const handleChange = (v: IEventTarget) => {
-    console.log(v)
-  }
-  
+  const { currentEvent, handleChangeEvent } = useContext(EventContext);
+
+  const handleChange = (
+    type: 'add' | 'edit',
+    targetAttr: Partial<IEventTarget>,
+    idx?: number,
+  ) => {
+    if (type === 'edit') {
+      const newEventTargets: IEventTarget[] = produce(
+        currentEvent.eventTargets!,
+        (draft) => {
+          draft![idx!] = Object.assign(draft![idx!], targetAttr);
+        },
+      );
+      handleChangeEvent('eventTargets', newEventTargets);
+    } else {
+      handleChangeEvent(
+        'eventTargets',
+        (currentEvent.eventTargets || []).concat(targetAttr),
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (currentEvent?.eventTargets?.length) return;
+    handleChange('add', {});
+  }, [currentEvent?.eventTargets]);
+
   return (
     <div className={c(prefixCls('event-modal-column'), className)}>
       <div
@@ -53,15 +72,16 @@ export const ActionConfig: React.FC<{
       >
         {title}
       </div>
-      {event?.eventAction && event?.eventType && (
+      {currentEvent?.eventAction && currentEvent?.eventType && (
         <>
-          {
-              event?.eventTargets?.length ? event?.eventTargets?.map((eventTarget, i) => (
-              <ActionItem key={i} type={event.eventType!} onChange={handleChange} eventTarget={eventTarget}/>
-            )): (
-              <ActionItem type={event.eventType!} onChange={handleChange}/>
-            )
-          }
+          {currentEvent?.eventTargets?.map((eventTarget, i) => (
+            <ActionItem
+              key={i}
+              type={currentEvent.eventType!}
+              onChange={(targetAttr) => handleChange('edit', targetAttr, i)}
+              eventTarget={eventTarget}
+            />
+          ))}
         </>
       )}
     </div>

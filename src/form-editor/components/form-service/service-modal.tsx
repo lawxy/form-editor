@@ -19,7 +19,6 @@ const ServiceModal: FC<PropsWithChildren<{
   const [open, setOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [form] = Form.useForm();
-
   return (
     <>
       {React.isValidElement(children) &&

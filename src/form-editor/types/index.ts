@@ -1,5 +1,6 @@
 export * from './event'
 export * from './service'
+import { CustomEvents } from './event';
 export type TConstructor<T = object> = new (...args: any[]) => T;
 export interface IDragElementProp {
   type: string;
@@ -112,6 +113,10 @@ export interface IBaseElement {
    * 表格column
    */
   tableColumns?: string;
+  /**
+   * 事件
+  */
+  customEvents?: CustomEvents;
 }
 
 export interface IFormAttributesProps {

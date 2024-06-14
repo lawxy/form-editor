@@ -5,7 +5,7 @@ import { prefixCls } from '@/const';
 import store from '@/store';
 import type { TFormSerive } from '@/types';
 import ServiceModal from './service-modal';
-import { ServiceItem } from './service-item';
+import { EditItem } from '../edit-item';
 import './style.less'
 
 const FormService = () => {
@@ -17,7 +17,20 @@ const FormService = () => {
       {
         store.formServices?.map((serv: TFormSerive) => {
           return (
-            <ServiceItem key={serv.id} service={serv}/>
+            // <ServiceItem key={serv.id} service={serv}/>
+            <EditItem 
+              name={serv.name}
+              key={serv.id}
+              onCopy={() => store.copyService(serv)}
+              onDelete={() => store.deleteService(serv.id)}
+              EditComponent={({children}) => {
+                return (
+                  <ServiceModal service={serv}>
+                    {children}
+                  </ServiceModal>
+                )
+              }}
+            />
           )
         })
       }
