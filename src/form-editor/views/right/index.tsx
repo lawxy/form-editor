@@ -7,7 +7,7 @@ import { prefixCls } from '@/const';
 import FormService from '@/components/form-service';
 import ElementSetting from './element-setting';
 import FormSetting from './form-setting';
-import { StyledRightDiv } from './styled'
+import './style.less'
 
 const items: TabsProps['items'] = [
   {
@@ -32,7 +32,7 @@ const items: TabsProps['items'] = [
 
 const Right = () => {
   return (
-    <StyledRightDiv>
+    <div className={prefixCls('setting')}>
       <Tabs 
         // activeKey={store.formSettingTab}
         defaultActiveKey='element' 
@@ -44,7 +44,7 @@ const Right = () => {
           store.setFormSettingTab(tab)
         }}
       />
-    </StyledRightDiv>
+    </div>
   )
 }
 export default observer(Right)

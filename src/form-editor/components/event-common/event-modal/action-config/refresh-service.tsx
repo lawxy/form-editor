@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { prefixCls } from '@/const';
 import store from '@/store';
 import type { IEventTarget } from '@/types';
@@ -5,10 +6,10 @@ import {
   changeStatePayloadInChinese,
   EChangeStatePayload,
   refreshOptions,
+  EServiceRefesh
 } from '@/types';
 import { Input, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
 
 const actions = Object.entries(changeStatePayloadInChinese).map(
   ([value, label]) => ({ label, value }),
@@ -16,10 +17,14 @@ const actions = Object.entries(changeStatePayloadInChinese).map(
 
 const RefreshService: React.FC<{
   onChange: (v: IEventTarget) => void;
-  eventTarget: IEventTarget;
+  eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
-  const [actionVal, setActionVal] = useState(EChangeStatePayload.UPDATE);
-  const [refreshVal, setRefreshVal] = useState(1);
+  const { 
+    targetServiceId, 
+    targetPayload = EChangeStatePayload.UPDATE, 
+    refreshFlag = EServiceRefesh.REFRESH 
+  } = eventTarget || {}
+
   return (
     <div style={{ lineHeight: '40px' }}>
       <div>
@@ -30,19 +35,21 @@ const RefreshService: React.FC<{
           options={store.getFormServices()}
           fieldNames={{ label: 'name', value: 'id' }}
           style={{ width: 200 }}
+          defaultValue={targetServiceId}
           onChange={(v) => {
             onChange({ targetServiceId: v });
           }}
         />
       </div>
       <div>
-        {actionVal === EChangeStatePayload.UPDATE ? (
+        {targetPayload === EChangeStatePayload.UPDATE ? (
           <>
             传入组件元素值&nbsp;
             <Select
               className={prefixCls('event-input')}
               options={actions}
               key="action"
+              defaultValue={targetPayload}
               onChange={(v) => {
                 onChange({ targetPayload: v });
               }}
@@ -57,6 +64,7 @@ const RefreshService: React.FC<{
               className={prefixCls('event-input')}
               options={actions}
               key="action"
+              defaultValue={targetPayload}
               onChange={(v) => {
                 onChange({ targetPayload: v });
               }}
@@ -67,9 +75,9 @@ const RefreshService: React.FC<{
       </div>
       并{' '}
       <Select
-        value={refreshVal}
         className={prefixCls('event-input')}
         options={refreshOptions}
+        defaultValue={refreshFlag}
         onChange={(v) => {
           onChange({ refreshFlag: v });
         }}

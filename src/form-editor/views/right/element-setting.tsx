@@ -6,20 +6,11 @@ import { ElementsList } from '@/elements'
 
 const ElementSetting = () => {
 
-  const Component = useMemo(() => {
+  const Component = useMemo<React.FC<any> | null>(() => {
     if(!store.selectedElement?.id) return null
-    // @ts-ignore
     return ElementsList[store.selectedElement.type ]?.setting
-  }, [store.selectedElement?.id])
-  return (
-    <div>
-      {
-        store.selectedElement?.id ? (
-          <Component />
-        ): null
-      }
-    </div>
-  )
+  }, [store.selectedElement?.id]) as React.FC<any>
+  return store.selectedElement?.id ? <Component /> : null
 }
 
 export default observer(ElementSetting)

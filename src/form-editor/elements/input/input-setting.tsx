@@ -8,32 +8,31 @@ import { CommonTabsSetting } from '@/components/common-tabs-setting';
 import { EventCommon } from '@/components/event-common';
 import { EEventAction } from '@/types';
 
-const typeOptions = [{label: '单行文本', value: 'single'}, {label: '多行文本', value: 'multiple'}]
-const eventActions = [ EEventAction.ON_CHANGE, EEventAction.ON_FOCUS, EEventAction.ON_BLUR ]
+const typeOptions = [{ label: '单行文本', value: 'single' }, { label: '多行文本', value: 'multiple' }]
+const eventActions = [EEventAction.ON_CHANGE, EEventAction.ON_FOCUS, EEventAction.ON_BLUR]
 const SettingInputContent = () => {
   const { textType, minRows, maxRows, autoSize } = store.selectedElement
   return (
-    <div>
-      <CommonTabsSetting
-        attributes={
-          <>
-            <PlaceholderSetting />
-            <SettingItem label='文本类型'>
-              <Select 
-                value={textType} 
-                style={{width: '100%'}} 
-                options={typeOptions}
-                onChange={(val) => {
-                  store.setSelectedProp('textType', val)
-                }}
-              />
-            </SettingItem>
-            {
-              textType === 'multiple' && (
-                <>
+    <CommonTabsSetting
+      attributes={
+        <>
+          <PlaceholderSetting />
+          <SettingItem label='文本类型'>
+            <Select
+              value={textType}
+              style={{ width: '100%' }}
+              options={typeOptions}
+              onChange={(val) => {
+                store.setSelectedProp('textType', val)
+              }}
+            />
+          </SettingItem>
+          {
+            textType === 'multiple' && (
+              <>
                 <SettingItem label='自适应行数'>
-                  <Switch 
-                    checked={autoSize} 
+                  <Switch
+                    checked={autoSize}
                     onChange={(val) => {
                       store.setSelectedProp('autoSize', val)
                     }}
@@ -43,19 +42,19 @@ const SettingInputContent = () => {
                   !autoSize && (
                     <>
                       <SettingItem label='最小行数'>
-                        <InputNumber 
-                          value={minRows} 
-                          style={{width: '100%'}} 
+                        <InputNumber
+                          value={minRows}
+                          style={{ width: '100%' }}
                           onChange={(val) => {
                             store.setSelectedProp('minRows', Number(val))
                           }}
                         />
                       </SettingItem>
                       <SettingItem label='最大行数'>
-                        <InputNumber 
-                          value={maxRows} 
+                        <InputNumber
+                          value={maxRows}
                           min={minRows}
-                          style={{width: '100%'}} 
+                          style={{ width: '100%' }}
                           onChange={(val) => {
                             store.setSelectedProp('maxRows', Number(val))
                           }}
@@ -64,18 +63,17 @@ const SettingInputContent = () => {
                     </>
                   )
                 }
-                </>
-              )
-            }
-          </>
-        }
-        events={
-          <EventCommon 
-            eventActions={eventActions}
-          />
-        }
-      />
-    </div>
+              </>
+            )
+          }
+        </>
+      }
+      events={
+        <EventCommon
+          eventActions={eventActions}
+        />
+      }
+    />
   )
 }
 export const SettingInput = observer(SettingInputContent)

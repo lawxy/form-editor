@@ -28,7 +28,7 @@ export const FormEditor = () => {
       store.setFormElements(formElements)
       store.setFieldsValues(fieldValues)
       store.setFormAttrs(formAttrs)
-      store.formServices = formServices;
+      store.setFormServices(formServices)
     }
   }, [])
 

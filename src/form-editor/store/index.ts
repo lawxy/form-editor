@@ -24,8 +24,9 @@ class Store {
   [key: string]: any;
 
   constructor() {
-  extendStore(baseStore, this),
-  makeAutoObservable(this);
+    /* eslint-disable */
+    extendStore(baseStore, this),
+    makeAutoObservable(this);
   }
 
   getFormJson() {

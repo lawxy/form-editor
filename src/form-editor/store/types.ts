@@ -1,4 +1,4 @@
-import type { TFormSerive, IBaseElement } from '../types';
+import type { TFormSerive, IBaseElement, TFormSerives } from '../types';
 
 export interface IElementStore {
   elementsMap: Map<string, IBaseElement>;
@@ -32,8 +32,9 @@ export interface IElementStore {
 }
 
 export interface IServiceStore {
-  formServices: TFormSerive[],
-  getFormServices: () => TFormSerive[],
+  formServices: TFormSerives,
+  setFormServices: (services: TFormSerives) => void;
+  getFormServices: () => TFormSerives,
   addService: (serv: TFormSerive) => void;
   deleteService: (id: string) => void;
   copyService: (serv: TFormSerive) => void;

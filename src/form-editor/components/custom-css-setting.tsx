@@ -52,7 +52,7 @@ const CustomCssSetting = () => {
         </Button>
       </SettingItem>
       <MonacoEditor
-        height='400px'
+        height='calc(100vh - 150px)'
         defaultLanguage='css'
         value={value}
         onChange={(v) => {

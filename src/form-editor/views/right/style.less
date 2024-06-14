@@ -1,11 +1,9 @@
-import styled from 'styled-components'
-
-export const StyledRightDiv = styled.div(() => {
-  return `
+.fm {
+  &-setting {
     width: 350px;
     background-color: white;
     height: 100%;
-    overflow: auto;
+    overflow: visible;
     .fm-form-setting-tab > .ant-tabs-nav {
       margin-bottom: 0;
     }
@@ -15,8 +13,7 @@ export const StyledRightDiv = styled.div(() => {
     .ant-tabs-tab {
       padding: 0 12%;
     }
-    .ant-tabs-content {
-    }
+  
     .ant-select, .ant-input {
       width: 100%;
     }
@@ -32,6 +29,5 @@ export const StyledRightDiv = styled.div(() => {
       right: 8px;
       top: 3px;
     }
-  `
-})
-
+  }
+}

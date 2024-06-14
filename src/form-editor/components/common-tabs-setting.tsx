@@ -34,8 +34,6 @@ export const CommonTabsSetting: FC<{
   ].filter(Boolean) as TabsProps['items'];
 
   return (
-    <div className="element-props-setting-section">
-      <Tabs defaultActiveKey="attribute" items={items}/>
-    </div>
+    <Tabs defaultActiveKey="attribute" items={items}/>
   );
 };

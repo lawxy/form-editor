@@ -5,22 +5,40 @@ import type { MenuProps } from 'antd';
 import { EEventAction, eventActionInChinese, CustomEvent, EEventType, eventTypeChinese, IEventTarget } from '@/types';
 import { prefixCls } from '@/const';
 import { SelectComponent } from './select-component';
-import { ActionConfig } from '../action-config';
+import { ActionConfig } from './action-config';
+import { EventContext } from './event-context';
 
 export type MenuItem = Required<MenuProps>['items'][number];
 
-const eventTypeMenus: MenuItem[] = Object.entries(eventTypeChinese).map(([key, label]) => ({key, label}))
+const eventTypeMenus: MenuItem[] = Object.entries(eventTypeChinese).map(([key, label]) => ({ key, label }))
 
 export const EventModal: FC<PropsWithChildren<{
   event?: CustomEvent;
   eventActions: EEventAction[];
-}>> = ({ children, event, eventActions }) => {
+}>> = ({ children, event = {}, eventActions }) => {
   const [open, setOpen] = useState(false);
-  const [tempEvent, setTempEvent] = useState<CustomEvent>(event || {});
+  const [, forceRandom] = useState(Math.random())
+  // const [tempEvent, setTempEvent] = useState<CustomEvent>(event || {});
 
-  useEffect(() => {
-    event && setTempEvent(event)
-  }, [event])
+  // useEffect(() => {
+  //   if(event){
+  //    setTempEvent(event)
+  //   }
+  // }, [event])
+
+  const tempEvent = useMemo(() => new Proxy(event, {
+    set(target, prop, value) {
+      console.log('prop')
+      console.log(prop)
+      target[prop]= value;
+      if(['eventAction', 'eventType'].includes(prop)){
+        console.log('in')
+        forceRandom(Math.random())
+      }
+      return true
+    }
+  }), [event])
+
 
   const eventActionsMenus = useMemo<MenuItem[]>(() => {
     return eventActions.map(action => {
@@ -33,23 +51,27 @@ export const EventModal: FC<PropsWithChildren<{
 
 
   const handleActionChange = (key: EEventAction) => {
-    setTempEvent(prev => ({
-      ...prev,
-      eventAction: key
-    }))
+    // setTempEvent(prev => ({
+    //   ...prev,
+    //   eventAction: key
+    // }))
+    tempEvent.eventAction = key
   }
 
   const handleTypeChange = (key: EEventType) => {
-    setTempEvent(prev => ({
-      ...prev,
-      eventType: key
-    }))
+    // setTempEvent(prev => ({
+    //   ...prev,
+    //   eventType: key
+    // }))
+    tempEvent.eventType = key
+
   }
   const handleConfigChange = (val: IEventTarget[]) => {
-    setTempEvent(prev => ({
-      ...prev,
-      eventTargets: val
-    }))
+    // setTempEvent(prev => ({
+    //   ...prev,
+    //   eventTargets: val
+    // }))
+    tempEvent.eventTargets = val
   }
 
   // const handleChange = <T>(field: keyof CustomEvent) => (val: T) => {
@@ -74,33 +96,32 @@ export const EventModal: FC<PropsWithChildren<{
           setOpen(false);
         }}
         onOk={() => {
-         
+
         }}
       >
-        <div className={prefixCls('event-modal-wrap')}>
-          <div className={prefixCls('event-modal-content')}>
-            <SelectComponent 
-              className={prefixCls('event-select')} 
-              title='选择事件'
-              menuItems={eventActionsMenus}
-              onChange={handleActionChange}
-            />
-            <SelectComponent 
-              className={prefixCls('action-select')} 
-              title='选择对应的动作'
-              menuItems={tempEvent.eventAction ? eventTypeMenus : []}
-              onChange={handleTypeChange}
-            />
-            <ActionConfig 
-              className={prefixCls('event-relation-config')} 
-              title='动作相关配置'
-              action={tempEvent.eventAction}
-              type={tempEvent.eventType}
-              onChange={handleConfigChange}
-              event={tempEvent}
-            />
+        <EventContext.Provider value={{ currentEvent: tempEvent }}>
+          <div className={prefixCls('event-modal-wrap')}>
+            <div className={prefixCls('event-modal-content')}>
+              <SelectComponent
+                className={prefixCls('event-select')}
+                title='选择事件'
+                menuItems={eventActionsMenus}
+                onChange={handleActionChange}
+              />
+              <SelectComponent
+                className={prefixCls('action-select')}
+                title='选择对应的动作'
+                menuItems={tempEvent.eventAction ? eventTypeMenus : []}
+                onChange={handleTypeChange}
+              />
+              <ActionConfig
+                className={prefixCls('event-relation-config')}
+                title='动作相关配置'
+                onChange={handleConfigChange}
+              />
+            </div>
           </div>
-        </div>
+        </EventContext.Provider>
       </Modal>
     </>
   );

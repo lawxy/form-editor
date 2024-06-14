@@ -15,7 +15,7 @@ const FormService = () => {
         <Button type="dashed" className={prefixCls('form-service-add')}>+ 新增服务</Button>
       </ServiceModal>
       {
-        store.formServices.map((serv: TFormSerive) => {
+        store.formServices?.map((serv: TFormSerive) => {
           return (
             <ServiceItem key={serv.id} service={serv}/>
           )

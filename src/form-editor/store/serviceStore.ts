@@ -7,6 +7,10 @@ export default {
   * 服务
   */
    formServices: [],
+
+  setFormServices(services: TFormSerives) {
+    this.formServices = services;
+  },
   /**
   * 获取服务
   */
