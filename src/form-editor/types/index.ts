@@ -1,5 +1,5 @@
-export * from './event'
-export * from './service'
+export * from './event';
+export * from './service';
 import { CustomEvents } from './event';
 export type TConstructor<T = object> = new (...args: any[]) => T;
 export interface IDragElementProp {
@@ -13,12 +13,9 @@ export interface IDragElementProp {
 export type TDirection = 'vertical' | 'horizontal';
 export type TMode = 'design' | 'form';
 export type TOption = { label: string; value: string | number; id?: string };
-export enum EEventsType {
-  CLICK,
-  DOUBLE_CLICK,
-  VALUE_CHANGE,
-  FOCUS,
-  BLUR
+export enum EChangeType {
+  ADD = 'add',
+  EDIT = 'edit',
 }
 
 export interface IEditorCanvasProp {
@@ -59,7 +56,7 @@ export interface IBaseElement {
   gridSpan?: number;
   /**
    * 元素偏移
-  */
+   */
   gridOffset?: number;
   /**
    * 日期元素格式
@@ -71,11 +68,11 @@ export interface IBaseElement {
   textType?: 'single' | 'multiple';
   /**
    * placeholder
-  */
+   */
   placeholder?: string;
   /**
    * 自定义css
-  */
+   */
   customCss?: string;
   /**
    * 最小行数
@@ -87,7 +84,7 @@ export interface IBaseElement {
   maxRows?: number;
   /**
    * 自适应行数
-  */
+   */
   autoSize?: boolean;
   /**
    * 元素名称（标签名称）对齐方式
@@ -107,7 +104,7 @@ export interface IBaseElement {
   alignDirection?: TDirection;
   /**
    * 表格设置
-  */
+   */
   tableAttributes?: string;
   /**
    * 表格column
@@ -115,7 +112,7 @@ export interface IBaseElement {
   tableColumns?: string;
   /**
    * 事件
-  */
+   */
   customEvents?: CustomEvents;
 }
 

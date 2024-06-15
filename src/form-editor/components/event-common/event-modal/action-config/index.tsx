@@ -1,9 +1,9 @@
 import { prefixCls } from '@/const';
-import { EEventType, IEventTarget } from '@/types';
+import { CustomEvent, EEventType, IEventTarget } from '@/types';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Popconfirm, Space } from 'antd';
 import c from 'classnames';
-import { produce } from 'immer';
+import { cloneDeep } from 'lodash-es';
 import React, { useContext, useEffect } from 'react';
 import { EventContext } from '../event-context';
 import RefreshService from './refresh-service';
@@ -35,8 +35,9 @@ const ActionItem: React.FC<{
 export const ActionConfig: React.FC<{
   title: string;
   className?: string;
-}> = ({ title, className }) => {
-  const { currentEvent, handleChangeEvent } = useContext(EventContext);
+  currentEvent: CustomEvent;
+}> = ({ title, className, currentEvent }) => {
+  const { handleChangeEvent } = useContext(EventContext);
 
   const handleChange = (
     type: 'add' | 'edit',
@@ -44,12 +45,12 @@ export const ActionConfig: React.FC<{
     idx?: number,
   ) => {
     if (type === 'edit') {
-      const newEventTargets: IEventTarget[] = produce(
-        currentEvent.eventTargets!,
-        (draft) => {
-          draft![idx!] = Object.assign(draft![idx!], targetAttr);
-        },
+      const newEventTargets = cloneDeep(currentEvent!.eventTargets);
+      newEventTargets![idx!] = Object.assign(
+        newEventTargets![idx!],
+        targetAttr,
       );
+
       handleChangeEvent('eventTargets', newEventTargets);
     } else {
       handleChangeEvent(

@@ -5,6 +5,7 @@
   &-event-button-add {
     width: 100%;
     color: #4096ff;
+    margin-bottom: 8px;
   }
   &-event-modal-wrap {
     margin: 0 -24px;
@@ -72,5 +73,42 @@
     border-radius: 2px;
     margin: 8px;
     padding: 8px;
+  }
+  &-event-collapse {
+    .ant-collapse-expand-icon {
+      padding-right: 4px !important;
+    }
+    .ant-collapse-header {
+      padding: 0 !important;
+    }
+    .ant-collapse-content-box {
+      padding: 0 !important;
+    }
+    .ant-collapse-header-text {
+      cursor: auto;
+    }
+    svg {
+      font-size: 13px;
+      fill: white;
+      background-color: #1677ff;
+      path:last-child {
+        display: none;
+      }
+    }
+    .collapse-item {
+      padding-left: 20px;
+      border-left: 2px dashed rgb(229,229,229); 
+      margin-left: 6px;
+      cursor: pointer;
+      color: #1677ff;
+      line-height: 30px;
+    }
+    .ant-dropdown-menu-item {
+      padding: 0 !important;
+      .ant-dropdown-menu-title-content span {
+        display: inline-block;
+        padding: 5px 12px;
+      }
+    }
   }
 }

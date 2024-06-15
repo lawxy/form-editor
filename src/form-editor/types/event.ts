@@ -1,4 +1,5 @@
 export type CustomEvent = {
+  id: string;
   // 触发事件的动作
   eventAction?: EEventAction;
   // 事件的类型
@@ -21,7 +22,7 @@ export enum EEventAction {
   // 失去焦点
   ON_BLUR = 'onBlur',
   // 组件加载后
-  ON_LOADED = 'onLoaded'
+  ON_LOADED = 'onLoaded',
 }
 export const eventActionInChinese = {
   [EEventAction.ON_CLICK]: '鼠标单击',
@@ -29,8 +30,8 @@ export const eventActionInChinese = {
   [EEventAction.ON_CHANGE]: '值发生变化',
   [EEventAction.ON_FOCUS]: '获得焦点',
   [EEventAction.ON_BLUR]: '失去焦点',
-  [EEventAction.ON_LOADED]: '组件加载后'
-}
+  [EEventAction.ON_LOADED]: '组件加载后',
+};
 
 /**
  * 组件事件操作动作
@@ -42,13 +43,13 @@ export enum EEventType {
   REFRESH_SERVICE = 'refreshService',
   /**
    * 关联服务
-  */
+   */
   LINK_SERVICE = 'linkService',
   // 显示/隐藏
   // CHANGE_VISIBILITY = 'changeVisibility',
   /**
    * 设置组件值
-  */
+   */
   SETTING_VALUE = 'settingValue',
 }
 
@@ -61,24 +62,24 @@ export const eventTypeChinese = {
 /**
  * 改变组件状态动作，包括显示隐藏，允许、禁止编辑，
  */
- export enum EChangeStatePayload {
+export enum EChangeStatePayload {
   SHOW = 'show',
   HIDDEN = 'hidden',
   DISABLE = 'disable',
   REFRESH = 'refresh',
   LINK = 'link',
   UPDATE = 'update',
-  CLEAR = 'clear'
+  CLEAR = 'clear',
 }
 
 export const changeStatePayloadInChinese = {
   [EChangeStatePayload.UPDATE]: '更新',
   [EChangeStatePayload.CLEAR]: '清空',
-}
+};
 
 export enum EServiceRefesh {
   REFRESH = 1,
-  NOT_REFRESH = 0
+  NOT_REFRESH = 0,
 }
 export const refreshOptions = [
   { label: '刷新', value: EServiceRefesh.REFRESH },
@@ -91,7 +92,7 @@ export interface IEventTarget {
   targetComponentId?: string;
   /**
    * 目标服务id
-  */
+   */
   targetServiceId?: string;
   /**
    * 目标执行动作
@@ -99,14 +100,14 @@ export interface IEventTarget {
   targetPayload?: EChangeStatePayload;
   /**
    * 是否刷新服务
-  */
+   */
   refreshFlag?: EServiceRefesh;
   /**
    * 服务更新的参数字段
-   * */ 
+   * */
   updateField?: string;
   /**
    * 服务url拼接参数
-   * */ 
+   * */
   appendUrl?: Record<string, any>;
 }
