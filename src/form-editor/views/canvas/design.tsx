@@ -1,16 +1,10 @@
-import React, { useMemo } from 'react'
 import { observer } from 'mobx-react-lite';
+import React from 'react';
 import ActionGroup from '../action-group';
-import EditorCanvas from './components/canvas'
+import EditorCanvas from './render-canvas';
 
 const EditorDesign = () => {
-  return (
-    <EditorCanvas
-      mode='design'
-      actions={<ActionGroup />}
-    >
-    </EditorCanvas>
-  )
-}
+  return <EditorCanvas mode="design" actions={<ActionGroup />}></EditorCanvas>;
+};
 
-export default observer(EditorDesign)
+export default observer(EditorDesign);

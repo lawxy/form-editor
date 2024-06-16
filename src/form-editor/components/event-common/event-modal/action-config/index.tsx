@@ -1,37 +1,62 @@
 import { prefixCls } from '@/const';
 import { CustomEvent, EEventType, IEventTarget } from '@/types';
+import { idCreator } from '@/utils';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Popconfirm, Space } from 'antd';
 import c from 'classnames';
 import { cloneDeep } from 'lodash-es';
 import React, { useContext, useEffect } from 'react';
 import { EventContext } from '../event-context';
+import LinkServcie from './link-service';
 import RefreshService from './refresh-service';
+import SetElementValue from './set-element-value';
 
 const ActionItem: React.FC<{
   type: EEventType;
   onChange: (v: IEventTarget) => void;
   eventTarget?: IEventTarget;
-}> = ({ type, onChange, eventTarget }) => {
+  last: boolean;
+  onAdd: () => void;
+  onDelete: () => void;
+}> = ({ type, onChange, eventTarget, last, onAdd, onDelete }) => {
+  const renderConfig = () => {
+    const props = { onChange, eventTarget };
+    switch (type) {
+      case EEventType.REFRESH_SERVICE:
+        return <RefreshService {...props} />;
+      case EEventType.LINK_SERVICE:
+        return <LinkServcie {...props} />;
+      default:
+        return <SetElementValue {...props} />;
+    }
+  };
+
   return (
     <div className={prefixCls('event-action-config')}>
-      <RefreshService onChange={onChange} eventTarget={eventTarget} />
+      {/* <RefreshService onChange={onChange} eventTarget={eventTarget} /> */}
+      {renderConfig()}
       <Space>
-        <Popconfirm title="确认删除">
-          <span onClick={() => {}}>
+        <Popconfirm title="确认删除" onConfirm={onDelete}>
+          <span>
             <MinusCircleOutlined
               style={{ color: '#D40000', cursor: 'pointer' }}
             />
           </span>
         </Popconfirm>
-        <span>
-          <PlusCircleOutlined style={{ color: '#287DFA', cursor: 'pointer' }} />
-        </span>
+        {last && (
+          <span>
+            <PlusCircleOutlined
+              style={{ color: '#287DFA', cursor: 'pointer' }}
+              onClick={onAdd}
+            />
+          </span>
+        )}
       </Space>
     </div>
   );
 };
 
+const getNewTarget = () => ({ id: idCreator('event-target') });
 export const ActionConfig: React.FC<{
   title: string;
   className?: string;
@@ -50,7 +75,6 @@ export const ActionConfig: React.FC<{
         newEventTargets![idx!],
         targetAttr,
       );
-
       handleChangeEvent('eventTargets', newEventTargets);
     } else {
       handleChangeEvent(
@@ -60,9 +84,15 @@ export const ActionConfig: React.FC<{
     }
   };
 
+  const handleDelete = (idx: number) => {
+    const newEventTargets = cloneDeep(currentEvent!.eventTargets);
+    newEventTargets!.splice(idx, 1);
+    handleChangeEvent('eventTargets', newEventTargets);
+  };
+
   useEffect(() => {
     if (currentEvent?.eventTargets?.length) return;
-    handleChange('add', {});
+    handleChange('add', getNewTarget());
   }, [currentEvent?.eventTargets]);
 
   return (
@@ -77,10 +107,13 @@ export const ActionConfig: React.FC<{
         <>
           {currentEvent?.eventTargets?.map((eventTarget, i) => (
             <ActionItem
-              key={i}
+              key={eventTarget.id}
               type={currentEvent.eventType!}
               onChange={(targetAttr) => handleChange('edit', targetAttr, i)}
               eventTarget={eventTarget}
+              last={i === currentEvent?.eventTargets!.length - 1}
+              onAdd={() => handleChange('add', getNewTarget())}
+              onDelete={() => handleDelete(i)}
             />
           ))}
         </>

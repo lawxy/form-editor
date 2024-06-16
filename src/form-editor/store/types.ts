@@ -1,4 +1,9 @@
-import type { TFormSerive, IBaseElement, TFormSerives } from '../types';
+import type {
+  IBaseElement,
+  IFormAttributesProps,
+  TFormSerive,
+  TFormSerives,
+} from '../types';
 
 export interface IElementStore {
   elementsMap: Map<string, IBaseElement>;
@@ -32,17 +37,38 @@ export interface IElementStore {
 }
 
 export interface IServiceStore {
-  formServices: TFormSerives,
+  formServices: TFormSerives;
   setFormServices: (services: TFormSerives) => void;
-  getFormServices: () => TFormSerives,
+  getFormServices: () => TFormSerives;
   addService: (serv: TFormSerive) => void;
   deleteService: (id: string) => void;
   copyService: (serv: TFormSerive) => void;
   setService: (id: string, servAttr: Partial<TFormSerive>) => void;
 }
 
-export type TFormTabType = 'element' | 'form' | 'service'
-export interface IBaseStore extends IServiceStore, IElementStore{
+export type TFormTabType = 'element' | 'form' | 'service';
+export interface IBaseStore extends IServiceStore, IElementStore {
   formSettingTab: TFormTabType;
   setFormSettingTab: (tab: TFormTabType) => void;
+  getFormJson: () => {
+    formElements: IBaseElement[];
+    fieldValues: Record<string, any>;
+    formAttrs: IFormAttributesProps;
+    formServices: TFormSerives;
+  };
+
+  fieldValues: Record<string, any>;
+
+  setFieldValue: (field: string, value: any) => void;
+
+  setFieldsValues: (values: Record<string, any>) => void;
+
+  formAttrs: IFormAttributesProps;
+
+  setFormAttrs: (attrs: IFormAttributesProps) => void;
+
+  setFormAttr: <T extends keyof IFormAttributesProps>(
+    key: T,
+    value: IFormAttributesProps[T],
+  ) => void;
 }

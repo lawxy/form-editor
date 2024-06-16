@@ -1,11 +1,9 @@
-import React, { useMemo, useEffect } from 'react'
 import { observer } from 'mobx-react-lite';
-import EditorCanvas from './components/canvas'
+import React from 'react';
+import EditorCanvas from './render-canvas';
 
 const EditorForm = () => {
-  return (
-    <EditorCanvas mode='form'/>
-  )
-}
+  return <EditorCanvas mode="form" />;
+};
 
-export default observer(EditorForm)
+export default observer(EditorForm);

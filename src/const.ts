@@ -1,1 +1,0 @@
-export const prefixCls = (className: any) => `fm-${className}`

@@ -1,30 +1,73 @@
-import React, { useState, useEffect } from 'react';
 import { prefixCls } from '@/const';
 import store from '@/store';
-import type { IEventTarget } from '@/types';
 import {
-  changeStatePayloadInChinese,
+  changeStateActions,
   EChangeStatePayload,
   refreshOptions,
-  EServiceRefesh
+  type IEventTarget,
 } from '@/types';
 import { Input, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
+import React from 'react';
 
-const actions = Object.entries(changeStatePayloadInChinese).map(
-  ([value, label]) => ({ label, value }),
-);
-
+const actions = changeStateActions([
+  EChangeStatePayload.UPDATE,
+  EChangeStatePayload.CLEAR,
+  EChangeStatePayload.APPEND,
+]);
 const RefreshService: React.FC<{
   onChange: (v: IEventTarget) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
-  const { 
-    targetServiceId, 
-    targetPayload, 
-    refreshFlag,
-    updateField
-  } = eventTarget || {}
+  const { targetServiceId, targetPayload, refreshFlag, updateField } =
+    eventTarget || {};
+
+  const renderAction = () => {
+    if (
+      targetPayload === EChangeStatePayload.UPDATE ||
+      targetPayload === EChangeStatePayload.APPEND
+    ) {
+      return (
+        <>
+          传入组件元素值&nbsp;
+          <Select
+            className={prefixCls('event-input')}
+            options={actions}
+            key="action"
+            defaultValue={targetPayload}
+            onChange={(v) => {
+              onChange({ targetPayload: v });
+            }}
+          />
+          &nbsp;
+          <Input
+            className={prefixCls('event-input')}
+            defaultValue={updateField}
+            onChange={(e) => {
+              onChange({ updateField: e.target.value });
+            }}
+          />
+          &nbsp;字段
+          {targetPayload === EChangeStatePayload.APPEND && <>到url上</>}
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Select
+          className={prefixCls('event-input')}
+          options={actions}
+          key="action"
+          defaultValue={targetPayload}
+          onChange={(v) => {
+            onChange({ targetPayload: v });
+          }}
+        />
+        &nbsp;所有字段，
+      </>
+    );
+  };
 
   return (
     <div style={{ lineHeight: '40px' }}>
@@ -42,45 +85,8 @@ const RefreshService: React.FC<{
           }}
         />
       </div>
-      <div>
-        {targetPayload === EChangeStatePayload.UPDATE ? (
-          <>
-            传入组件元素值&nbsp;
-            <Select
-              className={prefixCls('event-input')}
-              options={actions}
-              key="action"
-              defaultValue={targetPayload}
-              onChange={(v) => {
-                onChange({ targetPayload: v });
-              }}
-            />
-            &nbsp;
-            <Input 
-              className={prefixCls('event-input')}
-              defaultValue={updateField} 
-              onChange={e => {
-                onChange({ updateField: e.target.value });
-              }}
-            />
-            &nbsp;字段，
-          </>
-        ) : (
-          <>
-            <Select
-              className={prefixCls('event-input')}
-              options={actions}
-              key="action"
-              defaultValue={targetPayload}
-              onChange={(v) => {
-                onChange({ targetPayload: v });
-              }}
-            />
-            &nbsp;所有字段，
-          </>
-        )}
-      </div>
-      并{' '}
+      <div>{renderAction()}</div>
+      并
       <Select
         className={prefixCls('event-input')}
         options={refreshOptions}

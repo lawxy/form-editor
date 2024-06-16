@@ -27,11 +27,7 @@ const formatForCollapse = (customEvents: CustomEvent[]) => {
 const EventCommon: React.FC<{
   eventActions: EEventAction[];
 }> = ({ eventActions }) => {
-  const handleSaveEvents = (
-    type: EChangeType,
-    event: CustomEvent,
-    idx?: number,
-  ) => {
+  const handleSaveEvents = (type: EChangeType, event: CustomEvent) => {
     const customEvents = cloneDeep(store.selectedElement?.customEvents || []);
     if (type === EChangeType.ADD) {
       let sameActionEvent: CustomEvent | undefined = customEvents.find(
@@ -48,9 +44,15 @@ const EventCommon: React.FC<{
         customEvents.push(event);
       }
     } else {
+      const idx = store.selectedElement?.customEvents?.findIndex(
+        (evt) => event.id === evt.id,
+      );
       customEvents[idx!] = event;
     }
-    store.setSelectedProp('customEvents', customEvents);
+    // modal效果
+    setTimeout(() => {
+      store.setSelectedProp('customEvents', customEvents);
+    }, 200);
   };
 
   const handleDelete = (id: string) => {
@@ -83,7 +85,7 @@ const EventCommon: React.FC<{
             <EventModal
               eventActions={eventActions}
               onOk={(evt: CustomEvent) =>
-                handleSaveEvents(EChangeType.EDIT, evt, i)
+                handleSaveEvents(EChangeType.EDIT, evt)
               }
               event={evt}
               type={EChangeType.EDIT}

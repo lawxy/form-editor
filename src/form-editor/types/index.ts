@@ -47,6 +47,10 @@ export interface IBaseElement {
    */
   elementName?: string;
   /**
+   * 显示元素名称
+   */
+  showElementName?: boolean;
+  /**
    * 元素id
    */
   id?: string;

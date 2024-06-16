@@ -63,18 +63,35 @@ export const eventTypeChinese = {
  * 改变组件状态动作，包括显示隐藏，允许、禁止编辑，
  */
 export enum EChangeStatePayload {
-  SHOW = 'show',
-  HIDDEN = 'hidden',
-  DISABLE = 'disable',
-  REFRESH = 'refresh',
-  LINK = 'link',
+  // SHOW = 'show',
+  // HIDDEN = 'hidden',
+  // DISABLE = 'disable',
+  // REFRESH = 'refresh',
+  // LINK = 'link',
   UPDATE = 'update',
   CLEAR = 'clear',
+  APPEND = 'append',
+  SYNC = 'sync',
+  REFRESH = 'refresh',
+  NOT_REFRESH = 'not_refresh',
+  CUSTOM = 'custom',
 }
 
 export const changeStatePayloadInChinese = {
   [EChangeStatePayload.UPDATE]: '更新',
   [EChangeStatePayload.CLEAR]: '清空',
+  [EChangeStatePayload.APPEND]: '拼接',
+  [EChangeStatePayload.SYNC]: '同步',
+  [EChangeStatePayload.CUSTOM]: '自定义',
+  [EChangeStatePayload.REFRESH]: '刷新',
+  [EChangeStatePayload.NOT_REFRESH]: '不刷新',
+};
+
+export const changeStateActions = (fields: Array<EChangeStatePayload>) => {
+  return fields.map((field) => ({
+    label: changeStatePayloadInChinese[field],
+    value: field,
+  }));
 };
 
 export enum EServiceRefesh {
@@ -86,10 +103,11 @@ export const refreshOptions = [
   { label: '不刷新', value: EServiceRefesh.NOT_REFRESH },
 ];
 export interface IEventTarget {
+  id?: string;
   /**
    * 目标组件id
    */
-  targetComponentId?: string;
+  targetElementId?: string;
   /**
    * 目标服务id
    */
@@ -110,4 +128,8 @@ export interface IEventTarget {
    * 服务url拼接参数
    * */
   appendUrl?: Record<string, any>;
+  /**
+   * 设置组件值
+   */
+  setValue?: any;
 }
