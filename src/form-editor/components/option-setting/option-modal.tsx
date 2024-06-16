@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import type { FC, PropsWithChildren } from 'react';
-import { Modal, Table, Space, Button, Input, message, Popover, type TableColumnProps } from 'antd'
 import { MinusCircleOutlined, PlusCircleOutlined, MenuOutlined, QuestionCircleOutlined } from '@ant-design/icons'
-
-import Sortable from 'sortablejs'
+import { Modal, Table, Space, Button, Input, message, Popover, type TableColumnProps } from 'antd'
 import { arrayMoveImmutable } from 'array-move';
 import { cloneDeep } from 'lodash-es'
 import { observer } from "mobx-react-lite";
+import type { FC, PropsWithChildren } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Sortable from 'sortablejs'
+
 import { BatchGenerateOptions } from '../batch-generate-options';
+
 import store from '@/store';
 import type { TOption } from '@/types';
 import { idCreator } from '@/utils';

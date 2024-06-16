@@ -1,3 +1,7 @@
+import { Input, Select } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+
 import { prefixCls } from '@/const';
 import store from '@/store';
 import {
@@ -6,9 +10,6 @@ import {
   refreshOptions,
   type IEventTarget,
 } from '@/types';
-import { Input, Select } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React from 'react';
 
 const actions = changeStateActions([
   EChangeStatePayload.UPDATE,

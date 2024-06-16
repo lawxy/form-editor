@@ -1,9 +1,10 @@
-import { prefixCls } from '@/const';
-import store from '@/store';
-import type { IEventTarget } from '@/types';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+
+import { prefixCls } from '@/const';
+import store from '@/store';
+import type { IEventTarget } from '@/types';
 
 const LinkService: React.FC<{
   onChange: (v: IEventTarget) => void;

@@ -1,10 +1,12 @@
-import { prefixCls } from '@/const';
-import { TFormSerive } from '@/types';
 import { CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Popconfirm, Popover, Typography } from 'antd';
 import React from 'react';
+
 import ServiceModal from './service-modal';
+
+import { prefixCls } from '@/const';
 import store from '@/store'
+import { TFormSerive } from '@/types';
 
 export const ServiceItem: React.FC<{
   service: TFormSerive;

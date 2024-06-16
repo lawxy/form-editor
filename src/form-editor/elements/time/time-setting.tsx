@@ -1,9 +1,10 @@
-import React from 'react'
-import { observer } from "mobx-react-lite";
 import { Select } from 'antd';
+import { observer } from "mobx-react-lite";
+import React from 'react'
+
+import { CommonTabsSetting } from '@/components/common-tabs-setting';
 import { SettingItem } from '@/components/setting-item';
 import store from '@/store';
-import { CommonTabsSetting } from '@/components/common-tabs-setting';
 
 const dateOptions = ['HH:mm:ss', 'HH:mm'].map(per => ({label: per, value: per}))
 

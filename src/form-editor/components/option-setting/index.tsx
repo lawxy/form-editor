@@ -1,12 +1,15 @@
-import React from 'react';
-import type { FC } from 'react';
 import { Table, Select, Button, type TableColumnProps } from 'antd'
 import { observer } from "mobx-react-lite";
-import { SettingItem } from '@/components/setting-item';
+import type { FC } from 'react';
+import React from 'react';
+
+
 import OptionModal from './option-modal';
-import type { TOption } from '@/types';
+
+import { SettingItem } from '@/components/setting-item';
 import { DirectionOpions } from '@/const';
 import store from '@/store';
+import type { TOption } from '@/types';
 
 const columns: TableColumnProps<TOption>[] = [
   {

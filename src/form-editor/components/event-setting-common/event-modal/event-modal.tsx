@@ -1,3 +1,11 @@
+import { MenuProps, message, Modal } from 'antd';
+import type { FC, PropsWithChildren } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+
+import { ActionConfig } from './action-config';
+import { EventContext } from './event-context';
+import { SelectComponent } from './select-component';
+
 import { prefixCls } from '@/const';
 import {
   CustomEvent,
@@ -7,12 +15,6 @@ import {
   eventTypeChinese,
 } from '@/types';
 import { idCreator } from '@/utils';
-import { MenuProps, message, Modal } from 'antd';
-import type { FC, PropsWithChildren } from 'react';
-import React, { useEffect, useMemo, useState } from 'react';
-import { ActionConfig } from './action-config';
-import { EventContext } from './event-context';
-import { SelectComponent } from './select-component';
 
 export type MenuItem = Required<MenuProps>['items'][number];
 

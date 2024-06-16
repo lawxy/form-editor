@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
 import { Input, InputNumber } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { idCreator } from '@/utils';
+import React, { useEffect } from 'react';
+
 import { SettingItem } from '@/components/setting-item';
 import store from '@/store';
+import { idCreator } from '@/utils';
 
 const FormSetting = () => {
   const {

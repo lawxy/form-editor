@@ -1,8 +1,9 @@
-import React, { useMemo, useEffect } from 'react'
-import { observer } from 'mobx-react-lite'
 import { Form } from 'antd'
-import store from '@/store'
+import { observer } from 'mobx-react-lite'
+import React, { useMemo, useEffect } from 'react'
+
 import { ElementsList } from '@/elements'
+import store from '@/store'
 
 const ElementSetting = () => {
 

@@ -1,10 +1,12 @@
-import React, { useCallback, useState, useMemo } from 'react';
-import { observer } from "mobx-react-lite";
-import { Popconfirm, Modal, Button, Form, message } from 'antd';
-import { EditorForm } from '../canvas';
 import MonacoEditor from "@monaco-editor/react";
+import { Popconfirm, Modal, Button, Form, message } from 'antd';
+import { observer } from "mobx-react-lite";
+import React, { useCallback, useState, useMemo } from 'react';
 
 import { ActionGroupWrap, GroupItem } from './styled'
+import { EditorForm } from '../canvas';
+
+
 import store from '@/store';
 
 const ActionItem: React.FC<{

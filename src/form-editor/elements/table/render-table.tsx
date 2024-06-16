@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react'
 import { Table } from 'antd'
 import { observer } from 'mobx-react-lite';
-import type { IBaseElement, TMode } from '@/types';
-import store from '@/store';
-import { parseJSX } from '@/utils'
+import React, { useMemo } from 'react'
+
 import ElementLayout from '@/components/element-layout';
+import store from '@/store';
+import type { IBaseElement, TMode } from '@/types';
+import { parseJSX } from '@/utils'
 
 const RenderTableContent: React.FC<{
   fieldValue: any;

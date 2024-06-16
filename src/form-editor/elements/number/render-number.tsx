@@ -1,9 +1,10 @@
-import React from 'react'
 import { InputNumber } from 'antd';
 import { observer } from 'mobx-react-lite';
-import type { IBaseElement, TMode } from '@/types';
-import store from '@/store';
+import React from 'react'
+
 import ElementLayout from '@/components/element-layout';
+import store from '@/store';
+import type { IBaseElement, TMode } from '@/types';
 
 const RenderNumberContent: React.FC<{
   fieldValue: any;

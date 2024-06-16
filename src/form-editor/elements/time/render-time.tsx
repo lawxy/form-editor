@@ -1,10 +1,11 @@
-import React from 'react'
 import { TimePicker  } from 'antd';
-import { observer } from 'mobx-react-lite';
 import dayjs from 'dayjs'
-import type { IBaseElement, TMode } from '@/types';
-import store from '@/store';
+import { observer } from 'mobx-react-lite';
+import React from 'react'
+
 import ElementLayout from '@/components/element-layout';
+import store from '@/store';
+import type { IBaseElement, TMode } from '@/types';
 
 const RenderTimeContent: React.FC<{
   fieldValue: any;

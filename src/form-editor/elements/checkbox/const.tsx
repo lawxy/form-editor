@@ -7,7 +7,7 @@ export const initialData: Partial<IBaseElement> = {
   gridSpan: 10,
   alignDirection: 'horizontal',
   valueOptions: [
-    { label: '选项1', value: 1 },
-    { label: '选项2', value: 2 },
+    { label: '选项1', value: 1, id: '1' },
+    { label: '选项2', value: 2, id: '2' },
   ],
 };

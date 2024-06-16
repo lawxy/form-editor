@@ -1,3 +1,11 @@
+import React from 'react';
+import { Button, message } from 'antd';
+import { cloneDeep, groupBy } from 'lodash-es';
+import { observer } from 'mobx-react-lite';
+
+import { EventCollapse } from './event-collapse';
+import { EventModal } from './event-modal';
+
 import { prefixCls } from '@/const';
 import store from '@/store';
 import {
@@ -6,12 +14,7 @@ import {
   EEventAction,
   eventActionInChinese,
 } from '@/types';
-import { Button, message } from 'antd';
-import { cloneDeep, groupBy } from 'lodash-es';
-import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { EventCollapse } from './event-collapse';
-import { EventModal } from './event-modal';
+
 import './style.less';
 
 const formatForCollapse = (customEvents: CustomEvent[]) => {
@@ -24,7 +27,7 @@ const formatForCollapse = (customEvents: CustomEvent[]) => {
   });
 };
 
-const EventCommon: React.FC<{
+const EventSettingCommon: React.FC<{
   eventActions: EEventAction[];
 }> = ({ eventActions }) => {
   const handleSaveEvents = (type: EChangeType, event: CustomEvent) => {
@@ -99,4 +102,4 @@ const EventCommon: React.FC<{
   );
 };
 
-export default observer(EventCommon);
+export default observer(EventSettingCommon);

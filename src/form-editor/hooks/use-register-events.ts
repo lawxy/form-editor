@@ -1,12 +1,22 @@
+import { useEffect, useContext } from 'react';
 import type { IBaseElement } from '@/types';
-import { useEffect } from 'react';
+import { EventContext } from '@/components/event-context';
 
 interface IRegisterEvents {
-  (props: { element: IBaseElement }): any;
+  (element: IBaseElement): any;
 }
 
-export const useRegisterEvents: IRegisterEvents = ({ element }) => {
-  const { customEvents } = element;
+export const useRegisterEvents: IRegisterEvents = (element) => {
+  const { emitter } = useContext(EventContext);
+  const { customEvents, id } = element;
 
+  console.log('emitter');
+  console.log(emitter);
   useEffect(() => {}, []);
+
+  return {
+    eventOnChange: () => {},
+    eventOnBlur: () => {},
+    eventOnFocus: () => {},
+  };
 };

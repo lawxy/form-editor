@@ -1,9 +1,10 @@
-import React from 'react'
 import { Checkbox, Space, type CheckboxValueType } from 'antd';
 import { observer } from 'mobx-react-lite';
-import type { IBaseElement, TMode } from '@/types';
-import store from '@/store';
+import React from 'react'
+
 import ElementLayout from '@/components/element-layout';
+import store from '@/store';
+import type { IBaseElement, TMode } from '@/types';
 
 const RenderCheckboxContent: React.FC<{
   fieldValue: any;

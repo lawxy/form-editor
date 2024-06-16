@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react'
 import { Button } from 'antd';
-import { observer } from 'mobx-react-lite';
 import dayjs from 'dayjs'
+import { observer } from 'mobx-react-lite';
+import React, { useMemo } from 'react'
+
 import ElementLayout from '@/components/element-layout';
-import type { IBaseElement, TMode } from '@/types';
 import store from '@/store';
+import type { IBaseElement, TMode } from '@/types';
 
 const RenderButtonContent: React.FC<{
   fieldValue: any;

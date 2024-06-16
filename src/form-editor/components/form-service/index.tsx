@@ -1,11 +1,13 @@
-import React from 'react'
 import { Button } from 'antd';
 import { observer } from 'mobx-react-lite';
+import React from 'react'
+
+import { ServiceItem } from './service-item';
+import ServiceModal from './service-modal';
+
 import { prefixCls } from '@/const';
 import store from '@/store';
 import type { TFormSerive } from '@/types';
-import ServiceModal from './service-modal';
-import { ServiceItem } from './service-item';
 import './style.less'
 
 const FormService = () => {

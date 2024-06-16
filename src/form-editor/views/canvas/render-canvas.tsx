@@ -1,13 +1,14 @@
+import type { FC, PropsWithChildren } from 'react';
+import { Row } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useEffect, useRef } from 'react';
+import Sortable from 'sortablejs';
+import { EventContextProvider } from '@/components/event-context';
 import { prefixCls } from '@/const';
 import { ElementsList } from '@/elements/export';
 import store from '@/store';
 import type { IBaseElement, IEditorCanvasProp } from '@/types';
 import { idCreator } from '@/utils';
-import { Row } from 'antd';
-import { observer } from 'mobx-react-lite';
-import type { FC, PropsWithChildren } from 'react';
-import React, { useEffect, useRef } from 'react';
-import Sortable from 'sortablejs';
 import './style.less';
 
 const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
@@ -48,28 +49,30 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
   }, [mode]);
 
   return (
-    <div className={prefixCls('canvas-wrap')}>
-      {actions && <>{actions}</>}
-      <div className={prefixCls('canvas')} ref={el}>
-        {mode === 'design' && (
-          <div style={{ height: 10, background: '#f3f3f3' }} />
-        )}
-        <Row gutter={[horizontalGap, verticalGap]} style={{ height: '100%' }}>
-          {store.formElements.map((item: IBaseElement) => {
-            const Component = ElementsList[item.type!]?.render;
-            if (!Component) return null;
-            return (
-              <Component
-                mode={mode}
-                key={item.id || String(+new Date())}
-                fieldValue={store.fieldValues[item.id as string]}
-                element={item}
-              />
-            );
-          })}
-        </Row>
+    <EventContextProvider>
+      <div className={prefixCls('canvas-wrap')}>
+        {actions && <>{actions}</>}
+        <div className={prefixCls('canvas')} ref={el}>
+          {mode === 'design' && (
+            <div style={{ height: 10, background: '#f3f3f3' }} />
+          )}
+          <Row gutter={[horizontalGap, verticalGap]} style={{ height: '100%' }}>
+            {store.formElements.map((item: IBaseElement) => {
+              const Component = ElementsList[item.type!]?.render;
+              if (!Component) return null;
+              return (
+                <Component
+                  mode={mode}
+                  key={item.id || String(+new Date())}
+                  fieldValue={store.fieldValues[item.id as string]}
+                  element={item}
+                />
+              );
+            })}
+          </Row>
+        </div>
       </div>
-    </div>
+    </EventContextProvider>
   );
 };
 

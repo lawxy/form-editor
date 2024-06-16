@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
 import { Button, Flex, Form, Input, Modal, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
+import React, { useEffect, useState } from 'react';
 import type { FC, PropsWithChildren } from 'react';
+
+import { AttributesSetting } from '../attributes-setting';
+
 import { prefixCls } from '@/const';
 import store from '@/store';
-import { idCreator } from '@/utils';
 import { TFormSerive } from '@/types';
-import { AttributesSetting } from '../attributes-setting';
+import { idCreator } from '@/utils';
 
 const methodOptions = ['GET', 'POST', 'PUT', 'DELETE'].map((item) => ({
   label: item,

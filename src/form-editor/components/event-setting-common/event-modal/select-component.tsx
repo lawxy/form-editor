@@ -1,8 +1,10 @@
-import { prefixCls } from '@/const';
 import { Menu } from 'antd';
 import c from 'classnames';
 import React from 'react';
+
 import type { MenuItem } from './event-modal';
+
+import { prefixCls } from '@/const';
 
 export const SelectComponent: React.FC<{
   className?: string;

@@ -1,8 +1,9 @@
-import { prefixCls } from '@/const';
-import { eventTypeChinese, type CustomEvent } from '@/types';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { Collapse, Dropdown, Popconfirm } from 'antd';
 import React, { PropsWithChildren, type FC } from 'react';
+
+import { prefixCls } from '@/const';
+import { eventTypeChinese, type CustomEvent } from '@/types';
 
 export const EventCollapse: FC<{
   onDelete: (id: string) => void;

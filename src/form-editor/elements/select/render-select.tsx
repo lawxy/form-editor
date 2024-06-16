@@ -1,10 +1,13 @@
-import React from 'react'
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
-import type { IBaseElement, TMode } from '@/types';
+import React from 'react'
+
+
 import { ELEMENT_SELECT } from './const';
-import store from '@/store';
+
 import ElementLayout from '@/components/element-layout';
+import store from '@/store';
+import type { IBaseElement, TMode } from '@/types';
 
 const RenderSelectContent: React.FC<{
   fieldValue: any;

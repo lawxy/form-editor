@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
-import { idCreator } from '@/utils';
-import type { IDragElementProp } from '@/types';
-import store from '@/store';
+import React, { useEffect, useMemo, useCallback } from 'react';
+
 import { prefixCls } from '@/const';
+import store from '@/store';
+import type { IDragElementProp } from '@/types';
+import { idCreator } from '@/utils';
 
 const DragItem: React.FC<{
   item: IDragElementProp;

@@ -1,11 +1,12 @@
-import React from 'react'
-import { observer } from "mobx-react-lite";
-import { Button, Popover } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
-import { SettingItem } from '@/components/setting-item';
+import { Button, Popover } from 'antd'
+import { observer } from "mobx-react-lite";
+import React from 'react'
+
 import { AttributesSetting } from '@/components/attributes-setting';
-import store from '@/store';
 import { CommonTabsSetting } from '@/components/common-tabs-setting';
+import { SettingItem } from '@/components/setting-item';
+import store from '@/store';
 
 const SettingTableContent = () => {
   return (
@@ -18,7 +19,7 @@ const SettingTableContent = () => {
                 表格配置&nbsp;
                 <Popover 
                   content={
-                    <a target='_blank' href='https://ant.design/components/table-cn#table'>antd - table文档</a>
+                    <a target='_blank' href='https://ant.design/components/table-cn#table' rel="noreferrer">antd - table文档</a>
                   }
                 >
                   <QuestionCircleOutlined style={{cursor: 'pointer'}}/>
@@ -40,7 +41,7 @@ const SettingTableContent = () => {
                 列表配置&nbsp;
                 <Popover 
                   content={
-                    <a target='_blank' href='https://ant.design/components/table-cn#column'>table - column文档</a>
+                    <a target='_blank' href='https://ant.design/components/table-cn#column' rel="noreferrer">table - column文档</a>
                   }
                 >
                   <QuestionCircleOutlined style={{cursor: 'pointer'}}/>
