@@ -5,6 +5,7 @@ import React, { useCallback } from 'react';
 import ElementLayout from '@/components/element-layout';
 import { useElementCommon, useRegisterEvents } from '@/hooks';
 import store from '@/store';
+import { EEventAction } from '@/types';
 import type { IBaseElement, TMode } from '@/types';
 
 const RenderInputContent: React.FC<{
@@ -13,15 +14,19 @@ const RenderInputContent: React.FC<{
   mode: TMode;
 }> = ({ fieldValue, element = {}, mode }) => {
   const { textType, minRows, maxRows, id, autoSize, placeholder } = element;
+ 
+  const { elCss, contaninerCss } = useElementCommon(element);
+
+  const { eventFunctions } = useRegisterEvents(element);
+
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       store.setFieldValue(id as string, e.target.value);
+      const changeEvents = eventFunctions[EEventAction.ON_CHANGE] || []
+      changeEvents.forEach(fn => fn(e.target.value))
     },
-    [id],
+    [id, eventFunctions[EEventAction.ON_CHANGE]],
   );
-  const { elCss, contaninerCss } = useElementCommon(element);
-
-  useRegisterEvents(element);
 
   return (
     <ElementLayout element={element} mode={mode} contaninerCss={contaninerCss}>

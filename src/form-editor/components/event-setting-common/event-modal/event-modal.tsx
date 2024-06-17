@@ -1,9 +1,9 @@
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { MenuProps, message, Modal } from 'antd';
 import type { FC, PropsWithChildren } from 'react';
-import React, { useEffect, useMemo, useState } from 'react';
 
 import { ActionConfig } from './action-config';
-import { EventContext } from './event-context';
+import { EventModalContext } from './context';
 import { SelectComponent } from './select-component';
 
 import { prefixCls } from '@/const';
@@ -32,9 +32,13 @@ export const EventModal: FC<
   const [tempEvent, setTempEvent] = useState<CustomEvent>(
     event || getNewEvent(),
   );
-
+  const edit = useRef<boolean>(false);
+  const setEdit = (flag: boolean) => {
+    edit.current = flag;
+  }
   useEffect(() => {
     if (!open) {
+      edit.current = false;
       setTempEvent(getNewEvent());
     }
     if (event) {
@@ -71,10 +75,25 @@ export const EventModal: FC<
     field: T,
     value: CustomEvent[T],
   ) => {
-    setTempEvent((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    if ((field === 'eventAction' || field === 'eventType') && edit.current) {
+      Modal.confirm({
+        title: '编辑数据未保存，切换后将清除数据，确认切换？',
+        onOk() {
+          setEdit(false);
+          setTempEvent((prev) => ({
+            ...prev,
+            [field]: value,
+            eventTargets: []
+          }));
+        }
+      })
+    } else {
+      setTempEvent((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    }
+
   };
 
   return (
@@ -103,8 +122,8 @@ export const EventModal: FC<
           setOpen(false);
         }}
       >
-        <EventContext.Provider
-          value={{ currentEvent: tempEvent, handleChangeEvent }}
+        <EventModalContext.Provider
+          value={{ currentEvent: tempEvent, handleChangeEvent, setEdit }}
         >
           <div className={prefixCls('event-modal-wrap')}>
             <div className={prefixCls('event-modal-content')}>
@@ -129,7 +148,7 @@ export const EventModal: FC<
               />
             </div>
           </div>
-        </EventContext.Provider>
+        </EventModalContext.Provider>
       </Modal>
     </>
   );

@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Emitter } from './emitter';
 
+export * from './emitter'
+
 interface IEventContext {
   emitter: Emitter;
 }

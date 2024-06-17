@@ -1,13 +1,14 @@
 import React from 'react'
 import type { CustomEvent } from '@/types';
 
-interface IEventContext {
+interface IEventModalContext {
   currentEvent: CustomEvent;
   handleChangeEvent: <T extends keyof CustomEvent>(
     field: T,
     value: CustomEvent[T],
   ) => void;
+  setEdit: (f: boolean) => void;
 }
 
 // @ts-ignore
-export const EventContext = React.createContext<IEventContext>(null);
+export const EventModalContext = React.createContext<IEventModalContext>(null);

@@ -19,6 +19,7 @@ const SetElementValue: React.FC<{
   const componentsOptions = store.formElements.map((el) => ({
     label: el?.elementName || el.id,
     value: el.id,
+    disabled: store.selectedElement.id === el.id
   }));
 
   return (

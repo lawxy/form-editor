@@ -18,10 +18,14 @@ export default {
 
   setFormElements(els: IBaseElement[]) {
     this.formElements = els;
+    this.formElements.forEach((el: IBaseElement) => {
+      this.elementsMap.set(el.id as string, el)
+    })
   },
 
   clearAllElements() {
     this.formElements = [];
+    this.elementsMap.clear()
   },
 
   /**
@@ -76,6 +80,7 @@ export default {
     const idx = this.formElements.findIndex((item) => item.id === el.id);
     const newEl: IBaseElement = { ...el, id: idCreator() };
     this.formElements.splice(idx + 1, 0, newEl);
+    this.elementsMap.set(newEl.id as string, newEl)
     return newEl;
   },
 

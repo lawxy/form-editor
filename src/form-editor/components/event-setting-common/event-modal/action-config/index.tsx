@@ -1,17 +1,17 @@
-import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import React, { useContext, useEffect } from 'react';
 import { Popconfirm, Space } from 'antd';
 import c from 'classnames';
 import { cloneDeep } from 'lodash-es';
-import React, { useContext, useEffect } from 'react';
-
-import LinkServcie from './link-service';
-import RefreshService from './refresh-service';
-import SetElementValue from './set-element-value';
-import { EventContext } from '../event-context';
+import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 
 import { prefixCls } from '@/const';
 import { CustomEvent, EEventType, IEventTarget } from '@/types';
 import { idCreator } from '@/utils';
+
+import LinkServcie from './link-service';
+import RefreshService from './refresh-service';
+import SetElementValue from './set-element-value';
+import { EventModalContext } from '../context';
 
 const ActionItem: React.FC<{
   type: EEventType;
@@ -35,7 +35,6 @@ const ActionItem: React.FC<{
 
   return (
     <div className={prefixCls('event-action-config')}>
-      {/* <RefreshService onChange={onChange} eventTarget={eventTarget} /> */}
       {renderConfig()}
       <Space>
         <Popconfirm title="确认删除" onConfirm={onDelete}>
@@ -64,11 +63,11 @@ export const ActionConfig: React.FC<{
   className?: string;
   currentEvent: CustomEvent;
 }> = ({ title, className, currentEvent }) => {
-  const { handleChangeEvent } = useContext(EventContext);
+  const { handleChangeEvent, setEdit } = useContext(EventModalContext);
 
   const handleChange = (
     type: 'add' | 'edit',
-    targetAttr: Partial<IEventTarget>,
+    targetAttr?: Partial<IEventTarget>,
     idx?: number,
   ) => {
     if (type === 'edit') {
@@ -78,10 +77,11 @@ export const ActionConfig: React.FC<{
         targetAttr,
       );
       handleChangeEvent('eventTargets', newEventTargets);
+      setEdit(true)
     } else {
       handleChangeEvent(
         'eventTargets',
-        (currentEvent.eventTargets || []).concat(targetAttr),
+        (currentEvent.eventTargets || []).concat(getNewTarget()),
       );
     }
   };
@@ -94,7 +94,7 @@ export const ActionConfig: React.FC<{
 
   useEffect(() => {
     if (currentEvent?.eventTargets?.length) return;
-    handleChange('add', getNewTarget());
+    handleChange('add');
   }, [currentEvent?.eventTargets]);
 
   return (
@@ -114,7 +114,7 @@ export const ActionConfig: React.FC<{
               onChange={(targetAttr) => handleChange('edit', targetAttr, i)}
               eventTarget={eventTarget}
               last={i === currentEvent?.eventTargets!.length - 1}
-              onAdd={() => handleChange('add', getNewTarget())}
+              onAdd={() => handleChange('add')}
               onDelete={() => handleDelete(i)}
             />
           ))}

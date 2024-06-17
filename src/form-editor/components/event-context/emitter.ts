@@ -1,7 +1,7 @@
-import { EventEmitter } from 'events';
+// import { EventEmitter } from 'events';
 
 export class Emitter {
-  private emitter = new EventEmitter();
+  // private emitter = new EventEmitter();
   private listeners: Map<string, ((...args: any[]) => any)[]> = new Map();
 
   private hasEvent(event: string): boolean {
@@ -14,15 +14,15 @@ export class Emitter {
     } else {
       this.listeners.set(event, [listener]);
     }
-    this.emitter.on(event, listener);
+    // this.emitter.on(event, listener);
   }
 
   emit(event: string, ...args: any) {
     if (!this.hasEvent(event)) return;
-    this.listeners.get(event)?.map((listener) => {
+    this.listeners.get(event)?.forEach((listener) => {
       listener?.(...args);
     });
-    this.emitter.emit(event, ...args);
+    // this.emitter.emit(event, ...args);
   }
 
   off(event: string, listener: (...args: any) => any) {
@@ -33,6 +33,6 @@ export class Emitter {
     if (index !== -1) {
       listeners?.splice(index!, 1);
     }
-    this.emitter.off(event, listener);
+    // this.emitter.off(event, listener);
   }
 }

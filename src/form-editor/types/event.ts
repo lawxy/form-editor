@@ -14,7 +14,7 @@ export enum EEventAction {
   // 鼠标点击
   ON_CLICK = 'onClick',
   // 鼠标双击
-  ON_DOULE_CLICK = 'onDoubleClick',
+  // ON_DOULE_CLICK = 'onDoubleClick',
   // 值发生变化
   ON_CHANGE = 'onChange',
   // 聚焦
