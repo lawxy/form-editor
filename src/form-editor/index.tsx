@@ -38,7 +38,12 @@ export const FormEditor = () => {
 
   return (
     <ConfigProvider locale={locale}>
-      <Form form={form}>
+      <Form
+        form={form}
+        onValuesChange={(a) => {
+          console.log(a);
+        }}
+      >
         <StyledDiv>
           <Left />
           <EditorDesign />

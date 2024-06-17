@@ -26,7 +26,7 @@ export enum EEventAction {
 }
 export const eventActionInChinese = {
   [EEventAction.ON_CLICK]: '鼠标单击',
-  [EEventAction.ON_DOULE_CLICK]: '鼠标双击',
+  // [EEventAction.ON_DOULE_CLICK]: '鼠标双击',
   [EEventAction.ON_CHANGE]: '值发生变化',
   [EEventAction.ON_FOCUS]: '获得焦点',
   [EEventAction.ON_BLUR]: '失去焦点',

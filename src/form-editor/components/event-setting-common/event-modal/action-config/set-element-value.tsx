@@ -17,9 +17,15 @@ const SetElementValue: React.FC<{
   const { targetElementId, targetPayload, setValue } = eventTarget || {};
 
   const componentsOptions = store.formElements.map((el) => ({
-    label: el?.elementName || el.id,
+    label: (
+      <div
+        dangerouslySetInnerHTML={{
+          __html: el?.elementName || (el.id as string),
+        }}
+      />
+    ),
     value: el.id,
-    disabled: store.selectedElement.id === el.id
+    disabled: store.selectedElement.id === el.id,
   }));
 
   return (
