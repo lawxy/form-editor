@@ -26,14 +26,15 @@ const RenderInputContent: React.FC<{
       eventFunctions[action]?.(e.target.value);
     };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    store.setFieldValue(id!, e.target.value)
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    store.setFieldValue(id!, e.target.value);
   };
 
-  
   useEffect(() => {
-    eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue)
-  }, [fieldValue, eventFunctions[EEventAction.VALUE_CHANGE]])
+    eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
+  }, [fieldValue, eventFunctions[EEventAction.VALUE_CHANGE]]);
 
   return (
     <ElementLayout element={element} mode={mode} contaninerCss={contaninerCss}>

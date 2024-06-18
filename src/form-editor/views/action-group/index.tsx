@@ -1,24 +1,20 @@
-import MonacoEditor from "@monaco-editor/react";
+import MonacoEditor from '@/components/monaco-editor';
 import { Popconfirm, Modal, Button, Form, message } from 'antd';
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite';
 import React, { useCallback, useState, useMemo } from 'react';
-
-import { ActionGroupWrap, GroupItem } from './styled'
+import { ActionGroupWrap, GroupItem } from './styled';
 import { EditorForm } from '../canvas';
-
 
 import store from '@/store';
 
-const ActionItem: React.FC<{
-  icon?: React.ReactNode,
-  text: string;
-} & {[key: string]: any}> = ({ text, icon, ...rest }) => {
-  return (
-    <GroupItem {...rest}>
-      {text}
-    </GroupItem>
-  )
-}
+const ActionItem: React.FC<
+  {
+    icon?: React.ReactNode;
+    text: string;
+  } & { [key: string]: any }
+> = ({ text, icon, ...rest }) => {
+  return <GroupItem {...rest}>{text}</GroupItem>;
+};
 
 const ActionGroup = () => {
   const [openCode, setOpenCode] = useState(false);
@@ -33,7 +29,7 @@ const ActionGroup = () => {
     // console.log(toJS(store.formElements))
     /**
      * 组件属性校验
-    */
+     */
     // const hasErrorEl = store.validateSettringAttr()
     // if(hasErrorEl) {
     //   store.setSelectedElement(hasErrorEl)
@@ -45,25 +41,25 @@ const ActionGroup = () => {
     //   return;
     // }
 
-    localStorage.setItem('formJson', JSON.stringify(store.getFormJson()))
-    message.success('保存成功')
-  }, [])
+    localStorage.setItem('formJson', JSON.stringify(store.getFormJson()));
+    message.success('保存成功');
+  }, []);
 
   return (
     <ActionGroupWrap>
-      <ActionItem text='预览' onClick={() => setOpenForm(true)}/>
-      <ActionItem text='查看json' onClick={() => setOpenCode(true)}/>
-      <ActionItem text='保存' onClick={handleSave}/>
+      <ActionItem text="预览" onClick={() => setOpenForm(true)} />
+      <ActionItem text="查看json" onClick={() => setOpenCode(true)} />
+      <ActionItem text="保存" onClick={handleSave} />
       <Popconfirm
         title="确定要清空吗？"
         onConfirm={() => {
           store.clearAllElements();
         }}
         // @ts-ignore
-        getPopupContainer={n => n.parentNode}
+        getPopupContainer={(n) => n.parentNode}
       >
         <div>
-          <ActionItem text='清空' />
+          <ActionItem text="清空" />
         </div>
       </Popconfirm>
 
@@ -71,20 +67,20 @@ const ActionGroup = () => {
         width={600}
         open={openCode}
         onCancel={() => {
-          setOpenCode(false)
+          setOpenCode(false);
         }}
-        footer={
-          <Button onClick={() => setOpenCode(false)}>关闭</Button>
-        }
+        footer={<Button onClick={() => setOpenCode(false)}>关闭</Button>}
       >
-        <div style={{marginTop: 20}}>
+        <div style={{ marginTop: 20 }}>
           <MonacoEditor
-            defaultLanguage="json"
+            language="json"
             defaultValue={JSON.stringify(store.getFormJson(), null, 2)}
-            width="100%"
-            height="560px"
+            style={{
+              width: '100%',
+              height: 560,
+            }}
             options={{
-              readOnly: true
+              readOnly: true,
             }}
           />
         </div>
@@ -93,23 +89,21 @@ const ActionGroup = () => {
       <Modal
         open={openForm}
         onCancel={() => {
-          setOpenForm(false)
+          setOpenForm(false);
         }}
-        footer={
-          <Button onClick={() => setOpenForm(false)}>关闭</Button>
-        }
+        footer={<Button onClick={() => setOpenForm(false)}>关闭</Button>}
         width={1200}
         styles={{
           body: {
             height: 400,
-            overflow: 'auto'
-          }
+            overflow: 'auto',
+          },
         }}
       >
         <EditorForm />
       </Modal>
     </ActionGroupWrap>
-  )
-}
+  );
+};
 
-export default observer(ActionGroup)
+export default observer(ActionGroup);

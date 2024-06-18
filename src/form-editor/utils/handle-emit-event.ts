@@ -29,20 +29,41 @@ export type TEmitData = Partial<IEventTarget> & {
   value?: any;
 };
 
-const validateValues = (values: any[]) =>
+const validateParams = (values: any[]) =>
   values.every((value) => !isNil(value));
 
 // 设置组件值
 export const emitSettingValue = (params: IParams) => {
   const { emitter, eventType, target } = params;
   const { targetElementId, setValue, targetPayload } = target;
-  const validate = validateValues([targetElementId, targetPayload]);
+  const validate = validateParams([targetElementId, targetPayload]);
   if (!validate) return;
   return (value: any) => {
     emitter.emit(targetElementId!, {
       targetElementId,
       eventType,
       setValue,
+      targetPayload,
+      value,
+    } as TEmitData);
+  };
+};
+
+// 刷新服务
+export const emitRefreshService = (params: IParams) => {
+  const { emitter, eventType, target } = params;
+  const { targetServiceId, targetPayload, refreshFlag, updateField } = target;
+  const validate = validateParams([
+    targetServiceId,
+    targetPayload,
+    refreshFlag,
+  ]);
+  if (!validate) return;
+  return (value: any) => {
+    emitter.emit(targetServiceId!, {
+      targetServiceId,
+      eventType,
+      updateField,
       targetPayload,
       value,
     } as TEmitData);
@@ -62,6 +83,9 @@ export const handleEmitEvent = (
       switch (eventType) {
         case EEventType.SETTING_VALUE:
           emitFn = emitSettingValue(params);
+          break;
+        case EEventType.REFRESH_SERVICE:
+          emitFn = emitRefreshService(params);
           break;
       }
 

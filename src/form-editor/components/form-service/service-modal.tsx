@@ -15,12 +15,16 @@ const methodOptions = ['GET', 'POST', 'PUT', 'DELETE'].map((item) => ({
   value: item,
 }));
 
-const ServiceModal: FC<PropsWithChildren<{
-  service?: TFormSerive
-}>> = ({ children, service }) => {
+const ServiceModal: FC<
+  PropsWithChildren<{
+    service?: TFormSerive;
+  }>
+> = ({ children, service }) => {
   const [open, setOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [form] = Form.useForm();
+  console.log("form.getFieldValue('previewData')");
+  console.log(form.getFieldsValue());
   return (
     <>
       {React.isValidElement(children) &&
@@ -45,19 +49,19 @@ const ServiceModal: FC<PropsWithChildren<{
         styles={{
           body: {
             height: 500,
-            overflow: 'auto'
-          }
+            overflow: 'auto',
+          },
         }}
         onCancel={() => {
           setOpen(false);
         }}
         onOk={async () => {
           await form.validateFields();
-          const serviceValue = form.getFieldsValue()
-          if(service) {
-            store.setService(service.id, serviceValue)
-          }else {
-            serviceValue.id = idCreator('service')
+          const serviceValue = form.getFieldsValue();
+          if (service) {
+            store.setService(service.id, serviceValue);
+          } else {
+            serviceValue.id = idCreator('service');
             store.addService(serviceValue);
           }
           setOpen(false);
@@ -126,7 +130,7 @@ const ServiceModal: FC<PropsWithChildren<{
 
           <Form.Item
             className={prefixCls('service-modal-form-item')}
-            name='callback'
+            name="callback"
             label={
               <Flex style={{ width: '100%' }} justify="space-between">
                 <span>回调函数</span>
@@ -149,13 +153,14 @@ const ServiceModal: FC<PropsWithChildren<{
           <Form.Item
             className={prefixCls('service-modal-form-item')}
             name="previewData"
+            shouldUpdate
             label={
               <Flex style={{ width: '100%' }} justify="space-between">
                 <span>预览参数</span>
                 <AttributesSetting
                   title="编辑参数"
                   editorType="typescript"
-                  value="export default {}"
+                  value={form.getFieldValue('previewData')}
                   onChange={(v) => {
                     form.setFieldValue('previewData', v);
                   }}

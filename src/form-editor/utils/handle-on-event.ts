@@ -12,6 +12,11 @@ export const triggerSettingValue = (params: TEmitData) => {
     store.setFieldValue(targetElementId!, setValue);
   }
 };
+// 刷新服务
+export const triggerRefreshService = (params: TEmitData) => {
+  const { targetServiceId, eventType, updateField, targetPayload, value } =
+    params;
+};
 
 export const handleOnEvent = (params: TEmitData) => {
   const { eventType } = params;
@@ -19,5 +24,7 @@ export const handleOnEvent = (params: TEmitData) => {
     case EEventType.SETTING_VALUE:
       triggerSettingValue(params);
       break;
+    case EEventType.REFRESH_SERVICE:
+      triggerRefreshService(params);
   }
 };
