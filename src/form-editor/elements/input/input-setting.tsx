@@ -14,7 +14,7 @@ const typeOptions = [
   { label: '多行文本', value: 'multiple' },
 ];
 const eventActions = [
-  EEventAction.ON_CHANGE,
+  EEventAction.VALUE_CHANGE,
   EEventAction.ON_FOCUS,
   EEventAction.ON_BLUR,
 ];

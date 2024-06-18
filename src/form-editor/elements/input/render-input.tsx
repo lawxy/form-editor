@@ -1,6 +1,6 @@
 import { Input } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import ElementLayout from '@/components/element-layout';
 import { useElementCommon, useRegisterEvents } from '@/hooks';
@@ -23,9 +23,17 @@ const RenderInputContent: React.FC<{
   const handleEvent =
     (action: EEventAction) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      store.setFieldValue(id as string, e.target.value);
       eventFunctions[action]?.(e.target.value);
     };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    store.setFieldValue(id!, e.target.value)
+  };
+
+  
+  useEffect(() => {
+    eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue)
+  }, [fieldValue, eventFunctions[EEventAction.VALUE_CHANGE]])
 
   return (
     <ElementLayout element={element} mode={mode} contaninerCss={contaninerCss}>
@@ -35,7 +43,7 @@ const RenderInputContent: React.FC<{
           style={{ ...elCss }}
           placeholder={placeholder}
           id={id}
-          onChange={handleEvent(EEventAction.ON_CHANGE)}
+          onChange={handleChange}
           onFocus={handleEvent(EEventAction.ON_FOCUS)}
           onBlur={handleEvent(EEventAction.ON_BLUR)}
         />
@@ -53,7 +61,7 @@ const RenderInputContent: React.FC<{
           value={fieldValue}
           placeholder={placeholder}
           id={id}
-          onChange={handleEvent(EEventAction.ON_CHANGE)}
+          onChange={handleChange}
           onFocus={handleEvent(EEventAction.ON_FOCUS)}
           onBlur={handleEvent(EEventAction.ON_BLUR)}
         />

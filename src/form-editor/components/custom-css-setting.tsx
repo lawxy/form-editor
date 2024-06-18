@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Button, message } from 'antd'
-import MonacoEditor, { useMonaco } from "@monaco-editor/react";
+// import MonacoEditor, { useMonaco } from "@monaco-editor/react";
+import MonacoEditor, { useMonaco } from "./monaco-editor";
 
 import { SettingItem } from './setting-item'
 import store from '../store'
@@ -21,12 +22,14 @@ const CustomCssSetting = () => {
 
   useEffect(() => {
     if(!monaco) return;
-    monaco.languages.css.cssDefaults.setDiagnosticsOptions({
-      validate: true,
-      lint: {
-        emptyRules: 'ignore', // 忽略空规则校验
-      },
-    });
+    // console.log('monaco')
+    // console.log(monaco)
+    // monaco.languages.css.cssDefaults.setDiagnosticsOptions({
+    //   validate: true,
+    //   lint: {
+    //     emptyRules: 'ignore', // 忽略空规则校验
+    //   },
+    // });
   }, [monaco])
 
   const handleSave = () => {
@@ -52,9 +55,11 @@ const CustomCssSetting = () => {
         </Button>
       </SettingItem>
       <MonacoEditor
-        height='calc(100vh - 150px)'
-        defaultLanguage='css'
-        value={value}
+        style={{
+          height: 'calc(100vh - 150px)'
+        }}
+        language='css'
+        defaultValue={value}
         onChange={(v) => {
           setCanSave(true);
           tempVal.current = v as string;

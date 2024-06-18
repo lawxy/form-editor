@@ -67,6 +67,7 @@
   "dependencies": {
     "@babel/core": "^7.24.6",
     "@babel/standalone": "^7.24.6",
+    "@monaco-editor/loader": "^1.4.0",
     "@monaco-editor/react": "^4.6.0",
     "@types/styled-components": "^5.1.9",
     "ahooks": "^3.7.8",
@@ -76,6 +77,7 @@
     "lodash-es": "^4.17.21",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
+    "monaco-editor": "^0.32.0",
     "serialize-javascript": "^6.0.2",
     "sortablejs": "^1.15.2",
     "styled-components": "^5.3.0"
@@ -103,12 +105,14 @@
     "husky": "^8.0.1",
     "inquirer": "^8.2.6",
     "lint-staged": "^13.0.3",
+    "monaco-editor-webpack-plugin": "^7.1.0",
     "prettier": "^2.7.1",
     "prettier-plugin-organize-imports": "^3.0.0",
     "prettier-plugin-packagejson": "^2.2.18",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "stylelint": "^14.9.1"
+    "stylelint": "^14.9.1",
+    "worker-loader": "^3.0.8"
   },
   "peerDependencies": {
     "antd": "^5.8.1",
