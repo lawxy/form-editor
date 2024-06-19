@@ -4,7 +4,7 @@ const chainWebpack = (config: any) => {
   // 添加 MonacoWebpackPlugin
   config.plugin('monaco-editor').use(MonacoWebpackPlugin, [
     {
-      languages: ['json', 'css', 'html', 'typescript'], // 需要加载的语言
+      languages: ['json', 'css', 'html', 'typescript', 'javascript'], // 需要加载的语言
     },
   ]);
 

@@ -66,6 +66,7 @@ export const emitRefreshService = (params: IParams) => {
       updateField,
       targetPayload,
       value,
+      refreshFlag
     } as TEmitData);
   };
 };

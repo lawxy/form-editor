@@ -67,6 +67,7 @@
   "dependencies": {
     "@babel/core": "^7.24.6",
     "@babel/standalone": "^7.24.6",
+    "@monaco-editor/loader": "^1.4.0",
     "@types/styled-components": "^5.1.9",
     "ahooks": "^3.7.8",
     "array-move": "^4.0.0",

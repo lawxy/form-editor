@@ -1,7 +1,8 @@
 import { Emitter } from '@/components/event-context';
-import { EEventType, EChangeStatePayload } from '@/types';
+import { cloneDeep } from 'lodash-es';
+import { EEventType, EChangeStatePayload, TFormSerive } from '@/types';
 import store from '@/store';
-import { triggerService } from './trigger-service';
+import { triggerService, toSearchString, appendUrl, type IServiceParams } from './trigger-service';
 import type { TEventFunctions, TEmitData } from './handle-emit-event';
 
 // 设置组件值
@@ -14,21 +15,49 @@ export const triggerSettingValue = (params: TEmitData) => {
   }
 };
 // 刷新服务
-export const triggerRefreshService = (params: TEmitData) => {
-  const { targetServiceId, eventType, updateField, targetPayload, value } =
-    params;
+export const triggerRefreshService = async (params: TEmitData, emitter: Emitter) => {
+  const { targetServiceId, eventType, updateField, targetPayload, value, refreshFlag } = params;
 
-  triggerService(targetServiceId!, {})
+  const servId = targetServiceId!
+  const currentService = store.servicesMap.get(servId) as TFormSerive
+  console.log('currentService')
+  console.log(JSON.stringify(currentService))
+  // 拼接参数
+  if (targetPayload === EChangeStatePayload.APPEND) {
+    const { originalUrl } = currentService;
+    const newUrl = appendUrl(originalUrl, { [updateField!]: value })
+    console.log('newUrl', newUrl)
+    store.setService(servId, { url: newUrl })
+  }
+  // 更新参数
+  if (targetPayload === EChangeStatePayload.UPDATE) {
+    const { data = {} } = currentService;
+    const newData = cloneDeep(data);
+    newData[updateField!] = value;
+    store.setService(servId, { data: newData })
+  }
+  // 清空参数
+  if (targetPayload === EChangeStatePayload.CLEAR) {
+    store.setService(servId, { data: {} })
+  }
+
+  // 刷新服务
+  if (refreshFlag) {
+    const serviceRes = await triggerService(targetServiceId!)
+    console.log('serviceRes')
+    console.log(serviceRes)
+  }
+
 };
 
-export const handleOnEvent = (params: TEmitData) => {
+export const handleOnEvent = (params: TEmitData, emitter: Emitter) => {
   const { eventType } = params;
   switch (eventType) {
     case EEventType.SETTING_VALUE:
       triggerSettingValue(params);
       break;
     case EEventType.REFRESH_SERVICE:
-      triggerRefreshService(params);
+      triggerRefreshService(params, emitter);
       break;
   }
 };

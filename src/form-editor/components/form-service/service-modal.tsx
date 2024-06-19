@@ -91,19 +91,18 @@ const ServiceModal: FC<
             <Input />
           </Form.Item>
           <Form.Item
-            name="url"
+            name="originalUrl"
             label="接口名"
             required
-            rules={[{ 
+            rules={[{
               required: true,
               validator(_, val) {
-                console.log(val)
-                if(val.match(/^(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-.,@?^=%&amp;:/~+#]*[\w\-@?^=%&amp;/~+#])?$/)){
+                if (val.match(/^(http|https):\/\/((localhost:\d{1,5})|([\w\-_]+(\.[\w\-_]+)+))([\w\-.,@?^=%&amp;:/~+#]*[\w\-@?^=%&amp;/~+#])?$/)) {
                   return Promise.resolve()
                 }
                 return Promise.reject('格式不正确, 请以http或者https开头')
               }
-             }]}
+            }]}
           >
             <Input />
           </Form.Item>
@@ -168,7 +167,7 @@ const ServiceModal: FC<
                 <span>预览参数</span>
                 <AttributesSetting
                   title="编辑参数"
-                  editorType="typescript"
+                  editorType="javascript"
                   value={form.getFieldValue('previewData')}
                   onChange={(v) => {
                     form.setFieldValue('previewData', v);

@@ -5,6 +5,7 @@ import type { IBaseElement } from '@/types';
 import {
   handleEmitEvent,
   handleOnEvent,
+  type TEmitData,
   type TEventFormatFunctions,
 } from '@/utils';
 import { useForceRender } from '.';
@@ -22,9 +23,10 @@ export const useRegisterEvents: IRegisterEvents = (element) => {
   const forceRender = useForceRender();
 
   useEffect(() => {
-    emitter.on(id!, handleOnEvent);
+    const emitterOnEvent = (params: TEmitData) => handleOnEvent(params, emitter)
+    emitter.on(id!, emitterOnEvent);
     return () => {
-      emitter.off(id!, handleOnEvent);
+      emitter.off(id!, emitterOnEvent);
     };
   }, [id, emitter]);
 

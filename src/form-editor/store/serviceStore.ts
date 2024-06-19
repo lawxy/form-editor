@@ -51,7 +51,9 @@ export default {
     * 设置服务属性
    */
    setService(id: string, servAttr: Partial<TFormSerive>){
-     const idx = this.formServices!.findIndex(item => item.id === id)
-     this.formServices[idx] = { ...this.formServices![idx], ...servAttr }
+     const idx = this.formServices!.findIndex(item => item.id === id);
+     const newService = { ...this.formServices![idx], ...servAttr };
+     this.formServices[idx] = newService;
+     this.servicesMap.set(newService.id, newService)
    }
 } as Pick<IBaseStore , keyof IServiceStore>;

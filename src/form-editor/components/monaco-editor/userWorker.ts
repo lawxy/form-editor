@@ -1,5 +1,7 @@
 import * as monaco from 'monaco-editor';
+import loader from '@monaco-editor/loader';
 
+loader.config({ monaco });
 // @ts-ignore
 self.MonacoEnvironment = {
   getWorkerUrl: function (_moduleId: any, label: string) {
@@ -20,3 +22,7 @@ self.MonacoEnvironment = {
 };
 
 monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
+monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+  noSemanticValidation: true,
+  noSyntaxValidation: true,
+});

@@ -3,8 +3,6 @@ import { arrayMoveImmutable } from 'array-move';
 import type { IBaseElement } from '../types';
 import { IBaseStore, IElementStore } from './types'
 
-
-
 export default {
   /**
    * 储存所有元素的map
@@ -107,5 +105,6 @@ export default {
       (item) => item.id === this.selectedElement.id,
     ) as IBaseElement;
     elInForm[field] = value;
+    this.elementsMap.set(elInForm.id!, elInForm);
   },
 } as Pick<IBaseStore, keyof IElementStore>;
