@@ -94,7 +94,16 @@ const ServiceModal: FC<
             name="url"
             label="接口名"
             required
-            rules={[{ required: true }]}
+            rules={[{ 
+              required: true,
+              validator(_, val) {
+                console.log(val)
+                if(val.match(/^(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-.,@?^=%&amp;:/~+#]*[\w\-@?^=%&amp;/~+#])?$/)){
+                  return Promise.resolve()
+                }
+                return Promise.reject('格式不正确, 请以http或者https开头')
+              }
+             }]}
           >
             <Input />
           </Form.Item>
