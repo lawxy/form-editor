@@ -17,7 +17,7 @@ const actions = changeStateActions([
   EChangeStatePayload.APPEND,
 ]);
 const RefreshService: React.FC<{
-  onChange: (v: IEventTarget) => void;
+  onChange: (v: Omit<IEventTarget, 'id' | 'sourceElementId'>) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
   const { targetServiceId, targetPayload, refreshFlag, updateField } =

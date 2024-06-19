@@ -11,7 +11,7 @@ import {
 } from '@/types';
 
 const SetElementValue: React.FC<{
-  onChange: (v: IEventTarget) => void;
+  onChange: (v: Omit<IEventTarget, 'id' | 'sourceElementId'>) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
   const { targetElementId, targetPayload, setValue } = eventTarget || {};

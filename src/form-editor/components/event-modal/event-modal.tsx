@@ -26,8 +26,9 @@ export const EventModal: FC<
     eventActions: EEventAction[];
     onOk: (evt: CustomEvent) => void;
     type: EChangeType;
+    sourceElementId: string;
   }>
-> = ({ children, event, eventActions, onOk, type }) => {
+> = ({ children, event, eventActions, onOk, type, sourceElementId }) => {
   const [open, setOpen] = useState(false);
   const [tempEvent, setTempEvent] = useState<CustomEvent>(
     event || getNewEvent(),
@@ -35,7 +36,7 @@ export const EventModal: FC<
   const edit = useRef<boolean>(false);
   const setEdit = (flag: boolean) => {
     edit.current = flag;
-  }
+  };
   useEffect(() => {
     if (!open) {
       edit.current = false;
@@ -83,18 +84,26 @@ export const EventModal: FC<
           setTempEvent((prev) => ({
             ...prev,
             [field]: value,
-            eventTargets: []
+            eventTargets: [],
           }));
-        }
-      })
+        },
+      });
     } else {
       setTempEvent((prev) => ({
         ...prev,
         [field]: value,
       }));
     }
-
   };
+
+  const eventContextValue = useMemo(() => {
+    return {
+      currentEvent: tempEvent,
+      handleChangeEvent,
+      setEdit,
+      sourceElementId,
+    };
+  }, [tempEvent, handleChangeEvent, setEdit, sourceElementId]);
 
   return (
     <>
@@ -122,9 +131,7 @@ export const EventModal: FC<
           setOpen(false);
         }}
       >
-        <EventModalContext.Provider
-          value={{ currentEvent: tempEvent, handleChangeEvent, setEdit }}
-        >
+        <EventModalContext.Provider value={eventContextValue}>
           <div className={prefixCls('event-modal-wrap')}>
             <div className={prefixCls('event-modal-content')}>
               <SelectComponent

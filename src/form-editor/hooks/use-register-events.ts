@@ -19,11 +19,12 @@ interface IRegisterEvents {
 export const useRegisterEvents: IRegisterEvents = (element) => {
   const { emitter } = useContext(EventContext);
   const { customEvents, id } = element;
-  const eventFunctions = useRef<TEventFormatFunctions>({})
+  const eventFunctions = useRef<TEventFormatFunctions>({});
   const forceRender = useForceRender();
 
   useEffect(() => {
-    const emitterOnEvent = (params: TEmitData) => handleOnEvent(params, emitter)
+    const emitterOnEvent = (params: TEmitData) =>
+      handleOnEvent(params, emitter);
     emitter.on(id!, emitterOnEvent);
     return () => {
       emitter.off(id!, emitterOnEvent);
@@ -31,6 +32,7 @@ export const useRegisterEvents: IRegisterEvents = (element) => {
   }, [id, emitter]);
 
   useEffect(() => {
+    console.log(customEvents);
     if (!customEvents?.length) return;
     const functions = handleEmitEvent(emitter, customEvents);
     eventFunctions.current = functions;

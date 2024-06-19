@@ -103,11 +103,15 @@ export const refreshOptions = [
   { label: '不刷新', value: EServiceRefesh.NOT_REFRESH },
 ];
 export interface IEventTarget {
-  id?: string;
+  id: string;
   /**
    * 目标组件id
    */
   targetElementId?: string;
+  /**
+   * 事件源组件id
+   */
+  sourceElementId: string;
   /**
    * 目标服务id
    */

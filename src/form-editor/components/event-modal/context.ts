@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import type { CustomEvent } from '@/types';
 
 interface IEventModalContext {
@@ -8,6 +8,7 @@ interface IEventModalContext {
     value: CustomEvent[T],
   ) => void;
   setEdit: (f: boolean) => void;
+  sourceElementId: string;
 }
 
 // @ts-ignore

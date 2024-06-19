@@ -30,6 +30,8 @@ const formatForCollapse = (customEvents: CustomEvent[]) => {
 const EventSettingCommon: React.FC<{
   eventActions: EEventAction[];
 }> = ({ eventActions }) => {
+  const sourceElementId = store.selectedElement.id;
+
   const handleSaveEvents = (type: EChangeType, event: CustomEvent) => {
     const customEvents = cloneDeep(store.selectedElement?.customEvents || []);
     if (type === EChangeType.ADD) {
@@ -73,6 +75,7 @@ const EventSettingCommon: React.FC<{
         eventActions={eventActions}
         onOk={(evt: CustomEvent) => handleSaveEvents(EChangeType.ADD, evt)}
         type={EChangeType.ADD}
+        sourceElementId={sourceElementId!}
       >
         <Button type="dashed" className={prefixCls('event-button-add')}>
           + 新增事件
@@ -92,6 +95,7 @@ const EventSettingCommon: React.FC<{
               }
               event={evt}
               type={EChangeType.EDIT}
+              sourceElementId={sourceElementId!}
             >
               {children}
             </EventModal>

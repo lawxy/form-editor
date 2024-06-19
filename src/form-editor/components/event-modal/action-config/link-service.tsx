@@ -7,7 +7,7 @@ import store from '@/store';
 import type { IEventTarget } from '@/types';
 
 const LinkService: React.FC<{
-  onChange: (v: IEventTarget) => void;
+  onChange: (v: Omit<IEventTarget, 'id' | 'sourceElementId'>) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
   const { targetServiceId } = eventTarget || {};
@@ -28,7 +28,7 @@ const LinkService: React.FC<{
           }}
         />
       </div>
-      <div>服务刷新时, 根据服务结果更新组件</div>
+      <div>服务刷新时, 获取服务结果更新组件</div>
     </div>
   );
 };

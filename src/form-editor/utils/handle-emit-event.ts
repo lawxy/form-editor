@@ -66,7 +66,22 @@ export const emitRefreshService = (params: IParams) => {
       updateField,
       targetPayload,
       value,
-      refreshFlag
+      refreshFlag,
+    } as TEmitData);
+  };
+};
+
+// 关联服务
+export const emitLinkService = (params: IParams) => {
+  const { emitter, eventType, target } = params;
+  const { targetServiceId, sourceElementId } = target;
+  const validate = validateParams([targetServiceId]);
+  if (!validate) return;
+  return () => {
+    emitter.emit(targetServiceId!, {
+      targetServiceId,
+      eventType,
+      sourceElementId,
     } as TEmitData);
   };
 };
@@ -87,6 +102,9 @@ export const handleEmitEvent = (
           break;
         case EEventType.REFRESH_SERVICE:
           emitFn = emitRefreshService(params);
+          break;
+        case EEventType.LINK_SERVICE:
+          emitFn = emitLinkService(params);
           break;
       }
 

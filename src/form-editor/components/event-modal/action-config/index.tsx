@@ -15,7 +15,7 @@ import { EventModalContext } from '../context';
 
 const ActionItem: React.FC<{
   type: EEventType;
-  onChange: (v: IEventTarget) => void;
+  onChange: (v: Omit<IEventTarget, 'id' | 'sourceElementId'>) => void;
   eventTarget?: IEventTarget;
   last: boolean;
   onAdd: () => void;
@@ -57,17 +57,21 @@ const ActionItem: React.FC<{
   );
 };
 
-const getNewTarget = () => ({ id: idCreator('event-target') });
+const getNewTarget = (sourceElementId: string) => ({
+  id: idCreator('event-target'),
+  sourceElementId,
+});
 export const ActionConfig: React.FC<{
   title: string;
   className?: string;
   currentEvent: CustomEvent;
 }> = ({ title, className, currentEvent }) => {
-  const { handleChangeEvent, setEdit } = useContext(EventModalContext);
+  const { handleChangeEvent, setEdit, sourceElementId } =
+    useContext(EventModalContext);
 
   const handleChange = (
     type: 'add' | 'edit',
-    targetAttr?: Partial<IEventTarget>,
+    targetAttr?: Omit<IEventTarget, 'id' | 'sourceElementId'>,
     idx?: number,
   ) => {
     if (type === 'edit') {
@@ -77,11 +81,11 @@ export const ActionConfig: React.FC<{
         targetAttr,
       );
       handleChangeEvent('eventTargets', newEventTargets);
-      setEdit(true)
+      setEdit(true);
     } else {
       handleChangeEvent(
         'eventTargets',
-        (currentEvent.eventTargets || []).concat(getNewTarget()),
+        (currentEvent.eventTargets || []).concat(getNewTarget(sourceElementId)),
       );
     }
   };
