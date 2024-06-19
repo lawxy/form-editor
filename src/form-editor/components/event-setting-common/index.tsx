@@ -4,7 +4,7 @@ import { cloneDeep, groupBy } from 'lodash-es';
 import { observer } from 'mobx-react-lite';
 
 import { EventCollapse } from './event-collapse';
-import { EventModal } from './event-modal';
+import { EventModal } from '../event-modal';
 
 import { prefixCls } from '@/const';
 import store from '@/store';

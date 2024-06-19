@@ -1,8 +1,5 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-// import loader from '@monaco-editor/loader';
-// loader.config({ monaco });
-// loader.init()
 import './userWorker'
 
 interface EditorProps {

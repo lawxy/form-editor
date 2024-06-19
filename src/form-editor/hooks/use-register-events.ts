@@ -1,12 +1,13 @@
-import { useEffect, useContext, useState, memo } from 'react';
+import { useEffect, useContext, useState, useRef } from 'react';
 import { EventContext } from '@/components/event-context';
 import { EEventAction, EEventType, IEventTarget } from '@/types';
 import type { IBaseElement } from '@/types';
 import {
   handleEmitEvent,
+  handleOnEvent,
   type TEventFormatFunctions,
-} from '@/utils/handle-emit-event';
-import { handleOnEvent } from '@/utils/handle-on-event';
+} from '@/utils';
+import { useForceRender } from '.';
 
 export * from '@/utils/handle-emit-event';
 
@@ -17,7 +18,8 @@ interface IRegisterEvents {
 export const useRegisterEvents: IRegisterEvents = (element) => {
   const { emitter } = useContext(EventContext);
   const { customEvents, id } = element;
-  const [eventFunctions, setFunctions] = useState<TEventFormatFunctions>({});
+  const eventFunctions = useRef<TEventFormatFunctions>({})
+  const forceRender = useForceRender();
 
   useEffect(() => {
     emitter.on(id!, handleOnEvent);
@@ -29,8 +31,9 @@ export const useRegisterEvents: IRegisterEvents = (element) => {
   useEffect(() => {
     if (!customEvents?.length) return;
     const functions = handleEmitEvent(emitter, customEvents);
-    setFunctions(functions);
+    eventFunctions.current = functions;
+    forceRender();
   }, [customEvents, emitter]);
 
-  return { eventFunctions };
+  return { eventFunctions: eventFunctions.current };
 };

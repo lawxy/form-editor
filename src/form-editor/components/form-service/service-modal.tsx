@@ -23,8 +23,8 @@ const ServiceModal: FC<
   const [open, setOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [form] = Form.useForm();
-  console.log("form.getFieldValue('previewData')");
-  console.log(form.getFieldsValue());
+  // console.log("form.getFieldValue('previewData')");
+  // console.log(form.getFieldsValue());
   return (
     <>
       {React.isValidElement(children) &&

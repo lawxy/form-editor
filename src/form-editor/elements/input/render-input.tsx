@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect } from 'react';
 
 import ElementLayout from '@/components/element-layout';
-import { useElementCommon, useRegisterEvents } from '@/hooks';
+import { useElementCommon, useRegisterEvents, useUpdate } from '@/hooks';
 import store from '@/store';
 import { EEventAction } from '@/types';
 import type { IBaseElement, TMode } from '@/types';
@@ -23,6 +23,7 @@ const RenderInputContent: React.FC<{
   const handleEvent =
     (action: EEventAction) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      // console.log('render emit', action, eventFunctions[action])
       eventFunctions[action]?.(e.target.value);
     };
 
@@ -32,9 +33,9 @@ const RenderInputContent: React.FC<{
     store.setFieldValue(id!, e.target.value);
   };
 
-  useEffect(() => {
+  useUpdate(() => {
     eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
-  }, [fieldValue, eventFunctions[EEventAction.VALUE_CHANGE]]);
+  }, [fieldValue]);
 
   return (
     <ElementLayout element={element} mode={mode} contaninerCss={contaninerCss}>

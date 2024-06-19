@@ -1,6 +1,7 @@
 import { Emitter } from '@/components/event-context';
 import { EEventType, EChangeStatePayload } from '@/types';
 import store from '@/store';
+import { triggerService } from './trigger-service';
 import type { TEventFunctions, TEmitData } from './handle-emit-event';
 
 // 设置组件值
@@ -16,6 +17,8 @@ export const triggerSettingValue = (params: TEmitData) => {
 export const triggerRefreshService = (params: TEmitData) => {
   const { targetServiceId, eventType, updateField, targetPayload, value } =
     params;
+
+  triggerService(targetServiceId!, {})
 };
 
 export const handleOnEvent = (params: TEmitData) => {
@@ -26,5 +29,6 @@ export const handleOnEvent = (params: TEmitData) => {
       break;
     case EEventType.REFRESH_SERVICE:
       triggerRefreshService(params);
+      break;
   }
 };

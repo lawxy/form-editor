@@ -38,6 +38,7 @@ export interface IElementStore {
 
 export interface IServiceStore {
   formServices: TFormSerives;
+  servicesMap: Map<string, TFormSerive>;
   setFormServices: (services: TFormSerives) => void;
   getFormServices: () => TFormSerives;
   addService: (serv: TFormSerive) => void;

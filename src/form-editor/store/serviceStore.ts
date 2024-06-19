@@ -8,8 +8,13 @@ export default {
   */
   formServices: [],
 
+  servicesMap: new Map(),
+
   setFormServices(services: TFormSerives) {
     this.formServices = services;
+    this.formServices.forEach((serv: TFormSerive) => {
+      this.servicesMap.set(serv.id as string, serv)
+    })
   },
   /**
   * 获取服务
@@ -22,22 +27,25 @@ export default {
     * 新增服务
    */
    addService(serv: TFormSerive) {
-     this.formServices.push(serv)
-   },
+    this.formServices.push(serv)
+    this.servicesMap.set(serv.id!, serv);
+  },
    /**
     * 删除服务
    */
    deleteService(id: string) {
-     const idx = this.formServices!.findIndex(item => item.id === id)
-     this.formServices.splice(idx, 1)
-   },
+    const idx = this.formServices!.findIndex(item => item.id === id)
+    this.formServices.splice(idx, 1)
+    this.servicesMap.delete(id);
+  },
    /**
     * 复制服务
    */
    copyService(serv: TFormSerive) {
-     const idx = this.formServices!.findIndex(item => item.id === serv.id)
-     const newServ:TFormSerive =  { ...serv, name: `${serv.name}-副本`, id: idCreator('service') }
-     this.formServices.splice(idx+1, 0, newServ)
+    const idx = this.formServices!.findIndex(item => item.id === serv.id)
+    const newServ:TFormSerive =  { ...serv, name: `${serv.name}-副本`, id: idCreator('service') }
+    this.formServices.splice(idx+1, 0, newServ)
+    this.servicesMap.set(newServ.id!, newServ);
    },
    /**
     * 设置服务属性

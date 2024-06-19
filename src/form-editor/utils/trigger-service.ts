@@ -2,17 +2,20 @@ import store from '@/store';
 import axios from 'axios';
 import { TFormSerive } from '@/types';
 
-export type TServiceParams = Pick<
-  TFormSerive,
-  'method' | 'url' | 'data' | 'headers' | 'callback'
->;
+export interface IServiceParams {
+  url?: TFormSerive['url'],
+  data?: TFormSerive['data'],
+}
 
-export const triggerService = async (params: TServiceParams) => {
-  const { method, url, data, headers = {}, callback } = params;
+export const triggerService = async (id: string, params: IServiceParams) => {
+  const service = store.servicesMap.get(id);
+  const { method, url: originUrl, data: originData, headers = {}, callback } = service!
+
+  const { url, data = {} } = params;
   return axios({
     method,
-    url,
-    data,
+    url: url || originUrl,
+    data: data || originData,
     headers,
   });
 };
