@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash-es';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 
 import { prefixCls } from '@/const';
-import { CustomEvent, EEventType, IEventTarget } from '@/types';
+import { TCustomEvent, EEventType, IEventTarget } from '@/types';
 import { idCreator } from '@/utils';
 
 import LinkServcie from './link-service';
@@ -64,7 +64,7 @@ const getNewTarget = (sourceElementId: string) => ({
 export const ActionConfig: React.FC<{
   title: string;
   className?: string;
-  currentEvent: CustomEvent;
+  currentEvent: TCustomEvent;
 }> = ({ title, className, currentEvent }) => {
   const { handleChangeEvent, setEdit, sourceElementId } =
     useContext(EventModalContext);

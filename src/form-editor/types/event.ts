@@ -1,4 +1,4 @@
-export type CustomEvent = {
+export type TCustomEvent = {
   id: string;
   // 触发事件的动作
   eventAction?: EEventAction;
@@ -8,7 +8,7 @@ export type CustomEvent = {
   eventTargets?: IEventTarget[];
 };
 
-export type CustomEvents = CustomEvent[];
+export type TCustomEvents = TCustomEvent[];
 
 export enum EEventAction {
   // 鼠标点击
@@ -31,6 +31,7 @@ export const eventActionInChinese = {
   [EEventAction.ON_FOCUS]: '获得焦点',
   [EEventAction.ON_BLUR]: '失去焦点',
   [EEventAction.ON_LOADED]: '组件加载后',
+
 };
 
 /**
@@ -55,8 +56,8 @@ export enum EEventType {
 
 export const eventTypeChinese = {
   [EEventType.REFRESH_SERVICE]: '刷新服务',
-  [EEventType.LINK_SERVICE]: '关联服务',
   [EEventType.SETTING_VALUE]: '设置组件值',
+  [EEventType.LINK_SERVICE]: '关联服务',
 };
 
 /**

@@ -69,6 +69,7 @@ const ActionGroup = () => {
         onCancel={() => {
           setOpenCode(false);
         }}
+        destroyOnClose
         footer={<Button onClick={() => setOpenCode(false)}>关闭</Button>}
       >
         <div style={{ marginTop: 20 }}>

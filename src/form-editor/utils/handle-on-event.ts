@@ -35,13 +35,13 @@ export const triggerRefreshService = async (
   } = params;
 
   const servId = targetServiceId!;
-  const currentService = store.servicesMap.get(servId) as TFormSerive;
+  const currentService = store.getService(servId) as TFormSerive;
   // console.log('currentService')
   // console.log(JSON.stringify(currentService))
   // 拼接参数
   if (targetPayload === EChangeStatePayload.APPEND) {
-    const { originalUrl } = currentService;
-    const newUrl = appendUrl(originalUrl, { [updateField!]: value });
+    const { url } = currentService;
+    const newUrl = appendUrl(url, { [updateField!]: value });
     // console.log('newUrl', newUrl)
     store.setService(servId, { url: newUrl });
   }
@@ -59,7 +59,9 @@ export const triggerRefreshService = async (
 
   // 刷新服务
   if (refreshFlag) {
+    // emitter.emit()
     const serviceRes = await triggerService(targetServiceId!);
+    const { linkingElements } = currentService
     // console.log('serviceRes');
     // console.log(serviceRes);
   }

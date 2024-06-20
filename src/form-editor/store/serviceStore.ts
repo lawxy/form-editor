@@ -55,5 +55,17 @@ export default {
      const newService = { ...this.formServices![idx], ...servAttr };
      this.formServices[idx] = newService;
      this.servicesMap.set(newService.id, newService)
+   },
+   /**
+    * 根据判断服务是否存在
+   */
+   hasService(id: string){
+    return this.servicesMap.has(id);
+   },
+   /**
+    * 根据id获取服务
+   */
+   getService(id: string) {
+    return this.servicesMap.get(id);
    }
 } as Pick<IBaseStore , keyof IServiceStore>;

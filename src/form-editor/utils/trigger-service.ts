@@ -32,8 +32,8 @@ export const appendUrl = (baseUrl: string, params: Record<string, any>) => {
 }
 
 export const triggerService = async (id: string) => {
-  const service = store.servicesMap.get(id);
-  const { method, url, originalUrl, data, headers: originHeaders, callback: originCallback } = service!
+  const service = store.getService(id);
+  const { method, url, data, headers: originHeaders, callback: originCallback } = service!
 
   const { value: headers } = parseEsmString(originHeaders as string, {})
   // const { value: callback } =  parseEsmString(originCallback as string, {})
@@ -44,7 +44,7 @@ export const triggerService = async (id: string) => {
   try {
     return axios({
       method,
-      url: url || originalUrl,
+      url,
       data,
       headers,
     });

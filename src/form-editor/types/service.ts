@@ -1,7 +1,6 @@
 export type TFormSerive = {
   id: string;
   name: string;
-  originalUrl: string; // 初始状态的url
   url: string;  // 真实请求的url，可能因为事件更改
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   previewData?: Record<string, any>;
@@ -16,6 +15,11 @@ export type TFormSerive = {
    *  }
   */
   callback?: string;
+
+  /**
+  * 关联服务的组件id
+  */
+  linkingElements?: string[];
 };
 
 export type TFormSerives = TFormSerive[];

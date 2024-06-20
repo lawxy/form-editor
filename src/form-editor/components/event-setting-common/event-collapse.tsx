@@ -3,12 +3,12 @@ import { Collapse, Dropdown, Popconfirm } from 'antd';
 import React, { PropsWithChildren, type FC } from 'react';
 
 import { prefixCls } from '@/const';
-import { eventTypeChinese, type CustomEvent } from '@/types';
+import { eventTypeChinese, type TCustomEvent } from '@/types';
 
 export const EventCollapse: FC<{
   onDelete: (id: string) => void;
-  collopaseItems: Array<{ label: string; events: CustomEvent[] }>;
-  EditComponent: FC<PropsWithChildren<{ evt: CustomEvent }>>;
+  collopaseItems: Array<{ label: string; events: TCustomEvent[] }>;
+  EditComponent: FC<PropsWithChildren<{ evt: TCustomEvent }>>;
 }> = ({ collopaseItems, onDelete, EditComponent }) => {
   const items = collopaseItems.map((item, i) => ({
     key: i,

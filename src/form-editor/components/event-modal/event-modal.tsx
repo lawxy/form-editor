@@ -8,11 +8,12 @@ import { SelectComponent } from './select-component';
 
 import { prefixCls } from '@/const';
 import {
-  CustomEvent,
+  TCustomEvent,
   EChangeType,
   EEventAction,
   eventActionInChinese,
   eventTypeChinese,
+  EEventType,
 } from '@/types';
 import { idCreator } from '@/utils';
 
@@ -22,15 +23,15 @@ const getNewEvent = () => ({ id: idCreator('event') });
 
 export const EventModal: FC<
   PropsWithChildren<{
-    event?: CustomEvent;
+    event?: TCustomEvent;
     eventActions: EEventAction[];
-    onOk: (evt: CustomEvent) => void;
+    onOk: (evt: TCustomEvent) => void;
     type: EChangeType;
     sourceElementId: string;
   }>
 > = ({ children, event, eventActions, onOk, type, sourceElementId }) => {
   const [open, setOpen] = useState(false);
-  const [tempEvent, setTempEvent] = useState<CustomEvent>(
+  const [tempEvent, setTempEvent] = useState<TCustomEvent>(
     event || getNewEvent(),
   );
   const edit = useRef<boolean>(false);
@@ -69,12 +70,16 @@ export const EventModal: FC<
         menuItem.disabled = true;
       }
       return menuItem;
+    }).filter(({ key }) => {
+      // 只有组件加载后 才能关联服务
+      if (tempEvent.eventAction === EEventAction.ON_LOADED) return true
+      return key !== EEventType.LINK_SERVICE
     });
-  }, [type, event?.eventType]);
+  }, [type, event?.eventType, tempEvent.eventAction]);
 
-  const handleChangeEvent = <T extends keyof CustomEvent>(
+  const handleChangeEvent = <T extends keyof TCustomEvent>(
     field: T,
-    value: CustomEvent[T],
+    value: TCustomEvent[T],
   ) => {
     if ((field === 'eventAction' || field === 'eventType') && edit.current) {
       Modal.confirm({

@@ -2,22 +2,25 @@ import React from 'react';
 import { Button, message } from 'antd';
 import { cloneDeep, groupBy } from 'lodash-es';
 import { observer } from 'mobx-react-lite';
+import { prefixCls } from '@/const';
+import store from '@/store';
+import { handleLinkService, handleUnLinkService } from '@/utils';
+import {
+  TCustomEvent,
+  EChangeStatePayload,
+  EChangeType,
+  EEventAction,
+  EEventType,
+  eventActionInChinese,
+  TFormSerive
+} from '@/types';
 
 import { EventCollapse } from './event-collapse';
 import { EventModal } from '../event-modal';
 
-import { prefixCls } from '@/const';
-import store from '@/store';
-import {
-  CustomEvent,
-  EChangeType,
-  EEventAction,
-  eventActionInChinese,
-} from '@/types';
-
 import './style.less';
 
-const formatForCollapse = (customEvents: CustomEvent[]) => {
+const formatForCollapse = (customEvents: TCustomEvent[]) => {
   const group = groupBy(customEvents, 'eventAction');
   return Object.entries(group).map(([action, events]) => {
     return {
@@ -27,15 +30,52 @@ const formatForCollapse = (customEvents: CustomEvent[]) => {
   });
 };
 
+
+// 处理关联服务的数据
+// const handleLinkService = (newEvent: TCustomEvent, oldEvent?: TCustomEvent) => {
+//   const { eventTargets, eventType } = newEvent;
+//   if(eventType !== EEventType.LINK_SERVICE) return;
+
+//   // debugger
+//   if(oldEvent) {
+//     const { eventTargets: oldTargets } = newEvent;
+//     oldTargets?.forEach((target) => {
+//       const { targetServiceId, sourceElementId } = target;
+//       if(!targetServiceId) return;
+//       const { linkingElements } = store.servicesMap.get(targetServiceId) as TFormSerive
+//       if(linkingElements && linkingElements.length) {
+//         const idx = linkingElements.findIndex(elId => elId === sourceElementId)
+//         if(idx > -1) {
+//           linkingElements.splice(idx, 1);
+//           store.setService(targetServiceId, { linkingElements })
+//         }
+//       }
+//     })
+//   }
+
+//   eventTargets?.forEach((target) => {
+//     const { targetServiceId, sourceElementId } = target;
+//     if(!targetServiceId) return;
+//     const service = store.servicesMap.get(targetServiceId) as TFormSerive;
+//     const { linkingElements } = service
+//     if(!linkingElements) {
+//       store.setService(targetServiceId, { linkingElements: [sourceElementId]})
+//     }else {
+//       linkingElements.push(sourceElementId)
+//       store.setService(targetServiceId, { linkingElements })
+//     }
+//   })
+// }
+
 const EventSettingCommon: React.FC<{
   eventActions: EEventAction[];
 }> = ({ eventActions }) => {
   const sourceElementId = store.selectedElement.id;
 
-  const handleSaveEvents = (type: EChangeType, event: CustomEvent) => {
+  const handleSaveEvents = (type: EChangeType, event: TCustomEvent) => {
     const customEvents = cloneDeep(store.selectedElement?.customEvents || []);
     if (type === EChangeType.ADD) {
-      let sameActionEvent: CustomEvent | undefined = customEvents.find(
+      let sameActionEvent: TCustomEvent | undefined = customEvents.find(
         (existEvent) =>
           existEvent.eventAction === event.eventAction &&
           existEvent.eventType === event.eventType,
@@ -48,11 +88,14 @@ const EventSettingCommon: React.FC<{
       } else {
         customEvents.push(event);
       }
+      handleLinkService(event)
     } else {
       const idx = store.selectedElement?.customEvents?.findIndex(
         (evt) => event.id === evt.id,
       );
+      handleUnLinkService(customEvents[idx!])
       customEvents[idx!] = event;
+      handleLinkService(event)
     }
     // modal效果
     setTimeout(() => {
@@ -65,6 +108,7 @@ const EventSettingCommon: React.FC<{
     const idx = store.selectedElement?.customEvents?.findIndex(
       (event) => event.id === id,
     );
+    handleUnLinkService(customEvents![idx!])
     customEvents!.splice(idx!, 1);
     store.setSelectedProp('customEvents', customEvents);
   };
@@ -73,7 +117,7 @@ const EventSettingCommon: React.FC<{
     <div className={prefixCls('event-common-wrap')}>
       <EventModal
         eventActions={eventActions}
-        onOk={(evt: CustomEvent) => handleSaveEvents(EChangeType.ADD, evt)}
+        onOk={(evt: TCustomEvent) => handleSaveEvents(EChangeType.ADD, evt)}
         type={EChangeType.ADD}
         sourceElementId={sourceElementId!}
       >
@@ -90,7 +134,7 @@ const EventSettingCommon: React.FC<{
           return (
             <EventModal
               eventActions={eventActions}
-              onOk={(evt: CustomEvent) =>
+              onOk={(evt: TCustomEvent) =>
                 handleSaveEvents(EChangeType.EDIT, evt)
               }
               event={evt}

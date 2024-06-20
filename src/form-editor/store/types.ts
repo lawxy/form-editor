@@ -45,6 +45,8 @@ export interface IServiceStore {
   deleteService: (id: string) => void;
   copyService: (serv: TFormSerive) => void;
   setService: (id: string, servAttr: Partial<TFormSerive>) => void;
+  hasService: (id: string) => boolean;
+  getService: (id: string) => TFormSerive | undefined;
 }
 
 export type TFormTabType = 'element' | 'form' | 'service';

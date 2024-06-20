@@ -10,9 +10,6 @@ export function parseEsmString(jsString: string, valueWhenError: any): { formatt
       value: new Function(`return ${formattedString}`)(),
     };
   } catch (e) {
-    console.log('js解析错误');
-    console.log(jsString);
-  
     return {
       formattedString: jsString,
       value: valueWhenError,

@@ -91,7 +91,7 @@ const ServiceModal: FC<
             <Input />
           </Form.Item>
           <Form.Item
-            name="originalUrl"
+            name="url"
             label="接口名"
             required
             rules={[{

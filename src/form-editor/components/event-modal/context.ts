@@ -1,11 +1,11 @@
 import React from 'react';
-import type { CustomEvent } from '@/types';
+import type { TCustomEvent } from '@/types';
 
 interface IEventModalContext {
-  currentEvent: CustomEvent;
-  handleChangeEvent: <T extends keyof CustomEvent>(
+  currentEvent: TCustomEvent;
+  handleChangeEvent: <T extends keyof TCustomEvent>(
     field: T,
-    value: CustomEvent[T],
+    value: TCustomEvent[T],
   ) => void;
   setEdit: (f: boolean) => void;
   sourceElementId: string;

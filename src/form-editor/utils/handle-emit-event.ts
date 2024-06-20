@@ -3,10 +3,11 @@ import {
   EEventAction,
   EEventType,
   IEventTarget,
-  CustomEvent,
-  CustomEvents,
+  TCustomEvent,
+  TCustomEvents,
 } from '@/types';
 import { Emitter } from '@/components/event-context';
+import store from '@/store';
 
 interface IParams {
   emitter: Emitter;
@@ -59,6 +60,7 @@ export const emitRefreshService = (params: IParams) => {
     refreshFlag,
   ]);
   if (!validate) return;
+  if(!store.hasService(targetServiceId!)) return;
   return (value: any) => {
     emitter.emit(targetServiceId!, {
       targetServiceId,
@@ -72,26 +74,26 @@ export const emitRefreshService = (params: IParams) => {
 };
 
 // 关联服务
-export const emitLinkService = (params: IParams) => {
-  const { emitter, eventType, target } = params;
-  const { targetServiceId, sourceElementId } = target;
-  const validate = validateParams([targetServiceId]);
-  if (!validate) return;
-  return () => {
-    emitter.emit(targetServiceId!, {
-      targetServiceId,
-      eventType,
-      sourceElementId,
-    } as TEmitData);
-  };
-};
+// export const emitLinkService = (params: IParams) => {
+//   const { emitter, eventType, target } = params;
+//   const { targetServiceId, sourceElementId } = target;
+//   const validate = validateParams([targetServiceId]);
+//   if (!validate) return;
+//   return () => {
+//     emitter.emit(targetServiceId!, {
+//       targetServiceId,
+//       eventType,
+//       sourceElementId,
+//     } as TEmitData);
+//   };
+// };
 
 export const handleEmitEvent = (
   emitter: Emitter,
-  events: CustomEvents,
+  events: TCustomEvents,
 ): TEventFormatFunctions => {
   const functions: TEventFunctions = {};
-  events.forEach((event: CustomEvent) => {
+  events.forEach((event: TCustomEvent) => {
     const { eventAction, eventType, eventTargets } = event;
     eventTargets?.forEach((target) => {
       const params = { emitter, eventType, target } as IParams;
@@ -103,9 +105,9 @@ export const handleEmitEvent = (
         case EEventType.REFRESH_SERVICE:
           emitFn = emitRefreshService(params);
           break;
-        case EEventType.LINK_SERVICE:
-          emitFn = emitLinkService(params);
-          break;
+        // case EEventType.LINK_SERVICE:
+        //   emitFn = emitLinkService(params);
+        //   break;
       }
 
       if (!emitFn) return;
