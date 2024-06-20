@@ -13,6 +13,7 @@ import type { TEventFunctions, TEmitData } from './handle-emit-event';
 // 设置组件值
 export const triggerSettingValue = (params: TEmitData) => {
   const { setValue, value, targetPayload, targetElementId } = params;
+  if (!store.hasElement(targetElementId!)) return;
   if (targetPayload === EChangeStatePayload.SYNC) {
     store.setFieldValue(targetElementId!, value);
   } else {
@@ -41,6 +42,7 @@ export const triggerRefreshService = async (
   // 拼接参数
   if (targetPayload === EChangeStatePayload.APPEND) {
     const { url } = currentService;
+    debugger;
     const newUrl = appendUrl(url, { [updateField!]: value });
     // console.log('newUrl', newUrl)
     store.setService(servId, { url: newUrl });
@@ -59,22 +61,17 @@ export const triggerRefreshService = async (
 
   // 刷新服务
   if (refreshFlag) {
-    // emitter.emit()
     const serviceRes = await triggerService(targetServiceId!);
-    const { linkingElements } = currentService
-    // console.log('serviceRes');
-    // console.log(serviceRes);
+    const { linkingElements } = currentService;
+    linkingElements?.forEach((elId) => {
+      if (!store.hasElement(elId)) return;
+      store.setFieldValue(elId, serviceRes);
+    });
   }
 };
 
 // 关联服务
-export const triggerLinkService = (params: TEmitData) => {
-  // const { setValue, value, targetPayload, targetElementId } = params;
-  // if (targetPayload === EChangeStatePayload.SYNC) {
-  //   store.setFieldValue(targetElementId!, value);
-  // } else {
-  //   store.setFieldValue(targetElementId!, setValue);
-  // }
+// export const triggerLinkService = (params: TEmitData) => {
 };
 
 export const handleOnEvent = (params: TEmitData, emitter: Emitter) => {

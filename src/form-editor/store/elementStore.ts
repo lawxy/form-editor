@@ -1,7 +1,7 @@
 import { idCreator } from '@/utils';
 import { arrayMoveImmutable } from 'array-move';
 import type { IBaseElement } from '../types';
-import { IBaseStore, IElementStore } from './types'
+import { IBaseStore, IElementStore } from './types';
 
 export default {
   /**
@@ -17,13 +17,13 @@ export default {
   setFormElements(els: IBaseElement[]) {
     this.formElements = els;
     this.formElements.forEach((el: IBaseElement) => {
-      this.elementsMap.set(el.id as string, el)
-    })
+      this.elementsMap.set(el.id as string, el);
+    });
   },
 
   clearAllElements() {
     this.formElements = [];
-    this.elementsMap.clear()
+    this.elementsMap.clear();
   },
 
   /**
@@ -78,7 +78,7 @@ export default {
     const idx = this.formElements.findIndex((item) => item.id === el.id);
     const newEl: IBaseElement = { ...el, id: idCreator() };
     this.formElements.splice(idx + 1, 0, newEl);
-    this.elementsMap.set(newEl.id as string, newEl)
+    this.elementsMap.set(newEl.id as string, newEl);
     return newEl;
   },
 
@@ -90,7 +90,7 @@ export default {
   setSelectedElement(el: IBaseElement) {
     this.selectedElement = el;
     // @ts-ignore
-    this.setFormSettingTab('element')
+    this.setFormSettingTab('element');
   },
 
   /**
@@ -106,5 +106,19 @@ export default {
     ) as IBaseElement;
     elInForm[field] = value;
     this.elementsMap.set(elInForm.id!, elInForm);
+  },
+
+  /**
+   * 根据id判断元素是否存在
+   */
+  hasElement(id: string) {
+    return this.elementsMap.has(id);
+  },
+
+  /**
+   * 根据id获取元素
+   */
+  getElement(id: string) {
+    return this.elementsMap.get(id);
   },
 } as Pick<IBaseStore, keyof IElementStore>;

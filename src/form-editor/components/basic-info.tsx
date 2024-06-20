@@ -32,7 +32,7 @@ const BasicInfo = () => {
           }}
         />
       </SettingItem>
-      <SettingItem label="标签对齐">
+      <SettingItem label="名称对齐">
         <Select
           options={DirectionOpions}
           value={store.selectedElement.elementNameDisplay || 'vertical'}

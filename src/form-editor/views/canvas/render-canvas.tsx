@@ -53,24 +53,21 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
 
   useUpdate(() => {
     if (!store.formServices.length) return;
-    store.formServices.forEach(serv => {
-      emitter.on(serv.id!, handleOnEvent)
-    })
+    store.formServices.forEach((serv) => {
+      emitter.on(serv.id!, handleOnEvent);
+    });
     return () => {
-      store.formServices.forEach(serv => {
-        emitter.off(serv.id!, handleOnEvent)
-      })
-    }
-  }, [emitter, store.formServices])
+      store.formServices.forEach((serv) => {
+        emitter.off(serv.id!, handleOnEvent);
+      });
+    };
+  }, [emitter, store.formServices]);
 
   return (
     <div className={prefixCls('canvas-wrap')}>
       {actions && <>{actions}</>}
       <div className={prefixCls('canvas')} ref={el}>
-        {mode === 'design' && (
-          <div style={{ height: 10, background: '#f3f3f3' }} />
-        )}
-        <Row gutter={[horizontalGap, verticalGap]} style={{ height: '100%' }}>
+        <Row className={prefixCls('row')} gutter={[horizontalGap, verticalGap]}>
           {store.formElements.map((item: IBaseElement) => {
             const Component = ElementsList[item.type!]?.render;
             if (!Component) return null;

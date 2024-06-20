@@ -34,6 +34,10 @@ export interface IElementStore {
     field: T,
     value: IBaseElement[T],
   ) => void;
+
+  hasElement: (id: string) => boolean;
+
+  getElement: (id: string) => IBaseElement | undefined;
 }
 
 export interface IServiceStore {

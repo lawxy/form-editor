@@ -8,7 +8,6 @@ import {
 } from '@/types';
 import { Emitter } from '@/components/event-context';
 import store from '@/store';
-
 interface IParams {
   emitter: Emitter;
   eventType: EEventType;
@@ -60,7 +59,7 @@ export const emitRefreshService = (params: IParams) => {
     refreshFlag,
   ]);
   if (!validate) return;
-  if(!store.hasService(targetServiceId!)) return;
+  if (!store.hasService(targetServiceId!)) return;
   return (value: any) => {
     emitter.emit(targetServiceId!, {
       targetServiceId,

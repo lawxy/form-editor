@@ -1,22 +1,13 @@
+import React, { useEffect } from 'react';
 import { ConfigProvider, Form } from 'antd';
 import locale from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import './index.less';
+import { prefixCls } from './const';
 import store from './store';
 import { EditorDesign } from './views/canvas';
 import Left from './views/left';
 import Right from './views/right';
-
-const StyledDiv = styled.div(() => {
-  return `
-    display: flex;
-    align-items: flex-start;
-    background-color: rgb(245, 245, 245);
-    height: 100vh;
-  `;
-});
+import './index.less';
 
 export const FormEditor = () => {
   const [form] = Form.useForm();
@@ -38,17 +29,12 @@ export const FormEditor = () => {
 
   return (
     <ConfigProvider locale={locale}>
-      <Form
-        form={form}
-        onValuesChange={(a) => {
-          console.log(a);
-        }}
-      >
-        <StyledDiv>
+      <Form form={form}>
+        <div className={prefixCls('form')}>
           <Left />
           <EditorDesign />
           <Right />
-        </StyledDiv>
+        </div>
       </Form>
     </ConfigProvider>
   );
