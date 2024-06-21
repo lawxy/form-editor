@@ -32,7 +32,7 @@ const items: TabsProps['items'] = [
   }
 ];
 
-const Right = () => {
+const Settings = () => {
   return (
     <div className={prefixCls('setting')}>
       <Tabs 
@@ -49,4 +49,4 @@ const Right = () => {
     </div>
   )
 }
-export default observer(Right)
+export default observer(Settings)

@@ -1,11 +1,11 @@
-import MonacoEditor from '@/components/monaco-editor';
+import React, { useCallback, useState } from 'react';
 import { Popconfirm, Modal, Button, Form, message } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useCallback, useState, useMemo } from 'react';
+import MonacoEditor from '@/components/monaco-editor';
+import { prefixCls } from '@/const';
 import { ActionGroupWrap, GroupItem } from './styled';
-import { EditorForm } from '../canvas';
-
 import store from '@/store';
+import './style.less'
 
 const ActionItem: React.FC<
   {
@@ -13,7 +13,7 @@ const ActionItem: React.FC<
     text: string;
   } & { [key: string]: any }
 > = ({ text, icon, ...rest }) => {
-  return <GroupItem {...rest}>{text}</GroupItem>;
+  return <div className={prefixCls('action-item')} {...rest}>{text}</div>;
 };
 
 const ActionGroup = () => {
@@ -46,8 +46,10 @@ const ActionGroup = () => {
   }, []);
 
   return (
-    <ActionGroupWrap>
-      <ActionItem text="预览" onClick={() => setOpenForm(true)} />
+    <div className={prefixCls('action-group')}>
+      <ActionItem text="预览" onClick={() => {
+        window.open('/~demos/docs-preview-demo-demo-demo')
+      }} />
       <ActionItem text="查看json" onClick={() => setOpenCode(true)} />
       <ActionItem text="保存" onClick={handleSave} />
       <Popconfirm
@@ -86,7 +88,7 @@ const ActionGroup = () => {
           />
         </div>
       </Modal>
-
+{/* 
       <Modal
         open={openForm}
         onCancel={() => {
@@ -102,8 +104,8 @@ const ActionGroup = () => {
         }}
       >
         <EditorForm />
-      </Modal>
-    </ActionGroupWrap>
+      </Modal> */}
+    </div>
   );
 };
 

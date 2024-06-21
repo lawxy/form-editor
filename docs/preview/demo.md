@@ -1,5 +1,3 @@
-# low-code
-
-设计模式
+# 预览
 
 <code src='./demo.tsx'></code>

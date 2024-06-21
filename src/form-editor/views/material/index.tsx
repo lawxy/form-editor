@@ -8,7 +8,7 @@ import { ElementsList } from '@/elements';
 import type { IDragElementProp } from '@/types';
 import './style.less';
 
-const Left = () => {
+export const Material = () => {
   const el = useRef<any>();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Left = () => {
   }, []);
 
   return (
-    <div className={prefixCls('left-wrapper')}>
+    <div className={prefixCls('material')}>
       <div className={prefixCls('title')}>组件库</div>
       <div style={{ height: 10, backgroundColor: '#f5f5f5' }} />
       <div className={prefixCls('element-wrap')} ref={el}>
@@ -31,5 +31,3 @@ const Left = () => {
     </div>
   );
 };
-
-export default Left;

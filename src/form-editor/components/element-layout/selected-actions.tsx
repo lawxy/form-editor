@@ -51,7 +51,7 @@ export const SelectedActions = () => {
         className='fm-selected-action copy-action'
         onClick={() => {
           const newEl = store.copyEl(store.selectedElement)
-          store.setSelectedElement(newEl)
+          store.setSelectedElement(newEl!)
         }}
       >
         <CopyOutlined />

@@ -3,15 +3,27 @@ import type { FC, PropsWithChildren } from 'react';
 import { Row } from 'antd';
 import { observer } from 'mobx-react-lite';
 import Sortable from 'sortablejs';
+import c from 'classnames';
 import { prefixCls } from '@/const';
 import { ElementsList } from '@/elements/export';
 import { EventContext } from '@/components/event-context';
 import store from '@/store';
-import type { IBaseElement, IEditorCanvasProp } from '@/types';
+import type { IBaseElement, TMode } from '@/types';
 import { idCreator, handleOnEvent } from '@/utils';
 import { useUpdate } from '@/hooks';
 
 import './style.less';
+
+export interface IEditorCanvasProp {
+  /**
+   * 表单模式
+   */
+  mode: TMode;
+  /**
+   * 表单操作按钮
+   */
+  actions?: React.ReactNode; // 表单操作按钮组
+}
 
 const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
   mode,
@@ -66,7 +78,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
   return (
     <div className={prefixCls('canvas-wrap')}>
       {actions && <>{actions}</>}
-      <div className={prefixCls('canvas')} ref={el}>
+      <div className={c([prefixCls('canvas'), mode === 'design' ? prefixCls('canvas-design') : ''])} ref={el}>
         <Row className={prefixCls('row')} gutter={[horizontalGap, verticalGap]}>
           {store.formElements.map((item: IBaseElement) => {
             const Component = ElementsList[item.type!]?.render;

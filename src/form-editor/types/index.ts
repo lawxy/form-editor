@@ -1,7 +1,8 @@
 export * from './event';
 export * from './service';
 import { TCustomEvents } from './event';
-export type TConstructor<T = object> = new (...args: any[]) => T;
+import { TFormSerives } from './service';
+
 export interface IDragElementProp {
   type: string;
   render: React.FC<any>;
@@ -16,21 +17,6 @@ export type TOption = { label: string; value: string | number; id?: string };
 export enum EChangeType {
   ADD = 'add',
   EDIT = 'edit',
-}
-
-export interface IEditorCanvasProp {
-  /**
-   * 表单模式
-   */
-  mode: TMode;
-  /**
-   * 表单操作按钮
-   */
-  actions?: React.ReactNode; // 表单操作按钮组
-  /**
-   * 虚拟拖拽的组件
-   */
-  virtualElement?: IBaseElement;
 }
 
 export interface IBaseElement {
@@ -119,12 +105,17 @@ export interface IBaseElement {
    */
   customEvents?: TCustomEvents;
 }
-
 export interface IFormAttributesProps {
-  isProcessForm: boolean;
   formName?: string;
   formId?: string;
   status?: boolean;
   horizontalGap: number;
   verticalGap: number;
+}
+
+export interface IFormSchema {
+  formElements?: IBaseElement[];
+  fieldValues?: Record<string, any>;
+  formAttrs?: IFormAttributesProps;
+  formServices?: TFormSerives;
 }

@@ -1,41 +1,64 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import { ConfigProvider, Form } from 'antd';
 import locale from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
+import type { TMode, IFormSchema } from './types';
 import { prefixCls } from './const';
 import store from './store';
-import { EditorDesign } from './views/canvas';
-import Left from './views/left';
-import Right from './views/right';
-import './index.less';
+import { EditorContext } from './context';
 
-export const FormEditor = () => {
+import './index.less';
+export * from './views'
+
+export interface IForm {
+  mode: TMode;
+  defaultValue?: IFormSchema;
+}
+
+
+export const FormEditor: FC<PropsWithChildren<IForm>> = ({
+  mode, defaultValue, children
+}) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (localStorage.getItem('formJson')) {
-      const {
-        formElements = [],
-        fieldValues = {},
-        formAttrs = {},
-        formServices = [],
-      } = JSON.parse(localStorage.getItem('formJson')!);
-      store.setFormElements(formElements);
-      store.setFieldsValues(fieldValues);
-      store.setFormAttrs(formAttrs);
-      store.setFormServices(formServices);
+    let schema: IFormSchema = {}
+    if (defaultValue) {
+      schema = defaultValue;
+    } else if (localStorage.getItem('formJson')) {
+      try {
+        schema = JSON.parse(localStorage.getItem('formJson')!);
+      } catch (e) { }
     }
-  }, []);
+    const {
+      formElements = [],
+      fieldValues = {},
+      formAttrs = { verticalGap: 8, horizontalGap: 8 },
+      formServices = [],
+    } = schema;
+    store.setFormElements(formElements);
+    store.setFieldsValues(fieldValues);
+    store.setFormAttrs(formAttrs);
+    store.setFormServices(formServices);
+  }, [defaultValue]);
+
+  const contextValue = useMemo(() => {
+    return { mode }
+  }, [mode])
 
   return (
     <ConfigProvider locale={locale}>
-      <Form form={form}>
-        <div className={prefixCls('form')}>
-          <Left />
-          <EditorDesign />
-          <Right />
-        </div>
-      </Form>
+      <EditorContext.Provider value={contextValue}>
+        <Form form={form}>
+          <div className={prefixCls('form')}>
+            { children }
+            {/* <Material />
+            <FormCanvas mode={mode}/>
+            <Settings /> */}
+          </div>
+        </Form>
+      </EditorContext.Provider>
     </ConfigProvider>
   );
 };

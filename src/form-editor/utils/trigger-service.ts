@@ -11,7 +11,7 @@ export interface IServiceParams {
 }
 
 export interface IServiceResponse {
-  code: typeof axios.HttpStatusCode;
+  code: HttpStatusCode;
   data: any;
   errMsg?: string;
 }

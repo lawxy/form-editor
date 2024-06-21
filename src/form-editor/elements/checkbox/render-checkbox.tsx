@@ -1,4 +1,4 @@
-import { Checkbox, Space, type CheckboxValueType } from 'antd';
+import { Checkbox, Space } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React from 'react'
 

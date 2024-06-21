@@ -22,10 +22,10 @@ const WrapDesignEl: React.FC<PropsWithChildren<{
       onMouseDownCapture={handleSelect}
       ref={ref}
     >
-      {/* <Mask
+      <Mask
         horizontal={store.formAttrs.horizontalGap + 2}
         vertical={store.formAttrs.verticalGap + 2}
-      /> */}
+      />
       {store.selectedElement?.id === el.id && <SelectedActions />}
       {children}
     </DesignWrapDiv>

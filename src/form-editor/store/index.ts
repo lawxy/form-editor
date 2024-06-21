@@ -24,6 +24,7 @@ class Store {
   [key: string]: any;
 
   constructor() {
+    /* eslint-disable */
     extendStore(baseStore, this), makeAutoObservable(this);
   }
 
@@ -62,7 +63,6 @@ class Store {
    * 表单属性
    */
   formAttrs: IFormAttributesProps = {
-    isProcessForm: false,
     horizontalGap: 8,
     verticalGap: 8,
   };

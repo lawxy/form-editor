@@ -32,7 +32,6 @@ export const useRegisterEvents: IRegisterEvents = (element) => {
   }, [id, emitter]);
 
   useEffect(() => {
-    console.log(customEvents);
     if (!customEvents?.length) return;
     const functions = handleEmitEvent(emitter, customEvents);
     eventFunctions.current = functions;

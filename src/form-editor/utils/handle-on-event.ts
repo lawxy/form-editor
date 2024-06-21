@@ -42,7 +42,6 @@ export const triggerRefreshService = async (
   // 拼接参数
   if (targetPayload === EChangeStatePayload.APPEND) {
     const { url } = currentService;
-    debugger;
     const newUrl = appendUrl(url, { [updateField!]: value });
     // console.log('newUrl', newUrl)
     store.setService(servId, { url: newUrl });
@@ -72,7 +71,7 @@ export const triggerRefreshService = async (
 
 // 关联服务
 // export const triggerLinkService = (params: TEmitData) => {
-};
+// };
 
 export const handleOnEvent = (params: TEmitData, emitter: Emitter) => {
   const { eventType } = params;
