@@ -48,7 +48,7 @@ export const AttributesSetting: FC<
             height: 400,
           }}
           language={editorType}
-          defaultValue={val}
+          value={val}
           onChange={setVal}
           onValidate={(errors) => {
             console.log(errors);

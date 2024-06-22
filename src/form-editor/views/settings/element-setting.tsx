@@ -1,16 +1,22 @@
-import { observer } from 'mobx-react-lite'
-import React, { useMemo } from 'react'
-
-import { ElementsList } from '@/elements'
-import store from '@/store'
+import React, { useMemo } from 'react';
+import { observer } from 'mobx-react-lite';
+import { CommonTabsSetting } from '@/components/common-tabs-setting';
+import EventSettingCommon from '@/components/event-setting-common';
+import { ElementsList } from '@/elements';
+import store from '@/store';
 
 const ElementSetting = () => {
+  if (!store.selectedElement?.id) return null;
 
-  const Component = useMemo<React.FC<any> | null>(() => {
-    if(!store.selectedElement?.id) return null
-    return ElementsList[store.selectedElement.type!]?.setting
-  }, [store.selectedElement?.id]) as React.FC<any>
-  return store.selectedElement?.id ? <Component /> : null
-}
+  const { setting: Component, eventActions } =
+    ElementsList[store.selectedElement.type!];
 
-export default observer(ElementSetting)
+  return store.selectedElement?.id ? (
+    <CommonTabsSetting
+      attributes={<Component />}
+      events={<EventSettingCommon eventActions={eventActions} />}
+    />
+  ) : null;
+};
+
+export default observer(ElementSetting);

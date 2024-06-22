@@ -53,23 +53,7 @@ export interface IServiceStore {
   getService: (id: string) => TFormSerive | undefined;
 }
 
-export type TFormTabType = 'element' | 'form' | 'service';
-export interface IBaseStore extends IServiceStore, IElementStore {
-  formSettingTab: TFormTabType;
-  setFormSettingTab: (tab: TFormTabType) => void;
-  getFormJson: () => {
-    formElements: IBaseElement[];
-    fieldValues: Record<string, any>;
-    formAttrs: IFormAttributesProps;
-    formServices: TFormSerives;
-  };
-
-  fieldValues: Record<string, any>;
-
-  setFieldValue: (field: string, value: any) => void;
-
-  setFieldsValues: (values: Record<string, any>) => void;
-
+export interface IFormAttrStore {
   formAttrs: IFormAttributesProps;
 
   setFormAttrs: (attrs: IFormAttributesProps) => void;
@@ -78,4 +62,26 @@ export interface IBaseStore extends IServiceStore, IElementStore {
     key: T,
     value: IFormAttributesProps[T],
   ) => void;
+}
+
+export interface IFieldValuesStore {
+  fieldValues: Record<string, any>;
+
+  setFieldValue: (field: string, value: any) => void;
+
+  setFieldsValues: (values: Record<string, any>) => void;
+}
+
+export type TFormTabType = 'element' | 'form' | 'service';
+export interface IBaseStore
+  extends IServiceStore,
+    IElementStore,
+    IFormAttrStore,
+    IFieldValuesStore {
+  getFormJson: () => {
+    formElements: IBaseElement[];
+    fieldValues: Record<string, any>;
+    formAttrs: IFormAttributesProps;
+    formServices: TFormSerives;
+  };
 }

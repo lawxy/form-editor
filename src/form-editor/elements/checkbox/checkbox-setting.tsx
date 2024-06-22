@@ -1,18 +1,18 @@
-import { observer } from "mobx-react-lite";
-import React from 'react'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
 import { CommonTabsSetting } from '@/components/common-tabs-setting';
-import OptionSetting from '@/components/option-setting'; 
+import OptionSetting from '@/components/option-setting';
 
 const SettingCheckboxContent = () => {
   return (
     <div>
-      <CommonTabsSetting 
+      {/* <CommonTabsSetting 
         attributes={
-          <OptionSetting/>
         }
-      />
+        /> */}
+      <OptionSetting />
     </div>
-  )
-}
-export const SettingCheckbox = observer(SettingCheckboxContent)
+  );
+};
+export const SettingCheckbox = observer(SettingCheckboxContent);

@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import MonacoEditor from '@/components/monaco-editor';
 import { prefixCls } from '@/const';
 import store from '@/store';
-import './style.less'
+import './style.less';
 
 const ActionItem: React.FC<
   {
@@ -12,7 +12,11 @@ const ActionItem: React.FC<
     text: string;
   } & { [key: string]: any }
 > = ({ text, icon, ...rest }) => {
-  return <div className={prefixCls('action-item')} {...rest}>{text}</div>;
+  return (
+    <div className={prefixCls('action-item')} {...rest}>
+      {text}
+    </div>
+  );
 };
 
 const ActionGroup = () => {
@@ -44,17 +48,27 @@ const ActionGroup = () => {
     message.success('保存成功');
   }, []);
 
+  const handlePreview = async () => {
+    await handleSave();
+    setTimeout(() => {
+      window.open('/~demos/docs-preview-demo-demo-demo');
+    }, 1000);
+  };
+
   return (
     <div className={prefixCls('action-group')}>
-      <ActionItem text="预览" onClick={() => {
-        window.open('/~demos/docs-preview-demo-demo-demo')
-      }} />
+      <ActionItem text="预览" onClick={handlePreview} />
       <ActionItem text="查看json" onClick={() => setOpenCode(true)} />
       <ActionItem text="保存" onClick={handleSave} />
       <Popconfirm
         title="确定要清空吗？"
         onConfirm={() => {
           store.clearAllElements();
+          store.formServices?.forEach((serv) => {
+            if (serv?.linkingElements?.length) {
+              store.setService(serv.id, { linkingElements: [] });
+            }
+          });
         }}
         // @ts-ignore
         getPopupContainer={(n) => n.parentNode}
@@ -76,7 +90,7 @@ const ActionGroup = () => {
         <div style={{ marginTop: 20 }}>
           <MonacoEditor
             language="json"
-            defaultValue={JSON.stringify(store.getFormJson(), null, 2)}
+            value={JSON.stringify(store.getFormJson(), null, 2)}
             style={{
               width: '100%',
               height: 560,
@@ -87,7 +101,7 @@ const ActionGroup = () => {
           />
         </div>
       </Modal>
-{/* 
+      {/* 
       <Modal
         open={openForm}
         onCancel={() => {

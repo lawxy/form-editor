@@ -22,59 +22,54 @@ const eventActions = [
 const SettingInputContent = () => {
   const { textType, minRows, maxRows, autoSize } = store.selectedElement;
   return (
-    <CommonTabsSetting
-      attributes={
+    <>
+      <PlaceholderSetting />
+      <SettingItem label="文本类型">
+        <Select
+          value={textType}
+          style={{ width: '100%' }}
+          options={typeOptions}
+          onChange={(val) => {
+            store.setSelectedProp('textType', val);
+          }}
+        />
+      </SettingItem>
+      {textType === 'multiple' && (
         <>
-          <PlaceholderSetting />
-          <SettingItem label="文本类型">
-            <Select
-              value={textType}
-              style={{ width: '100%' }}
-              options={typeOptions}
+          <SettingItem label="自适应行数">
+            <Switch
+              checked={autoSize}
               onChange={(val) => {
-                store.setSelectedProp('textType', val);
+                store.setSelectedProp('autoSize', val);
               }}
             />
           </SettingItem>
-          {textType === 'multiple' && (
+          {!autoSize && (
             <>
-              <SettingItem label="自适应行数">
-                <Switch
-                  checked={autoSize}
+              <SettingItem label="最小行数">
+                <InputNumber
+                  value={minRows}
+                  style={{ width: '100%' }}
                   onChange={(val) => {
-                    store.setSelectedProp('autoSize', val);
+                    store.setSelectedProp('minRows', Number(val));
                   }}
                 />
               </SettingItem>
-              {!autoSize && (
-                <>
-                  <SettingItem label="最小行数">
-                    <InputNumber
-                      value={minRows}
-                      style={{ width: '100%' }}
-                      onChange={(val) => {
-                        store.setSelectedProp('minRows', Number(val));
-                      }}
-                    />
-                  </SettingItem>
-                  <SettingItem label="最大行数">
-                    <InputNumber
-                      value={maxRows}
-                      min={minRows}
-                      style={{ width: '100%' }}
-                      onChange={(val) => {
-                        store.setSelectedProp('maxRows', Number(val));
-                      }}
-                    />
-                  </SettingItem>
-                </>
-              )}
+              <SettingItem label="最大行数">
+                <InputNumber
+                  value={maxRows}
+                  min={minRows}
+                  style={{ width: '100%' }}
+                  onChange={(val) => {
+                    store.setSelectedProp('maxRows', Number(val));
+                  }}
+                />
+              </SettingItem>
             </>
           )}
         </>
-      }
-      events={<EventSettingCommon eventActions={eventActions} />}
-    />
+      )}
+    </>
   );
 };
 export const SettingInput = observer(SettingInputContent);

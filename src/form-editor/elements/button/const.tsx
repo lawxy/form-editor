@@ -1,7 +1,8 @@
-import type { IBaseElement } from "@/types"
+import type { IBaseElement } from '@/types';
 
-export const ELEMENT_BUTTON = 'button'
-export const BUTTON_TEXT = '按钮'
+export const ELEMENT_BUTTON = 'button';
+export const BUTTON_TEXT = '按钮';
+export const eventActions = [];
 export const initialData: Partial<IBaseElement> = {
-  gridSpan: 2
-}
+  gridSpan: 2,
+};

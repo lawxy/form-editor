@@ -61,7 +61,7 @@ const CustomCssSetting = () => {
           height: 'calc(100vh - 150px)',
         }}
         language="css"
-        defaultValue={value}
+        value={value}
         onChange={(v) => {
           setCanSave(true);
           tempVal.current = v as string;

@@ -2,12 +2,14 @@ export * from './event';
 export * from './service';
 import { TCustomEvents } from './event';
 import { TFormSerives } from './service';
+import { EEventAction } from './event';
 
 export interface IDragElementProp {
   type: string;
   render: React.FC<any>;
   setting: React.FC<any>;
   text: string;
+  eventActions: EEventAction[];
   initialData: Record<string, any>;
 }
 
