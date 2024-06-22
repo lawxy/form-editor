@@ -43,6 +43,10 @@ export interface IBaseElement {
    */
   id?: string;
   /**
+  * 采用栅格布局
+  */
+  gridLayout?: boolean;
+  /**
    * 元素栅格
    */
   gridSpan?: number;

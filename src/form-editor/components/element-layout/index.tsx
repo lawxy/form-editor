@@ -1,6 +1,6 @@
+import React, { useMemo, type FC, type PropsWithChildren } from 'react';
 import { Col, Form } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { type FC, type PropsWithChildren } from 'react';
 import styled, { css } from 'styled-components';
 import type { IBaseElement, TDirection, TMode } from '../../types';
 import { WrapEl } from './wrap-el';
@@ -31,10 +31,25 @@ const ElementLayout: FC<
     gridOffset,
     gridSpan,
     showElementName,
+    gridLayout
   } = element;
 
+  const style = useMemo(() => {
+    const finnalStyle: React.CSSProperties = contaninerCss;
+    if(!gridLayout) {
+      Object.assign(finnalStyle, { 
+        flex: 'none',
+        maxWidth: 'inherit',
+      })
+    }
+    return finnalStyle
+
+  }, [contaninerCss, gridLayout])
+
+  const offset = gridLayout ? 0 : (gridOffset || 0);
+
   return (
-    <Col span={gridSpan} offset={gridOffset || 0} style={contaninerCss}>
+    <Col span={gridSpan} offset={offset} style={style}>
       <Form.Item name={id} style={{ marginBottom: 0 }}>
         <WrapEl el={element} mode={mode}>
           <StyledDiv elementNameDisplay={elementNameDisplay}>

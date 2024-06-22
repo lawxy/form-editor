@@ -24,7 +24,7 @@ const ActionItem: React.FC<{
   const renderConfig = () => {
     const props = { onChange, eventTarget };
     switch (type) {
-      case EEventType.REFRESH_SERVICE:
+      case EEventType.UPDATE_SERVICE:
         return <RefreshService {...props} />;
       case EEventType.LINK_SERVICE:
         return <LinkServcie {...props} />;

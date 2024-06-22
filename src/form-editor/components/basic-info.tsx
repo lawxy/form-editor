@@ -41,32 +41,46 @@ const BasicInfo = () => {
           }}
         />
       </SettingItem>
-
-      <SettingItem label="元素栅格">
-        <div style={{ width: '90%' }}>
-          <Slider
-            value={gridSpan}
-            max={24}
-            min={1}
-            onChange={(v) => {
-              store.setSelectedProp('gridSpan', v);
-            }}
-          />
-        </div>
+      <SettingItem label="栅格布局">
+        <Switch
+          checked={store.selectedElement?.gridLayout}
+          onChange={(checked) => {
+            store.setSelectedProp('gridLayout', checked);
+          }}
+        />
       </SettingItem>
+      {
+        store.selectedElement?.gridLayout && (
+          <>
+            <SettingItem label="元素栅格">
+              <div style={{ width: '90%' }}>
+                <Slider
+                  value={gridSpan}
+                  max={24}
+                  min={1}
+                  onChange={(v) => {
+                    store.setSelectedProp('gridSpan', v);
+                  }}
+                />
+              </div>
+            </SettingItem>
 
-      <SettingItem label="元素偏移">
-        <div style={{ width: '90%' }}>
-          <Slider
-            value={gridOffset}
-            max={24}
-            min={0}
-            onChange={(v) => {
-              store.setSelectedProp('gridOffset', v);
-            }}
-          />
-        </div>
-      </SettingItem>
+            <SettingItem label="元素偏移">
+              <div style={{ width: '90%' }}>
+                <Slider
+                  value={gridOffset}
+                  max={24}
+                  min={0}
+                  onChange={(v) => {
+                    store.setSelectedProp('gridOffset', v);
+                  }}
+                />
+              </div>
+            </SettingItem>
+          </>
+        )
+      }
+
     </>
   );
 };

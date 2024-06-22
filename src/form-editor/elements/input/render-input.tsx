@@ -42,7 +42,7 @@ const RenderInputContent: React.FC<{
       {textType === 'single' ? (
         <Input
           value={fieldValue}
-          style={{ ...elCss }}
+          style={elCss}
           placeholder={placeholder}
           id={id}
           onChange={handleChange}

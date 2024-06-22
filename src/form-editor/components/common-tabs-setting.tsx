@@ -1,9 +1,11 @@
 import React from 'react';
+import type { FC, ReactNode } from 'react';
 import type { TabsProps } from 'antd';
 
+import { observer } from 'mobx-react-lite';
+import { tabStore, type TElementTab } from '@/store';
 import BasicInfo from './basic-info';
 import CustomCssSetting from './custom-css-setting'
-import type { FC, ReactNode } from 'react';
 
 import { Tabs } from 'antd';
 
@@ -11,7 +13,7 @@ export const CommonTabsSetting: FC<{
   attributes?: ReactNode;
   events?: ReactNode;
   hideCss?: boolean;
-}> = ({ attributes, events, hideCss }) => {
+}> = observer(({ attributes, events, hideCss }) => {
   const items: TabsProps['items'] = [
     {
       key: 'attribute',
@@ -22,7 +24,7 @@ export const CommonTabsSetting: FC<{
       </>
     },
     !hideCss && {
-      key: 'form',
+      key: 'style',
       label: `样式`,
       children: <CustomCssSetting />,
     },
@@ -34,6 +36,8 @@ export const CommonTabsSetting: FC<{
   ].filter(Boolean) as TabsProps['items'];
 
   return (
-    <Tabs defaultActiveKey="attribute" items={items}/>
+    <Tabs activeKey={tabStore.elementTab} onChange={(key) => {
+      tabStore.setElementTab(key as TElementTab)
+    }} items={items}/>
   );
-};
+});

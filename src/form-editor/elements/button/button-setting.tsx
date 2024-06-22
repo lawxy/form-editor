@@ -6,12 +6,8 @@ import { SettingItem } from '@/components/setting-item';
 
 const SettingButtonContent = () => {
   return (
-    <div>
-      {/* <BasicInfo /> */}
-      {/* <CommonTabsSetting 
-        // attributes
-      /> */}
-    </div>
+    <>
+    </>
   );
 };
 export const SettingButton = observer(SettingButtonContent);

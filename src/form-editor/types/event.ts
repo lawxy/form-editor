@@ -39,9 +39,9 @@ export const eventActionInChinese = {
  */
 export enum EEventType {
   /**
-   * 刷新服务
+   * 更新服务
    */
-  REFRESH_SERVICE = 'refreshService',
+  UPDATE_SERVICE = 'refreshService',
   /**
    * 关联服务
    */
@@ -55,7 +55,7 @@ export enum EEventType {
 }
 
 export const eventTypeChinese = {
-  [EEventType.REFRESH_SERVICE]: '刷新服务',
+  [EEventType.UPDATE_SERVICE]: '更新服务',
   [EEventType.SETTING_VALUE]: '设置组件值',
   [EEventType.LINK_SERVICE]: '关联服务',
 };

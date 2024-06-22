@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import MonacoEditor from '@/components/monaco-editor';
 import { prefixCls } from '@/const';
 import store from '@/store';
+import { openPage } from '@/utils';
 import './style.less';
 
 const ActionItem: React.FC<
@@ -51,7 +52,7 @@ const ActionGroup = () => {
   const handlePreview = async () => {
     await handleSave();
     setTimeout(() => {
-      window.open('/~demos/docs-preview-demo-demo-demo');
+      window.open('/~demos/docs-preview-demo-demo-demo', 'preview');
     }, 1000);
   };
 

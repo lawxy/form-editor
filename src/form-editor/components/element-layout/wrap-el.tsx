@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useRef, type PropsWithChildren } from 'react';
-import store from '@/store';
+import store, { tabStore } from '@/store';
 import type { IBaseElement, TMode } from '@/types';
 import { SelectedActions } from './selected-actions';
 import { DesignWrapDiv, Mask } from './styled';
@@ -13,7 +13,7 @@ const WrapDesignEl: React.FC<PropsWithChildren<{
 
   const handleSelect = useCallback(() => {
     store.setSelectedElement(el);
-    store.setFormSettingTab('element');
+    tabStore.init();
   }, [el]);
 
   return (

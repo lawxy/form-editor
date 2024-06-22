@@ -101,7 +101,7 @@ export const handleEmitEvent = (
         case EEventType.SETTING_VALUE:
           emitFn = emitSettingValue(params);
           break;
-        case EEventType.REFRESH_SERVICE:
+        case EEventType.UPDATE_SERVICE:
           emitFn = emitRefreshService(params);
           break;
         // case EEventType.LINK_SERVICE:

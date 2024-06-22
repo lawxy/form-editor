@@ -41,15 +41,6 @@ class Store {
       formServices: this.formServices,
     };
   }
-
-  /**
-   * 属性tab值
-   */
-  formSettingTab: 'element' | 'form' | 'service' = 'element';
-
-  setFormSettingTab(tab: 'element' | 'form' | 'service') {
-    this.formSettingTab = tab;
-  }
 }
 
 export default new Store() as IBaseStore;

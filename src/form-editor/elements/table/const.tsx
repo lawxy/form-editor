@@ -6,6 +6,7 @@ export const eventActions = [];
 export const initialData: Partial<IBaseElement> = {
   elementName: TABLE_TEXT,
   gridSpan: 24,
+  gridLayout: true,
   tableAttributes: '{}',
   tableColumns: `[
   {

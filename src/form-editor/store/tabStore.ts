@@ -4,7 +4,7 @@ import { makeAutoObservable } from 'mobx';
 // setFormSettingTab: (tab: TFormTabType) => void;
 
 export type TFormTab = 'element' | 'form' | 'service';
-export type TElementTab = '';
+export type TElementTab = 'attribute' | 'style' | 'event';
 
 class TabStore {
   constructor() {
@@ -20,10 +20,15 @@ class TabStore {
     this.formTab = tab;
   }
 
-  elementTab: '';
+  elementTab: TElementTab =  'attribute';
 
-  setElementTab(tab: 'element' | 'form' | 'service') {
-    this.formTab = tab;
+  setElementTab(tab: TElementTab) {
+    this.elementTab = tab;
+  }
+
+  init() {
+    this.setFormTab('element')
+    this.setElementTab('attribute')
   }
 }
 

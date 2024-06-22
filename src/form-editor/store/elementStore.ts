@@ -1,5 +1,6 @@
-import { idCreator } from '@/utils';
 import { arrayMoveImmutable } from 'array-move';
+import { idCreator } from '@/utils';
+import { tabStore } from './tabStore';
 import type { IBaseElement } from '../types';
 import { IBaseStore, IElementStore } from './types';
 
@@ -89,8 +90,7 @@ export default {
 
   setSelectedElement(el: IBaseElement) {
     this.selectedElement = el;
-    // @ts-ignore
-    this.setFormSettingTab('element');
+    tabStore.init()
   },
 
   /**

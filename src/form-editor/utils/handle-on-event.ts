@@ -79,7 +79,7 @@ export const handleOnEvent = (params: TEmitData, emitter: Emitter) => {
     case EEventType.SETTING_VALUE:
       triggerSettingValue(params);
       break;
-    case EEventType.REFRESH_SERVICE:
+    case EEventType.UPDATE_SERVICE:
       triggerRefreshService(params, emitter);
       break;
   }
