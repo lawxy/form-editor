@@ -1,7 +1,7 @@
-import { Button } from 'antd';
-import dayjs from 'dayjs'
-import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react'
+import { Button } from 'antd';
+import { observer } from 'mobx-react-lite';
+import { useElementCommon } from '@/hooks'
 
 import ElementLayout from '@/components/element-layout';
 import store from '@/store';
@@ -13,11 +13,12 @@ const RenderButtonContent: React.FC<{
   mode: TMode;
 }> = ({fieldValue, element, mode}) => {
   const { id } = element;
+  const { elCss, contaninerCss } = useElementCommon(element);
  
   return (
-    <ElementLayout element={element} mode={mode}>
+    <ElementLayout element={element} mode={mode} contaninerCss={contaninerCss}>
       <Button 
-        style={{width: '100%'}}
+        style={elCss}
         onClick={(e) => {
         }}
       >button</Button>
@@ -25,5 +26,4 @@ const RenderButtonContent: React.FC<{
   )
 }
 
-// store.setAllElementsList(ELEMENT_INPUT, 'render', RenderInput)
 export const RenderButton = observer(RenderButtonContent)
