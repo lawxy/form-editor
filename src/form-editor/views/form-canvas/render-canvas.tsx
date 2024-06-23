@@ -85,7 +85,6 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
             if (!Component) return null;
             return (
               <Component
-                mode={mode}
                 key={item.id || String(+new Date())}
                 fieldValue={store.fieldValues[item.id as string]}
                 element={item}

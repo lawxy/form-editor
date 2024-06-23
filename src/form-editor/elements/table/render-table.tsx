@@ -3,23 +3,18 @@ import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react'
 
 import ElementLayout from '@/components/element-layout';
-import { useElementCommon } from '@/hooks';
-import store from '@/store';
-import type { IBaseElement, TMode } from '@/types';
+import type { IBaseElement, } from '@/types';
 import { parseJSX } from '@/utils'
 
 const RenderTableContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-  mode: TMode;
-}> = ({ fieldValue = [], element, mode }) => {
+}> = ({ fieldValue = [], element }) => {
   const { tableColumns = '[]', tableAttributes = '{}' } = element;
-  const { elCss, contaninerCss } = useElementCommon(element);
 
   return (
-    <ElementLayout element={element} mode={mode} contaninerCss={contaninerCss}>
+    <ElementLayout element={element}>
       <Table
-        style={elCss}
         columns={parseJSX(tableColumns)}
         rowKey='id'
         dataSource={fieldValue}

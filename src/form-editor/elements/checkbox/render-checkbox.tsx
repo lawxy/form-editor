@@ -4,19 +4,18 @@ import React from 'react'
 
 import ElementLayout from '@/components/element-layout';
 import store from '@/store';
-import type { IBaseElement, TMode } from '@/types';
+import type { IBaseElement, } from '@/types';
 
 const RenderCheckboxContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-  mode: TMode;
-}> = ({fieldValue, element, mode}) => {
+}> = ({ fieldValue, element }) => {
   const { id, valueOptions, alignDirection } = element
   const onChange = (val: Array<string | number | boolean>) => {
     store.setFieldValue(id!, val)
   }
   return (
-    <ElementLayout element={element} mode={mode}>
+    <ElementLayout element={element}>
       <Checkbox.Group onChange={onChange} value={fieldValue}>
         <Space direction={alignDirection}>
           {

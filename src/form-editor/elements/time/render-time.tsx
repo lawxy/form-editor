@@ -5,16 +5,15 @@ import React from 'react';
 
 import ElementLayout from '@/components/element-layout';
 import store from '@/store';
-import type { IBaseElement, TMode } from '@/types';
+import type { IBaseElement, } from '@/types';
 
 const RenderTimeContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-  mode: TMode;
-}> = ({ fieldValue, element, mode }) => {
+}> = ({ fieldValue, element }) => {
   const { id, dateFormat } = element;
   return (
-    <ElementLayout element={element} mode={mode}>
+    <ElementLayout element={element}>
       <TimePicker
         style={{ width: '100%' }}
         format={dateFormat}

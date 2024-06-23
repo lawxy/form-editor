@@ -12,20 +12,16 @@ import { TEventFunction } from '@/hooks';
 const RenderInputContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-  mode: TMode;
-}> = ({ fieldValue, element = {}, mode }) => {
+}> = ({ fieldValue, element = {}, }) => {
   const { textType, minRows, maxRows, id, autoSize, placeholder } = element;
-
-  const { elCss, contaninerCss } = useElementCommon(element);
 
   const { eventFunctions } = useRegisterEvents(element);
 
   const handleEvent =
     (action: EEventAction) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      // console.log('render emit', action, eventFunctions[action])
-      eventFunctions[action]?.(e.target.value);
-    };
+      (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        eventFunctions[action]?.(e.target.value);
+      };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -38,11 +34,10 @@ const RenderInputContent: React.FC<{
   }, [fieldValue]);
 
   return (
-    <ElementLayout element={element} mode={mode} contaninerCss={contaninerCss}>
+    <ElementLayout element={element} >
       {textType === 'single' ? (
         <Input
           value={fieldValue}
-          style={elCss}
           placeholder={placeholder}
           id={id}
           onChange={handleChange}
@@ -55,11 +50,10 @@ const RenderInputContent: React.FC<{
             autoSize
               ? true
               : {
-                  minRows,
-                  maxRows,
-                }
+                minRows,
+                maxRows,
+              }
           }
-          style={{ ...elCss }}
           value={fieldValue}
           placeholder={placeholder}
           id={id}

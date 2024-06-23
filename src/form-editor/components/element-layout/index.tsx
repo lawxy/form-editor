@@ -1,7 +1,10 @@
-import React, { useMemo, type FC, type PropsWithChildren } from 'react';
+import React, { useMemo, useContext } from 'react';
+import type { FC, PropsWithChildren } from 'react'
 import { Col, Form } from 'antd';
 import { observer } from 'mobx-react-lite';
 import styled, { css } from 'styled-components';
+import { useElementCommon } from '@/hooks'
+import { EditorContext } from '@/context';
 import type { IBaseElement, TDirection, TMode } from '../../types';
 import { WrapEl } from './wrap-el';
 
@@ -20,10 +23,8 @@ const StyledDiv = styled.div<{ elementNameDisplay?: TDirection }>(
 const ElementLayout: FC<
   PropsWithChildren<{
     element: IBaseElement;
-    mode: TMode;
-    contaninerCss?: React.CSSProperties;
   }>
-> = ({ element, children, mode, contaninerCss = {} }) => {
+> = ({ element, children }) => {
   const {
     elementName,
     elementNameDisplay,
@@ -33,11 +34,13 @@ const ElementLayout: FC<
     showElementName,
     gridLayout
   } = element;
+  const { elCss, contaninerCss } = useElementCommon(element);
+  const { mode } = useContext(EditorContext);
 
   const style = useMemo(() => {
-    const finnalStyle: React.CSSProperties = contaninerCss;
-    if(!gridLayout) {
-      Object.assign(finnalStyle, { 
+    const finnalStyle: React.CSSProperties = contaninerCss || {};
+    if (!gridLayout) {
+      Object.assign(finnalStyle, {
         flex: 'none',
         maxWidth: 'inherit',
       })
@@ -60,7 +63,12 @@ const ElementLayout: FC<
                 }}
               />
             )}
-            <div style={{ flex: 1 }}>{children}</div>
+            <div style={{ flex: 1 }}>
+              {React.isValidElement(children) &&
+                React.cloneElement<any>(children, {
+                  style: elCss || {}
+                })}
+            </div>
           </StyledDiv>
         </WrapEl>
       </Form.Item>

@@ -4,19 +4,18 @@ import React from 'react'
 
 import ElementLayout from '@/components/element-layout';
 import store from '@/store';
-import type { IBaseElement, TMode } from '@/types';
+import type { IBaseElement, } from '@/types';
 
 const RenderRadioContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-  mode: TMode;
-}> = ({fieldValue, element, mode}) => {
+}> = ({ fieldValue, element, }) => {
   const { id, valueOptions, alignDirection } = element;
   const onChange = (e: RadioChangeEvent) => {
     store.setFieldValue(id!, e.target.value)
   }
   return (
-    <ElementLayout element={element} mode={mode}>
+    <ElementLayout element={element}>
       <Radio.Group onChange={onChange} value={fieldValue}>
         <Space direction={alignDirection}>
           {
