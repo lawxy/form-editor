@@ -4,32 +4,11 @@
 
 创建页面
 
-## Options
+## TODO
 
-TODO
-
-## Development
-
-```bash
-# install dependencies
-$ yarn install
-
-# develop library by docs demo
-$ yarn start
-
-# build library source code
-$ yarn run build
-
-# build library source code in watch mode
-$ yarn run build:watch
-
-# build docs
-$ yarn run docs:build
-
-# check your project for potential problems
-$ yarn run doctor
-```
-
-## LICENSE
-
-MIT
+- 各组件事件函数
+- 表单 css 样式
+- 表单功能 校验 提交
+- 组件库 icon
+- 无效事件？ emr-editor -> get-element-event-type.ts
+- 容器组件

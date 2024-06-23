@@ -3,12 +3,13 @@ import React, { useCallback, useRef, type PropsWithChildren } from 'react';
 import store, { tabStore } from '@/store';
 import type { IBaseElement, TMode } from '@/types';
 import { SelectedActions } from './selected-actions';
-import { DesignWrapDiv, Mask } from './styled';
+import { DesignWrapDiv, Mask, EventIcon } from './styled';
 
-const WrapDesignEl: React.FC<PropsWithChildren<{
-  el: IBaseElement;
-}>> = observer(({ children, el }) => {
-
+const WrapDesignEl: React.FC<
+  PropsWithChildren<{
+    el: IBaseElement;
+  }>
+> = observer(({ children, el }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const handleSelect = useCallback(() => {
@@ -28,15 +29,20 @@ const WrapDesignEl: React.FC<PropsWithChildren<{
       />
       {store.selectedElement?.id === el.id && <SelectedActions />}
       {children}
+      {store.selectedElement?.id === el.id && el.customEvents?.length && (
+        <EventIcon />
+      )}
     </DesignWrapDiv>
   );
 });
 
-export const WrapEl: React.FC<PropsWithChildren<{
-  el: IBaseElement;
-  mode: TMode;
-}>> = ({ children, el, mode }) => {
-  if(mode !== 'design') return <>{children}</>
+export const WrapEl: React.FC<
+  PropsWithChildren<{
+    el: IBaseElement;
+    mode: TMode;
+  }>
+> = ({ children, el, mode }) => {
+  if (mode !== 'design') return <>{children}</>;
 
-  return <WrapDesignEl el={el}>{children}</WrapDesignEl>
+  return <WrapDesignEl el={el}>{children}</WrapDesignEl>;
 };

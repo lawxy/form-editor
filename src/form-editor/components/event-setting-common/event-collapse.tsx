@@ -47,7 +47,6 @@ export const EventCollapse: FC<{
       <Collapse
         ghost
         items={items}
-        collapsible="icon"
         defaultActiveKey={items.map((item) => item.key)}
         expandIcon={({ isActive }) =>
           isActive ? <MinusSquareOutlined /> : <PlusSquareOutlined />

@@ -110,6 +110,10 @@ export interface IBaseElement {
    * 事件
    */
   customEvents?: TCustomEvents;
+  /**
+   * 按钮文案
+  */
+  btnText?: string;
 }
 export interface IFormAttributesProps {
   formName?: string;

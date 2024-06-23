@@ -1,12 +1,20 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import { CommonTabsSetting } from '@/components/common-tabs-setting';
+import { observer } from 'mobx-react-lite';
+import { Input } from 'antd';
+import store from '@/store';
 import { SettingItem } from '@/components/setting-item';
 
 const SettingButtonContent = () => {
   return (
     <>
+      <SettingItem label="按钮文案">
+        <Input
+          value={store.selectedElement.btnText}
+          onChange={(e) => {
+            store.setSelectedProp('btnText', e.target.value);
+          }}
+        />
+      </SettingItem>
     </>
   );
 };

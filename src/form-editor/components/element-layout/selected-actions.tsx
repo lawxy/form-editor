@@ -1,16 +1,16 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import { CopyOutlined, DeleteOutlined } from '@ant-design/icons'
-import store from '@/store'
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
+import store from '@/store';
 
 const StyledDiv = styled.div(() => {
   return `
     ${css({
       position: 'absolute',
-      right: 0,
+      right: 6,
       top: -8,
       display: 'flex',
-      zIndex: 20
+      zIndex: 20,
     }).join(';')}
     .fm-selected-action{
       ${css({
@@ -25,7 +25,7 @@ const StyledDiv = styled.div(() => {
         borderRadius: '50%',
         fontSize: 12,
         border: '1px solid',
-        cursor: 'pointer'
+        cursor: 'pointer',
       }).join(';')}
       :hover {
         color: white;
@@ -41,30 +41,30 @@ const StyledDiv = styled.div(() => {
     .delete-action:hover {
       background: #F56C6C;
     }
-  `
-})
+  `;
+});
 
 export const SelectedActions = () => {
   return (
     <StyledDiv>
-      <div 
-        className='fm-selected-action copy-action'
+      <div
+        className="fm-selected-action copy-action"
         onClick={() => {
-          const newEl = store.copyEl(store.selectedElement)
-          store.setSelectedElement(newEl!)
+          const newEl = store.copyEl(store.selectedElement);
+          store.setSelectedElement(newEl!);
         }}
       >
         <CopyOutlined />
       </div>
-      <div 
-        className='fm-selected-action delete-action'
+      <div
+        className="fm-selected-action delete-action"
         onClick={() => {
-          store.deleteEl(store.selectedElement)
-          store.setSelectedElement({})
+          store.deleteEl(store.selectedElement);
+          store.setSelectedElement({});
         }}
       >
         <DeleteOutlined />
       </div>
     </StyledDiv>
-  )
-}
+  );
+};
