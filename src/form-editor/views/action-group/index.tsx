@@ -4,15 +4,13 @@ import { observer } from 'mobx-react-lite';
 import MonacoEditor from '@/components/monaco-editor';
 import { prefixCls } from '@/const';
 import store from '@/store';
-import { openPage } from '@/utils';
 import './style.less';
 
 const ActionItem: React.FC<
   {
-    icon?: React.ReactNode;
     text: string;
   } & { [key: string]: any }
-> = ({ text, icon, ...rest }) => {
+> = ({ text, ...rest }) => {
   return (
     <div className={prefixCls('action-item')} {...rest}>
       {text}
@@ -22,8 +20,7 @@ const ActionItem: React.FC<
 
 const ActionGroup = () => {
   const [openCode, setOpenCode] = useState(false);
-  const [openForm, setOpenForm] = useState(false);
-  const form = Form.useFormInstance();
+  // const form = Form.useFormInstance();
 
   const handleSave = useCallback(() => {
     // console.log(form.getFieldsValue())

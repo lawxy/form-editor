@@ -6,32 +6,23 @@ import { IBaseStore, IElementStore } from './types';
 
 export default {
   /**
-   * 储存所有元素的map
-   */
-  elementsMap: new Map(),
-
-  /**
    * 表单元素集合
    */
   formElements: [],
 
   setFormElements(els: IBaseElement[]) {
     this.formElements = els;
-    this.formElements.forEach((el: IBaseElement) => {
-      this.elementsMap.set(el.id as string, el);
-    });
   },
 
   clearAllElements() {
     this.formElements = [];
-    this.elementsMap.clear();
   },
 
   /**
    * 通过id获取元素
    */
-  getElFromId(id: string) {
-    return this.elementsMap.get(id);
+  getElement(id: string) {
+    return this.formElements.find(el => el.id === id);
   },
 
   /**
@@ -40,7 +31,6 @@ export default {
   appendEl(el: IBaseElement) {
     this.formElements.push(el);
     this.setSelectedElement(el);
-    this.elementsMap.set(el.id!, el);
   },
 
   /**
@@ -49,7 +39,6 @@ export default {
   insertEl(el: IBaseElement, idx: number) {
     this.formElements.splice(idx, 0, el);
     this.setSelectedElement(el);
-    this.elementsMap.set(el.id!, el);
   },
 
   /**
@@ -69,7 +58,6 @@ export default {
   deleteEl(el: IBaseElement) {
     const idx = this.formElements.findIndex((item) => item.id === el.id);
     this.formElements.splice(idx, 1);
-    this.elementsMap.delete(el.id!);
   },
 
   /**
@@ -79,7 +67,6 @@ export default {
     const idx = this.formElements.findIndex((item) => item.id === el.id);
     const newEl: IBaseElement = { ...el, id: idCreator() };
     this.formElements.splice(idx + 1, 0, newEl);
-    this.elementsMap.set(newEl.id as string, newEl);
     return newEl;
   },
 
@@ -93,32 +80,23 @@ export default {
     tabStore.init()
   },
 
+  setElementProp<T extends keyof IBaseElement>(
+    id: string,
+    field: T,
+    value: IBaseElement[T],
+  ) {
+    const element = this.getElement(id);
+    element![field] = value;
+  },
+
   /**
-   * 设置当前元素属性
+   * 设置当前选中元素属性
    */
   setSelectedProp<T extends keyof IBaseElement>(
     field: T,
     value: IBaseElement[T],
   ) {
+    this.setElementProp(this.selectedElement.id!, field, value)
     this.selectedElement[field] = value;
-    const elInForm = this.formElements.find(
-      (item) => item.id === this.selectedElement.id,
-    ) as IBaseElement;
-    elInForm[field] = value;
-    this.elementsMap.set(elInForm.id!, elInForm);
-  },
-
-  /**
-   * 根据id判断元素是否存在
-   */
-  hasElement(id: string) {
-    return this.elementsMap.has(id);
-  },
-
-  /**
-   * 根据id获取元素
-   */
-  getElement(id: string) {
-    return this.elementsMap.get(id);
   },
 } as Pick<IBaseStore, keyof IElementStore>;

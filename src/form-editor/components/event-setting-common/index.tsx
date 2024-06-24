@@ -30,43 +30,6 @@ const formatForCollapse = (customEvents: TCustomEvent[]) => {
   });
 };
 
-
-// 处理关联服务的数据
-// const handleLinkService = (newEvent: TCustomEvent, oldEvent?: TCustomEvent) => {
-//   const { eventTargets, eventType } = newEvent;
-//   if(eventType !== EEventType.LINK_SERVICE) return;
-
-//   // debugger
-//   if(oldEvent) {
-//     const { eventTargets: oldTargets } = newEvent;
-//     oldTargets?.forEach((target) => {
-//       const { targetServiceId, sourceElementId } = target;
-//       if(!targetServiceId) return;
-//       const { linkingElements } = store.servicesMap.get(targetServiceId) as TFormSerive
-//       if(linkingElements && linkingElements.length) {
-//         const idx = linkingElements.findIndex(elId => elId === sourceElementId)
-//         if(idx > -1) {
-//           linkingElements.splice(idx, 1);
-//           store.setService(targetServiceId, { linkingElements })
-//         }
-//       }
-//     })
-//   }
-
-//   eventTargets?.forEach((target) => {
-//     const { targetServiceId, sourceElementId } = target;
-//     if(!targetServiceId) return;
-//     const service = store.servicesMap.get(targetServiceId) as TFormSerive;
-//     const { linkingElements } = service
-//     if(!linkingElements) {
-//       store.setService(targetServiceId, { linkingElements: [sourceElementId]})
-//     }else {
-//       linkingElements.push(sourceElementId)
-//       store.setService(targetServiceId, { linkingElements })
-//     }
-//   })
-// }
-
 const EventSettingCommon: React.FC<{
   eventActions: EEventAction[];
 }> = ({ eventActions }) => {
@@ -97,7 +60,7 @@ const EventSettingCommon: React.FC<{
       customEvents[idx!] = event;
       handleLinkService(event)
     }
-    // modal效果
+    // modal过度效果
     setTimeout(() => {
       store.setSelectedProp('customEvents', customEvents);
     }, 200);

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import styled, { css } from 'styled-components';
 import { useElementCommon } from '@/hooks'
 import { EditorContext } from '@/context';
-import type { IBaseElement, TDirection, TMode } from '../../types';
+import type { IBaseElement, TDirection } from '../../types';
 import { WrapEl } from './wrap-el';
 
 const StyledDiv = styled.div<{ elementNameDisplay?: TDirection }>(

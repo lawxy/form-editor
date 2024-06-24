@@ -3,6 +3,8 @@ import { observer } from 'mobx-react-lite';
 import React from 'react'
 
 import ElementLayout from '@/components/element-layout';
+import { useRegisterEvents, useUpdate } from '@/hooks';
+import { EEventAction, } from '@/types';
 import store from '@/store';
 import type { IBaseElement, } from '@/types';
 
@@ -11,9 +13,17 @@ const RenderRadioContent: React.FC<{
   element: IBaseElement;
 }> = ({ fieldValue, element, }) => {
   const { id, valueOptions, alignDirection } = element;
+  
+  const { eventFunctions } = useRegisterEvents(element);
+  
   const onChange = (e: RadioChangeEvent) => {
     store.setFieldValue(id!, e.target.value)
   }
+  
+  useUpdate(() => {
+    eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
+  }, [fieldValue]);
+
   return (
     <ElementLayout element={element}>
       <Radio.Group onChange={onChange} value={fieldValue}>

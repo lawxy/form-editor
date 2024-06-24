@@ -1,11 +1,9 @@
-import { useEffect, useContext, useState, useRef } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import { EventContext } from '@/components/event-context';
-import { EEventAction, EEventType, IEventTarget } from '@/types';
 import type { IBaseElement } from '@/types';
 import {
   handleEmitEvent,
   handleOnEvent,
-  type TEmitData,
   type TEventFormatFunctions,
 } from '@/utils';
 import { useForceRender } from '.';
@@ -23,11 +21,9 @@ export const useRegisterEvents: IRegisterEvents = (element) => {
   const forceRender = useForceRender();
 
   useEffect(() => {
-    const emitterOnEvent = (params: TEmitData) =>
-      handleOnEvent(params, emitter);
-    emitter.on(id!, emitterOnEvent);
+    emitter.on(id!, handleOnEvent);
     return () => {
-      emitter.off(id!, emitterOnEvent);
+      emitter.off(id!, handleOnEvent);
     };
   }, [id, emitter]);
 

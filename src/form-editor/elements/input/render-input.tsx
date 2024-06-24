@@ -1,13 +1,12 @@
+import React from 'react';
 import { Input } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useCallback, useEffect } from 'react';
 
 import ElementLayout from '@/components/element-layout';
-import { useElementCommon, useRegisterEvents, useUpdate } from '@/hooks';
+import { useRegisterEvents, useUpdate } from '@/hooks';
 import store from '@/store';
 import { EEventAction } from '@/types';
-import type { IBaseElement, TMode } from '@/types';
-import { TEventFunction } from '@/hooks';
+import type { IBaseElement } from '@/types';
 
 const RenderInputContent: React.FC<{
   fieldValue: any;

@@ -6,15 +6,13 @@ import type {
 } from '../types';
 
 export interface IElementStore {
-  elementsMap: Map<string, IBaseElement>;
-
   formElements: IBaseElement[];
 
   setFormElements: (els: IBaseElement[]) => void;
 
   clearAllElements: () => void;
 
-  getElFromId: (id: string) => void;
+  getElement: (id: string) => IBaseElement;
 
   appendEl: (el: IBaseElement) => void;
 
@@ -30,14 +28,16 @@ export interface IElementStore {
 
   setSelectedElement: (el: IBaseElement) => void;
 
-  setSelectedProp: <T extends keyof IBaseElement>(
+  setElementProp: <T extends keyof IBaseElement>(
+    id: string,
     field: T,
     value: IBaseElement[T],
   ) => void;
 
-  hasElement: (id: string) => boolean;
-
-  getElement: (id: string) => IBaseElement | undefined;
+  setSelectedProp: <T extends keyof IBaseElement>(
+    field: T,
+    value: IBaseElement[T],
+  ) => void;
 }
 
 export interface IServiceStore {
