@@ -1,10 +1,10 @@
-import { Table } from 'antd'
+import React from 'react';
+import { Table } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useMemo } from 'react'
 
-import ElementLayout from '@/components/element-layout';
-import type { IBaseElement, } from '@/types';
-import { parseJSX } from '@/utils'
+import { ElementLayout } from '@/components/element-layout';
+import type { IBaseElement } from '@/types';
+import { parseJSX } from '@/utils';
 
 const RenderTableContent: React.FC<{
   fieldValue: any;
@@ -16,14 +16,12 @@ const RenderTableContent: React.FC<{
     <ElementLayout element={element}>
       <Table
         columns={parseJSX(tableColumns)}
-        rowKey='id'
+        rowKey="id"
         dataSource={fieldValue}
-        {
-        ...(parseJSX(`[${tableAttributes}]`)[0])
-        }
+        {...parseJSX(`[${tableAttributes}]`)[0]}
       />
     </ElementLayout>
-  )
-}
+  );
+};
 
-export const RenderTable = observer(RenderTableContent)
+export const RenderTable = observer(RenderTableContent);

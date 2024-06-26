@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import store from '@/store';
 import { useRegisterEvents, useUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
-import ElementLayout from '@/components/element-layout';
+import { ElementLayout } from '@/components/element-layout';
 import type { IBaseElement } from '@/types';
 
 const RenderNumberContent: React.FC<{

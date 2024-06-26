@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
 import { DatePicker } from 'antd';
-// import { PickerFocus } from 'antd/date'
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite';
 import { useRegisterEvents, useUpdate } from '@/hooks';
 import { formatDate } from '@/utils';
 import { EEventAction } from '@/types';
-import ElementLayout from '@/components/element-layout';
+import { ElementLayout } from '@/components/element-layout';
 import store from '@/store';
 import type { IBaseElement } from '@/types';
 

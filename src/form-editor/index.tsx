@@ -9,27 +9,32 @@ import store from './store';
 import { EditorContext } from './context';
 
 import './index.less';
-export * from './views'
+export * from './views';
 
 export interface IForm {
   mode: TMode;
   defaultValue?: IFormSchema;
 }
 
-
 export const FormEditor: FC<PropsWithChildren<IForm>> = ({
-  mode, defaultValue, children
+  mode,
+  defaultValue,
+  children,
 }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    let schema: IFormSchema = {}
+    store.setForm(form);
+  }, [form]);
+
+  useEffect(() => {
+    let schema: IFormSchema = {};
     if (defaultValue) {
       schema = defaultValue;
     } else if (localStorage.getItem('formJson')) {
       try {
         schema = JSON.parse(localStorage.getItem('formJson')!);
-      } catch (e) { }
+      } catch (e) {}
     }
     const {
       formElements = [],
@@ -44,19 +49,14 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
   }, [defaultValue]);
 
   const contextValue = useMemo(() => {
-    return { mode }
-  }, [mode])
+    return { mode };
+  }, [mode]);
 
   return (
     <ConfigProvider locale={locale}>
       <EditorContext.Provider value={contextValue}>
         <Form form={form}>
-          <div className={prefixCls('form')}>
-            { children }
-            {/* <Material />
-            <FormCanvas mode={mode}/>
-            <Settings /> */}
-          </div>
+          <div className={prefixCls('form')}>{children}</div>
         </Form>
       </EditorContext.Provider>
     </ConfigProvider>

@@ -1,7 +1,9 @@
+import type { ELinkRefreshField } from './event';
+
 export type TFormSerive = {
   id: string;
   name: string;
-  url: string;  // 真实请求的url，可能因为事件更改
+  url: string; // 真实请求的url，可能因为事件更改
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   previewData?: Record<string, any>;
   data?: Record<string, any>;
@@ -13,13 +15,13 @@ export type TFormSerive = {
    *    success?: (res: any) => Promise<any> | any;
    *    fail?: (error: any) => any;
    *  }
-  */
+   */
   callback?: string;
 
   /**
-  * 关联服务的组件id
-  */
-  linkingElements?: string[];
+   * 关联服务的组件id
+   */
+  linkingElements?: { id: string; field?: ELinkRefreshField }[];
 };
 
 export type TFormSerives = TFormSerive[];

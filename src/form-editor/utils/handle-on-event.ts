@@ -1,11 +1,13 @@
 import { Emitter } from '@/components/event-context';
 import { cloneDeep } from 'lodash-es';
-import { EEventType, EChangeStatePayload, TFormSerive } from '@/types';
-import store from '@/store';
 import {
-  triggerService,
-  appendUrl,
-} from './trigger-service';
+  EEventType,
+  EChangeStatePayload,
+  TFormSerive,
+  ELinkRefreshField,
+} from '@/types';
+import store from '@/store';
+import { triggerService, appendUrl } from './trigger-service';
 import type { TEmitData } from './handle-emit-event';
 
 // 设置组件值
@@ -20,16 +22,9 @@ export const triggerSettingValue = (params: TEmitData) => {
 };
 
 // 刷新服务
-export const triggerRefreshService = async (
-  params: TEmitData,
-) => {
-  const {
-    targetServiceId,
-    updateField,
-    targetPayload,
-    value,
-    refreshFlag,
-  } = params;
+export const triggerRefreshService = async (params: TEmitData) => {
+  const { targetServiceId, updateField, targetPayload, value, refreshFlag } =
+    params;
 
   const servId = targetServiceId!;
   const currentService = store.getService(servId) as TFormSerive;
@@ -56,13 +51,14 @@ export const triggerRefreshService = async (
     const serviceRes: any = await triggerService(targetServiceId!);
     // 触发关联服务
     const { linkingElements } = currentService;
-    linkingElements?.forEach((elId) => {
-      const element = store.getElement(elId);
+    linkingElements?.forEach((item) => {
+      const { id, field } = item;
+      const element = store.getElement(id);
       if (!element) return;
-      if(element?.linkRefreshField === 'valueOptions'){
-        store.setElementProp(elId, 'valueOptions', serviceRes)
-      }else {
-        store.setFieldValue(elId, serviceRes);
+      if (field === ELinkRefreshField.VALUEOPTIONS) {
+        store.setElementProp(id, ELinkRefreshField.VALUEOPTIONS, serviceRes);
+      } else {
+        store.setFieldValue(id, serviceRes);
       }
     });
   }

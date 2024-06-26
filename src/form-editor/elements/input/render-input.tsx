@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import ElementLayout from '@/components/element-layout';
+import { ElementLayout } from '@/components/element-layout';
 import { useRegisterEvents, useUpdate } from '@/hooks';
 import store from '@/store';
 import { EEventAction } from '@/types';
@@ -11,16 +11,16 @@ import type { IBaseElement } from '@/types';
 const RenderInputContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ fieldValue, element = {}, }) => {
+}> = ({ fieldValue, element = {} }) => {
   const { textType, minRows, maxRows, id, autoSize, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
   const handleEvent =
     (action: EEventAction) =>
-      (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        eventFunctions[action]?.(e.target.value);
-      };
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      eventFunctions[action]?.(e.target.value);
+    };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -33,7 +33,7 @@ const RenderInputContent: React.FC<{
   }, [fieldValue]);
 
   return (
-    <ElementLayout element={element} >
+    <ElementLayout element={element}>
       {textType === 'single' ? (
         <Input
           value={fieldValue}
@@ -49,9 +49,9 @@ const RenderInputContent: React.FC<{
             autoSize
               ? true
               : {
-                minRows,
-                maxRows,
-              }
+                  minRows,
+                  maxRows,
+                }
           }
           value={fieldValue}
           placeholder={placeholder}

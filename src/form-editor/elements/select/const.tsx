@@ -11,7 +11,6 @@ export const eventActions = [
 ];
 export const initialData: Partial<IBaseElement> = {
   elementName: SELECT_TEXT,
-  linkRefreshField: 'valueOptions',
   gridSpan: 4,
   valueOptions: [
     { label: '选项1', value: 1, id: '1' },

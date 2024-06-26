@@ -2,7 +2,8 @@ import React from 'react';
 import { InputNumber, Select, Switch } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import PlaceholderSetting from '@/components/placeholder-setting';
+import { PlaceholderSetting } from '@/components/placeholder-setting';
+import { RegPattern } from '@/components/reg-pattern';
 import { SettingItem } from '@/components/setting-item';
 import store from '@/store';
 import { EEventAction } from '@/types';
@@ -67,6 +68,7 @@ const SettingInputContent = () => {
           )}
         </>
       )}
+      <RegPattern />
     </>
   );
 };

@@ -31,7 +31,6 @@ export const eventActionInChinese = {
   [EEventAction.ON_FOCUS]: '获得焦点',
   [EEventAction.ON_BLUR]: '失去焦点',
   [EEventAction.ON_LOADED]: '组件加载后',
-
 };
 
 /**
@@ -103,6 +102,14 @@ export const refreshOptions = [
   { label: '刷新', value: EServiceRefesh.REFRESH },
   { label: '不刷新', value: EServiceRefesh.NOT_REFRESH },
 ];
+export enum ELinkRefreshField {
+  FIELDVALUE = 'fieldValue',
+  VALUEOPTIONS = 'valueOptions',
+}
+export const linkRefreshFieldOptions = [
+  { label: '元素值', value: ELinkRefreshField.FIELDVALUE },
+  { label: '选项', value: ELinkRefreshField.VALUEOPTIONS },
+];
 export interface IEventTarget {
   id: string;
   /**
@@ -137,4 +144,8 @@ export interface IEventTarget {
    * 设置组件值
    */
   setValue?: any;
+  /**
+   * 设置关联服务后，刷新服务需要更新的字段
+   */
+  linkRefreshField?: ELinkRefreshField;
 }

@@ -12,7 +12,7 @@ import {
   EEventAction,
   EEventType,
   eventActionInChinese,
-  TFormSerive
+  TFormSerive,
 } from '@/types';
 
 import { EventCollapse } from './event-collapse';
@@ -30,9 +30,9 @@ const formatForCollapse = (customEvents: TCustomEvent[]) => {
   });
 };
 
-const EventSettingCommon: React.FC<{
+export const EventSettingCommon: React.FC<{
   eventActions: EEventAction[];
-}> = ({ eventActions }) => {
+}> = observer(({ eventActions }) => {
   const sourceElementId = store.selectedElement.id;
 
   const handleSaveEvents = (type: EChangeType, event: TCustomEvent) => {
@@ -51,14 +51,14 @@ const EventSettingCommon: React.FC<{
       } else {
         customEvents.push(event);
       }
-      handleLinkService(event)
+      handleLinkService(event);
     } else {
       const idx = store.selectedElement?.customEvents?.findIndex(
         (evt) => event.id === evt.id,
       );
-      handleUnLinkService(customEvents[idx!])
+      handleUnLinkService(customEvents[idx!]);
       customEvents[idx!] = event;
-      handleLinkService(event)
+      handleLinkService(event);
     }
     // modal过度效果
     setTimeout(() => {
@@ -71,7 +71,7 @@ const EventSettingCommon: React.FC<{
     const idx = store.selectedElement?.customEvents?.findIndex(
       (event) => event.id === id,
     );
-    handleUnLinkService(customEvents![idx!])
+    handleUnLinkService(customEvents![idx!]);
     customEvents!.splice(idx!, 1);
     store.setSelectedProp('customEvents', customEvents);
   };
@@ -111,6 +111,4 @@ const EventSettingCommon: React.FC<{
       />
     </div>
   );
-};
-
-export default observer(EventSettingCommon);
+});

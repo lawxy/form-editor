@@ -1,21 +1,33 @@
+import React from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React from 'react'
-
-import ElementLayout from '@/components/element-layout';
-import type { IBaseElement, } from '@/types';
+import store from '@/store';
+import { ElementLayout } from '@/components/element-layout';
+import { useRegisterEvents, useUpdate } from '@/hooks';
+import { EEventAction } from '@/types';
+import type { IBaseElement } from '@/types';
 
 const RenderSelectContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ element }) => {
-  const { id, elementName, dateFormat } = element;
+}> = ({ element, fieldValue }) => {
+  const { id, elementName, valueOptions } = element;
+
+  const { eventFunctions } = useRegisterEvents(element);
+
+  const onChange = (val: any) => {
+    store.setFieldValue(id!, val);
+  };
+
+  useUpdate(() => {
+    eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
+  }, [fieldValue]);
+
   return (
     <ElementLayout element={element}>
-      <Select style={{ width: '100%' }} />
+      <Select options={valueOptions} onChange={onChange} />
     </ElementLayout>
-  )
-}
+  );
+};
 
-// store.setAllElementsList(ELEMENT_INPUT, 'render', RenderInput)
-export const RenderSelect = observer(RenderSelectContent)
+export const RenderSelect = observer(RenderSelectContent);

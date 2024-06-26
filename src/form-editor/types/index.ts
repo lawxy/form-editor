@@ -114,10 +114,7 @@ export interface IBaseElement {
    * 按钮文案
   */
   btnText?: string;
-  /**
-   * 设置关联服务后，刷新服务需要更新的字段
-  */
-  linkRefreshField?: 'fieldValue' | 'valueOptions';
+
 }
 export interface IFormAttributesProps {
   formName?: string;

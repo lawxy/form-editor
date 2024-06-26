@@ -1,9 +1,9 @@
 import React, { useMemo, useContext } from 'react';
-import type { FC, PropsWithChildren } from 'react'
+import type { FC, PropsWithChildren } from 'react';
 import { Col, Form } from 'antd';
 import { observer } from 'mobx-react-lite';
 import styled, { css } from 'styled-components';
-import { useElementCommon } from '@/hooks'
+import { useElementCommon } from '@/hooks';
 import { EditorContext } from '@/context';
 import type { IBaseElement, TDirection } from '../../types';
 import { WrapEl } from './wrap-el';
@@ -20,11 +20,11 @@ const StyledDiv = styled.div<{ elementNameDisplay?: TDirection }>(
   },
 );
 
-const ElementLayout: FC<
+export const ElementLayout: FC<
   PropsWithChildren<{
     element: IBaseElement;
   }>
-> = ({ element, children }) => {
+> = observer(({ element, children }) => {
   const {
     elementName,
     elementNameDisplay,
@@ -32,7 +32,7 @@ const ElementLayout: FC<
     gridOffset,
     gridSpan,
     showElementName,
-    gridLayout
+    gridLayout,
   } = element;
   const { elCss, contaninerCss } = useElementCommon(element);
   const { mode } = useContext(EditorContext);
@@ -43,17 +43,20 @@ const ElementLayout: FC<
       Object.assign(finnalStyle, {
         flex: 'none',
         maxWidth: 'inherit',
-      })
+      });
     }
-    return finnalStyle
+    return finnalStyle;
+  }, [contaninerCss, gridLayout]);
 
-  }, [contaninerCss, gridLayout])
-
-  const offset = gridLayout ? 0 : (gridOffset || 0);
+  const offset = gridLayout ? gridOffset || 0 : 0;
 
   return (
     <Col span={gridSpan} offset={offset} style={style}>
-      <Form.Item name={id} style={{ marginBottom: 0 }}>
+      <Form.Item
+        name={id}
+        style={{ marginBottom: 0 }}
+        rules={[{ required: true, message: '校验' }]}
+      >
         <WrapEl el={element} mode={mode}>
           <StyledDiv elementNameDisplay={elementNameDisplay}>
             {showElementName && (
@@ -66,7 +69,7 @@ const ElementLayout: FC<
             <div style={{ flex: 1 }}>
               {React.isValidElement(children) &&
                 React.cloneElement<any>(children, {
-                  style: elCss || {}
+                  style: elCss || {},
                 })}
             </div>
           </StyledDiv>
@@ -74,5 +77,4 @@ const ElementLayout: FC<
       </Form.Item>
     </Col>
   );
-};
-export default observer(ElementLayout);
+});

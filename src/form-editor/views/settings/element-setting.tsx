@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { CommonTabsSetting } from '@/components/common-tabs-setting';
-import EventSettingCommon from '@/components/event-setting-common';
+import { EventSettingCommon } from '@/components/event-setting-common';
 import { ElementsList } from '@/elements';
 import store from '@/store';
 

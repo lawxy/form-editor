@@ -29,9 +29,7 @@ const WrapDesignEl: React.FC<
       />
       {store.selectedElement?.id === el.id && <SelectedActions />}
       {children}
-      {store.selectedElement?.id === el.id && el.customEvents?.length && (
-        <EventIcon />
-      )}
+      {el.customEvents?.length && <EventIcon />}
     </DesignWrapDiv>
   );
 });

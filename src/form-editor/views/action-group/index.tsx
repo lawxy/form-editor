@@ -20,9 +20,10 @@ const ActionItem: React.FC<
 
 const ActionGroup = () => {
   const [openCode, setOpenCode] = useState(false);
-  // const form = Form.useFormInstance();
+  const form = Form.useFormInstance();
 
   const handleSave = useCallback(() => {
+    form.validateFields();
     // console.log(form.getFieldsValue())
     // form.validateFields().catch(err => {
     //   console.log(err)
@@ -42,8 +43,8 @@ const ActionGroup = () => {
     //   return;
     // }
 
-    localStorage.setItem('formJson', JSON.stringify(store.getFormJson()));
-    message.success('保存成功');
+    // localStorage.setItem('formJson', JSON.stringify(store.getFormJson()));
+    // message.success('保存成功');
   }, []);
 
   const handlePreview = async () => {

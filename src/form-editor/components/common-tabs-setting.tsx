@@ -1,11 +1,12 @@
 import React from 'react';
 import type { FC, ReactNode } from 'react';
 import type { TabsProps } from 'antd';
+import { prefixCls } from '@/const';
 
 import { observer } from 'mobx-react-lite';
 import { tabStore, type TElementTab } from '@/store';
 import BasicInfo from './basic-info';
-import CustomCssSetting from './custom-css-setting'
+import CustomCssSetting from './custom-css-setting';
 
 import { Tabs } from 'antd';
 
@@ -18,10 +19,12 @@ export const CommonTabsSetting: FC<{
     {
       key: 'attribute',
       label: `属性`,
-      children: <>
-        <BasicInfo />
-        {attributes}
-      </>
+      children: (
+        <div className={prefixCls('basic-info')}>
+          <BasicInfo />
+          {attributes}
+        </div>
+      ),
     },
     !hideCss && {
       key: 'style',
@@ -31,13 +34,17 @@ export const CommonTabsSetting: FC<{
     {
       key: 'event',
       label: '事件',
-      children: <>{events}</>
-    }
+      children: <>{events}</>,
+    },
   ].filter(Boolean) as TabsProps['items'];
 
   return (
-    <Tabs activeKey={tabStore.elementTab} onChange={(key) => {
-      tabStore.setElementTab(key as TElementTab)
-    }} items={items}/>
+    <Tabs
+      activeKey={tabStore.elementTab}
+      onChange={(key) => {
+        tabStore.setElementTab(key as TElementTab);
+      }}
+      items={items}
+    />
   );
 });

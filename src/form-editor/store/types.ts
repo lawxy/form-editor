@@ -1,3 +1,4 @@
+import type { FormInstance } from 'antd';
 import type {
   IBaseElement,
   IFormAttributesProps,
@@ -65,6 +66,10 @@ export interface IFormAttrStore {
 }
 
 export interface IFieldValuesStore {
+  formInstance?: FormInstance;
+
+  setForm: (form: FormInstance) => void;
+
   fieldValues: Record<string, any>;
 
   setFieldValue: (field: string, value: any) => void;
