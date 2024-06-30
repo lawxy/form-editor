@@ -2,8 +2,8 @@ import { InputNumber, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-import { CommonTabsSetting } from '@/components/common-tabs-setting';
-import { SettingItem } from '@/components/setting-item';
+import { TabsSetting } from '@/components';
+import { SettingItem } from '@/components';
 
 const valueTypeOptions = [
   {

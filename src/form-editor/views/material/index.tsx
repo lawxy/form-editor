@@ -15,7 +15,7 @@ export const Material = () => {
     new Sortable(el.current, {
       animation: 150,
       sort: false,
-      group: { name: 'list', pull: 'clone' },
+      group: { name: 'list', pull: 'clone', put: false },
     });
   }, []);
 

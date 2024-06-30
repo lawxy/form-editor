@@ -2,7 +2,7 @@ import React from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import store from '@/store';
-import { ElementLayout } from '@/components/element-layout';
+import { ElementLayout } from '@/components';
 import { useRegisterEvents, useUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
 import type { IBaseElement } from '@/types';
@@ -11,7 +11,7 @@ const RenderSelectContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ element, fieldValue }) => {
-  const { id, elementName, valueOptions } = element;
+  const { id, valueOptions } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 

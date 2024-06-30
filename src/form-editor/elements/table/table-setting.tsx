@@ -3,9 +3,9 @@ import { Button, Popover } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-import { AttributesSetting } from '@/components/attributes-setting';
-import { CommonTabsSetting } from '@/components/common-tabs-setting';
-import { SettingItem } from '@/components/setting-item';
+import { AttributesSetting } from '@/components';
+import { TabsSetting } from '@/components';
+import { SettingItem } from '@/components';
 import store from '@/store';
 
 const SettingTableContent = () => {

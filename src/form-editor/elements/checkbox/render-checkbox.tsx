@@ -2,7 +2,7 @@ import React from 'react';
 import { Checkbox, Space } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import { ElementLayout } from '@/components/element-layout';
+import { ElementLayout } from '@/components';
 import { useRegisterEvents, useUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
 

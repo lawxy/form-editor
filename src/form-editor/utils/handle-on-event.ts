@@ -1,4 +1,4 @@
-import { Emitter } from '@/components/event-context';
+import { Emitter } from '@/components';
 import { cloneDeep } from 'lodash-es';
 import {
   EEventType,

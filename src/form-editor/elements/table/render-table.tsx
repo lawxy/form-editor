@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import { ElementLayout } from '@/components/element-layout';
+import { ElementLayout } from '@/components';
 import type { IBaseElement } from '@/types';
 import { parseJSX } from '@/utils';
 

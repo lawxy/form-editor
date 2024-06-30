@@ -1,9 +1,9 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, message } from 'antd';
-import MonacoEditor, { useMonaco } from './monaco-editor';
+import { MonacoEditor, useMonaco } from './monaco-editor';
 
-import { SettingItem } from './setting-item';
+import { SettingItem } from './setting-common';
 import store from '../store';
 
 const CustomCssSetting = () => {
@@ -13,6 +13,7 @@ const CustomCssSetting = () => {
   const monaco = useMonaco();
 
   const value = useMemo(() => {
+    setCanSave(false);
     if (!store.selectedElement.customCss) {
       return `/* 组件样式 */\n#${
         store.selectedElement.id

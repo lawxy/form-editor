@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
-import { CommonTabsSetting } from '@/components/common-tabs-setting';
-import { EventSettingCommon } from '@/components/event-setting-common';
+import { TabsSetting } from '@/components';
+import { EventSetting } from '@/components';
 import { ElementsList } from '@/elements';
 import store from '@/store';
 
@@ -12,9 +12,9 @@ const ElementSetting = () => {
     ElementsList[store.selectedElement.type!];
 
   return store.selectedElement?.id ? (
-    <CommonTabsSetting
+    <TabsSetting
       attributes={<Component />}
-      events={<EventSettingCommon eventActions={eventActions} />}
+      events={<EventSetting eventActions={eventActions} />}
     />
   ) : null;
 };

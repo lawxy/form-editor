@@ -1,18 +1,24 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import { CommonTabsSetting } from '@/components/common-tabs-setting';
-import OptionSetting from '@/components/option-setting';
+import { observer } from 'mobx-react-lite';
+import { Select } from 'antd';
+import { OptionSetting, SettingWrap, SettingItem } from '@/components';
+import { DirectionOpions } from '@/const';
+import store from '@/store';
 
 const SettingCheckboxContent = () => {
   return (
-    <div>
-      {/* <CommonTabsSetting 
-        attributes={
-        }
-        /> */}
+    <SettingWrap title="元素设置">
+      <SettingItem label="排列方式">
+        <Select
+          options={DirectionOpions}
+          value={store.selectedElement.alignDirection}
+          onChange={(val) => {
+            store.setSelectedProp('alignDirection', val);
+          }}
+        />
+      </SettingItem>
       <OptionSetting />
-    </div>
+    </SettingWrap>
   );
 };
 export const SettingCheckbox = observer(SettingCheckboxContent);

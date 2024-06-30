@@ -2,7 +2,7 @@ import { Radio, Space, type RadioChangeEvent } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-import { ElementLayout } from '@/components/element-layout';
+import { ElementLayout } from '@/components';
 import { useRegisterEvents, useUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
 import store from '@/store';

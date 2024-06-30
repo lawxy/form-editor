@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Popconfirm, Modal, Button, Form, message } from 'antd';
 import { observer } from 'mobx-react-lite';
-import MonacoEditor from '@/components/monaco-editor';
+import { MonacoEditor } from '@/components';
 import { prefixCls } from '@/const';
 import store from '@/store';
 import './style.less';
@@ -23,7 +23,7 @@ const ActionGroup = () => {
   const form = Form.useFormInstance();
 
   const handleSave = useCallback(() => {
-    form.validateFields();
+    // form.validateFields();
     // console.log(form.getFieldsValue())
     // form.validateFields().catch(err => {
     //   console.log(err)
@@ -43,8 +43,8 @@ const ActionGroup = () => {
     //   return;
     // }
 
-    // localStorage.setItem('formJson', JSON.stringify(store.getFormJson()));
-    // message.success('保存成功');
+    localStorage.setItem('formJson', JSON.stringify(store.getFormJson()));
+    message.success('保存成功');
   }, []);
 
   const handlePreview = async () => {

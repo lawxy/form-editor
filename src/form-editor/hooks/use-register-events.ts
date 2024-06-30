@@ -1,5 +1,5 @@
 import { useEffect, useContext, useRef } from 'react';
-import { EventContext } from '@/components/event-context';
+import { EventContext } from '@/components';
 import type { IBaseElement } from '@/types';
 import {
   handleEmitEvent,

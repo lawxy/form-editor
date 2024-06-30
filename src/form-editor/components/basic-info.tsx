@@ -4,12 +4,12 @@ import React from 'react';
 import { DirectionOpions } from '../const';
 import store from '../store';
 import type { TDirection } from '../types';
-import { SettingItem } from './setting-item';
+import { SettingItem, SettingWrap } from './setting-common';
 
 const BasicInfo = () => {
   const { gridSpan, id, gridOffset } = store.selectedElement;
   return (
-    <>
+    <SettingWrap title="基础设置">
       <SettingItem label="元素id">
         <div>{id}</div>
       </SettingItem>
@@ -49,39 +49,36 @@ const BasicInfo = () => {
           }}
         />
       </SettingItem>
-      {
-        store.selectedElement?.gridLayout && (
-          <>
-            <SettingItem label="元素栅格">
-              <div style={{ width: '90%' }}>
-                <Slider
-                  value={gridSpan}
-                  max={24}
-                  min={1}
-                  onChange={(v) => {
-                    store.setSelectedProp('gridSpan', v);
-                  }}
-                />
-              </div>
-            </SettingItem>
+      {store.selectedElement?.gridLayout && (
+        <>
+          <SettingItem label="元素栅格">
+            <div style={{ width: '90%' }}>
+              <Slider
+                value={gridSpan}
+                max={24}
+                min={1}
+                onChange={(v) => {
+                  store.setSelectedProp('gridSpan', v);
+                }}
+              />
+            </div>
+          </SettingItem>
 
-            <SettingItem label="元素偏移">
-              <div style={{ width: '90%' }}>
-                <Slider
-                  value={gridOffset}
-                  max={24}
-                  min={0}
-                  onChange={(v) => {
-                    store.setSelectedProp('gridOffset', v);
-                  }}
-                />
-              </div>
-            </SettingItem>
-          </>
-        )
-      }
-
-    </>
+          <SettingItem label="元素偏移">
+            <div style={{ width: '90%' }}>
+              <Slider
+                value={gridOffset}
+                max={24}
+                min={0}
+                onChange={(v) => {
+                  store.setSelectedProp('gridOffset', v);
+                }}
+              />
+            </div>
+          </SettingItem>
+        </>
+      )}
+    </SettingWrap>
   );
 };
 

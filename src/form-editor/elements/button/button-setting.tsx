@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Input } from 'antd';
 import store from '@/store';
-import { SettingItem } from '@/components/setting-item';
+import { SettingItem } from '@/components';
 
 const SettingButtonContent = () => {
   return (

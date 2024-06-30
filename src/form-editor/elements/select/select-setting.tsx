@@ -1,9 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import { CommonTabsSetting } from '@/components/common-tabs-setting';
+import { OptionSetting, SettingWrap } from '@/components';
 
 const SettingSelectContent = () => {
-  return <div></div>;
+  return (
+    <SettingWrap title="元素设置">
+      <OptionSetting />
+    </SettingWrap>
+  );
 };
 export const SettingSelect = observer(SettingSelectContent);

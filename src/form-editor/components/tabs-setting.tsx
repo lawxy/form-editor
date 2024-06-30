@@ -10,7 +10,7 @@ import CustomCssSetting from './custom-css-setting';
 
 import { Tabs } from 'antd';
 
-export const CommonTabsSetting: FC<{
+export const TabsSetting: FC<{
   attributes?: ReactNode;
   events?: ReactNode;
   hideCss?: boolean;

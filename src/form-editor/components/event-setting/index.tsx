@@ -30,7 +30,7 @@ const formatForCollapse = (customEvents: TCustomEvent[]) => {
   });
 };
 
-export const EventSettingCommon: React.FC<{
+export const EventSetting: React.FC<{
   eventActions: EEventAction[];
 }> = observer(({ eventActions }) => {
   const sourceElementId = store.selectedElement.id;

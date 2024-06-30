@@ -6,7 +6,7 @@ import Sortable from 'sortablejs';
 import c from 'classnames';
 import { prefixCls } from '@/const';
 import { ElementsList } from '@/elements/export';
-import { EventContext } from '@/components/event-context';
+import { EventContext } from '@/components';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
 import { idCreator, handleOnEvent } from '@/utils';
@@ -78,7 +78,13 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
   return (
     <div className={prefixCls('canvas-wrap')}>
       {actions && <>{actions}</>}
-      <div className={c([prefixCls('canvas'), mode === 'design' ? prefixCls('canvas-design') : ''])} ref={el}>
+      <div
+        className={c([
+          prefixCls('canvas'),
+          mode === 'design' ? prefixCls('canvas-design') : '',
+        ])}
+        ref={el}
+      >
         <Row className={prefixCls('row')} gutter={[horizontalGap, verticalGap]}>
           {store.formElements.map((item: IBaseElement) => {
             const Component = ElementsList[item.type!]?.render;

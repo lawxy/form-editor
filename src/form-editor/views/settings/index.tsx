@@ -6,7 +6,7 @@ import React from 'react';
 import ElementSetting from './element-setting';
 import FormSetting from './form-setting';
 
-import FormService from '@/components/form-service';
+import { FormService } from '@/components';
 import { prefixCls } from '@/const';
 import { tabStore } from '@/store';
 import './style.less';

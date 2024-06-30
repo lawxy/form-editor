@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRegisterEvents } from '@/hooks';
 
-import { ElementLayout } from '@/components/element-layout';
+import { ElementLayout } from '@/components';
 import { EEventAction, type IBaseElement } from '@/types';
 
 const RenderButtonContent: React.FC<{

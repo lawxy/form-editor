@@ -6,7 +6,7 @@ import {
   TCustomEvent,
   TCustomEvents,
 } from '@/types';
-import { Emitter } from '@/components/event-context';
+import { Emitter } from '@/components';
 import store from '@/store';
 interface IParams {
   emitter: Emitter;

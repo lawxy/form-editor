@@ -20,6 +20,14 @@ export enum EChangeType {
   ADD = 'add',
   EDIT = 'edit',
 }
+export type TPattern = {
+  id?: string;
+  name: string;
+  regexp?: string;
+  message: string;
+  enable: boolean;
+  required?: boolean;
+};
 
 export interface IBaseElement {
   /**
@@ -43,8 +51,8 @@ export interface IBaseElement {
    */
   id?: string;
   /**
-  * 采用栅格布局
-  */
+   * 采用栅格布局
+   */
   gridLayout?: boolean;
   /**
    * 元素栅格
@@ -112,9 +120,13 @@ export interface IBaseElement {
   customEvents?: TCustomEvents;
   /**
    * 按钮文案
-  */
+   */
   btnText?: string;
 
+  /**
+   * 自定义正则
+   */
+  regExps?: TPattern[];
 }
 export interface IFormAttributesProps {
   formName?: string;

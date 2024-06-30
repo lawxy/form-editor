@@ -2,29 +2,22 @@ import { Input, InputNumber } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 
-import { SettingItem } from '@/components/setting-item';
+import { SettingItem } from '@/components';
 import store from '@/store';
 import { idCreator } from '@/utils';
 
 const FormSetting = () => {
-  const {
-    formId,
-    formName,
-    horizontalGap,
-    verticalGap,
-  } = store.formAttrs;
+  const { formId, formName, horizontalGap, verticalGap } = store.formAttrs;
 
   useEffect(() => {
-    if(!formId){
-      store.setFormAttr('formId', idCreator('form'))
+    if (!formId) {
+      store.setFormAttr('formId', idCreator('form'));
     }
-  }, [formId])
+  }, [formId]);
 
   return (
-    <div style={{marginTop: 16}}>
-      <SettingItem label="表单id">
-        { formId }
-      </SettingItem>
+    <div style={{ marginTop: 16 }}>
+      <SettingItem label="表单id">{formId}</SettingItem>
       <SettingItem label="表单名称">
         <Input
           value={formName}

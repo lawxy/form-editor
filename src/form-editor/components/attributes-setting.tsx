@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Modal, message } from 'antd';
 import { observer } from 'mobx-react-lite';
-import MonacoEditor, { useMonaco } from '@/components/monaco-editor';
+import { MonacoEditor, useMonaco } from '@/components';
 
 export const AttributesSetting: FC<
   PropsWithChildren<{

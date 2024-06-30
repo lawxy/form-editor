@@ -11,7 +11,7 @@ interface EditorProps {
   options?: object;
 }
 
-const MonacoEditor: React.FC<EditorProps> = ({
+export const MonacoEditor: React.FC<EditorProps> = ({
   onValidate,
   style,
   language,
@@ -84,8 +84,6 @@ const MonacoEditor: React.FC<EditorProps> = ({
 
   return <div style={style || {}} ref={monacoEl} />;
 };
-
-export default MonacoEditor;
 
 export const useMonaco = () => {
   return useMemo(() => monaco, [monaco]);
