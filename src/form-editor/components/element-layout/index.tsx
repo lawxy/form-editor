@@ -1,11 +1,12 @@
 import React, { useMemo, useContext } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Col, Form } from 'antd';
+import { Rule } from 'antd/es/form';
 import { observer } from 'mobx-react-lite';
 import styled, { css } from 'styled-components';
 import { useElementCommon } from '@/hooks';
 import { EditorContext } from '@/context';
-import type { IBaseElement, TDirection } from '../../types';
+import type { IBaseElement, TDirection, TPattern } from '../../types';
 import { WrapEl } from './wrap-el';
 
 const StyledDiv = styled.div<{ elementNameDisplay?: TDirection }>(
@@ -33,10 +34,12 @@ export const ElementLayout: FC<
     gridSpan,
     showElementName,
     gridLayout,
+    regExps,
   } = element;
   const { elCss, contaninerCss } = useElementCommon(element);
   const { mode } = useContext(EditorContext);
 
+  // 自定义css样式
   const style = useMemo(() => {
     const finnalStyle: React.CSSProperties = contaninerCss || {};
     if (!gridLayout) {
@@ -48,15 +51,38 @@ export const ElementLayout: FC<
     return finnalStyle;
   }, [contaninerCss, gridLayout]);
 
+  // 校验规则
+  const rules = useMemo<Rule[]>(() => {
+    if (!regExps?.length) return [];
+    const arr = [];
+    const requiredRule = regExps[0];
+    arr.push({
+      required: requiredRule?.enable,
+      message: requiredRule?.message,
+    });
+    regExps
+      .slice(1)
+      .filter((item) => item.enable && item.regexp && item.message)
+      .forEach((patternItem) => {
+        arr.push({
+          validator(_: any, value: any = '') {
+            const reg = new RegExp(patternItem.regexp as string);
+            if (value?.match(reg)) {
+              return Promise.resolve();
+            }
+            return Promise.reject(patternItem.message);
+          },
+        });
+      });
+    return arr;
+  }, [regExps]);
+
+  // 偏移量值 仅使用栅格布局才生效
   const offset = gridLayout ? gridOffset || 0 : 0;
 
   return (
     <Col span={gridSpan} offset={offset} style={style}>
-      <Form.Item
-        name={id}
-        style={{ marginBottom: 0 }}
-        rules={[{ required: true, message: '校验' }]}
-      >
+      <Form.Item name={id} rules={rules} style={{ marginBottom: 0 }}>
         <WrapEl el={element} mode={mode}>
           <StyledDiv elementNameDisplay={elementNameDisplay}>
             {showElementName && (

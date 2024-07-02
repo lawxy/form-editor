@@ -51,12 +51,17 @@ export enum EEventType {
    * 设置组件值
    */
   SETTING_VALUE = 'settingValue',
+  /**
+   * 表单校验
+   */
+  VALIDATE = 'validate',
 }
 
 export const eventTypeChinese = {
   [EEventType.UPDATE_SERVICE]: '更新服务',
   [EEventType.SETTING_VALUE]: '设置组件值',
   [EEventType.LINK_SERVICE]: '关联服务',
+  [EEventType.VALIDATE]: '表单校验',
 };
 
 /**

@@ -1,5 +1,4 @@
 import React, { type FC, type PropsWithChildren } from 'react';
-import styled from 'styled-components';
 import { prefixCls } from '@/const';
 import './style.less';
 

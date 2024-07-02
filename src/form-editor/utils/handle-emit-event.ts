@@ -72,20 +72,10 @@ export const emitRefreshService = (params: IParams) => {
   };
 };
 
-// 关联服务
-// export const emitLinkService = (params: IParams) => {
-//   const { emitter, eventType, target } = params;
-//   const { targetServiceId, sourceElementId } = target;
-//   const validate = validateParams([targetServiceId]);
-//   if (!validate) return;
-//   return () => {
-//     emitter.emit(targetServiceId!, {
-//       targetServiceId,
-//       eventType,
-//       sourceElementId,
-//     } as TEmitData);
-//   };
-// };
+// 表单校验
+export const emitValidateForm = () => {
+  return () => store.formInstance?.validateFields();
+};
 
 export const handleEmitEvent = (
   emitter: Emitter,
@@ -104,9 +94,9 @@ export const handleEmitEvent = (
         case EEventType.UPDATE_SERVICE:
           emitFn = emitRefreshService(params);
           break;
-        // case EEventType.LINK_SERVICE:
-        //   emitFn = emitLinkService(params);
-        //   break;
+        case EEventType.VALIDATE:
+          emitFn = emitValidateForm();
+          break;
       }
 
       if (!emitFn) return;

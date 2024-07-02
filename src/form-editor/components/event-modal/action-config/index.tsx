@@ -24,36 +24,42 @@ const ActionItem: React.FC<{
   const renderConfig = () => {
     const props = { onChange, eventTarget };
     switch (type) {
+      case EEventType.SETTING_VALUE:
+        return <SetElementValue {...props} />;
       case EEventType.UPDATE_SERVICE:
         return <RefreshService {...props} />;
       case EEventType.LINK_SERVICE:
         return <LinkServcie {...props} />;
       default:
-        return <SetElementValue {...props} />;
+        return null;
     }
   };
 
+  const Config = renderConfig();
+
   return (
-    <div className={prefixCls('event-action-config')}>
-      {renderConfig()}
-      <Space>
-        <Popconfirm title="确认删除" onConfirm={onDelete}>
-          <span>
-            <MinusCircleOutlined
-              style={{ color: '#D40000', cursor: 'pointer' }}
-            />
-          </span>
-        </Popconfirm>
-        {last && (
-          <span>
-            <PlusCircleOutlined
-              style={{ color: '#287DFA', cursor: 'pointer' }}
-              onClick={onAdd}
-            />
-          </span>
-        )}
-      </Space>
-    </div>
+    Config && (
+      <div className={prefixCls('event-action-config')}>
+        {Config}
+        <Space>
+          <Popconfirm title="确认删除" onConfirm={onDelete}>
+            <span>
+              <MinusCircleOutlined
+                style={{ color: '#D40000', cursor: 'pointer' }}
+              />
+            </span>
+          </Popconfirm>
+          {last && (
+            <span>
+              <PlusCircleOutlined
+                style={{ color: '#287DFA', cursor: 'pointer' }}
+                onClick={onAdd}
+              />
+            </span>
+          )}
+        </Space>
+      </div>
+    )
   );
 };
 

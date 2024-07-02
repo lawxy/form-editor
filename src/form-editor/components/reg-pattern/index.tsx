@@ -7,6 +7,7 @@ import { idCreator } from '@/utils';
 import store from '@/store';
 import { prefixCls } from '@/const';
 import type { TPattern } from '@/types';
+import { EditInput } from './edit-input';
 import { SettingItem, SettingWrap } from '../';
 import './style.less';
 
@@ -27,16 +28,12 @@ const defaultPattern: TPattern = {
 export const RegPattern = observer(() => {
   const regExps = store.selectedElement?.regExps ?? [requiredPattern];
 
-  console.log('regExps', regExps);
-
   const handleChange = <T extends keyof TPattern>(
     idx: number,
     field: T,
     value: TPattern[T],
   ) => {
     const newRegExps: TPattern[] = cloneDeep(regExps);
-    console.log(idx);
-    console.log(newRegExps);
     newRegExps[idx][field] = value;
     store.setSelectedProp('regExps', newRegExps);
   };
@@ -63,22 +60,26 @@ export const RegPattern = observer(() => {
             onChange={(checked) => handleChange(0, 'enable', checked)}
           />
         </SettingItem>
-        <SettingItem label="错误提示">
-          <Input
-            value={regExps[0]?.message}
-            onChange={(e) => handleChange(0, 'message', e.target.value)}
-          />
-        </SettingItem>
+        {regExps[0]?.enable && (
+          <SettingItem label="错误提示">
+            <Input
+              value={regExps[0]?.message}
+              onChange={(e) => handleChange(0, 'message', e.target.value)}
+            />
+          </SettingItem>
+        )}
       </div>
       {regExps?.slice(1)?.map((patternItem: TPattern, i: number) => {
         return (
           <div key={patternItem.id} className={prefixCls('patter-item')}>
             <SettingItem
               label={
-                <>
-                  {patternItem.name}
-                  <EditOutlined />
-                </>
+                <EditInput
+                  value={patternItem.name}
+                  onChange={(val) => {
+                    handleChange(i + 1, 'name', val);
+                  }}
+                />
               }
             >
               <Switch
