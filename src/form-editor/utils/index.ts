@@ -10,3 +10,4 @@ export * from './handle-emit-event';
 export * from './handle-on-event';
 export * from './handle-deal-service';
 export * from './format-date';
+export * from './validate-params';

@@ -1,4 +1,3 @@
-import { isNil } from 'lodash-es';
 import {
   EEventAction,
   EEventType,
@@ -8,6 +7,8 @@ import {
 } from '@/types';
 import { Emitter } from '@/components';
 import store from '@/store';
+import { validateParams } from '.';
+
 interface IParams {
   emitter: Emitter;
   eventType: EEventType;
@@ -28,9 +29,6 @@ export type TEmitData = Partial<IEventTarget> & {
   eventType: EEventType;
   value?: any;
 };
-
-const validateParams = (values: any[]) =>
-  values.every((value) => !isNil(value));
 
 // 设置组件值
 export const emitSettingValue = (params: IParams) => {
@@ -73,8 +71,11 @@ export const emitRefreshService = (params: IParams) => {
 };
 
 // 表单校验
-export const emitValidateForm = () => {
-  return () => store.formInstance?.validateFields();
+export const emitValidateForm = (params: IParams) => {
+  const { target } = params;
+  const { validateField } = target;
+  const fields = validateField ? [validateField] : undefined;
+  return () => store.formInstance?.validateFields(fields);
 };
 
 export const handleEmitEvent = (
@@ -95,7 +96,7 @@ export const handleEmitEvent = (
           emitFn = emitRefreshService(params);
           break;
         case EEventType.VALIDATE:
-          emitFn = emitValidateForm();
+          emitFn = emitValidateForm(params);
           break;
       }
 

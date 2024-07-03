@@ -1,6 +1,6 @@
+import React, { useEffect } from 'react';
 import { Radio, Space, type RadioChangeEvent } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 
 import { ElementLayout } from '@/components';
 import { useRegisterEvents, useUpdate } from '@/hooks';
@@ -20,7 +20,12 @@ const RenderRadioContent: React.FC<{
     store.setFieldValue(id!, e.target.value);
   };
 
+  useEffect(() => {
+    eventFunctions[EEventAction.ON_LOADED]?.();
+  }, [EEventAction.ON_LOADED]);
+
   useUpdate(() => {
+    console.log(fieldValue, typeof fieldValue);
     eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
   }, [fieldValue]);
 

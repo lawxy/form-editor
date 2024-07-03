@@ -4,6 +4,7 @@ import { Col, Form } from 'antd';
 import { Rule } from 'antd/es/form';
 import { observer } from 'mobx-react-lite';
 import styled, { css } from 'styled-components';
+import { cloneDeep } from 'lodash-es';
 import { useElementCommon } from '@/hooks';
 import { EditorContext } from '@/context';
 import type { IBaseElement, TDirection, TPattern } from '../../types';
@@ -17,6 +18,15 @@ const StyledDiv = styled.div<{ elementNameDisplay?: TDirection }>(
       flexDirection: elementNameDisplay === 'horizontal' ? 'row' : 'column',
       alignItems: elementNameDisplay === 'horizontal' ? 'center' : '',
     }).join(';')}
+    .title-required::before {
+      display: inline-block;
+      margin-inline-end: 4px;
+      color: #ff4d4f;
+      font-size: 14px;
+      font-family: SimSun, sans-serif;
+      line-height: 1;
+      content: "*";
+    }
   `;
   },
 );
@@ -41,7 +51,10 @@ export const ElementLayout: FC<
 
   // 自定义css样式
   const style = useMemo(() => {
-    const finnalStyle: React.CSSProperties = contaninerCss || {};
+    const finnalStyle: React.CSSProperties = contaninerCss
+      ? cloneDeep(contaninerCss)
+      : {};
+
     if (!gridLayout) {
       Object.assign(finnalStyle, {
         flex: 'none',
@@ -90,6 +103,8 @@ export const ElementLayout: FC<
                 dangerouslySetInnerHTML={{
                   __html: elementName as string,
                 }}
+                // @ts-ignore
+                className={rules?.[0]?.required ? 'title-required' : ''}
               />
             )}
             <div style={{ flex: 1 }}>

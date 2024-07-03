@@ -11,7 +11,7 @@ export const useElementCommon = (element: IBaseElement) => {
   const customStyle: TCustomStyleType = useMemo(() => {
     try {
       const styleObj = parseCSS(customCss);
-  
+
       return Object.entries(styleObj).reduce<TCustomStyleType>(
         (
           memo: TCustomStyleType,
@@ -25,11 +25,11 @@ export const useElementCommon = (element: IBaseElement) => {
         },
         {} as TCustomStyleType,
       );
-    }catch{
+    } catch {
       return {
         elCss: {},
-        contaninerCss: {}
-      }
+        contaninerCss: {},
+      };
     }
   }, [customCss]);
 

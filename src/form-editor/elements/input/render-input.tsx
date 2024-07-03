@@ -36,7 +36,6 @@ const RenderInputContent: React.FC<{
     <ElementLayout element={element}>
       {textType === 'single' ? (
         <Input
-          value={fieldValue}
           placeholder={placeholder}
           id={id}
           onChange={handleChange}

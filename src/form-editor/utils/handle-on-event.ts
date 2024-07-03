@@ -9,6 +9,7 @@ import {
 import store from '@/store';
 import { triggerService, appendUrl } from './trigger-service';
 import type { TEmitData } from './handle-emit-event';
+import { validateParams } from '.';
 
 // 设置组件值
 export const triggerSettingValue = (params: TEmitData) => {
@@ -54,7 +55,7 @@ export const triggerRefreshService = async (params: TEmitData) => {
     linkingElements?.forEach((item) => {
       const { id, field } = item;
       const element = store.getElement(id);
-      if (!element) return;
+      if (!element || !field) return;
       if (field === ELinkRefreshField.VALUEOPTIONS) {
         store.setElementProp(id, ELinkRefreshField.VALUEOPTIONS, serviceRes);
       } else {

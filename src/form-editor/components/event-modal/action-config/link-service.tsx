@@ -1,23 +1,23 @@
-import { Select } from 'antd';
-import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { Select, Input } from 'antd';
+import { observer } from 'mobx-react-lite';
 
 import { prefixCls } from '@/const';
 import store from '@/store';
+import { linkRefreshFieldOptions } from '@/types';
 import type { IEventTarget } from '@/types';
 
 const LinkService: React.FC<{
   onChange: (v: Omit<IEventTarget, 'id' | 'sourceElementId'>) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
-  const { targetServiceId } = eventTarget || {};
+  const { targetServiceId, linkRefreshField } = eventTarget || {};
 
   return (
     <div style={{ lineHeight: '40px' }}>
       <div>
         目标服务 ={' '}
         <Select
-          allowClear
           className={prefixCls('event-select')}
           options={store.getFormServices()}
           fieldNames={{ label: 'name', value: 'id' }}
@@ -27,7 +27,26 @@ const LinkService: React.FC<{
           }}
         />
       </div>
-      <div>服务刷新时, 获取服务结果更新组件</div>
+      <div>
+        获取服务结果更新组件{' '}
+        <Select
+          style={{ width: 120 }}
+          options={linkRefreshFieldOptions}
+          defaultValue={linkRefreshField}
+          onChange={(v) => {
+            onChange({ linkRefreshField: v });
+          }}
+        />
+        {/* {linkRefreshField === ELinkRefreshField.CUSTOMFIELD && (
+          <Input
+            defaultValue={updateField}
+            className={prefixCls('event-input')}
+            onChange={(e) => {
+              onChange({ updateField: e.target.value });
+            }}
+          />
+        )} */}
+      </div>
     </div>
   );
 };
