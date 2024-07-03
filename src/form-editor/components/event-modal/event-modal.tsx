@@ -16,6 +16,7 @@ import {
   EEventType,
 } from '@/types';
 import { idCreator } from '@/utils';
+import './style.less'
 
 export type MenuItem = Required<MenuProps>['items'][number];
 
@@ -140,14 +141,14 @@ export const EventModal: FC<
           <div className={prefixCls('event-modal-wrap')}>
             <div className={prefixCls('event-modal-content')}>
               <SelectComponent
-                className={prefixCls('event-select')}
+                className={prefixCls('action-select')}
                 title="选择事件"
                 menuItems={eventActionsMenus}
                 onChange={(v) => handleChangeEvent('eventAction', v)}
                 defaultValue={event?.eventAction}
               />
               <SelectComponent
-                className={prefixCls('action-select')}
+                className={prefixCls('type-select')}
                 title="选择对应的动作"
                 menuItems={tempEvent.eventAction ? eventTypeMenus : []}
                 onChange={(v) => handleChangeEvent('eventType', v)}

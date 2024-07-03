@@ -16,7 +16,7 @@ export interface IServiceResponse {
   errMsg?: string;
 }
 
-const DEFAULT_ERROR_MESSAGE = '请求服务出错';
+const DEFAULT_ERROR_MESSAGE = '请求服务报错';
 
 export const toSearchString = (params: Record<string, any>): string => {
   return new URLSearchParams(params).toString();

@@ -18,10 +18,9 @@ const LinkService: React.FC<{
         目标服务 ={' '}
         <Select
           allowClear
-          className={prefixCls('event-input')}
+          className={prefixCls('event-select')}
           options={store.getFormServices()}
           fieldNames={{ label: 'name', value: 'id' }}
-          style={{ width: 200 }}
           defaultValue={targetServiceId}
           onChange={(v) => {
             onChange({ targetServiceId: v });

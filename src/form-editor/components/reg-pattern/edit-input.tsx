@@ -12,7 +12,7 @@ export const EditInput: React.FC<{
 
   return (
     <div className={prefixCls('edit-input')}>
-      <Typography.Text style={{ width: 60 }} ellipsis={{ tooltip: true }}>
+      <Typography.Text style={{ width: 60, fontSize: 13 }} ellipsis={{ tooltip: true }}>
         {value}
       </Typography.Text>
 

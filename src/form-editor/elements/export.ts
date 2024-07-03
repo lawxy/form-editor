@@ -48,15 +48,6 @@ export const ElementsList: Record<string, IDragElementProp> = {
     initialData: Input_initData
   },
 
-  [ELEMENT_BUTTON]: {
-    type: ELEMENT_BUTTON,
-    render: RenderButton,
-    setting: SettingButton,
-    text: BUTTON_TEXT,
-    eventActions: Button_eventActions,
-    initialData: Button_initData
-  },
-
   [ELEMENT_NUMBER]: {
     type: ELEMENT_NUMBER,
     render: RenderNumber,
@@ -109,6 +100,15 @@ export const ElementsList: Record<string, IDragElementProp> = {
     text: CHECKBOX_TEXT,
     eventActions: Checkbox_eventActions,
     initialData: Checkbox_initData
+  },
+
+  [ELEMENT_BUTTON]: {
+    type: ELEMENT_BUTTON,
+    render: RenderButton,
+    setting: SettingButton,
+    text: BUTTON_TEXT,
+    eventActions: Button_eventActions,
+    initialData: Button_initData
   },
 
   [ELEMENT_TABLE]: {

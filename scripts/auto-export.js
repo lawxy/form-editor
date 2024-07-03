@@ -10,15 +10,15 @@ const exportFile = path.join(componentsDir, 'export.ts');
 
 // 由于文件目录会自己根据首字母排序， 这里要自己排序一下([文件名大写]_TEXT)
 const sort = [
-  'INPUT_TEXT',   // 文本框
-  'BUTTON_TEXT',  // 按钮
+  'INPUT_TEXT',   // 输入框
   'NUMBER_TEXT',  // 数字框
   'DATE_TEXT',    // 日期
   'TIME_TEXT',    // 时间
   'SELECT_TEXT',  // 下拉
   'RADIO_TEXT',   // 单选
   'CHECKBOX_TEXT', // 多选
-  'TABLE_TEXT'     // 表格
+  'BUTTON_TEXT',  // 按钮
+  'TABLE_TEXT',    // 表格
 ]
 
 fs.readdir(componentsDir, (err, files) => {

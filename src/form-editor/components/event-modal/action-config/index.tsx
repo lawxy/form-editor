@@ -11,6 +11,7 @@ import { idCreator } from '@/utils';
 import LinkServcie from './link-service';
 import RefreshService from './refresh-service';
 import SetElementValue from './set-element-value';
+import Validate from './validate';
 import { EventModalContext } from '../context';
 
 const ActionItem: React.FC<{
@@ -30,6 +31,8 @@ const ActionItem: React.FC<{
         return <RefreshService {...props} />;
       case EEventType.LINK_SERVICE:
         return <LinkServcie {...props} />;
+      case EEventType.VALIDATE:
+        return <Validate {...props}/>
       default:
         return null;
     }

@@ -71,8 +71,6 @@ export enum EChangeStatePayload {
   // SHOW = 'show',
   // HIDDEN = 'hidden',
   // DISABLE = 'disable',
-  // REFRESH = 'refresh',
-  // LINK = 'link',
   UPDATE = 'update',
   CLEAR = 'clear',
   APPEND = 'append',
@@ -112,9 +110,17 @@ export enum ELinkRefreshField {
   VALUEOPTIONS = 'valueOptions',
 }
 export const linkRefreshFieldOptions = [
-  { label: '元素值', value: ELinkRefreshField.FIELDVALUE },
+  { label: '组件值', value: ELinkRefreshField.FIELDVALUE },
   { label: '选项', value: ELinkRefreshField.VALUEOPTIONS },
 ];
+export enum EValidateType {
+  CURRENT = 'current',
+  ALL = 'all',
+}
+export const validateTypeOptions = [
+  { label: '当前组件', value: EValidateType.CURRENT },
+  { label: '表单', value: EValidateType.ALL },
+]
 export interface IEventTarget {
   id: string;
   /**
@@ -150,7 +156,15 @@ export interface IEventTarget {
    */
   setValue?: any;
   /**
+   * 表单校验的字段，为空时校验整个表单
+  */
+  validateField?: string;
+  /**
    * 设置关联服务后，刷新服务需要更新的字段
    */
   linkRefreshField?: ELinkRefreshField;
+  /**
+   * 获取服务返回的字段值 
+  */
+  getFieldFromService?: string;
 }

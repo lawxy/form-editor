@@ -31,9 +31,9 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
     let schema: IFormSchema = {};
     if (defaultValue) {
       schema = defaultValue;
-    } else if (localStorage.getItem('formJson')) {
+    } else if (localStorage.getItem('schema')) {
       try {
-        schema = JSON.parse(localStorage.getItem('formJson')!);
+        schema = JSON.parse(localStorage.getItem('schema')!);
       } catch (e) {}
     }
     const {

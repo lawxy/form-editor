@@ -1,6 +1,6 @@
+import React from 'react';
 import { Input, Select, Slider, Switch } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { DirectionOpions } from '../const';
 import store from '../store';
 import type { TDirection } from '../types';
@@ -30,6 +30,7 @@ const BasicInfo = () => {
           onChange={(checked) => {
             store.setSelectedProp('showElementName', checked);
           }}
+          size='small'
         />
       </SettingItem>
       <SettingItem label="名称对齐">
@@ -47,6 +48,7 @@ const BasicInfo = () => {
           onChange={(checked) => {
             store.setSelectedProp('gridLayout', checked);
           }}
+          size='small'
         />
       </SettingItem>
       {store.selectedElement?.gridLayout && (

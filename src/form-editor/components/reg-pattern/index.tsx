@@ -58,6 +58,7 @@ export const RegPattern = observer(() => {
           <Switch
             checked={regExps[0]?.enable}
             onChange={(checked) => handleChange(0, 'enable', checked)}
+            size='small'
           />
         </SettingItem>
         {regExps[0]?.enable && (
@@ -85,6 +86,7 @@ export const RegPattern = observer(() => {
               <Switch
                 checked={patternItem.enable}
                 onChange={(checked) => handleChange(i + 1, 'enable', checked)}
+                size='small'
               />
               <Popconfirm
                 title="确认删除"
