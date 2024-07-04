@@ -3,7 +3,7 @@ import { Checkbox, Space } from 'antd';
 import { observer } from 'mobx-react-lite';
 
 import { ElementLayout } from '@/components';
-import { useRegisterEvents, useUpdate } from '@/hooks';
+import { useRegisterEvents, useEditorUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
 
 import store from '@/store';
@@ -21,7 +21,11 @@ const RenderCheckboxContent: React.FC<{
     store.setFieldValue(id!, val);
   };
 
-  useUpdate(() => {
+  useEditorUpdate(() => {
+    eventFunctions[EEventAction.ON_LOADED]?.();
+  }, [eventFunctions[EEventAction.ON_LOADED]]);
+
+  useEditorUpdate(() => {
     eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
   }, [fieldValue]);
 

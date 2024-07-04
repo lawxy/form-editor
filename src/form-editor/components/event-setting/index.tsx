@@ -7,21 +7,20 @@ import store from '@/store';
 import { handleLinkService, handleUnLinkService } from '@/utils';
 import {
   TCustomEvent,
-  EChangeStatePayload,
   EChangeType,
   EEventAction,
-  EEventType,
   eventActionInChinese,
-  TFormSerive,
 } from '@/types';
 
 import { EventCollapse } from './event-collapse';
 import { EventModal } from '../event-modal';
 
+export * from './event-collapse';
+
 import './style.less';
 
-const formatForCollapse = (customEvents: TCustomEvent[]) => {
-  const group = groupBy(customEvents, 'eventAction');
+const formatForCollapse = (events: TCustomEvent[]) => {
+  const group = groupBy(events, 'eventAction');
   return Object.entries(group).map(([action, events]) => {
     return {
       label: eventActionInChinese[action as EEventAction],
@@ -32,13 +31,26 @@ const formatForCollapse = (customEvents: TCustomEvent[]) => {
 
 export const EventSetting: React.FC<{
   eventActions: EEventAction[];
-}> = observer(({ eventActions }) => {
-  const sourceElementId = store.selectedElement.id;
+  type: 'element' | 'form';
+}> = observer(({ eventActions, type }) => {
+  
+  const { source, setProp } = (() => {
+    if(type === 'element') return {
+      source: store.selectedElement,
+      setProp: store.setSelectedProp as any
+    }
+    return {
+      source: store.formAttrs,
+      setProp: store.setFormAttr as any
+    }
+  })()
+
+  const sourceId = source.id;
 
   const handleSaveEvents = (type: EChangeType, event: TCustomEvent) => {
-    const customEvents = cloneDeep(store.selectedElement?.customEvents || []);
+    const events = cloneDeep(source?.events || []);
     if (type === EChangeType.ADD) {
-      let sameActionEvent: TCustomEvent | undefined = customEvents.find(
+      let sameActionEvent: TCustomEvent | undefined = events.find(
         (existEvent) =>
           existEvent.eventAction === event.eventAction &&
           existEvent.eventType === event.eventType,
@@ -49,31 +61,31 @@ export const EventSetting: React.FC<{
         );
         message.success('新增事件已被合并');
       } else {
-        customEvents.push(event);
+        events.push(event);
       }
       handleLinkService(event);
     } else {
-      const idx = store.selectedElement?.customEvents?.findIndex(
+      const idx = source?.events?.findIndex(
         (evt) => event.id === evt.id,
       );
-      handleUnLinkService(customEvents[idx!]);
-      customEvents[idx!] = event;
+      handleUnLinkService(events[idx!]);
+      events[idx!] = event;
       handleLinkService(event);
     }
     // modal过度效果
     setTimeout(() => {
-      store.setSelectedProp('customEvents', customEvents);
+      setProp('events', events);
     }, 200);
   };
 
   const handleDelete = (id: string) => {
-    const customEvents = cloneDeep(store.selectedElement?.customEvents);
-    const idx = store.selectedElement?.customEvents?.findIndex(
+    const events = cloneDeep(source?.events);
+    const idx = source?.events?.findIndex(
       (event) => event.id === id,
     );
-    handleUnLinkService(customEvents![idx!]);
-    customEvents!.splice(idx!, 1);
-    store.setSelectedProp('customEvents', customEvents);
+    handleUnLinkService(events![idx!]);
+    events!.splice(idx!, 1);
+    setProp('events', events);
   };
 
   return (
@@ -82,7 +94,7 @@ export const EventSetting: React.FC<{
         eventActions={eventActions}
         onOk={(evt: TCustomEvent) => handleSaveEvents(EChangeType.ADD, evt)}
         type={EChangeType.ADD}
-        sourceElementId={sourceElementId!}
+        sourceId={sourceId!}
       >
         <Button type="dashed" className={prefixCls('event-button-add')}>
           + 新增事件
@@ -90,7 +102,7 @@ export const EventSetting: React.FC<{
       </EventModal>
       <EventCollapse
         collopaseItems={formatForCollapse(
-          store.selectedElement?.customEvents || [],
+          source?.events || [],
         )}
         onDelete={handleDelete}
         EditComponent={({ children, evt }) => {
@@ -102,7 +114,7 @@ export const EventSetting: React.FC<{
               }
               event={evt}
               type={EChangeType.EDIT}
-              sourceElementId={sourceElementId!}
+              sourceId={sourceId!}
             >
               {children}
             </EventModal>

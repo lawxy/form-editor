@@ -1,17 +1,14 @@
-import React, { useContext, type FC } from 'react';
-import { EditorContext } from '@/context';
+import React, { type FC } from 'react';
+import { useEditorContext } from '@/context';
 import EditorCanvas from './render-canvas';
 import ActionGroup from '../action-group';
-import { EventContextProvider } from '@/components';
 
 export const FormCanvas: FC = () => {
-  const { mode } = useContext(EditorContext);
+  const { mode } = useEditorContext();
   return (
-    <EventContextProvider>
-      <EditorCanvas
-        mode={mode}
-        actions={mode === 'design' && <ActionGroup />}
-      ></EditorCanvas>
-    </EventContextProvider>
+    <EditorCanvas
+      mode={mode}
+      actions={mode === 'design' && <ActionGroup />}
+    />
   );
 };

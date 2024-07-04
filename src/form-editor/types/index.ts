@@ -117,7 +117,7 @@ export interface IBaseElement {
   /**
    * 事件
    */
-  customEvents?: TCustomEvents;
+  events?: TCustomEvents;
   /**
    * 按钮文案
    */
@@ -130,10 +130,11 @@ export interface IBaseElement {
 }
 export interface IFormAttributesProps {
   formName?: string;
-  formId?: string;
+  id?: string;
   status?: boolean;
   horizontalGap: number;
   verticalGap: number;
+  events?: TCustomEvents;
 }
 
 export interface IFormSchema {

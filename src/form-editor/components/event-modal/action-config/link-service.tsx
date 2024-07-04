@@ -8,7 +8,7 @@ import { linkRefreshFieldOptions } from '@/types';
 import type { IEventTarget } from '@/types';
 
 const LinkService: React.FC<{
-  onChange: (v: Omit<IEventTarget, 'id' | 'sourceElementId'>) => void;
+  onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
   const { targetServiceId, linkRefreshField } = eventTarget || {};

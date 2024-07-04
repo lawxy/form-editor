@@ -3,7 +3,7 @@ import { Input } from 'antd';
 import { observer } from 'mobx-react-lite';
 
 import { ElementLayout } from '@/components';
-import { useRegisterEvents, useUpdate } from '@/hooks';
+import { useRegisterEvents, useEditorUpdate } from '@/hooks';
 import store from '@/store';
 import { EEventAction } from '@/types';
 import type { IBaseElement } from '@/types';
@@ -28,7 +28,11 @@ const RenderInputContent: React.FC<{
     store.setFieldValue(id!, e.target.value);
   };
 
-  useUpdate(() => {
+  useEditorUpdate(() => {
+    eventFunctions[EEventAction.ON_LOADED]?.();
+  }, [eventFunctions[EEventAction.ON_LOADED]]);
+
+  useEditorUpdate(() => {
     eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
   }, [fieldValue]);
 

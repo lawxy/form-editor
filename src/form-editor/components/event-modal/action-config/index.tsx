@@ -16,7 +16,7 @@ import { EventModalContext } from '../context';
 
 const ActionItem: React.FC<{
   type: EEventType;
-  onChange: (v: Omit<IEventTarget, 'id' | 'sourceElementId'>) => void;
+  onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
   eventTarget?: IEventTarget;
   last: boolean;
   onAdd: () => void;
@@ -66,21 +66,21 @@ const ActionItem: React.FC<{
   );
 };
 
-const getNewTarget = (sourceElementId: string) => ({
+const getNewTarget = (sourceId: string) => ({
   id: idCreator('event-target'),
-  sourceElementId,
+  sourceId,
 });
 export const ActionConfig: React.FC<{
   title: string;
   className?: string;
   currentEvent: TCustomEvent;
 }> = ({ title, className, currentEvent }) => {
-  const { handleChangeEvent, setEdit, sourceElementId } =
+  const { handleChangeEvent, setEdit, sourceId } =
     useContext(EventModalContext);
 
   const handleChange = (
     type: 'add' | 'edit',
-    targetAttr?: Omit<IEventTarget, 'id' | 'sourceElementId'>,
+    targetAttr?: Omit<IEventTarget, 'id' | 'sourceId'>,
     idx?: number,
   ) => {
     if (type === 'edit') {
@@ -94,7 +94,7 @@ export const ActionConfig: React.FC<{
     } else {
       handleChangeEvent(
         'eventTargets',
-        (currentEvent.eventTargets || []).concat(getNewTarget(sourceElementId)),
+        (currentEvent.eventTargets || []).concat(getNewTarget(sourceId)),
       );
     }
   };

@@ -2,7 +2,7 @@ import React from 'react';
 import { TimePicker } from 'antd';
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite';
-import { useRegisterEvents, useUpdate } from '@/hooks';
+import { useRegisterEvents, useEditorUpdate } from '@/hooks';
 import { formatDate } from '@/utils';
 import { EEventAction } from '@/types';
 import { ElementLayout } from '@/components';
@@ -25,7 +25,7 @@ const RenderTimeContent: React.FC<{
     store.setFieldValue(id!, formatDate(date, dateFormat!));
   };
 
-  useUpdate(() => {
+  useEditorUpdate(() => {
     eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
   }, [fieldValue]);
 

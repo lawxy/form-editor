@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Col, Form } from 'antd';
 import { Rule } from 'antd/es/form';
@@ -6,8 +6,8 @@ import { observer } from 'mobx-react-lite';
 import styled, { css } from 'styled-components';
 import { cloneDeep } from 'lodash-es';
 import { useElementCommon } from '@/hooks';
-import { EditorContext } from '@/context';
-import type { IBaseElement, TDirection, TPattern } from '../../types';
+import { useEditorContext } from '@/context';
+import type { IBaseElement, TDirection } from '../../types';
 import { WrapEl } from './wrap-el';
 
 const StyledDiv = styled.div<{ elementNameDisplay?: TDirection }>(
@@ -47,7 +47,7 @@ export const ElementLayout: FC<
     regExps,
   } = element;
   const { elCss, contaninerCss } = useElementCommon(element);
-  const { mode } = useContext(EditorContext);
+  const { mode } = useEditorContext();
 
   // 自定义css样式
   const style = useMemo(() => {

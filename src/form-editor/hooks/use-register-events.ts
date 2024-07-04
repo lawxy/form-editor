@@ -1,5 +1,5 @@
-import { useEffect, useContext, useRef } from 'react';
-import { EventContext } from '@/components';
+import { useEffect, useRef } from 'react';
+import { useEventContext } from '@/components';
 import type { IBaseElement } from '@/types';
 import {
   handleEmitEvent,
@@ -11,12 +11,12 @@ import { useForceRender } from '.';
 export * from '@/utils/handle-emit-event';
 
 interface IRegisterEvents {
-  (element: IBaseElement): any;
+  (element: Pick<IBaseElement, 'id' | 'events'>): any;
 }
 
 export const useRegisterEvents: IRegisterEvents = (element) => {
-  const { emitter } = useContext(EventContext);
-  const { customEvents, id } = element;
+  const { emitter } = useEventContext();
+  const { events, id } = element;
   const eventFunctions = useRef<TEventFormatFunctions>({});
   const forceRender = useForceRender();
 
@@ -28,11 +28,11 @@ export const useRegisterEvents: IRegisterEvents = (element) => {
   }, [id, emitter]);
 
   useEffect(() => {
-    if (!customEvents?.length) return;
-    const functions = handleEmitEvent(emitter, customEvents);
+    if (!events?.length) return;
+    const functions = handleEmitEvent(emitter, events);
     eventFunctions.current = functions;
     forceRender();
-  }, [customEvents, emitter]);
+  }, [events, emitter]);
 
   return { eventFunctions: eventFunctions.current };
 };

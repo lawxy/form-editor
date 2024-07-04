@@ -20,7 +20,7 @@ import './style.less'
 
 export type MenuItem = Required<MenuProps>['items'][number];
 
-const getNewEvent = () => ({ id: idCreator('event') });
+const getNewEvent = (newProps = {}) => ({ id: idCreator('event'), ...newProps });
 
 export const EventModal: FC<
   PropsWithChildren<{
@@ -28,9 +28,9 @@ export const EventModal: FC<
     eventActions: EEventAction[];
     onOk: (evt: TCustomEvent) => void;
     type: EChangeType;
-    sourceElementId: string;
+    sourceId: string;
   }>
-> = ({ children, event, eventActions, onOk, type, sourceElementId }) => {
+> = ({ children, event, eventActions, onOk, type, sourceId }) => {
   const [open, setOpen] = useState(false);
   const [tempEvent, setTempEvent] = useState<TCustomEvent>(
     event || getNewEvent(),
@@ -42,7 +42,7 @@ export const EventModal: FC<
   useEffect(() => {
     if (!open) {
       edit.current = false;
-      setTempEvent(getNewEvent());
+      setTempEvent(getNewEvent({eventAction: eventActions[0]}));
     }
     if (event) {
       setTempEvent(event);
@@ -72,7 +72,7 @@ export const EventModal: FC<
       }
       return menuItem;
     }).filter(({ key }) => {
-      // 只有组件加载后 才能关联服务
+      // 只有组件加载后的动作才能关联服务
       if (tempEvent.eventAction === EEventAction.ON_LOADED) return true
       return key !== EEventType.LINK_SERVICE
     });
@@ -107,9 +107,9 @@ export const EventModal: FC<
       currentEvent: tempEvent,
       handleChangeEvent,
       setEdit,
-      sourceElementId,
+      sourceId,
     };
-  }, [tempEvent, handleChangeEvent, setEdit, sourceElementId]);
+  }, [tempEvent, handleChangeEvent, setEdit, sourceId]);
 
   return (
     <>
@@ -145,14 +145,14 @@ export const EventModal: FC<
                 title="选择事件"
                 menuItems={eventActionsMenus}
                 onChange={(v) => handleChangeEvent('eventAction', v)}
-                defaultValue={event?.eventAction}
+                defaultValue={tempEvent?.eventAction}
               />
               <SelectComponent
                 className={prefixCls('type-select')}
                 title="选择对应的动作"
                 menuItems={tempEvent.eventAction ? eventTypeMenus : []}
                 onChange={(v) => handleChangeEvent('eventType', v)}
-                defaultValue={event?.eventType}
+                defaultValue={tempEvent?.eventType}
               />
               <ActionConfig
                 className={prefixCls('event-relation-config')}

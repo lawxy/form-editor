@@ -6,13 +6,13 @@ const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {
   if (eventType !== EEventType.LINK_SERVICE) return;
 
   eventTargets?.forEach((target) => {
-    const { targetServiceId, sourceElementId, linkRefreshField } = target;
+    const { targetServiceId, sourceId, linkRefreshField } = target;
     if (!targetServiceId) return;
     if (!store.hasService(targetServiceId!)) return;
     const service = store.getService(targetServiceId) as TFormSerive;
     const { linkingElements } = service;
     if (type === 'link') {
-      const linkData = { id: sourceElementId, field: linkRefreshField };
+      const linkData = { id: sourceId, field: linkRefreshField };
       if (!linkingElements) {
         store.setService(targetServiceId, { linkingElements: [linkData] });
       } else {
@@ -22,7 +22,7 @@ const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {
     } else {
       if (linkingElements && linkingElements.length) {
         const idx = linkingElements.findIndex(
-          (item) => item.id === sourceElementId,
+          (item) => item.id === sourceId,
         );
         if (idx > -1) {
           linkingElements.splice(idx, 1);

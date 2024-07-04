@@ -8,7 +8,7 @@ interface IEventModalContext {
     value: TCustomEvent[T],
   ) => void;
   setEdit: (f: boolean) => void;
-  sourceElementId: string;
+  sourceId: string;
 }
 
 // @ts-ignore

@@ -7,7 +7,7 @@ const StyledDiv = styled.div(() => {
   return `
     ${css({
       position: 'absolute',
-      right: 6,
+      right: 0,
       top: -8,
       display: 'flex',
       zIndex: 20,

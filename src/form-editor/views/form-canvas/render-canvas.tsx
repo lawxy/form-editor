@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Row } from 'antd';
 import { observer } from 'mobx-react-lite';
 import Sortable from 'sortablejs';
 import c from 'classnames';
+import { useRegisterEvents, useEditorUpdate } from '@/hooks';
+import { EEventAction } from '@/types';
 import { prefixCls } from '@/const';
 import { ElementsList } from '@/elements/export';
-import { EventContext } from '@/components';
+import { useEventContext } from '@/components';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
 import { idCreator, handleOnEvent } from '@/utils';
-import { useUpdate } from '@/hooks';
 
 import './style.less';
 
@@ -29,9 +30,10 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
   mode,
   actions,
 }) => {
-  const { horizontalGap, verticalGap } = store.formAttrs;
+  const { horizontalGap, verticalGap, id, events } = store.formAttrs;
   const el = useRef<any>();
-  const { emitter } = useContext(EventContext);
+  const { emitter } = useEventContext();
+  const { eventFunctions } = useRegisterEvents({ id, events });
 
   useEffect(() => {
     if (mode !== 'design') return;
@@ -63,7 +65,15 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
     };
   }, [mode]);
 
-  useUpdate(() => {
+  // 表单加载事件
+  useEditorUpdate(() => {
+    eventFunctions[EEventAction.FORM_LOADED]?.();
+  }, [eventFunctions[EEventAction.FORM_LOADED]]);
+
+  console.log(store.formServices)
+
+  // 服务监听事件
+  useEditorUpdate(() => {
     if (!store.formServices.length) return;
     store.formServices.forEach((serv) => {
       emitter.on(serv.id!, handleOnEvent);

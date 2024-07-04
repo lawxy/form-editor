@@ -1,4 +1,3 @@
-import { Emitter } from '@/components';
 import { cloneDeep } from 'lodash-es';
 import {
   EEventType,
@@ -9,7 +8,6 @@ import {
 import store from '@/store';
 import { triggerService, appendUrl } from './trigger-service';
 import type { TEmitData } from './handle-emit-event';
-import { validateParams } from '.';
 
 // 设置组件值
 export const triggerSettingValue = (params: TEmitData) => {

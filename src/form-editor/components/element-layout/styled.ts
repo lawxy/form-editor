@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import type { IBaseElement } from '@/types';
 
 export const Mask = styled.div<{ horizontal: number; vertical: number }>(
   ({ horizontal, vertical }) => {
@@ -40,7 +39,7 @@ export const EventIcon = styled.div(() => {
   return `
   position: absolute;
   top: -8px;
-  right: 8px;
+  left: 8px;
   &::after {
     position: absolute;
     width: 14px;

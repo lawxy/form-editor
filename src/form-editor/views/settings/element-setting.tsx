@@ -14,7 +14,7 @@ const ElementSetting = () => {
   return store.selectedElement?.id ? (
     <TabsSetting
       attributes={<Component />}
-      events={<EventSetting eventActions={eventActions} />}
+      events={<EventSetting eventActions={eventActions} type='element'/>}
     />
   ) : null;
 };

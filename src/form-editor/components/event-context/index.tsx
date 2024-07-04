@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useContext } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Emitter } from './emitter';
 
@@ -9,6 +9,10 @@ interface IEventContext {
 }
 // @ts-ignore
 export const EventContext = React.createContext<IEventContext>(null);
+
+export const useEventContext = () => {
+  return useContext(EventContext)
+}
 
 export const EventContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const emitterMemo = useMemo(() => ({ emitter: new Emitter() }), []);

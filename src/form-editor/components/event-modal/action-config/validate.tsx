@@ -7,10 +7,10 @@ import { validateTypeOptions, EValidateType } from '@/types';
 import type { IEventTarget } from '@/types';
 
 const Validate: React.FC<{
-  onChange: (v: Omit<IEventTarget, 'id' | 'sourceElementId'>) => void;
+  onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
-  const { validateField, sourceElementId } = eventTarget || {};
+  const { validateField, sourceId } = eventTarget || {};
 
   return (
     <div style={{ lineHeight: '40px' }}>
@@ -21,7 +21,7 @@ const Validate: React.FC<{
         options={validateTypeOptions}
         defaultValue={validateField}
         onChange={(v) => {
-          const val = v === EValidateType.ALL ? '' : sourceElementId
+          const val = v === EValidateType.ALL ? '' : sourceId
           onChange({ validateField: val });
         }}
       />

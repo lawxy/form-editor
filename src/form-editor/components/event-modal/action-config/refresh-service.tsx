@@ -17,7 +17,7 @@ const actions = changeStateActions([
   EChangeStatePayload.APPEND,
 ]);
 const RefreshService: React.FC<{
-  onChange: (v: Omit<IEventTarget, 'id' | 'sourceElementId'>) => void;
+  onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
   const { targetServiceId, targetPayload, refreshFlag, updateField } =
@@ -87,7 +87,7 @@ const RefreshService: React.FC<{
         />
       </div>
       <div>{renderAction()}</div>
-      并
+      并{' '}
       <Select
         className={prefixCls('event-input')}
         options={refreshOptions}
