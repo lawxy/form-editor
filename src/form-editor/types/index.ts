@@ -135,6 +135,7 @@ export interface IFormAttributesProps {
   horizontalGap: number;
   verticalGap: number;
   events?: TCustomEvents;
+  customCss?: string;
 }
 
 export interface IFormSchema {

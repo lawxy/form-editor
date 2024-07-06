@@ -70,9 +70,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
     eventFunctions[EEventAction.FORM_LOADED]?.();
   }, [eventFunctions[EEventAction.FORM_LOADED]]);
 
-  console.log(store.formServices)
-
-  // 服务监听事件
+  // 服务监听事件 - ps:不用关心设计模式下的运行
   useEditorUpdate(() => {
     if (!store.formServices.length) return;
     store.formServices.forEach((serv) => {

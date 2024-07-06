@@ -11,14 +11,14 @@ export const SelectComponent: React.FC<{
   title: string;
   menuItems: MenuItem[];
   onChange: (key: any) => void;
-  defaultValue?: string;
-}> = ({ className = '', title, menuItems, onChange, defaultValue }) => {
+  value?: string;
+}> = ({ className = '', title, menuItems, onChange, value }) => {
   return (
     <div className={c(prefixCls('event-modal-column'), className)}>
       <div className={prefixCls('event-modal-title')}>{title}</div>
       <div className={prefixCls('event-list')}>
         <Menu
-          defaultSelectedKeys={defaultValue ? [defaultValue] : []}
+          selectedKeys={value ? [value] : []}
           onClick={({ key }) => {
             onChange(key);
           }}

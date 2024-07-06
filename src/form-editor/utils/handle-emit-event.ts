@@ -57,7 +57,7 @@ export const emitRefreshService = (params: IParams) => {
     refreshFlag,
   ]);
   if (!validate) return;
-  if (!store.hasService(targetServiceId!)) return;
+  if (!store.getService(targetServiceId!)) return;
   return (value: any) => {
     emitter.emit(targetServiceId!, {
       targetServiceId,

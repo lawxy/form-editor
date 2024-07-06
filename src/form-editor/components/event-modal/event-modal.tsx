@@ -16,11 +16,14 @@ import {
   EEventType,
 } from '@/types';
 import { idCreator } from '@/utils';
-import './style.less'
+import './style.less';
 
 export type MenuItem = Required<MenuProps>['items'][number];
 
-const getNewEvent = (newProps = {}) => ({ id: idCreator('event'), ...newProps });
+const getNewEvent = (newProps = {}) => ({
+  id: idCreator('event'),
+  ...newProps,
+});
 
 export const EventModal: FC<
   PropsWithChildren<{
@@ -29,8 +32,17 @@ export const EventModal: FC<
     onOk: (evt: TCustomEvent) => void;
     type: EChangeType;
     sourceId: string;
+    eventTypeOptions?: EEventType[];
   }>
-> = ({ children, event, eventActions, onOk, type, sourceId }) => {
+> = ({
+  children,
+  event,
+  eventActions,
+  onOk,
+  type,
+  sourceId,
+  eventTypeOptions,
+}) => {
   const [open, setOpen] = useState(false);
   const [tempEvent, setTempEvent] = useState<TCustomEvent>(
     event || getNewEvent(),
@@ -42,7 +54,7 @@ export const EventModal: FC<
   useEffect(() => {
     if (!open) {
       edit.current = false;
-      setTempEvent(getNewEvent({eventAction: eventActions[0]}));
+      setTempEvent(getNewEvent({ eventAction: eventActions[0] }));
     }
     if (event) {
       setTempEvent(event);
@@ -65,24 +77,30 @@ export const EventModal: FC<
 
   // 选择对应动作 菜单项
   const eventTypeMenus: MenuItem[] = useMemo(() => {
-    return Object.entries(eventTypeChinese).map(([key, label]) => {
-      const menuItem: MenuItem = { key, label };
-      if (type === EChangeType.EDIT && key !== event?.eventType) {
-        menuItem.disabled = true;
-      }
-      return menuItem;
-    }).filter(({ key }) => {
-      // 只有组件加载后的动作才能关联服务
-      if (tempEvent.eventAction === EEventAction.ON_LOADED) return true
-      return key !== EEventType.LINK_SERVICE
-    });
-  }, [type, event?.eventType, tempEvent.eventAction]);
+    return Object.entries(eventTypeChinese)
+      .map(([key, label]) => {
+        const menuItem: MenuItem = { key, label };
+        if (type === EChangeType.EDIT && key !== event?.eventType) {
+          menuItem.disabled = true;
+        }
+        return menuItem;
+      })
+      .filter(({ key }) => {
+        if (eventTypeOptions?.length) {
+          if (eventTypeOptions.indexOf(key as EEventType) === -1) return false;
+        }
+        // 只有组件加载后的动作才能关联服务
+        if (tempEvent.eventAction === EEventAction.ON_LOADED) return true;
+        return key !== EEventType.LINK_SERVICE;
+      });
+  }, [type, event?.eventType, tempEvent.eventAction, eventTypeOptions]);
 
   const handleChangeEvent = <T extends keyof TCustomEvent>(
     field: T,
     value: TCustomEvent[T],
   ) => {
     if ((field === 'eventAction' || field === 'eventType') && edit.current) {
+      if (tempEvent[field] === value) return;
       Modal.confirm({
         title: '编辑数据未保存，切换后将清除数据，确认切换？',
         onOk() {
@@ -145,14 +163,14 @@ export const EventModal: FC<
                 title="选择事件"
                 menuItems={eventActionsMenus}
                 onChange={(v) => handleChangeEvent('eventAction', v)}
-                defaultValue={tempEvent?.eventAction}
+                value={tempEvent?.eventAction}
               />
               <SelectComponent
                 className={prefixCls('type-select')}
                 title="选择对应的动作"
                 menuItems={tempEvent.eventAction ? eventTypeMenus : []}
                 onChange={(v) => handleChangeEvent('eventType', v)}
-                defaultValue={tempEvent?.eventType}
+                value={tempEvent?.eventType}
               />
               <ActionConfig
                 className={prefixCls('event-relation-config')}

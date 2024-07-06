@@ -86,8 +86,7 @@ const RefreshService: React.FC<{
           }}
         />
       </div>
-      <div>{renderAction()}</div>
-      并{' '}
+      <div>{renderAction()}</div>并{' '}
       <Select
         className={prefixCls('event-input')}
         options={refreshOptions}

@@ -50,6 +50,7 @@ export const triggerRefreshService = async (params: TEmitData) => {
     const serviceRes: any = await triggerService(targetServiceId!);
     // 触发关联服务
     const { linkingElements } = currentService;
+
     linkingElements?.forEach((item) => {
       const { id, field } = item;
       const element = store.getElement(id);

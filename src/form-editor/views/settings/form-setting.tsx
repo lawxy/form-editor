@@ -2,15 +2,19 @@ import React, { useEffect } from 'react';
 import { Input, InputNumber } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import { SettingItem, SettingWrap, EventSetting } from '@/components';
-import { EEventAction } from '@/types';
+import {
+  SettingItem,
+  SettingWrap,
+  EventSetting,
+  CustomCssSetting,
+} from '@/components';
+import { EEventAction, EEventType } from '@/types';
 import store from '@/store';
 import { idCreator } from '@/utils';
+import { prefixCls } from '@/const';
 
 const FormSetting = () => {
   const { id, formName, horizontalGap, verticalGap, events } = store.formAttrs;
-
- 
 
   useEffect(() => {
     if (!id) {
@@ -19,9 +23,8 @@ const FormSetting = () => {
   }, [id]);
 
   return (
-    <div style={{ marginTop: 16 }}>
-      <SettingWrap title='基本属性'>
-
+    <div className={prefixCls('form-setting')}>
+      <SettingWrap title="基本属性">
         <SettingItem label="表单id">{id}</SettingItem>
         <SettingItem label="表单名称">
           <Input
@@ -51,15 +54,18 @@ const FormSetting = () => {
             }}
           />
         </SettingItem>
-
       </SettingWrap>
-      <SettingWrap title='事件'>
+
+      <SettingWrap title="事件">
         <EventSetting
-          type='form'
-          eventActions={
-            [EEventAction.FORM_LOADED]
-          }
+          type="form"
+          eventActions={[EEventAction.FORM_LOADED]}
+          eventTypeOptions={[EEventType.UPDATE_SERVICE]}
         />
+      </SettingWrap>
+
+      <SettingWrap title="样式" style={{ flex: 1, height: 0 }}>
+        <CustomCssSetting type="form" />
       </SettingWrap>
     </div>
   );

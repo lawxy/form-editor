@@ -4,12 +4,14 @@ import { cloneDeep, groupBy } from 'lodash-es';
 import { observer } from 'mobx-react-lite';
 import { prefixCls } from '@/const';
 import store from '@/store';
+import { useCurrent } from '@/hooks';
 import { handleLinkService, handleUnLinkService } from '@/utils';
 import {
   TCustomEvent,
   EChangeType,
   EEventAction,
   eventActionInChinese,
+  EEventType,
 } from '@/types';
 
 import { EventCollapse } from './event-collapse';
@@ -31,24 +33,15 @@ const formatForCollapse = (events: TCustomEvent[]) => {
 
 export const EventSetting: React.FC<{
   eventActions: EEventAction[];
+  eventTypeOptions?: EEventType[];
   type: 'element' | 'form';
-}> = observer(({ eventActions, type }) => {
-  
-  const { source, setProp } = (() => {
-    if(type === 'element') return {
-      source: store.selectedElement,
-      setProp: store.setSelectedProp as any
-    }
-    return {
-      source: store.formAttrs,
-      setProp: store.setFormAttr as any
-    }
-  })()
+}> = observer(({ eventActions, type, eventTypeOptions }) => {
+  const { current, setProp } = useCurrent(type);
 
-  const sourceId = source.id;
+  const sourceId = current.id;
 
   const handleSaveEvents = (type: EChangeType, event: TCustomEvent) => {
-    const events = cloneDeep(source?.events || []);
+    const events = cloneDeep(current?.events || []);
     if (type === EChangeType.ADD) {
       let sameActionEvent: TCustomEvent | undefined = events.find(
         (existEvent) =>
@@ -65,9 +58,7 @@ export const EventSetting: React.FC<{
       }
       handleLinkService(event);
     } else {
-      const idx = source?.events?.findIndex(
-        (evt) => event.id === evt.id,
-      );
+      const idx = current?.events?.findIndex((evt) => event.id === evt.id);
       handleUnLinkService(events[idx!]);
       events[idx!] = event;
       handleLinkService(event);
@@ -79,10 +70,8 @@ export const EventSetting: React.FC<{
   };
 
   const handleDelete = (id: string) => {
-    const events = cloneDeep(source?.events);
-    const idx = source?.events?.findIndex(
-      (event) => event.id === id,
-    );
+    const events = cloneDeep(current?.events);
+    const idx = current?.events?.findIndex((event) => event.id === id);
     handleUnLinkService(events![idx!]);
     events!.splice(idx!, 1);
     setProp('events', events);
@@ -95,15 +84,14 @@ export const EventSetting: React.FC<{
         onOk={(evt: TCustomEvent) => handleSaveEvents(EChangeType.ADD, evt)}
         type={EChangeType.ADD}
         sourceId={sourceId!}
+        eventTypeOptions={eventTypeOptions}
       >
         <Button type="dashed" className={prefixCls('event-button-add')}>
           + 新增事件
         </Button>
       </EventModal>
       <EventCollapse
-        collopaseItems={formatForCollapse(
-          source?.events || [],
-        )}
+        collopaseItems={formatForCollapse(current?.events || [])}
         onDelete={handleDelete}
         EditComponent={({ children, evt }) => {
           return (
@@ -115,6 +103,7 @@ export const EventSetting: React.FC<{
               event={evt}
               type={EChangeType.EDIT}
               sourceId={sourceId!}
+              eventTypeOptions={eventTypeOptions}
             >
               {children}
             </EventModal>

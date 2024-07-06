@@ -8,7 +8,7 @@ const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {
   eventTargets?.forEach((target) => {
     const { targetServiceId, sourceId, linkRefreshField } = target;
     if (!targetServiceId) return;
-    if (!store.hasService(targetServiceId!)) return;
+    if (!store.getService(targetServiceId!)) return;
     const service = store.getService(targetServiceId) as TFormSerive;
     const { linkingElements } = service;
     if (type === 'link') {
@@ -21,9 +21,7 @@ const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {
       }
     } else {
       if (linkingElements && linkingElements.length) {
-        const idx = linkingElements.findIndex(
-          (item) => item.id === sourceId,
-        );
+        const idx = linkingElements.findIndex((item) => item.id === sourceId);
         if (idx > -1) {
           linkingElements.splice(idx, 1);
           store.setService(targetServiceId, { linkingElements });

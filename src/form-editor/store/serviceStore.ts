@@ -12,9 +12,9 @@ export default {
 
   setFormServices(services: TFormSerives) {
     this.formServices = services;
-    this.formServices.forEach((serv: TFormSerive) => {
-      this.servicesMap.set(serv.id as string, serv);
-    });
+    // this.formServices.forEach((serv: TFormSerive) => {
+    //   this.servicesMap.set(serv.id as string, serv);
+    // });
   },
   /**
    * 获取服务
@@ -28,7 +28,7 @@ export default {
    */
   addService(serv: TFormSerive) {
     this.formServices.push(serv);
-    this.servicesMap.set(serv.id!, serv);
+    // this.servicesMap.set(serv.id!, serv);
   },
   /**
    * 删除服务
@@ -36,7 +36,7 @@ export default {
   deleteService(id: string) {
     const idx = this.formServices!.findIndex((item) => item.id === id);
     this.formServices.splice(idx, 1);
-    this.servicesMap.delete(id);
+    // this.servicesMap.delete(id);
   },
   /**
    * 复制服务
@@ -49,7 +49,7 @@ export default {
       id: idCreator('service'),
     };
     this.formServices.splice(idx + 1, 0, newServ);
-    this.servicesMap.set(newServ.id!, newServ);
+    // this.servicesMap.set(newServ.id!, newServ);
   },
   /**
    * 设置服务属性
@@ -58,18 +58,12 @@ export default {
     const idx = this.formServices!.findIndex((item) => item.id === id);
     const newService = { ...this.formServices![idx], ...servAttr };
     this.formServices[idx] = newService;
-    this.servicesMap.set(newService.id, newService);
-  },
-  /**
-   * 根据id判断服务是否存在
-   */
-  hasService(id: string) {
-    return this.servicesMap.has(id);
+    // this.servicesMap.set(newService.id, newService);
   },
   /**
    * 根据id获取服务
    */
   getService(id: string) {
-    return this.servicesMap.get(id);
+    return this.formServices.find((serv) => serv.id === id);
   },
 } as Pick<IBaseStore, keyof IServiceStore>;
