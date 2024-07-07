@@ -6,13 +6,17 @@ const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {
   if (eventType !== EEventType.LINK_SERVICE) return;
 
   eventTargets?.forEach((target) => {
-    const { targetServiceId, sourceId, linkRefreshField } = target;
-    if (!targetServiceId) return;
-    if (!store.getService(targetServiceId!)) return;
+    const { targetServiceId, sourceId, linkRefreshField, getFieldFromService } =
+      target;
+    if (!targetServiceId || !store.getService(targetServiceId!)) return;
     const service = store.getService(targetServiceId) as TFormSerive;
     const { linkingElements } = service;
     if (type === 'link') {
-      const linkData = { id: sourceId, field: linkRefreshField };
+      const linkData = {
+        id: sourceId,
+        field: linkRefreshField,
+        getFieldFromService,
+      };
       if (!linkingElements) {
         store.setService(targetServiceId, { linkingElements: [linkData] });
       } else {

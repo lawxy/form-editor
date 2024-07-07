@@ -52,7 +52,9 @@ export const triggerRefreshService = async (params: TEmitData) => {
     const { linkingElements } = currentService;
 
     linkingElements?.forEach((item) => {
-      const { id, field } = item;
+      const { id, field, getFieldFromService } = item;
+      console.log(item);
+      console.log('getFieldFromService', getFieldFromService);
       const element = store.getElement(id);
       if (!element || !field) return;
       if (field === ELinkRefreshField.VALUEOPTIONS) {

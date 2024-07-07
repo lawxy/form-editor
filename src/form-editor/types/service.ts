@@ -7,21 +7,18 @@ export type TFormSerive = {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   previewData?: Record<string, any>;
   data?: Record<string, any>;
-  // headers?: Record<string, any>;
-  headers?: string;
-  /**
-   * 回调函数
-   *  {
-   *    success?: (res: any) => Promise<any> | any;
-   *    fail?: (error: any) => any;
-   *  }
-   */
-  callback?: string;
-
+  interceptors?: string;
   /**
    * 关联服务的组件id
    */
-  linkingElements?: { id: string; field?: ELinkRefreshField }[];
+  linkingElements?: {
+    id: string;
+    field?: ELinkRefreshField;
+    /**
+     * 设置关联服务后，获取服务返回的字段值 比如data.a.b
+     */
+    getFieldFromService?: string;
+  }[];
 };
 
 export type TFormSerives = TFormSerive[];

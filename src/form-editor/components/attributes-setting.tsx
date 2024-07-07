@@ -10,12 +10,12 @@ export const AttributesSetting: FC<
     value?: any;
     onChange?: (v: any) => void;
     editorType: string;
+    style?: React.CSSProperties;
   }>
-> = observer(({ children, title, value, onChange, editorType }) => {
+> = observer(({ children, title, value, onChange, editorType, style }) => {
   const [open, setOpen] = useState(false);
   const [val, setVal] = useState<string>('');
   const isJsonValidate = useRef<boolean>(true);
-  const monaco = useMonaco();
 
   useEffect(() => {
     setVal(value);
@@ -44,14 +44,15 @@ export const AttributesSetting: FC<
         }}
       >
         <MonacoEditor
-          style={{
-            height: 400,
-          }}
+          style={
+            style ?? {
+              height: 400,
+            }
+          }
           language={editorType}
           value={val}
           onChange={setVal}
           onValidate={(errors) => {
-            console.log(errors);
             // 参数变量未使用时不校验
             isJsonValidate.current =
               errors.filter((item) => item?.code !== '6133').length === 0;

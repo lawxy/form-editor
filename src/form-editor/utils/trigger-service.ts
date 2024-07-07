@@ -1,22 +1,12 @@
-import axios from 'axios';
-import { message } from 'antd';
-import { AxiosResponse, HttpStatusCode, AxiosError } from 'axios';
 import store from '@/store';
 import { TFormSerive } from '@/types';
-import { parseEsmString } from './parse-esm-string';
+import { DEFAULT_ERROR_MESSAGE } from '@/const';
+import { createRequest } from '.';
 
 export interface IServiceParams {
   url?: TFormSerive['url'];
   data?: TFormSerive['data'];
 }
-
-export interface IServiceResponse {
-  code: HttpStatusCode;
-  data: any;
-  errMsg?: string;
-}
-
-const DEFAULT_ERROR_MESSAGE = '请求服务报错';
 
 export const toSearchString = (params: Record<string, any>): string => {
   return new URLSearchParams(params).toString();
@@ -42,51 +32,19 @@ export const appendUrl = (baseUrl: string, params: Record<string, any>) => {
   return url.toString();
 };
 
-axios.interceptors.response.use(
-  function (res: AxiosResponse) {
-    try {
-      if (res.status !== HttpStatusCode.Ok) {
-        message.error(DEFAULT_ERROR_MESSAGE);
-        return {};
-      }
-      const { data, errMsg, code } = res.data as IServiceResponse;
-      if (HttpStatusCode.Ok === code) {
-        return data;
-      }
-      message.error(errMsg || DEFAULT_ERROR_MESSAGE);
-    } catch (e) {
-      message.error(DEFAULT_ERROR_MESSAGE);
-    }
-  },
-  function (err: AxiosError) {
-    console.log(err);
-    message.error(err?.message || DEFAULT_ERROR_MESSAGE);
-    return Promise.reject(err);
-  },
-);
-
 export const triggerService = async (id: string) => {
   const service = store.getService(id);
-  const {
-    method,
-    url,
-    data,
-    headers: originHeaders,
-    callback: originCallback,
-  } = service!;
+  const { method, url, data, interceptors = '' } = service!;
 
-  const { value: headers } = parseEsmString(originHeaders as string, {});
-  // const { value: callback } =  parseEsmString(originCallback as string, {})
-  // console.log('headers')
-  // console.log(headers)
-  // console.log(callback)
+  const request = createRequest(interceptors);
 
   try {
-    return axios({
+    return request({
       method,
       url,
       data,
-      headers,
     });
-  } catch (e) {}
+  } catch (e) {
+    return { msg: DEFAULT_ERROR_MESSAGE };
+  }
 };

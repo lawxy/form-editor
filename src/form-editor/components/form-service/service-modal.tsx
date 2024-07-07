@@ -1,19 +1,50 @@
 import { Button, Flex, Form, Input, Modal, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { FC, PropsWithChildren } from 'react';
-
-import { AttributesSetting } from '../attributes-setting';
 
 import { prefixCls } from '@/const';
 import store from '@/store';
 import { TFormSerive } from '@/types';
 import { idCreator } from '@/utils';
+import { RequestMethod } from '@/const';
+import { Preview } from './preview';
 
-const methodOptions = ['GET', 'POST', 'PUT', 'DELETE'].map((item) => ({
+import { AttributesSetting } from '../attributes-setting';
+
+const methodOptions = RequestMethod.map((item) => ({
   label: item,
   value: item,
 }));
+
+const defaultInterceptor = `axios.interceptors.request.use(config =>{
+  return config
+})
+
+const DEFAULT_ERROR_MESSAGE = '请求服务报错';
+
+const HttpStatusCode = { Ok: 200 };
+
+axios.interceptors.response.use(function (res) {
+  try {
+    if (res.status !== HttpStatusCode.Ok) {
+      message.error(DEFAULT_ERROR_MESSAGE);
+      return {};
+    }
+    const { data, errMsg, code } = res.data;
+    if (HttpStatusCode.Ok === code) {
+      return data;
+    }
+    message.error(errMsg || DEFAULT_ERROR_MESSAGE);
+  } catch (e) {
+    message.error(DEFAULT_ERROR_MESSAGE);
+  }
+},
+function (err) {
+  message.error(err?.message || DEFAULT_ERROR_MESSAGE);
+  return Promise.reject(err);
+})
+`;
 
 const ServiceModal: FC<
   PropsWithChildren<{
@@ -21,27 +52,23 @@ const ServiceModal: FC<
   }>
 > = ({ children, service }) => {
   const [open, setOpen] = useState(false);
-  const [previewOpen, setPreviewOpen] = useState(false);
   const [form] = Form.useForm();
-  // console.log("form.getFieldValue('previewData')");
-  // console.log(form.getFieldsValue());
+  Form.useWatch('previewData', form);
+  Form.useWatch('interceptors', form);
+
+  const getDefaultService = (serv?: TFormSerive) => {
+    if (serv?.id) return serv;
+    return {
+      interceptors: defaultInterceptor,
+    };
+  };
+
   return (
     <>
       {React.isValidElement(children) &&
         React.cloneElement<any>(children, {
           onClick: () => setOpen(true),
         })}
-      <Modal
-        open={previewOpen}
-        title="服务预览"
-        onCancel={() => {
-          setPreviewOpen(false);
-        }}
-        okButtonProps={{
-          style: { display: 'none' },
-        }}
-        cancelText="关闭"
-      ></Modal>
       <Modal
         open={open}
         title={`${service ? '编辑' : '新增'}服务`}
@@ -69,19 +96,18 @@ const ServiceModal: FC<
         footer={(_, { OkBtn, CancelBtn }) => (
           <>
             <CancelBtn />
-            <Button
-              onClick={async () => {
-                // await form.validateFields();
-                setPreviewOpen(true);
-              }}
-            >
-              预览
-            </Button>
+            <Preview form={form}>
+              <Button>预览</Button>
+            </Preview>
             <OkBtn />
           </>
         )}
       >
-        <Form form={form} layout="vertical" initialValues={service}>
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={getDefaultService(service)}
+        >
           <Form.Item
             name="name"
             label="名称"
@@ -94,15 +120,21 @@ const ServiceModal: FC<
             name="url"
             label="接口名"
             required
-            rules={[{
-              required: true,
-              validator(_, val) {
-                if (val.match(/^(http|https):\/\/((localhost:\d{1,5})|([\w\-_]+(\.[\w\-_]+)+))([\w\-.,@?^=%&amp;:/~+#]*[\w\-@?^=%&amp;/~+#])?$/)) {
-                  return Promise.resolve()
-                }
-                return Promise.reject('格式不正确, 请以http或者https开头')
-              }
-            }]}
+            rules={[
+              {
+                required: true,
+                validator(_, val) {
+                  if (
+                    val.match(
+                      /^https?:\/\/((localhost:\d{1,5})|([\w\-_]+(\.[\w\-_]+)+))([\w\-.,@?^=%&amp;:/~+#]*[\w\-@?^=%&amp;/~+#])?$/,
+                    )
+                  ) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject('格式不正确, 请以http或者https开头');
+                },
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -112,43 +144,22 @@ const ServiceModal: FC<
             required
             rules={[{ required: true }]}
           >
-            <Select options={methodOptions} />
+            <Select options={methodOptions} showSearch />
           </Form.Item>
           <Form.Item
             className={prefixCls('service-modal-form-item')}
-            name="headers"
+            name="interceptors"
             label={
               <Flex style={{ width: '100%' }} justify="space-between">
-                <span>headers</span>
+                <span>拦截器设置</span>
                 <AttributesSetting
-                  title="headers"
+                  title="拦截器设置"
                   editorType="javascript"
-                  value={`export default (axiosReq) => {\n  return {\n  } \n}`}
+                  value={defaultInterceptor}
                   onChange={(v) => {
-                    form.setFieldValue('headers', v);
+                    form.setFieldValue('interceptors', v);
                   }}
-                >
-                  <Button size="small">编辑</Button>
-                </AttributesSetting>
-              </Flex>
-            }
-          >
-            <Input.TextArea readOnly />
-          </Form.Item>
-
-          <Form.Item
-            className={prefixCls('service-modal-form-item')}
-            name="callback"
-            label={
-              <Flex style={{ width: '100%' }} justify="space-between">
-                <span>回调函数</span>
-                <AttributesSetting
-                  title="headers"
-                  editorType="javascript"
-                  value={`export default {\n  success(res) {\n  }, \n  fail(err) {\n  } \n}`}
-                  onChange={(v) => {
-                    form.setFieldValue('callback', v);
-                  }}
+                  style={{ height: 600 }}
                 >
                   <Button size="small">编辑</Button>
                 </AttributesSetting>
@@ -168,7 +179,10 @@ const ServiceModal: FC<
                 <AttributesSetting
                   title="编辑参数"
                   editorType="javascript"
-                  value={form.getFieldValue('previewData')}
+                  value={
+                    form.getFieldValue('previewData') ||
+                    'export default {\n\t\n}'
+                  }
                   onChange={(v) => {
                     form.setFieldValue('previewData', v);
                   }}

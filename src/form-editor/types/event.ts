@@ -24,7 +24,7 @@ export enum EEventAction {
   // 组件加载后
   ON_LOADED = 'onLoaded',
   // 表单加载后
-  FORM_LOADED = 'formLoaded'
+  FORM_LOADED = 'formLoaded',
 }
 export const eventActionInChinese = {
   [EEventAction.ON_CLICK]: '鼠标单击',
@@ -169,7 +169,7 @@ export interface IEventTarget {
    */
   linkRefreshField?: ELinkRefreshField;
   /**
-   * 获取服务返回的字段值
+   * 设置关联服务后，获取服务返回的字段值 比如data.a.b
    */
   getFieldFromService?: string;
 }
