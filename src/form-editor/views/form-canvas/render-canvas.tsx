@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Row } from 'antd';
 import { observer } from 'mobx-react-lite';
@@ -11,7 +11,7 @@ import { ElementsList } from '@/elements/export';
 import { useEventContext } from '@/components';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
-import { idCreator, handleOnEvent } from '@/utils';
+import { idCreator, handleOnEvent, parseCSS } from '@/utils';
 
 import './style.less';
 
@@ -30,10 +30,15 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
   mode,
   actions,
 }) => {
-  const { horizontalGap, verticalGap, id, events } = store.formAttrs;
+  const { horizontalGap, verticalGap, id, events, customCss } = store.formAttrs;
   const el = useRef<any>();
   const { emitter } = useEventContext();
   const { eventFunctions } = useRegisterEvents({ id, events });
+  const formStyle = useMemo(() => {
+    if (!customCss) return {};
+    const cssObj = parseCSS(customCss);
+    return Object.values(cssObj)[0];
+  }, [customCss]);
 
   useEffect(() => {
     if (mode !== 'design') return;
@@ -91,6 +96,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
           prefixCls('canvas'),
           mode === 'design' ? prefixCls('canvas-design') : '',
         ])}
+        style={formStyle}
         ref={el}
       >
         <Row className={prefixCls('row')} gutter={[horizontalGap, verticalGap]}>
