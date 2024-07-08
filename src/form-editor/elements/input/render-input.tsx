@@ -45,6 +45,7 @@ const RenderInputContent: React.FC<{
           onChange={handleChange}
           onFocus={handleEvent(EEventAction.ON_FOCUS)}
           onBlur={handleEvent(EEventAction.ON_BLUR)}
+          value={fieldValue}
         />
       ) : (
         <Input.TextArea

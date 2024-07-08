@@ -1,6 +1,6 @@
 import { Button, Flex, Form, Input, Modal, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 
 import { prefixCls } from '@/const';
@@ -31,9 +31,9 @@ axios.interceptors.response.use(function (res) {
       message.error(DEFAULT_ERROR_MESSAGE);
       return {};
     }
-    const { data, errMsg, code } = res.data;
+    const { code } = res.data;
     if (HttpStatusCode.Ok === code) {
-      return data;
+      return res.data;
     }
     message.error(errMsg || DEFAULT_ERROR_MESSAGE);
   } catch (e) {
@@ -56,6 +56,7 @@ const ServiceModal: FC<
   Form.useWatch('previewData', form);
   Form.useWatch('interceptors', form);
 
+  
   const getDefaultService = (serv?: TFormSerive) => {
     if (serv?.id) return serv;
     return {
@@ -73,6 +74,7 @@ const ServiceModal: FC<
         open={open}
         title={`${service ? '编辑' : '新增'}服务`}
         maskClosable={false}
+        destroyOnClose
         styles={{
           body: {
             height: 500,
@@ -155,7 +157,7 @@ const ServiceModal: FC<
                 <AttributesSetting
                   title="拦截器设置"
                   editorType="javascript"
-                  value={defaultInterceptor}
+                  value={form.getFieldValue('interceptors')}
                   onChange={(v) => {
                     form.setFieldValue('interceptors', v);
                   }}

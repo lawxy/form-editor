@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep, result } from 'lodash-es';
 import {
   EEventType,
   EChangeStatePayload,
@@ -52,15 +52,16 @@ export const triggerRefreshService = async (params: TEmitData) => {
     const { linkingElements } = currentService;
 
     linkingElements?.forEach((item) => {
-      const { id, field, getFieldFromService } = item;
-      console.log(item);
-      console.log('getFieldFromService', getFieldFromService);
+      const { id, field, getFieldFromService = 'data' } = item;
+      const finalRes: any = result(serviceRes, getFieldFromService)
+      
       const element = store.getElement(id);
       if (!element || !field) return;
       if (field === ELinkRefreshField.VALUEOPTIONS) {
-        store.setElementProp(id, ELinkRefreshField.VALUEOPTIONS, serviceRes);
+        store.setElementProp(id, ELinkRefreshField.VALUEOPTIONS, finalRes);
       } else {
-        store.setFieldValue(id, serviceRes);
+       
+        store.setFieldValue(id, finalRes);
       }
     });
   }

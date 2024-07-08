@@ -45,7 +45,7 @@ const ActionGroup = () => {
     await handleSave();
     setTimeout(() => {
       window.open('/~demos/docs-preview-demo-demo-demo', 'preview');
-    }, 1000);
+    }, 200);
   };
 
   return (
