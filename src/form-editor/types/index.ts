@@ -127,6 +127,10 @@ export interface IBaseElement {
    * 自定义正则
    */
   regExps?: TPattern[];
+  /**
+   * 关联的服务id
+   */
+  linkServices?: string[];
 }
 export interface IFormAttributesProps {
   formName?: string;

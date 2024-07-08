@@ -1,5 +1,14 @@
 import type { ELinkRefreshField } from './event';
 
+export type TLinkElement = {
+  id: string;
+  field?: ELinkRefreshField;
+  /**
+   * 设置关联服务后，获取服务返回的字段值 比如data.a.b
+   */
+  getFieldFromService?: string;
+};
+
 export type TFormSerive = {
   id: string;
   name: string;
@@ -11,14 +20,7 @@ export type TFormSerive = {
   /**
    * 关联服务的组件id
    */
-  linkingElements?: {
-    id: string;
-    field?: ELinkRefreshField;
-    /**
-     * 设置关联服务后，获取服务返回的字段值 比如data.a.b
-     */
-    getFieldFromService?: string;
-  }[];
+  linkingElements?: TLinkElement[];
 };
 
 export type TFormSerives = TFormSerive[];

@@ -56,7 +56,6 @@ const ServiceModal: FC<
   Form.useWatch('previewData', form);
   Form.useWatch('interceptors', form);
 
-  
   const getDefaultService = (serv?: TFormSerive) => {
     if (serv?.id) return serv;
     return {
