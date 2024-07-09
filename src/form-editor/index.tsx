@@ -3,7 +3,7 @@ import type { FC, PropsWithChildren } from 'react';
 import { ConfigProvider, Form } from 'antd';
 import locale from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
-import { EventContextProvider } from '@/components';
+import { EventContextProvider, HotKeysContextProvider } from '@/components';
 import type { TMode, IFormSchema } from './types';
 import { prefixCls } from './const';
 import store from './store';
@@ -55,14 +55,16 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
   }, [mode]);
 
   return (
-    <ConfigProvider locale={locale}>
+    <HotKeysContextProvider>
       <EventContextProvider>
         <EditorContext.Provider value={contextValue}>
-          <Form form={form}>
-            <div className={prefixCls('form')}>{children}</div>
-          </Form>
+          <ConfigProvider locale={locale}>
+            <Form form={form}>
+              <div className={prefixCls('form')}>{children}</div>
+            </Form>
+          </ConfigProvider>
         </EditorContext.Provider>
       </EventContextProvider>
-    </ConfigProvider>
+    </HotKeysContextProvider>
   );
 };

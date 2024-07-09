@@ -23,6 +23,21 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
     const tempVal = useRef('');
     const monaco = useMonaco();
     const { current, setProp } = useCurrent(type);
+    const focus = useRef(false);
+
+    useEffect(() => {
+      const keydonwFn = (e: KeyboardEvent) => {
+        if (!focus.current) return;
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+          e.preventDefault();
+          handleSave();
+        }
+      };
+      document.addEventListener('keydown', keydonwFn);
+      return () => {
+        document.removeEventListener('keydown', keydonwFn);
+      };
+    }, []);
 
     const value = useMemo(() => {
       setCanSave(false);
@@ -80,6 +95,12 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
           }}
           options={{
             tabSize: 2,
+          }}
+          onFocus={() => {
+            focus.current = true;
+          }}
+          onBlur={() => {
+            focus.current = false;
           }}
         />
       </>

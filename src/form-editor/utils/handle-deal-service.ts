@@ -91,10 +91,10 @@ export const unBindFromElement = (elId: string) => {
 
 export const unBindFromService = (servId: string) => {
   const elements = getElementFromService(servId);
-  elements.forEach(el => {
-    unBindService(el.id, servId)
-  })
-}
+  elements.forEach((el) => {
+    unBindService(el.id, servId);
+  });
+};
 
 // 复制元素 关联服务
 export const bindFromCopiedElement = (oldId: string, newId: string) => {
@@ -103,8 +103,7 @@ export const bindFromCopiedElement = (oldId: string, newId: string) => {
   services.forEach((servId) => {
     const linkingElements = cloneDeep(getElementFromService(servId));
     const linkData = linkingElements.find((el) => el.id === oldId);
-    linkingElements.push({ ...linkData, id: newId })
+    linkingElements.push({ ...linkData, id: newId });
     store.setService(servId, { linkingElements });
   });
-  
-}
+};

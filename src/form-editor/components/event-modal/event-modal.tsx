@@ -151,10 +151,9 @@ export const EventModal: FC<
           if (!tempEvent.eventType) {
             return message.error('选择对应动作');
           }
-          if(type === EChangeType.ADD && !edit.current) {
+          if (type === EChangeType.ADD && !edit.current) {
             tempEvent.eventTargets = [];
           }
-          console.log(tempEvent)
           onOk(tempEvent);
           setOpen(false);
         }}

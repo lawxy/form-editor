@@ -1,5 +1,6 @@
 import { arrayMoveImmutable } from 'array-move';
-import { idCreator } from '@/utils';
+import { cloneDeep } from 'lodash-es';
+import { idCreator, bindFromCopiedElement, unBindFromElement } from '@/utils';
 import { tabStore } from './tabStore';
 import type { IBaseElement } from '../types';
 import { IBaseStore, IElementStore } from './types';
@@ -22,7 +23,7 @@ export default {
    * 通过id获取元素
    */
   getElement(id: string) {
-    return this.formElements.find(el => el.id === id);
+    return this.formElements.find((el) => el.id === id);
   },
 
   /**
@@ -57,6 +58,7 @@ export default {
    */
   deleteEl(el: IBaseElement) {
     const idx = this.formElements.findIndex((item) => item.id === el.id);
+    unBindFromElement(el.id as string);
     this.formElements.splice(idx, 1);
   },
 
@@ -65,8 +67,16 @@ export default {
    */
   copyEl(el: IBaseElement) {
     const idx = this.formElements.findIndex((item) => item.id === el.id);
-    const newEl: IBaseElement = { ...el, id: idCreator() };
+    const newId = idCreator();
+    const newEl: IBaseElement = { ...cloneDeep(el), id: newId };
     this.formElements.splice(idx + 1, 0, newEl);
+    bindFromCopiedElement(el.id as string, newId);
+    newEl?.events?.forEach((event) => {
+      const { eventTargets } = event;
+      eventTargets?.forEach((target) => {
+        target.sourceId = newId;
+      });
+    });
     return newEl;
   },
 
@@ -77,7 +87,7 @@ export default {
 
   setSelectedElement(el: IBaseElement) {
     this.selectedElement = el;
-    tabStore.init()
+    tabStore.init();
   },
 
   setElementProp<T extends keyof IBaseElement>(
@@ -96,7 +106,7 @@ export default {
     field: T,
     value: IBaseElement[T],
   ) {
-    this.setElementProp(this.selectedElement.id!, field, value)
+    this.setElementProp(this.selectedElement.id!, field, value);
     this.selectedElement[field] = value;
   },
 } as Pick<IBaseStore, keyof IElementStore>;

@@ -9,6 +9,8 @@ interface EditorProps {
   value: string;
   style?: React.CSSProperties;
   options?: object;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export const MonacoEditor: React.FC<EditorProps> = ({
@@ -18,10 +20,24 @@ export const MonacoEditor: React.FC<EditorProps> = ({
   value,
   onChange,
   options,
+  onFocus,
+  onBlur,
 }) => {
   const monacoEl = useRef<HTMLDivElement | null>(null);
   const [editor, setEditor] =
     useState<monaco.editor.IStandaloneCodeEditor | null>(null);
+
+  useEffect(() => {
+    // 监听编辑器聚焦事件
+    editor?.onDidFocusEditorText(() => {
+      onFocus?.();
+    });
+
+    // 监听编辑器失去焦点事件
+    editor?.onDidBlurEditorText(() => {
+      onBlur?.();
+    });
+  }, [editor]);
 
   useEffect(() => {
     if (monacoEl.current) {
@@ -74,7 +90,6 @@ export const MonacoEditor: React.FC<EditorProps> = ({
   useEffect(() => {
     if (!editor) return;
     const handleChange = editor.onDidChangeModelContent(() => {
-      // console.log('Content changed:', editor.getValue());
       onChange?.(editor.getValue());
     });
     return () => {

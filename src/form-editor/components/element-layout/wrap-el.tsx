@@ -6,24 +6,24 @@ import { SelectedActions } from './selected-actions';
 import { DesignWrapDiv, Mask, Icon } from './styled';
 
 const EventIcon: React.FC<{
-  events?: TCustomEvents
+  events?: TCustomEvents;
 }> = ({ events }) => {
   if (!events?.length) return null;
 
-  const validate = events.every(event => {
+  const validate = events.every((event) => {
     const { eventTargets } = event;
     if (!eventTargets?.length) return true;
-    return eventTargets.every(target => {
+    return eventTargets.every((target) => {
       const { targetElementId, targetServiceId } = target;
       if (!targetElementId && !targetServiceId) return true;
-      if (targetElementId) return !!store.getElement(targetElementId)
-      if (targetServiceId) return !!store.getService(targetServiceId)
-      return true
-    })
-  })
+      if (targetElementId) return !!store.getElement(targetElementId);
+      if (targetServiceId) return !!store.getService(targetServiceId);
+      return true;
+    });
+  });
 
-  return <Icon validate={validate} />
-}
+  return <Icon validate={validate} />;
+};
 
 const WrapDesignEl: React.FC<
   PropsWithChildren<{

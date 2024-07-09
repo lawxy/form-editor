@@ -13,3 +13,4 @@ export * from './placeholder-setting';
 export * from './reg-pattern';
 export * from './setting-common';
 export * from './tabs-setting';
+export * from './hot-keys';
