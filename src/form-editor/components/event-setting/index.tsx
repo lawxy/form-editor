@@ -3,7 +3,6 @@ import { Button, message } from 'antd';
 import { cloneDeep, groupBy } from 'lodash-es';
 import { observer } from 'mobx-react-lite';
 import { prefixCls } from '@/const';
-import store from '@/store';
 import { useCurrent } from '@/hooks';
 import { handleLinkService, handleUnLinkService } from '@/utils';
 import {
@@ -43,6 +42,7 @@ export const EventSetting: React.FC<{
   const handleSaveEvents = (type: EChangeType, event: TCustomEvent) => {
     const events = cloneDeep(current?.events || []);
     if (type === EChangeType.ADD) {
+      if(!event?.eventTargets?.length) return ;
       let sameActionEvent: TCustomEvent | undefined = events.find(
         (existEvent) =>
           existEvent.eventAction === event.eventAction &&
@@ -61,7 +61,11 @@ export const EventSetting: React.FC<{
       const idx = current?.events?.findIndex((evt) => event.id === evt.id);
       handleUnLinkService(events[idx!]);
       events[idx!] = event;
-      handleLinkService(event);
+      if(event?.eventTargets?.length){
+        handleLinkService(event);
+      }else {
+        events.splice(idx!, 1)
+      }
     }
     // modal过度效果
     setTimeout(() => {

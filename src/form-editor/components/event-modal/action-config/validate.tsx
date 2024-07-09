@@ -1,16 +1,15 @@
 import React from 'react';
 import { Select } from 'antd';
-import { observer } from 'mobx-react-lite';
 
 import { prefixCls } from '@/const';
-import { validateTypeOptions, EValidateType } from '@/types';
+import { validateTypeOptions } from '@/types';
 import type { IEventTarget } from '@/types';
 
 const Validate: React.FC<{
   onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
-  const { validateField, sourceId } = eventTarget || {};
+  const { validateField } = eventTarget || {};
 
   return (
     <div style={{ lineHeight: '40px' }}>
@@ -21,8 +20,7 @@ const Validate: React.FC<{
         options={validateTypeOptions}
         defaultValue={validateField}
         onChange={(v) => {
-          const val = v === EValidateType.ALL ? '' : sourceId
-          onChange({ validateField: val });
+          onChange({ validateField: v });
         }}
       />
     </div>

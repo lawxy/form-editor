@@ -1,9 +1,29 @@
-import { observer } from 'mobx-react-lite';
 import React, { useCallback, useRef, type PropsWithChildren } from 'react';
+import { observer } from 'mobx-react-lite';
 import store, { tabStore } from '@/store';
-import type { IBaseElement, TMode } from '@/types';
+import type { IBaseElement, TCustomEvents, TMode } from '@/types';
 import { SelectedActions } from './selected-actions';
-import { DesignWrapDiv, Mask, EventIcon } from './styled';
+import { DesignWrapDiv, Mask, Icon } from './styled';
+
+const EventIcon: React.FC<{
+  events?: TCustomEvents
+}> = ({ events }) => {
+  if (!events?.length) return null;
+
+  const validate = events.every(event => {
+    const { eventTargets } = event;
+    if (!eventTargets?.length) return true;
+    return eventTargets.every(target => {
+      const { targetElementId, targetServiceId } = target;
+      if (!targetElementId && !targetServiceId) return true;
+      if (targetElementId) return !!store.getElement(targetElementId)
+      if (targetServiceId) return !!store.getService(targetServiceId)
+      return true
+    })
+  })
+
+  return <Icon validate={validate} />
+}
 
 const WrapDesignEl: React.FC<
   PropsWithChildren<{
@@ -29,7 +49,7 @@ const WrapDesignEl: React.FC<
       />
       {store.selectedElement?.id === el.id && <SelectedActions />}
       {children}
-      {el.events?.length ? <EventIcon /> : null}
+      <EventIcon events={el.events} />
     </DesignWrapDiv>
   );
 });

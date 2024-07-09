@@ -151,6 +151,10 @@ export const EventModal: FC<
           if (!tempEvent.eventType) {
             return message.error('选择对应动作');
           }
+          if(type === EChangeType.ADD && !edit.current) {
+            tempEvent.eventTargets = [];
+          }
+          console.log(tempEvent)
           onOk(tempEvent);
           setOpen(false);
         }}
@@ -176,6 +180,7 @@ export const EventModal: FC<
                 className={prefixCls('event-relation-config')}
                 title="动作相关配置"
                 currentEvent={tempEvent}
+                operationType={type}
               />
             </div>
           </div>

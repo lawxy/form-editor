@@ -163,7 +163,7 @@ export interface IEventTarget {
   /**
    * 表单校验的字段，为空时校验整个表单
    */
-  validateField?: string;
+  validateField?: EValidateType;
   /**
    * 设置关联服务后，刷新服务需要更新的字段
    */

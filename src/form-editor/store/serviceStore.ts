@@ -1,4 +1,4 @@
-import { idCreator } from '@/utils';
+import { idCreator, unBindFromService } from '@/utils';
 import { TFormSerive, TFormSerives } from '@/types';
 import { IBaseStore, IServiceStore } from './types';
 
@@ -35,6 +35,7 @@ export default {
    */
   deleteService(id: string) {
     const idx = this.formServices!.findIndex((item) => item.id === id);
+    unBindFromService(id);
     this.formServices.splice(idx, 1);
     // this.servicesMap.delete(id);
   },
@@ -47,6 +48,7 @@ export default {
       ...serv,
       name: `${serv.name}-副本`,
       id: idCreator('service'),
+      linkingElements: [],
     };
     this.formServices.splice(idx + 1, 0, newServ);
     // this.servicesMap.set(newServ.id!, newServ);

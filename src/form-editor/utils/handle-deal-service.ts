@@ -41,12 +41,12 @@ const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {
   });
 };
 
-// 处理关联服务的数据
+// 事件 - 处理关联服务的数据
 export const handleLinkService = (event: TCustomEvent) => {
   handleDealService('link', event);
 };
 
-// 解除关联数据
+// 事件 - 解除关联数据
 export const handleUnLinkService = (event: TCustomEvent) => {
   handleDealService('unlink', event);
 };
@@ -64,6 +64,7 @@ const getElementFromService = (servId: string): TLinkElement[] => {
 
 export const bindService = (elId: string, serviceId: string) => {
   const services = getServicesFromElement(elId);
+  // console.log('services', services)
   if (services.indexOf(serviceId) > -1) return;
   services.push(serviceId);
   store.setElementProp(elId, 'linkServices', services);
@@ -76,7 +77,7 @@ export const unBindService = (elId: string, serviceId: string) => {
   services.splice(idx, 1);
   store.setElementProp(elId, 'linkServices', services);
 };
-// 删除元素 通过id操作关联服务的linkingElements
+// 删除元素 解绑服务
 export const unBindFromElement = (elId: string) => {
   const services = getServicesFromElement(elId);
   services.forEach((servId) => {
@@ -88,4 +89,22 @@ export const unBindFromElement = (elId: string) => {
   });
 };
 
-// export const copyServices = ()
+export const unBindFromService = (servId: string) => {
+  const elements = getElementFromService(servId);
+  elements.forEach(el => {
+    unBindService(el.id, servId)
+  })
+}
+
+// 复制元素 关联服务
+export const bindFromCopiedElement = (oldId: string, newId: string) => {
+  const services = getServicesFromElement(oldId);
+
+  services.forEach((servId) => {
+    const linkingElements = cloneDeep(getElementFromService(servId));
+    const linkData = linkingElements.find((el) => el.id === oldId);
+    linkingElements.push({ ...linkData, id: newId })
+    store.setService(servId, { linkingElements });
+  });
+  
+}

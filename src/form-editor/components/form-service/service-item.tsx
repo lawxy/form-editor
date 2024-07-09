@@ -31,13 +31,13 @@ export const ServiceItem: React.FC<{
           <CopyOutlined onClick={() => store.copyService(service)} />
         </Popover>
         <Popconfirm
-          title="确认删除"
+          title={`${service.linkingElements ? '有组件关联了此服务, ' : ''}确认删除?`}
           placement="topLeft"
           onConfirm={() => {
             store.deleteService(service.id);
           }}
         >
-          <Popover content="删除服务" placement="topLeft">
+          <Popover content="删除服务" placement="bottomLeft">
             <DeleteOutlined />
           </Popover>
         </Popconfirm>

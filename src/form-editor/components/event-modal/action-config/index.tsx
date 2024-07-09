@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash-es';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 
 import { prefixCls } from '@/const';
-import { TCustomEvent, EEventType, IEventTarget } from '@/types';
+import { TCustomEvent, EEventType, IEventTarget, EChangeType } from '@/types';
 import { idCreator } from '@/utils';
 
 import LinkServcie from './link-service';
@@ -32,7 +32,7 @@ const ActionItem: React.FC<{
       case EEventType.LINK_SERVICE:
         return <LinkServcie {...props} />;
       case EEventType.VALIDATE:
-        return <Validate {...props}/>
+        return <Validate {...props} />
       default:
         return null;
     }
@@ -74,16 +74,17 @@ export const ActionConfig: React.FC<{
   title: string;
   className?: string;
   currentEvent: TCustomEvent;
-}> = ({ title, className, currentEvent }) => {
+  operationType: EChangeType
+}> = ({ title, className, currentEvent, operationType }) => {
   const { handleChangeEvent, setEdit, sourceId } =
     useContext(EventModalContext);
 
   const handleChange = (
-    type: 'add' | 'edit',
+    type: EChangeType,
     targetAttr?: Omit<IEventTarget, 'id' | 'sourceId'>,
     idx?: number,
   ) => {
-    if (type === 'edit') {
+    if (type === EChangeType.EDIT) {
       const newEventTargets = cloneDeep(currentEvent!.eventTargets);
       newEventTargets![idx!] = Object.assign(
         newEventTargets![idx!],
@@ -103,12 +104,13 @@ export const ActionConfig: React.FC<{
     const newEventTargets = cloneDeep(currentEvent!.eventTargets);
     newEventTargets!.splice(idx, 1);
     handleChangeEvent('eventTargets', newEventTargets);
+    setEdit(true);
   };
 
   useEffect(() => {
-    if (currentEvent?.eventTargets?.length) return;
-    handleChange('add');
-  }, [currentEvent?.eventTargets]);
+    if (currentEvent?.eventTargets?.length || operationType === EChangeType.EDIT) return;
+    handleChange(EChangeType.ADD);
+  }, [currentEvent?.eventTargets, operationType]);
 
   return (
     <div className={c(prefixCls('event-modal-column'), className)}>
@@ -124,13 +126,23 @@ export const ActionConfig: React.FC<{
             <ActionItem
               key={eventTarget.id}
               type={currentEvent.eventType!}
-              onChange={(targetAttr) => handleChange('edit', targetAttr, i)}
+              onChange={(targetAttr) => handleChange(EChangeType.EDIT, targetAttr, i)}
               eventTarget={eventTarget}
               last={i === currentEvent?.eventTargets!.length - 1}
-              onAdd={() => handleChange('add')}
+              onAdd={() => handleChange(EChangeType.ADD)}
               onDelete={() => handleDelete(i)}
             />
           ))}
+          {
+            !currentEvent?.eventTargets?.length && (
+              <div className={prefixCls('event-action-config')} style={{justifyContent: 'flex-end'}}>
+                <PlusCircleOutlined
+                  style={{ color: '#287DFA', cursor: 'pointer' }}
+                  onClick={() => handleChange('add')}
+                />
+              </div>
+            )
+          }
         </>
       )}
     </div>

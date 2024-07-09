@@ -4,6 +4,7 @@ import {
   IEventTarget,
   TCustomEvent,
   TCustomEvents,
+  EValidateType
 } from '@/types';
 import { Emitter } from '@/components';
 import store from '@/store';
@@ -73,8 +74,8 @@ export const emitRefreshService = (params: IParams) => {
 // 表单校验
 export const emitValidateForm = (params: IParams) => {
   const { target } = params;
-  const { validateField } = target;
-  const fields = validateField ? [validateField] : undefined;
+  const { validateField, sourceId } = target;
+  const fields = validateField === EValidateType.CURRENT ? [sourceId] : undefined;
   return () => store.formInstance?.validateFields(fields);
 };
 
