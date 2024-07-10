@@ -4,7 +4,7 @@ import { Row } from 'antd';
 import { observer } from 'mobx-react-lite';
 import Sortable from 'sortablejs';
 import c from 'classnames';
-import { useRegisterEvents, useEditorUpdate } from '@/hooks';
+import { useRegisterEvents, useFormUpdate, useDesignEffect } from '@/hooks';
 import { EEventAction } from '@/types';
 import { prefixCls } from '@/const';
 import { ElementsList } from '@/elements/export';
@@ -40,9 +40,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
     return Object.values(cssObj)[0];
   }, [customCss]);
 
-  useEffect(() => {
-    if (mode !== 'design') return;
-
+  useDesignEffect(() => {
     const rowEl = el.current.querySelector('.ant-row');
 
     const sortIns = new Sortable(rowEl, {
@@ -68,15 +66,27 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
     return () => {
       sortIns?.destroy?.();
     };
-  }, [mode]);
+  });
+
+  useDesignEffect(() => {
+    const keydonwFn = (e: KeyboardEvent) => {
+      if(e.key === 'Backspace') {
+        store.deleteEl(store.selectedElement)
+      }
+    };
+    document.addEventListener('keydown', keydonwFn);
+    return () => {
+      document.removeEventListener('keydown', keydonwFn);
+    };
+  })
 
   // 表单加载事件
-  useEditorUpdate(() => {
+  useFormUpdate(() => {
     eventFunctions[EEventAction.FORM_LOADED]?.();
   }, [eventFunctions[EEventAction.FORM_LOADED]]);
 
   // 服务监听事件 - ps:不用关心设计模式下的运行
-  useEditorUpdate(() => {
+  useFormUpdate(() => {
     if (!store.formServices.length) return;
     store.formServices.forEach((serv) => {
       emitter.on(serv.id!, handleOnEvent);

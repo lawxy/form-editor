@@ -56,7 +56,8 @@ export default {
   /**
    * 删除元素
    */
-  deleteEl(el: IBaseElement) {
+  deleteEl(el?: IBaseElement) {
+    if(!el) return;
     const idx = this.formElements.findIndex((item) => item.id === el.id);
     unBindFromElement(el.id as string);
     this.formElements.splice(idx, 1);

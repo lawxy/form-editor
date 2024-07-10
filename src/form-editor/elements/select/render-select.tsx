@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import store from '@/store';
 import { ElementLayout } from '@/components';
-import { useRegisterEvents, useEditorUpdate } from '@/hooks';
+import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
 import type { IBaseElement } from '@/types';
 
@@ -19,11 +19,11 @@ const RenderSelectContent: React.FC<{
     store.setFieldValue(id!, val);
   };
 
-  useEditorUpdate(() => {
+  useFormUpdate(() => {
     eventFunctions[EEventAction.ON_LOADED]?.();
   }, [eventFunctions[EEventAction.ON_LOADED]]);
 
-  useEditorUpdate(() => {
+  useFormUpdate(() => {
     eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
   }, [fieldValue]);
 

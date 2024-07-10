@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Input, InputNumber } from 'antd';
 import { observer } from 'mobx-react-lite';
 
@@ -10,17 +10,10 @@ import {
 } from '@/components';
 import { EEventAction, EEventType } from '@/types';
 import store from '@/store';
-import { idCreator } from '@/utils';
 import { prefixCls } from '@/const';
 
 const FormSetting = () => {
-  const { id, formName, horizontalGap, verticalGap, events } = store.formAttrs;
-
-  useEffect(() => {
-    if (!id) {
-      store.setFormAttr('id', idCreator('form'));
-    }
-  }, [id]);
+  const { id, formName, horizontalGap, verticalGap } = store.formAttrs;
 
   return (
     <div className={prefixCls('form-setting')}>

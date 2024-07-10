@@ -3,7 +3,7 @@ import type { FC, PropsWithChildren } from 'react';
 import { ConfigProvider, Form } from 'antd';
 import locale from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
-import { EventContextProvider, HotKeysContextProvider } from '@/components';
+import { EventContextProvider } from '@/components';
 import type { TMode, IFormSchema } from './types';
 import { prefixCls } from './const';
 import store from './store';
@@ -55,7 +55,6 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
   }, [mode]);
 
   return (
-    <HotKeysContextProvider>
       <EventContextProvider>
         <EditorContext.Provider value={contextValue}>
           <ConfigProvider locale={locale}>
@@ -65,6 +64,5 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
           </ConfigProvider>
         </EditorContext.Provider>
       </EventContextProvider>
-    </HotKeysContextProvider>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { InputNumber } from 'antd';
 import { observer } from 'mobx-react-lite';
 import store from '@/store';
-import { useRegisterEvents, useEditorUpdate } from '@/hooks';
+import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
 import { ElementLayout } from '@/components';
 import type { IBaseElement } from '@/types';
@@ -24,11 +24,11 @@ const RenderNumberContent: React.FC<{
     store.setFieldValue(id!, val);
   };
 
-  useEditorUpdate(() => {
+  useFormUpdate(() => {
     eventFunctions[EEventAction.ON_LOADED]?.();
   }, [eventFunctions[EEventAction.ON_LOADED]]);
 
-  useEditorUpdate(() => {
+  useFormUpdate(() => {
     eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
   }, [fieldValue]);
 

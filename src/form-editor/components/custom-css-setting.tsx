@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, message } from 'antd';
-import { useCurrent } from '@/hooks';
+import { useCurrent, useDesignEffect } from '@/hooks';
 import { MonacoEditor, useMonaco } from './monaco-editor';
 
 import { SettingItem } from './setting-common';
@@ -25,7 +25,7 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
     const { current, setProp } = useCurrent(type);
     const focus = useRef(false);
 
-    useEffect(() => {
+    useDesignEffect(() => {
       const keydonwFn = (e: KeyboardEvent) => {
         if (!focus.current) return;
         if ((e.ctrlKey || e.metaKey) && e.key === 's') {
@@ -37,7 +37,7 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
       return () => {
         document.removeEventListener('keydown', keydonwFn);
       };
-    }, []);
+    });
 
     const value = useMemo(() => {
       setCanSave(false);
@@ -47,7 +47,7 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
       return current.customCss;
     }, [current.customCss, current?.id]);
 
-    useEffect(() => {
+    useDesignEffect(() => {
       if (!monaco) return;
       monaco.languages.css.cssDefaults.setDiagnosticsOptions({
         validate: true,

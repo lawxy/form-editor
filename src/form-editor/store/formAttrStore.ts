@@ -1,11 +1,13 @@
-import { IFormAttrStore, IBaseStore } from './types';
+import { idCreator } from '@/utils';
 import { IFormAttributesProps } from '@/types';
+import { IFormAttrStore, IBaseStore } from './types';
 
 export default {
   /**
    * 表单属性
    */
   formAttrs: {
+    id: idCreator('form'),
     horizontalGap: 8,
     verticalGap: 8,
   },

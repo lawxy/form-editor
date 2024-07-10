@@ -6,7 +6,7 @@ import { ElementLayout } from '@/components';
 import { EEventAction } from '@/types';
 import type { IBaseElement } from '@/types';
 import { parseJSX } from '@/utils';
-import { useEditorUpdate, useRegisterEvents } from '@/hooks';
+import { useFormUpdate, useRegisterEvents } from '@/hooks';
 
 const RenderTableContent: React.FC<{
   fieldValue: any;
@@ -16,7 +16,7 @@ const RenderTableContent: React.FC<{
 
   const { eventFunctions } = useRegisterEvents(element);
 
-  useEditorUpdate(() => {
+  useFormUpdate(() => {
     eventFunctions[EEventAction.ON_LOADED]?.();
   }, [eventFunctions[EEventAction.ON_LOADED]]);
 
