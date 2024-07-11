@@ -6,7 +6,7 @@ import {
   handleOnEvent,
   type TEventFormatFunctions,
 } from '@/utils';
-import { useForceRender } from '.';
+import { useForceRender, useFormEffect } from '.';
 
 export * from '@/utils/handle-emit-event';
 
@@ -20,14 +20,15 @@ export const useRegisterEvents: IRegisterEvents = (element) => {
   const eventFunctions = useRef<TEventFormatFunctions>({});
   const forceRender = useForceRender();
 
-  useEffect(() => {
+  useFormEffect(() => {
+    if (!id) return;
     emitter.on(id!, handleOnEvent);
     return () => {
       emitter.off(id!, handleOnEvent);
     };
   }, [id, emitter]);
 
-  useEffect(() => {
+  useFormEffect(() => {
     if (!events?.length) return;
     const functions = handleEmitEvent(emitter, events);
     eventFunctions.current = functions;

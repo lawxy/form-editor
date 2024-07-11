@@ -53,14 +53,13 @@ export const triggerRefreshService = async (params: TEmitData) => {
 
     linkingElements?.forEach((item) => {
       const { id, field, getFieldFromService = 'data' } = item;
-      const finalRes: any = result(serviceRes, getFieldFromService)
-      
+      const finalRes: any = result(serviceRes, getFieldFromService);
+
       const element = store.getElement(id);
       if (!element || !field) return;
       if (field === ELinkRefreshField.VALUEOPTIONS) {
         store.setElementProp(id, ELinkRefreshField.VALUEOPTIONS, finalRes);
       } else {
-       
         store.setFieldValue(id, finalRes);
       }
     });
@@ -76,5 +75,6 @@ export const handleOnEvent = (params: TEmitData) => {
     case EEventType.UPDATE_SERVICE:
       triggerRefreshService(params);
       break;
+    case EEventType.EVENT_FAILURE:
   }
 };

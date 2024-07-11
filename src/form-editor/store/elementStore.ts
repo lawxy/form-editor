@@ -2,6 +2,7 @@ import { arrayMoveImmutable } from 'array-move';
 import { cloneDeep } from 'lodash-es';
 import { idCreator, bindFromCopiedElement, unBindFromElement } from '@/utils';
 import { tabStore } from './tabStore';
+import eventStore from './eventStore';
 import type { IBaseElement } from '../types';
 import { IBaseStore, IElementStore } from './types';
 
@@ -56,8 +57,9 @@ export default {
   /**
    * 删除元素
    */
-  deleteEl(el?: IBaseElement) {
-    if(!el) return;
+  async deleteEl(el?: IBaseElement) {
+    if (!el) return;
+    const confirmDelete = await eventStore.deleteId(el.id);
     const idx = this.formElements.findIndex((item) => item.id === el.id);
     unBindFromElement(el.id as string);
     this.formElements.splice(idx, 1);
@@ -70,14 +72,14 @@ export default {
     const idx = this.formElements.findIndex((item) => item.id === el.id);
     const newId = idCreator();
     const newEl: IBaseElement = { ...cloneDeep(el), id: newId };
-    this.formElements.splice(idx + 1, 0, newEl);
-    bindFromCopiedElement(el.id as string, newId);
     newEl?.events?.forEach((event) => {
       const { eventTargets } = event;
       eventTargets?.forEach((target) => {
         target.sourceId = newId;
       });
     });
+    this.formElements.splice(idx + 1, 0, newEl);
+    bindFromCopiedElement(el.id as string, newId);
     return newEl;
   },
 

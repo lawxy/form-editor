@@ -10,6 +10,7 @@ import store from './store';
 import { EditorContext } from './context';
 
 import './index.less';
+import { idCreator } from './utils';
 
 export * from './views';
 
@@ -41,7 +42,7 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
     const {
       formElements = [],
       fieldValues = {},
-      formAttrs = { verticalGap: 8, horizontalGap: 8 },
+      formAttrs = { verticalGap: 8, horizontalGap: 8, id: idCreator('form') },
       formServices = [],
     } = schema;
     store.setFormElements(formElements);
@@ -55,14 +56,14 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
   }, [mode]);
 
   return (
-      <EventContextProvider>
-        <EditorContext.Provider value={contextValue}>
-          <ConfigProvider locale={locale}>
-            <Form form={form}>
-              <div className={prefixCls('form')}>{children}</div>
-            </Form>
-          </ConfigProvider>
-        </EditorContext.Provider>
-      </EventContextProvider>
+    <EventContextProvider>
+      <EditorContext.Provider value={contextValue}>
+        <ConfigProvider locale={locale}>
+          <Form form={form}>
+            <div className={prefixCls('form')}>{children}</div>
+          </Form>
+        </ConfigProvider>
+      </EditorContext.Provider>
+    </EventContextProvider>
   );
 };

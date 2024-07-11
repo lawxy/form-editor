@@ -58,6 +58,10 @@ export enum EEventType {
    * 表单校验
    */
   VALIDATE = 'validate',
+  /**
+   * 事件失效
+   */
+  EVENT_FAILURE = 'eventFailure',
 }
 
 export const eventTypeChinese = {

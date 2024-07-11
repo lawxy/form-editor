@@ -70,15 +70,15 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
 
   useDesignEffect(() => {
     const keydonwFn = (e: KeyboardEvent) => {
-      if(e.key === 'Backspace') {
-        store.deleteEl(store.selectedElement)
+      if (e.key === 'Backspace') {
+        store.deleteEl(store.selectedElement);
       }
     };
     document.addEventListener('keydown', keydonwFn);
     return () => {
       document.removeEventListener('keydown', keydonwFn);
     };
-  })
+  });
 
   // 表单加载事件
   useFormUpdate(() => {

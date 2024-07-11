@@ -42,7 +42,7 @@ export const EventSetting: React.FC<{
   const handleSaveEvents = (type: EChangeType, event: TCustomEvent) => {
     const events = cloneDeep(current?.events || []);
     if (type === EChangeType.ADD) {
-      if(!event?.eventTargets?.length) return ;
+      if (!event?.eventTargets?.length) return;
       let sameActionEvent: TCustomEvent | undefined = events.find(
         (existEvent) =>
           existEvent.eventAction === event.eventAction &&
@@ -61,10 +61,10 @@ export const EventSetting: React.FC<{
       const idx = current?.events?.findIndex((evt) => event.id === evt.id);
       handleUnLinkService(events[idx!]);
       events[idx!] = event;
-      if(event?.eventTargets?.length){
+      if (event?.eventTargets?.length) {
         handleLinkService(event);
-      }else {
-        events.splice(idx!, 1)
+      } else {
+        events.splice(idx!, 1);
       }
     }
     // modal过度效果
