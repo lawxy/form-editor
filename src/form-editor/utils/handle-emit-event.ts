@@ -4,14 +4,14 @@ import {
   IEventTarget,
   TCustomEvent,
   TCustomEvents,
-  EValidateType
+  EValidateType,
 } from '@/types';
-import { Emitter } from '@/components';
+import { EventEmitter } from '@/utils';
 import store from '@/store';
 import { validateParams } from '.';
 
 interface IParams {
-  emitter: Emitter;
+  emitter: EventEmitter;
   eventType: EEventType;
   target: IEventTarget;
 }
@@ -75,12 +75,13 @@ export const emitRefreshService = (params: IParams) => {
 export const emitValidateForm = (params: IParams) => {
   const { target } = params;
   const { validateField, sourceId } = target;
-  const fields = validateField === EValidateType.CURRENT ? [sourceId] : undefined;
+  const fields =
+    validateField === EValidateType.CURRENT ? [sourceId] : undefined;
   return () => store.formInstance?.validateFields(fields);
 };
 
 export const handleEmitEvent = (
-  emitter: Emitter,
+  emitter: EventEmitter,
   events: TCustomEvents,
 ): TEventFormatFunctions => {
   const functions: TEventFunctions = {};

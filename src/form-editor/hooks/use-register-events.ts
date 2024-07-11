@@ -1,5 +1,4 @@
-import { useEffect, useRef } from 'react';
-import { useEventContext } from '@/components';
+import { useRef } from 'react';
 import type { IBaseElement } from '@/types';
 import {
   handleEmitEvent,
@@ -7,6 +6,7 @@ import {
   type TEventFormatFunctions,
 } from '@/utils';
 import { useForceRender, useFormEffect } from '.';
+import eventStore from '@/store/eventStore';
 
 export * from '@/utils/handle-emit-event';
 
@@ -15,25 +15,24 @@ interface IRegisterEvents {
 }
 
 export const useRegisterEvents: IRegisterEvents = (element) => {
-  const { emitter } = useEventContext();
   const { events, id } = element;
   const eventFunctions = useRef<TEventFormatFunctions>({});
   const forceRender = useForceRender();
 
   useFormEffect(() => {
     if (!id) return;
-    emitter.on(id!, handleOnEvent);
+    eventStore.emitter.on(id!, handleOnEvent);
     return () => {
-      emitter.off(id!, handleOnEvent);
+      eventStore.emitter.off(id!, handleOnEvent);
     };
-  }, [id, emitter]);
+  }, [id]);
 
   useFormEffect(() => {
     if (!events?.length) return;
-    const functions = handleEmitEvent(emitter, events);
+    const functions = handleEmitEvent(eventStore.emitter, events);
     eventFunctions.current = functions;
     forceRender();
-  }, [events, emitter]);
+  }, [events]);
 
   return { eventFunctions: eventFunctions.current };
 };

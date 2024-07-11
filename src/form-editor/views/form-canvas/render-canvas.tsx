@@ -8,7 +8,7 @@ import { useRegisterEvents, useFormUpdate, useDesignEffect } from '@/hooks';
 import { EEventAction } from '@/types';
 import { prefixCls } from '@/const';
 import { ElementsList } from '@/elements/export';
-import { useEventContext } from '@/components';
+import eventStore from '@/store/eventStore';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
 import { idCreator, handleOnEvent, parseCSS } from '@/utils';
@@ -32,7 +32,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
 }) => {
   const { horizontalGap, verticalGap, id, events, customCss } = store.formAttrs;
   const el = useRef<any>();
-  const { emitter } = useEventContext();
+  // const { emitter } = useEventContext();
   const { eventFunctions } = useRegisterEvents({ id, events });
   const formStyle = useMemo(() => {
     if (!customCss) return {};
@@ -70,7 +70,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
 
   useDesignEffect(() => {
     const keydonwFn = (e: KeyboardEvent) => {
-      if (e.key === 'Backspace') {
+      if (e.key === 'Backspace' && document.activeElement === document.body) {
         store.deleteEl(store.selectedElement);
       }
     };
@@ -89,14 +89,14 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
   useFormUpdate(() => {
     if (!store.formServices.length) return;
     store.formServices.forEach((serv) => {
-      emitter.on(serv.id!, handleOnEvent);
+      eventStore.emitter.on(serv.id!, handleOnEvent);
     });
     return () => {
       store.formServices.forEach((serv) => {
-        emitter.off(serv.id!, handleOnEvent);
+        eventStore.emitter.off(serv.id!, handleOnEvent);
       });
     };
-  }, [emitter, store.formServices]);
+  }, [store.formServices]);
 
   return (
     <div className={prefixCls('canvas-wrap')}>

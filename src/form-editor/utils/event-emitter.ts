@@ -1,4 +1,4 @@
-export class Emitter {
+export class EventEmitter {
   listeners: Map<string, ((...args: any[]) => any)[]> = new Map();
 
   private hasEvent(event: string): boolean {

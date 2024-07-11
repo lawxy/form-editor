@@ -12,3 +12,4 @@ export * from './handle-deal-service';
 export * from './format-date';
 export * from './validate-params';
 export * from './create-request';
+export * from './event-emitter';

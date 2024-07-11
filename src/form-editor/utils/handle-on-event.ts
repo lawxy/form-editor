@@ -75,6 +75,5 @@ export const handleOnEvent = (params: TEmitData) => {
     case EEventType.UPDATE_SERVICE:
       triggerRefreshService(params);
       break;
-    case EEventType.EVENT_FAILURE:
   }
 };

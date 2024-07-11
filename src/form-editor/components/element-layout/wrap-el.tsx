@@ -10,12 +10,11 @@ import type { IBaseElement, TCustomEvents, TMode } from '@/types';
 import { useDesignEffect } from '@/hooks';
 import eventStore from '@/store/eventStore';
 import { SelectedActions } from './selected-actions';
-import { useEventContext } from '../event-context';
 import { DesignWrapDiv, Mask, Icon } from './styled';
 
 const EventIcon: React.FC<{
   events?: TCustomEvents;
-}> = ({ events }) => {
+}> = observer(({ events }) => {
   if (!events?.length) return null;
 
   const validate = events.every((event) => {
@@ -31,7 +30,7 @@ const EventIcon: React.FC<{
   });
 
   return <Icon validate={validate} />;
-};
+});
 
 const WrapDesignEl: React.FC<
   PropsWithChildren<{
@@ -39,20 +38,6 @@ const WrapDesignEl: React.FC<
   }>
 > = observer(({ children, el }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [, forceRender] = useState(1);
-  const { emitter } = useEventContext();
-
-  useDesignEffect(() => {
-    // const eventFailure = () => forceRender(Math.random());
-    const eventFailure = () => {
-      console.log('failure in');
-      forceRender(Math.random());
-    };
-    emitter.on(el.id!, eventFailure);
-    return () => {
-      emitter.off(el.id!, eventFailure);
-    };
-  }, [emitter, el.id]);
 
   useDesignEffect(() => {
     eventStore.iterate(el.events);

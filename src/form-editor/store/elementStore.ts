@@ -59,7 +59,8 @@ export default {
    */
   async deleteEl(el?: IBaseElement) {
     if (!el) return;
-    const confirmDelete = await eventStore.deleteId(el.id);
+    const confirmDelete = await eventStore.deleteId(el.id!);
+    if (!confirmDelete) return;
     const idx = this.formElements.findIndex((item) => item.id === el.id);
     unBindFromElement(el.id as string);
     this.formElements.splice(idx, 1);
