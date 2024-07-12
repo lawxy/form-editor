@@ -10,6 +10,7 @@ const exportFile = path.join(componentsDir, 'export.ts');
 
 // 由于文件目录会自己根据首字母排序， 这里要自己排序一下([文件名大写]_TEXT)
 const sort = [
+  'TEXT_TEXT',   // 文本框
   'INPUT_TEXT',   // 输入框
   'NUMBER_TEXT',  // 数字框
   'DATE_TEXT',    // 日期

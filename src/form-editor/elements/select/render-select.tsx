@@ -11,7 +11,7 @@ const RenderSelectContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ element, fieldValue }) => {
-  const { id, valueOptions } = element;
+  const { id, valueOptions, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -29,7 +29,11 @@ const RenderSelectContent: React.FC<{
 
   return (
     <ElementLayout element={element}>
-      <Select options={valueOptions} onChange={onChange} />
+      <Select
+        placeholder={placeholder}
+        options={valueOptions}
+        onChange={onChange}
+      />
     </ElementLayout>
   );
 };

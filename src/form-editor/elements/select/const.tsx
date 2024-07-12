@@ -12,6 +12,7 @@ export const eventActions = [
 export const initialData: Partial<IBaseElement> = {
   elementName: SELECT_TEXT,
   gridSpan: 4,
+  placeholder: '请选择',
   valueOptions: [
     { label: '选项1', value: 1, id: '1' },
     { label: '选项2', value: 2, id: '2' },

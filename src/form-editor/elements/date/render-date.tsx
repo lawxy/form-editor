@@ -13,7 +13,7 @@ const RenderDateContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ fieldValue, element }) => {
-  const { id, dateFormat } = element;
+  const { id, dateFormat, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -22,7 +22,7 @@ const RenderDateContent: React.FC<{
   };
 
   const handleChange = (date: Date) => {
-    store.setFieldValue(id!, formatDate(date, dateFormat!));
+    store.setFieldValue(id!, date ? formatDate(date, dateFormat!) : undefined);
   };
 
   useFormUpdate(() => {
@@ -42,6 +42,7 @@ const RenderDateContent: React.FC<{
     if (timeFormat.includes('ss')) res.showSecond = true;
     return res;
   }, [dateFormat]);
+  console.log(fieldValue);
   return (
     <ElementLayout element={element}>
       <DatePicker
@@ -54,6 +55,7 @@ const RenderDateContent: React.FC<{
         onChange={handleChange}
         onFocus={handleEvent(EEventAction.ON_FOCUS)}
         onBlur={handleEvent(EEventAction.ON_BLUR)}
+        placeholder={placeholder}
       />
     </ElementLayout>
   );

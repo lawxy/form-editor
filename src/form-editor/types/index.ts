@@ -87,6 +87,14 @@ export interface IBaseElement {
    */
   maxRows?: number;
   /**
+   * 最小数
+   */
+  minNum?: number;
+  /**
+   * 最大数
+   */
+  maxNum?: number;
+  /**
    * 自适应行数
    */
   autoSize?: boolean;

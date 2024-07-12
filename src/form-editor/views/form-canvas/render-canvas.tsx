@@ -14,7 +14,6 @@ import type { IBaseElement, TMode } from '@/types';
 import { idCreator, handleOnEvent, parseCSS } from '@/utils';
 
 import './style.less';
-
 export interface IEditorCanvasProp {
   /**
    * 表单模式
@@ -32,7 +31,6 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
 }) => {
   const { horizontalGap, verticalGap, id, events, customCss } = store.formAttrs;
   const el = useRef<any>();
-  // const { emitter } = useEventContext();
   const { eventFunctions } = useRegisterEvents({ id, events });
   const formStyle = useMemo(() => {
     if (!customCss) return {};

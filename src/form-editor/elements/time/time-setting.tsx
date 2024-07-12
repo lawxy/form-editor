@@ -1,9 +1,13 @@
+import React from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 
-import { TabsSetting } from '@/components';
-import { SettingItem } from '@/components';
+import {
+  SettingItem,
+  SettingWrap,
+  PlaceholderSetting,
+  RegPattern,
+} from '@/components';
 import store from '@/store';
 
 const dateOptions = ['HH:mm:ss', 'HH:mm'].map((per) => ({
@@ -14,19 +18,23 @@ const dateOptions = ['HH:mm:ss', 'HH:mm'].map((per) => ({
 const SettingTimeContent = () => {
   const { dateFormat } = store.selectedElement;
   return (
-    <div>
-      <SettingItem label="时间格式">
-        <Select
-          value={dateFormat}
-          style={{ width: '100%' }}
-          options={dateOptions}
-          onChange={(val) => {
-            // console.log(e)
-            store.setSelectedProp('dateFormat', val);
-          }}
-        />
-      </SettingItem>
-    </div>
+    <>
+      <SettingWrap title="元素设置">
+        <PlaceholderSetting />
+        <SettingItem label="时间格式">
+          <Select
+            value={dateFormat}
+            style={{ width: '100%' }}
+            options={dateOptions}
+            onChange={(val) => {
+              // console.log(e)
+              store.setSelectedProp('dateFormat', val);
+            }}
+          />
+        </SettingItem>
+      </SettingWrap>
+      <RegPattern />
+    </>
   );
 };
 export const SettingTime = observer(SettingTimeContent);

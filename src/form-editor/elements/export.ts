@@ -34,11 +34,23 @@ export { ELEMENT_SELECT, RenderSelect, SettingSelect, SELECT_TEXT } from './sele
 import { ELEMENT_TABLE, RenderTable, SettingTable, TABLE_TEXT, initialData as Table_initData, eventActions as Table_eventActions } from './table'
 export { ELEMENT_TABLE, RenderTable, SettingTable, TABLE_TEXT } from './table'
         
+import { ELEMENT_TEXT, RenderText, SettingText, TEXT_TEXT, initialData as Text_initData, eventActions as Text_eventActions } from './text'
+export { ELEMENT_TEXT, RenderText, SettingText, TEXT_TEXT } from './text'
+        
 import { ELEMENT_TIME, RenderTime, SettingTime, TIME_TEXT, initialData as Time_initData, eventActions as Time_eventActions } from './time'
 export { ELEMENT_TIME, RenderTime, SettingTime, TIME_TEXT } from './time'
         
 export const ElementsList: Record<string, IDragElementProp> = {
       
+  [ELEMENT_TEXT]: {
+    type: ELEMENT_TEXT,
+    render: RenderText,
+    setting: SettingText,
+    text: TEXT_TEXT,
+    eventActions: Text_eventActions,
+    initialData: Text_initData
+  },
+
   [ELEMENT_INPUT]: {
     type: ELEMENT_INPUT,
     render: RenderInput,

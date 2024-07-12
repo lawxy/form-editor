@@ -13,7 +13,7 @@ const RenderTimeContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ fieldValue, element }) => {
-  const { id, dateFormat } = element;
+  const { id, dateFormat, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -22,7 +22,7 @@ const RenderTimeContent: React.FC<{
   };
 
   const handleChange = (date: any) => {
-    store.setFieldValue(id!, formatDate(date, dateFormat!));
+    store.setFieldValue(id!, date ? formatDate(date, dateFormat!) : undefined);
   };
 
   useFormUpdate(() => {
@@ -38,6 +38,7 @@ const RenderTimeContent: React.FC<{
         onChange={handleChange}
         onFocus={handleEvent(EEventAction.ON_FOCUS)}
         onBlur={handleEvent(EEventAction.ON_BLUR)}
+        placeholder={placeholder}
       />
     </ElementLayout>
   );
