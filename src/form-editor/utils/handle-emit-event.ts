@@ -34,8 +34,8 @@ export type TEmitData = Partial<IEventTarget> & {
 // 设置组件值
 export const emitSettingValue = (params: IParams) => {
   const { emitter, eventType, target } = params;
-  const { targetElementId, setValue, targetPayload } = target;
-  const validate = validateParams([targetElementId, targetPayload]);
+  const { targetElementId, setValue, targetPayload, checked } = target;
+  const validate = validateParams([targetElementId]);
   if (!validate) return;
   return (value: any) => {
     emitter.emit(targetElementId!, {
@@ -44,6 +44,7 @@ export const emitSettingValue = (params: IParams) => {
       setValue,
       targetPayload,
       value,
+      checked,
     } as TEmitData);
   };
 };

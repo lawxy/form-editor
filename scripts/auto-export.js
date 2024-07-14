@@ -18,6 +18,7 @@ const sort = [
   'SELECT_TEXT',  // 下拉
   'RADIO_TEXT',   // 单选
   'CHECKBOX_TEXT', // 多选
+  'SWITCH_TEXT', // 开关
   'BUTTON_TEXT',  // 按钮
   'TABLE_TEXT',    // 表格
 ]

@@ -7,7 +7,6 @@ import { ElementLayout } from '@/components';
 import { EEventAction, type IBaseElement } from '@/types';
 
 const RenderButtonContent: React.FC<{
-  fieldValue: any;
   element: IBaseElement;
 }> = ({ element }) => {
   const { eventFunctions } = useRegisterEvents(element);

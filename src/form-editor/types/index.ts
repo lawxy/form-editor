@@ -17,6 +17,10 @@ export interface IDragElementProp {
 
 export type TDirection = 'vertical' | 'horizontal';
 export type TMode = 'design' | 'form';
+export enum EChecked {
+  CHECKED = '0',
+  NOT_CHECKED = '1',
+}
 export type TOption = { label: string; value: string | number; id?: string };
 export enum EChangeType {
   ADD = 'add',

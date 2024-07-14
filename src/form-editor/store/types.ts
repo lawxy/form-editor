@@ -13,7 +13,7 @@ export interface IElementStore {
 
   clearAllElements: () => void;
 
-  getElement: (id: string) => IBaseElement;
+  getElement: (id?: string) => IBaseElement;
 
   appendEl: (el: IBaseElement) => void;
 

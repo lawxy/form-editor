@@ -23,8 +23,8 @@ export default {
   /**
    * 通过id获取元素
    */
-  getElement(id: string) {
-    return this.formElements.find((el) => el.id === id);
+  getElement(id?: string) {
+    return this.formElements.find((el) => el?.id === id);
   },
 
   /**

@@ -6,13 +6,22 @@ import {
   ELinkRefreshField,
 } from '@/types';
 import store from '@/store';
+import { isSwitch } from '@/elements/switch';
+import { EChecked } from '@/types';
 import { triggerService, appendUrl } from './trigger-service';
 import type { TEmitData } from './handle-emit-event';
 
 // 设置组件值
 export const triggerSettingValue = (params: TEmitData) => {
-  const { setValue, value, targetPayload, targetElementId } = params;
+  const { setValue, value, targetPayload, targetElementId, checked } = params;
   if (!store.getElement(targetElementId!)) return;
+  if (isSwitch(targetElementId)) {
+    store.setFieldValue(
+      targetElementId!,
+      checked === EChecked.CHECKED ? true : false,
+    );
+    return;
+  }
   if (targetPayload === EChangeStatePayload.SYNC) {
     store.setFieldValue(targetElementId!, value);
   } else {

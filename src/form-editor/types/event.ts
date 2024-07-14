@@ -1,3 +1,5 @@
+import { EChecked } from '.';
+
 export type TCustomEvent = {
   id: string;
   // 触发事件的动作
@@ -160,6 +162,10 @@ export interface IEventTarget {
    * 设置组件值
    */
   setValue?: any;
+  /**
+   * 设置组件是否选中
+   */
+  checked?: EChecked;
   /**
    * 表单校验的字段，为空时校验整个表单
    */

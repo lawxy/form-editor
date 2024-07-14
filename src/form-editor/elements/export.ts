@@ -31,6 +31,9 @@ export { ELEMENT_RADIO, RenderRadio, SettingRadio, RADIO_TEXT } from './radio'
 import { ELEMENT_SELECT, RenderSelect, SettingSelect, SELECT_TEXT, initialData as Select_initData, eventActions as Select_eventActions, Icon as SELECT_Icon } from './select'
 export { ELEMENT_SELECT, RenderSelect, SettingSelect, SELECT_TEXT } from './select'
         
+import { ELEMENT_SWITCH, RenderSwitch, SettingSwitch, SWITCH_TEXT, initialData as Switch_initData, eventActions as Switch_eventActions, Icon as SWITCH_Icon } from './switch'
+export { ELEMENT_SWITCH, RenderSwitch, SettingSwitch, SWITCH_TEXT } from './switch'
+        
 import { ELEMENT_TABLE, RenderTable, SettingTable, TABLE_TEXT, initialData as Table_initData, eventActions as Table_eventActions, Icon as TABLE_Icon } from './table'
 export { ELEMENT_TABLE, RenderTable, SettingTable, TABLE_TEXT } from './table'
         
@@ -120,6 +123,16 @@ export const ElementsList: Record<string, IDragElementProp> = {
     eventActions: Checkbox_eventActions,
     initialData: Checkbox_initData,
     Icon: CHECKBOX_Icon
+  },
+
+  [ELEMENT_SWITCH]: {
+    type: ELEMENT_SWITCH,
+    render: RenderSwitch,
+    setting: SettingSwitch,
+    text: SWITCH_TEXT,
+    eventActions: Switch_eventActions,
+    initialData: Switch_initData,
+    Icon: SWITCH_Icon
   },
 
   [ELEMENT_BUTTON]: {
