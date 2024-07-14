@@ -9,6 +9,7 @@
     flex-wrap: wrap;
     align-content: flex-start;
     gap: 8px;
+    text-align: center;
     padding: 0 8px;
     padding-top: 10px;
   }
@@ -16,29 +17,33 @@
     height: 40px;
     line-height: 40px;
     padding-left: 10px;
-    // border-bottom: 2px solid rgb(245, 245, 245);
     box-sizing: border-box;
   }
   &-drag-item {
-    width: 138px;
-    text-align: center;
+    display: flex;
     align-items: center;
-    background: #f4f6fc;
-    border: 1px solid #f4f6fc;
-    border-radius: 2px;
+    width: 138px;
+    align-items: center;
+    border: 1px solid rgb(232, 233, 235);
+    border-radius: 4px;
     box-sizing: border-box;
     color: #333;
     cursor: move;
     font-size: 12px;
-    height: 26px;
-    line-height: 26px;
+    height: 32px;
     overflow: hidden;
     padding: 0 4px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-left: 35px;
     &:hover{
       border: 1px dashed #409eff;
-      color: #409eff;
+    }
+    svg {
+      width: 18px;
+      margin-right: 8px;
+      fill: #999;
+      color: #999;
     }
   }
 }

@@ -3,6 +3,7 @@ export * from './service';
 import { TCustomEvents } from './event';
 import { TFormSerives } from './service';
 import { EEventAction } from './event';
+import React from 'react';
 
 export interface IDragElementProp {
   type: string;
@@ -11,6 +12,7 @@ export interface IDragElementProp {
   text: string;
   eventActions: EEventAction[];
   initialData: Record<string, any>;
+  Icon: React.ReactNode;
 }
 
 export type TDirection = 'vertical' | 'horizontal';

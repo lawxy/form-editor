@@ -8,15 +8,15 @@ import { idCreator } from '@/utils';
 
 const DragItem: React.FC<{
   item: IDragElementProp;
-}> = ({item}) => {
-  const { text, type, initialData = {} } = item;
+}> = ({ item }) => {
+  const { text, type, initialData = {}, Icon } = item;
   const currentItem = useMemo(() => {
-    return { type, ...initialData }
-  }, [type, initialData])
+    return { type, ...initialData };
+  }, [type, initialData]);
 
   const handleClick = useCallback(() => {
-    store.appendEl({...currentItem, id: idCreator()})
-  }, [currentItem])
+    store.appendEl({ ...currentItem, id: idCreator() });
+  }, [currentItem]);
 
   return (
     <div
@@ -24,9 +24,9 @@ const DragItem: React.FC<{
       onClick={handleClick}
       data-type={type}
     >
-      {text}
+      {Icon} {text}
     </div>
-  )
-}
+  );
+};
 
-export default observer(DragItem)
+export default observer(DragItem);

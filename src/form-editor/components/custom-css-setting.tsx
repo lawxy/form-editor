@@ -6,13 +6,17 @@ import { MonacoEditor, useMonaco } from './monaco-editor';
 
 import { SettingItem } from './setting-common';
 
+const removeId = (id: string) => id?.replace(/\-(.*)?/, '');
+
 const defaultCSS = (id: string) => {
   return {
-    element: `/* 组件样式 */\n#${id}{\n\t\n} \n /* 容器样式 */\n#${id?.replace(
-      /^el-/,
-      'container-',
+    element: `/* 组件样式 */\n#${removeId(
+      id,
+    )}{\n\t\n} \n /* 容器样式 */\n#${removeId(id)?.replace(
+      /^el/,
+      'container',
     )}{\n\t\n}`,
-    form: `#${id}{\n\t\n}`,
+    form: `#${removeId(id)}{\n\t\n}`,
   };
 };
 

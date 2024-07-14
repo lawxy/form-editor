@@ -1,3 +1,4 @@
-export * from './render-select'
-export * from './const'
-export * from './select-setting'
+export * from './render-select';
+export * from './const';
+export * from './icon';
+export * from './select-setting';

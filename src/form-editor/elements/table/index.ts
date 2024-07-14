@@ -1,3 +1,4 @@
-export * from './render-table'
-export * from './const'
-export * from './table-setting'
+export * from './render-table';
+export * from './const';
+export * from './icon';
+export * from './table-setting';

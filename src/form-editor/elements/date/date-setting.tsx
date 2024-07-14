@@ -28,7 +28,6 @@ const SettingDateContent = () => {
             style={{ width: '100%' }}
             options={dateOptions}
             onChange={(val) => {
-              // console.log(e)
               store.setSelectedProp('dateFormat', val);
             }}
           />

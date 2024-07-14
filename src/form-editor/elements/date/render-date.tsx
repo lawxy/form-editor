@@ -42,7 +42,6 @@ const RenderDateContent: React.FC<{
     if (timeFormat.includes('ss')) res.showSecond = true;
     return res;
   }, [dateFormat]);
-  console.log(fieldValue);
   return (
     <ElementLayout element={element}>
       <DatePicker

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import Sortable from 'sortablejs';
-
-import DragItem from './drag-item';
-
 import { prefixCls } from '@/const';
 import { ElementsList } from '@/elements';
 import type { IDragElementProp } from '@/types';
+
+import DragItem from './drag-item';
+
 import './style.less';
 
 export const Material = () => {

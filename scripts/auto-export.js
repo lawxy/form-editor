@@ -57,8 +57,9 @@ import type { IDragElementProp } from '../types'
       const initData = `${OnlyFirstUpper}_initData`
       // 事件动作
       const eventActions = `${OnlyFirstUpper}_eventActions`
+      const iconName = `${AllUpper}_Icon`
       content += `
-import { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text}, initialData as ${initData}, eventActions as ${eventActions} } from './${elementName}'
+import { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text}, initialData as ${initData}, eventActions as ${eventActions}, Icon as ${iconName} } from './${elementName}'
 export { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text} } from './${elementName}'
         `
       elementList.push({
@@ -67,7 +68,8 @@ export { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text} } from './
         settingComponent,
         text,
         initData,
-        eventActions
+        eventActions,
+        icon: iconName
       })
     })
   content += `
@@ -83,7 +85,8 @@ export const ElementsList: Record<string, IDragElementProp> = {
     setting: ${item.settingComponent},
     text: ${item.text},
     eventActions: ${item.eventActions},
-    initialData: ${item.initData}
+    initialData: ${item.initData},
+    Icon: ${item.icon}
   },\n`
   })
   content += '}'
