@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import type { IBaseElement } from '@/types';
 import {
   handleEmitEvent,
@@ -27,7 +27,7 @@ export const useRegisterEvents: IRegisterEvents = (element) => {
     };
   }, [id]);
 
-  useFormEffect(() => {
+  useEffect(() => {
     if (!events?.length) return;
     const functions = handleEmitEvent(eventStore.emitter, events);
     eventFunctions.current = functions;

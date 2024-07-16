@@ -144,6 +144,18 @@ export interface IBaseElement {
    * 关联的服务id
    */
   linkServices?: string[];
+  /**
+   * 图片默认地址
+   */
+  defaultImgSrc?: string;
+  /**
+   * 支持预览
+   */
+  preview?: boolean;
+  /**
+   * 预览地址
+   */
+  previewSrc?: string;
 }
 export interface IFormAttributesProps {
   formName?: string;

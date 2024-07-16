@@ -1,6 +1,6 @@
 /**
  * 根据组件文件目录 自动导出
-*/
+ */
 
 const fs = require('fs');
 const path = require('path');
@@ -10,18 +10,19 @@ const exportFile = path.join(componentsDir, 'export.ts');
 
 // 由于文件目录会自己根据首字母排序， 这里要自己排序一下([文件名大写]_TEXT)
 const sort = [
-  'TEXT_TEXT',   // 文本框
-  'INPUT_TEXT',   // 输入框
-  'NUMBER_TEXT',  // 数字框
-  'DATE_TEXT',    // 日期
-  'TIME_TEXT',    // 时间
-  'SELECT_TEXT',  // 下拉
-  'RADIO_TEXT',   // 单选
+  'TEXT_TEXT', // 文本框
+  'INPUT_TEXT', // 输入框
+  'NUMBER_TEXT', // 数字框
+  'DATE_TEXT', // 日期
+  'TIME_TEXT', // 时间
+  'SELECT_TEXT', // 下拉
+  'RADIO_TEXT', // 单选
   'CHECKBOX_TEXT', // 多选
   'SWITCH_TEXT', // 开关
-  'BUTTON_TEXT',  // 按钮
-  'TABLE_TEXT',    // 表格
-]
+  'BUTTON_TEXT', // 按钮
+  'IMAGE_TEXT', // 图片
+  'TABLE_TEXT', // 表格
+];
 
 fs.readdir(componentsDir, (err, files) => {
   if (err) return console.log(err);
@@ -43,7 +44,8 @@ import type { IDragElementProp } from '../types'
     .filter((file) => fs.statSync(path.join(componentsDir, file)).isDirectory())
     .forEach((elementName) => {
       // 仅第一个字母大写
-      const OnlyFirstUpper = elementName[0].toUpperCase() + elementName.substring(1);
+      const OnlyFirstUpper =
+        elementName[0].toUpperCase() + elementName.substring(1);
       // 所有字母大写
       const AllUpper = elementName.toUpperCase();
       // 元素控件名
@@ -55,14 +57,14 @@ import type { IDragElementProp } from '../types'
       // 元素中文名
       const text = `${AllUpper}_TEXT`;
       // 元素默认值
-      const initData = `${OnlyFirstUpper}_initData`
+      const initData = `${OnlyFirstUpper}_initData`;
       // 事件动作
-      const eventActions = `${OnlyFirstUpper}_eventActions`
-      const iconName = `${AllUpper}_Icon`
+      const eventActions = `${OnlyFirstUpper}_eventActions`;
+      const iconName = `${AllUpper}_Icon`;
       content += `
 import { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text}, initialData as ${initData}, eventActions as ${eventActions}, Icon as ${iconName} } from './${elementName}'
 export { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text} } from './${elementName}'
-        `
+        `;
       elementList.push({
         typeKey,
         renderComponent,
@@ -70,16 +72,18 @@ export { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text} } from './
         text,
         initData,
         eventActions,
-        icon: iconName
-      })
-    })
+        icon: iconName,
+      });
+    });
   content += `
 export const ElementsList: Record<string, IDragElementProp> = {
-      `
-  elementList.sort((v1, v2) => {
-    return sort.indexOf(v1.text) - sort.indexOf(v2.text)
-  }).forEach((item) => {
-    content += `
+      `;
+  elementList
+    .sort((v1, v2) => {
+      return sort.indexOf(v1.text) - sort.indexOf(v2.text);
+    })
+    .forEach((item) => {
+      content += `
   [${item.typeKey}]: {
     type: ${item.typeKey},
     render: ${item.renderComponent},
@@ -88,9 +92,9 @@ export const ElementsList: Record<string, IDragElementProp> = {
     eventActions: ${item.eventActions},
     initialData: ${item.initData},
     Icon: ${item.icon}
-  },\n`
-  })
-  content += '}'
+  },\n`;
+    });
+  content += '}';
   // console.log(content)
   fs.writeFileSync(exportFile, content);
 });

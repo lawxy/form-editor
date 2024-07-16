@@ -19,6 +19,9 @@ export { ELEMENT_CHECKBOX, RenderCheckbox, SettingCheckbox, CHECKBOX_TEXT } from
 import { ELEMENT_DATE, RenderDate, SettingDate, DATE_TEXT, initialData as Date_initData, eventActions as Date_eventActions, Icon as DATE_Icon } from './date'
 export { ELEMENT_DATE, RenderDate, SettingDate, DATE_TEXT } from './date'
         
+import { ELEMENT_IMAGE, RenderImage, SettingImage, IMAGE_TEXT, initialData as Image_initData, eventActions as Image_eventActions, Icon as IMAGE_Icon } from './image'
+export { ELEMENT_IMAGE, RenderImage, SettingImage, IMAGE_TEXT } from './image'
+        
 import { ELEMENT_INPUT, RenderInput, SettingInput, INPUT_TEXT, initialData as Input_initData, eventActions as Input_eventActions, Icon as INPUT_Icon } from './input'
 export { ELEMENT_INPUT, RenderInput, SettingInput, INPUT_TEXT } from './input'
         
@@ -143,6 +146,16 @@ export const ElementsList: Record<string, IDragElementProp> = {
     eventActions: Button_eventActions,
     initialData: Button_initData,
     Icon: BUTTON_Icon
+  },
+
+  [ELEMENT_IMAGE]: {
+    type: ELEMENT_IMAGE,
+    render: RenderImage,
+    setting: SettingImage,
+    text: IMAGE_TEXT,
+    eventActions: Image_eventActions,
+    initialData: Image_initData,
+    Icon: IMAGE_Icon
   },
 
   [ELEMENT_TABLE]: {

@@ -61,14 +61,15 @@ const SetElementValue: React.FC<{
           }}
         />
         &nbsp;目标组件值为
-        <Popover content="按照基本数据类型填写, 比如 true 或 1 或 '1'">
-          <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
-        </Popover>
-        &nbsp;
         {targetPayload === EChangeStatePayload.SYNC ? (
-          <>事件源组件值</>
+          <> &nbsp;事件源组件值</>
         ) : (
           <>
+            &nbsp;
+            <Popover content="按照基本数据类型填写, 比如 true 或 1 或 '1'">
+              <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
+            </Popover>
+            &nbsp;
             <Input
               className={prefixCls('event-input')}
               defaultValue={setValue}

@@ -55,7 +55,14 @@ export const Preview: FC<
         cancelText="关闭"
       >
         <pre>
-          <code>{JSON.stringify(data, null, 2)}</code>
+          <code
+            style={{
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-all',
+            }}
+          >
+            {JSON.stringify(data, null, 2)}
+          </code>
         </pre>
       </Modal>
     </>

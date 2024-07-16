@@ -5,6 +5,6 @@ export const getValueFromInput = (val?: string): any => {
     eval(`realVal=${val}`);
     return realVal;
   } catch {
-    return '';
+    return val;
   }
 };
