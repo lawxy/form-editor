@@ -4,5 +4,6 @@ module.exports = {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     'no-param-reassign': 'off',
+    'no-eval': 'off',
   },
 };

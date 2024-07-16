@@ -7,4 +7,5 @@ export const eventActions = [EEventAction.ON_LOADED, EEventAction.VALUE_CHANGE];
 export const initialData: Partial<IBaseElement> = {
   gridSpan: 2,
   elementName: '开关',
+  checkedValue: 'true',
 };

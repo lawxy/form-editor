@@ -1,5 +1,4 @@
 export * from './id-creator';
-export * from './deserialize';
 export * from './modal-promisify';
 export * from './parse-jsx';
 export * from './convert-css-to-react-style';
@@ -13,3 +12,4 @@ export * from './format-date';
 export * from './validate-params';
 export * from './create-request';
 export * from './event-emitter';
+export * from './get-value-from-input';

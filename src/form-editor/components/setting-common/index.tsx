@@ -1,4 +1,6 @@
 import React, { type FC, type PropsWithChildren } from 'react';
+import { Popover } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import { prefixCls } from '@/const';
 import './style.less';
 
@@ -7,11 +9,19 @@ export const SettingItem: FC<
     label: React.ReactNode | string;
     children: React.ReactNode;
     style?: React.CSSProperties;
+    tips?: React.ReactNode | string;
   }>
-> = ({ label, children, style }) => {
+> = ({ label, children, style, tips }) => {
   return (
     <div style={style || {}} className={prefixCls('setting-item')}>
-      <div className={prefixCls('setting-item-label')}>{label}</div>
+      <div className={prefixCls('setting-item-label')}>
+        {label}&nbsp;
+        {tips && (
+          <Popover content={tips}>
+            <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
+          </Popover>
+        )}
+      </div>
       <div className={prefixCls('setting-item-value')}>{children}</div>
     </div>
   );

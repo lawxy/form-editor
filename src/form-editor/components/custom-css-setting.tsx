@@ -72,7 +72,10 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
 
     return (
       <>
-        <SettingItem label="自定义CSS">
+        <SettingItem
+          tips="选择器是为了方便格式书写，并不存在于html中"
+          label="自定义CSS"
+        >
           <Button
             disabled={!canSave}
             onClick={handleSave}

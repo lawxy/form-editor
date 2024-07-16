@@ -17,10 +17,6 @@ export interface IDragElementProp {
 
 export type TDirection = 'vertical' | 'horizontal';
 export type TMode = 'design' | 'form';
-export enum EChecked {
-  CHECKED = '0',
-  NOT_CHECKED = '1',
-}
 export type TOption = { label: string; value: string | number; id?: string };
 export enum EChangeType {
   ADD = 'add',
@@ -121,6 +117,10 @@ export interface IBaseElement {
    */
   alignDirection?: TDirection;
   /**
+   * 开关选中的字段值
+   */
+  checkedValue?: string;
+  /**
    * 表格设置
    */
   tableAttributes?: string;
@@ -136,7 +136,6 @@ export interface IBaseElement {
    * 按钮文案
    */
   btnText?: string;
-
   /**
    * 自定义正则
    */

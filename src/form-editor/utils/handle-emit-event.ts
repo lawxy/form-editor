@@ -6,7 +6,7 @@ import {
   TCustomEvents,
   EValidateType,
 } from '@/types';
-import { EventEmitter } from '@/utils';
+import { EventEmitter, getValueFromInput } from '@/utils';
 import store from '@/store';
 import { validateParams } from '.';
 
@@ -34,17 +34,16 @@ export type TEmitData = Partial<IEventTarget> & {
 // 设置组件值
 export const emitSettingValue = (params: IParams) => {
   const { emitter, eventType, target } = params;
-  const { targetElementId, setValue, targetPayload, checked } = target;
-  const validate = validateParams([targetElementId]);
+  const { targetElementId, setValue, targetPayload } = target;
+  const validate = validateParams([targetElementId, targetPayload]);
   if (!validate) return;
   return (value: any) => {
     emitter.emit(targetElementId!, {
       targetElementId,
       eventType,
-      setValue,
+      setValue: getValueFromInput(setValue),
       targetPayload,
       value,
-      checked,
     } as TEmitData);
   };
 };

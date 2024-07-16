@@ -11,24 +11,16 @@ const SettingTableContent = () => {
   return (
     <SettingWrap title="元素设置">
       <SettingItem
-        label={
-          <>
-            表格配置&nbsp;
-            <Popover
-              content={
-                <a
-                  target="_blank"
-                  href="https://ant.design/components/table-cn#table"
-                  rel="noreferrer"
-                >
-                  antd - table文档
-                </a>
-              }
-            >
-              <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
-            </Popover>
-          </>
+        tips={
+          <a
+            target="_blank"
+            href="https://ant.design/components/table-cn#table"
+            rel="noreferrer"
+          >
+            antd - table文档
+          </a>
         }
+        label="表格配置"
       >
         <AttributesSetting
           editorType="json"
@@ -44,24 +36,16 @@ const SettingTableContent = () => {
         </AttributesSetting>
       </SettingItem>
       <SettingItem
-        label={
-          <>
-            列表配置&nbsp;
-            <Popover
-              content={
-                <a
-                  target="_blank"
-                  href="https://ant.design/components/table-cn#column"
-                  rel="noreferrer"
-                >
-                  table - column文档
-                </a>
-              }
-            >
-              <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
-            </Popover>
-          </>
+        tips={
+          <a
+            target="_blank"
+            href="https://ant.design/components/table-cn#column"
+            rel="noreferrer"
+          >
+            table - column文档
+          </a>
         }
+        label="列表配置"
       >
         <AttributesSetting
           editorType="javascript"
