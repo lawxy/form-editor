@@ -1,234 +1,62 @@
 {
   "formElements": [
     {
+      "type": "container",
+      "elementName": "容器",
+      "gridSpan": 24,
+      "gridLayout": true,
+      "id": "el-j3c7tmn6cjg",
+      "parentId": "form-ldpcj3p103g",
+      "customCss": "/* 组件样式 */\n#el{\n  height: 100px;\n  border: 1px solid red;\n\t\n} \n /* 容器样式 */\n#container{\n\t\n}"
+    },
+    {
       "type": "input",
-      "elementName": "设置服务值",
+      "elementName": "输入框",
       "textType": "single",
       "gridSpan": 4,
       "autoSize": true,
       "placeholder": "请输入",
-      "id": "el-l4beocmddhg",
-      "regExps": [
-        {
-          "required": true,
-          "name": "必填",
-          "message": "该项必填",
-          "enable": false,
-          "id": "regexp-49verglttug"
-        },
-        {
-          "name": "最大长度",
-          "message": "超过最大长度",
-          "enable": true,
-          "id": "regexp-f4n0g4881pg",
-          "regexp": "^.{0,10}$"
-        },
-        {
-          "name": "最小长度",
-          "message": "不足最小长度",
-          "enable": true,
-          "id": "regexp-bqdvhur855g",
-          "regexp": "^.{5,}$"
-        }
-      ],
-      "showElementName": true,
-      "events": [
-        {
-          "id": "event-1fvr64hpiu",
-          "eventAction": "valueChange",
-          "eventTargets": [
-            {
-              "id": "event-target-34esesl8kmg",
-              "sourceId": "el-l4beocmddhg",
-              "targetServiceId": "service-9ggt0nodcno",
-              "targetPayload": "append",
-              "updateField": "value",
-              "refreshFlag": 1
-            }
-          ],
-          "eventType": "refreshService"
-        }
-      ],
-      "customCss": "/* 组件样式 */\n#el-l4beocmddhg{\n  color: rgb(46, 167, 248);\n} \n /* 容器样式 */\n#container-l4beocmddhg{\n\n}"
+      "id": "el-78e8b0c6rho",
+      "parentId": "form-ldpcj3p103g",
+      "showElementName": true
     },
     {
-      "type": "input",
-      "elementName": "单个校验&nbsp;:&nbsp;",
-      "textType": "single",
+      "type": "number",
+      "elementName": "数字框",
       "gridSpan": 4,
-      "autoSize": true,
-      "placeholder": "请输入",
-      "id": "el-1hj23bq12qo",
-      "regExps": [
-        {
-          "required": true,
-          "name": "必填",
-          "message": "该项必填",
-          "enable": true,
-          "id": "regexp-0qnkodv7p7"
-        }
-      ],
-      "showElementName": true,
-      "gridLayout": false,
-      "elementNameDisplay": "vertical",
-      "events": [
-        {
-          "id": "event-hseq7tl1h4g",
-          "eventAction": "valueChange",
-          "eventTargets": [
-            {
-              "id": "event-target-i03r1sq0he8",
-              "sourceId": "el-1hj23bq12qo",
-              "validateField": "el-1hj23bq12qo"
-            }
-          ],
-          "eventType": "validate"
-        }
-      ]
+      "valueType": "int",
+      "id": "el-mbo504mt4s",
+      "parentId": "form-ldpcj3p103g",
+      "showElementName": true
     },
     {
-      "type": "radio",
-      "elementName": "关联服务-设置组件值",
-      "gridSpan": 24,
-      "alignDirection": "horizontal",
-      "valueOptions": [
-        {
-          "label": "选项1",
-          "value": "1",
-          "id": "1"
-        },
-        {
-          "label": "选项2",
-          "value": "2",
-          "id": "2"
-        }
-      ],
-      "id": "el-m7ebp9rft6o",
-      "gridLayout": true,
-      "showElementName": true,
-      "events": [
-        {
-          "id": "event-r8arujnithg",
-          "eventAction": "onLoaded",
-          "eventTargets": [
-            {
-              "id": "event-target-f25fbb5fv98",
-              "sourceId": "el-m7ebp9rft6o",
-              "targetServiceId": "service-9ggt0nodcno",
-              "linkRefreshField": "fieldValue",
-              "getFieldFromService": "data1"
-            },
-            {
-              "id": "event-target-3mq29mcvi08",
-              "sourceId": "el-m7ebp9rft6o",
-              "targetServiceId": "service-31bs5m1tdf8",
-              "linkRefreshField": "valueOptions",
-              "getFieldFromService": "data1"
-            }
-          ],
-          "eventType": "linkService"
-        },
-        {
-          "id": "event-dmqoad863do",
-          "eventAction": "onLoaded",
-          "eventTargets": [
-            {
-              "id": "event-target-frq22303ob",
-              "sourceId": "el-m7ebp9rft6o",
-              "targetServiceId": "service-31bs5m1tdf8",
-              "targetPayload": "clear",
-              "refreshFlag": 1
-            }
-          ],
-          "eventType": "refreshService"
-        }
-      ]
-    },
-    {
-      "type": "button",
-      "gridSpan": 24,
-      "id": "el-ejvdv9gqqbo",
-      "gridOffset": 0,
-      "gridLayout": true,
-      "elementName": "123",
-      "showElementName": false,
-      "btnText": "表单校验",
-      "events": [
-        {
-          "id": "event-dvf36fo282g",
-          "eventAction": "onClick",
-          "eventTargets": [
-            {
-              "id": "event-target-sk3uodmatto",
-              "sourceId": "el-ejvdv9gqqbo",
-              "validateField": ""
-            }
-          ],
-          "eventType": "validate"
-        }
-      ]
+      "type": "date",
+      "elementName": "日期",
+      "dateFormat": "YYYY-MM-DD",
+      "gridSpan": 4,
+      "placeholder": "请选择日期",
+      "id": "el-bnslsf1fthg",
+      "parentId": "form-ldpcj3p103g",
+      "showElementName": true
     }
   ],
   "fieldValues": {},
   "formAttrs": {
-    "isProcessForm": false,
+    "verticalGap": 8,
     "horizontalGap": 8,
-    "verticalGap": 9,
-    "formId": "form-070c7qjr6v8",
-    "id": "form-62u3152dahg",
-    "customCss": "#form-62u3152dahg{\n\tpadding: 10px;\n}"
+    "id": "form-ldpcj3p103g"
   },
-  "formServices": [
-    {
-      "name": "设置值",
-      "originalUrl": "http://localhost:8888",
-      "method": "GET",
-      "id": "service-9ggt0nodcno",
-      "linkingElements": [
-        "el-usd1n2ik7j",
-        {
-          "id": "el-29kfskk463g",
-          "field": "fieldValue"
-        },
-        {
-          "id": "el-m7ebp9rft6o",
-          "field": "fieldValue"
-        },
-        {
-          "id": "el-m7ebp9rft6o",
-          "field": "fieldValue",
-          "getFieldFromService": "data1"
-        }
-      ],
-      "url": "http://localhost:8888/value",
-      "data": {},
-      "previewData": "export default {\n\tvalue: 123\n}",
-      "interceptors": "axios.interceptors.request.use(config =>{\n  return config\n})\n\nconst DEFAULT_ERROR_MESSAGE = '请求服务报错';\n\nconst HttpStatusCode = { Ok: 200 };\n\naxios.interceptors.response.use(function (res) {\n  try {\n    if (res.status !== HttpStatusCode.Ok) {\n      message.error(DEFAULT_ERROR_MESSAGE);\n      return {};\n    }\n    const { data, errMsg, code } = res.data;\n    if (HttpStatusCode.Ok === code) {\n      return data;\n    }\n    message.error(errMsg || DEFAULT_ERROR_MESSAGE);\n  } catch (e) {\n    message.error(DEFAULT_ERROR_MESSAGE);\n  }\n},\nfunction (err) {\n  message.error(err?.message || DEFAULT_ERROR_MESSAGE);\n  return Promise.reject(err);\n})\n"
-    },
-    {
-      "name": "获取选项",
-      "url": "http://localhost:8888/options",
-      "method": "GET",
-      "id": "service-31bs5m1tdf8",
-      "linkingElements": [
-        {
-          "id": "el-sq3spubdesg"
-        },
-        {
-          "id": "el-737ilkto2q8",
-          "field": "valueOptions"
-        },
-        {
-          "id": "el-29kfskk463g",
-          "field": "valueOptions"
-        },
-        {
-          "id": "el-m7ebp9rft6o",
-          "field": "valueOptions",
-          "getFieldFromService": "data1"
-        }
-      ],
-      "interceptors": "axios.interceptors.request.use(config =>{\n  return config\n})\n\nconst DEFAULT_ERROR_MESSAGE = '请求服务报错';\n\nconst HttpStatusCode =  { Ok: 200 };\n\naxios.interceptors.response.use(function (res) {\n  try {\n    if (res.status !== 200) {\n      message.error(DEFAULT_ERROR_MESSAGE);\n      return {};\n    }\n    const { data, errMsg, code } = res.data;\n    if (HttpStatusCode.Ok === code) {\n      return data;\n    }\n    message.error(errMsg || DEFAULT_ERROR_MESSAGE);\n  } catch (e) {\n    message.error(DEFAULT_ERROR_MESSAGE);\n  }\n},\nfunction (err) {\n  message.error(err?.message || DEFAULT_ERROR_MESSAGE);\n  return Promise.reject(err);\n})\n"
-    }
-  ]
+  "formServices": []
+}
+
+
+{
+  "formElements": [{"type":"container","elementName":"容器","gridSpan":24,"gridLayout":true,"id":"el-j3c7tmn6cjg","parentId":"form-ldpcj3p103g","customCss":"/* 组件样式 */\n#el{\n  height: 100px;\n  border: 1px solid red;\n\t\n} \n /* 容器样式 */\n#container{\n\t\n}","children":[{"type":"input","elementName":"输入框","textType":"single","gridSpan":4,"autoSize":true,"placeholder":"请输入","id":"el-78e8b0c6rho","parentId":"el-j3c7tmn6cjg","showElementName":true}]},{"type":"number","elementName":"数字框","gridSpan":4,"valueType":"int","id":"el-mbo504mt4s","parentId":"form-ldpcj3p103g","showElementName":true},{"type":"date","elementName":"日期","dateFormat":"YYYY-MM-DD","gridSpan":4,"placeholder":"请选择日期","id":"el-bnslsf1fthg","parentId":"form-ldpcj3p103g","showElementName":true}],
+  "fieldValues": {},
+  "formAttrs": {
+    "verticalGap": 8,
+    "horizontalGap": 8,
+    "id": "form-ldpcj3p103g"
+  },
+  "formServices": []
 }

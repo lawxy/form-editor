@@ -15,7 +15,11 @@ const DragItem: React.FC<{
   }, [type, initialData]);
 
   const handleClick = useCallback(() => {
-    store.appendEl({ ...currentItem, id: idCreator() });
+    store.appendEl({
+      ...currentItem,
+      id: idCreator(),
+      parentId: store.formAttrs.id,
+    });
   }, [currentItem]);
 
   return (

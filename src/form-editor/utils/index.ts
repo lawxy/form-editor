@@ -13,3 +13,4 @@ export * from './validate-params';
 export * from './create-request';
 export * from './event-emitter';
 export * from './get-value-from-input';
+export * from './handle-sort';

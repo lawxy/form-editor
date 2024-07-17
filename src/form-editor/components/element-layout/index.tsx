@@ -45,6 +45,8 @@ export const ElementLayout: FC<
     showElementName,
     gridLayout,
     regExps,
+    parentId,
+    type,
   } = element;
   const { elCss, contaninerCss } = useElementCommon(element);
   const { mode } = useEditorContext();
@@ -94,7 +96,14 @@ export const ElementLayout: FC<
   const offset = gridLayout ? gridOffset || 0 : 0;
 
   return (
-    <Col span={gridSpan} offset={offset} style={style}>
+    <Col
+      span={gridSpan}
+      offset={offset}
+      style={style}
+      data-parent-id={parentId}
+      data-id={id}
+      data-type={type}
+    >
       <Form.Item name={id} rules={rules} style={{ marginBottom: 0 }}>
         <WrapEl el={element} mode={mode}>
           <StyledDiv elementNameDisplay={elementNameDisplay}>
@@ -110,6 +119,7 @@ export const ElementLayout: FC<
             <div style={{ flex: 1 }}>
               {React.isValidElement(children) &&
                 React.cloneElement<any>(children, {
+                  ...(children?.props || {}),
                   style: elCss || {},
                 })}
             </div>

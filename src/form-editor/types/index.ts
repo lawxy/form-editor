@@ -33,9 +33,9 @@ export type TPattern = {
 
 export interface IBaseElement {
   /**
-   * 链表形式存储父节点, 暂时没用
+   * 父节点id
    */
-  parentEelemnt?: IBaseElement;
+  parentId?: string;
   /**
    * 元素类型
    */
@@ -156,6 +156,10 @@ export interface IBaseElement {
    * 预览地址
    */
   previewSrc?: string;
+  /**
+   * 子节点
+   */
+  children?: Array<IBaseElement>;
 }
 export interface IFormAttributesProps {
   formName?: string;

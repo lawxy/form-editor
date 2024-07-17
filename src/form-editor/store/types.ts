@@ -9,6 +9,10 @@ import type {
 export interface IElementStore {
   formElements: IBaseElement[];
 
+  formElementMap: Map<string, IBaseElement>;
+
+  flatElement: (el: IBaseElement) => void;
+
   setFormElements: (els: IBaseElement[]) => void;
 
   clearAllElements: () => void;
@@ -21,7 +25,7 @@ export interface IElementStore {
 
   moveEl: (fromIndex: number, toIndex: number) => void;
 
-  deleteEl: (el: IBaseElement) => void;
+  deleteEl: (el: IBaseElement, move?: boolean) => void;
 
   copyEl: (el: IBaseElement) => void;
 
