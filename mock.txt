@@ -1,234 +1,102 @@
 {
   "formElements": [
     {
-      "type": "input",
-      "elementName": "设置服务值",
-      "textType": "single",
-      "gridSpan": 4,
-      "autoSize": true,
-      "placeholder": "请输入",
-      "id": "el-l4beocmddhg",
-      "regExps": [
-        {
-          "required": true,
-          "name": "必填",
-          "message": "该项必填",
-          "enable": false,
-          "id": "regexp-49verglttug"
-        },
-        {
-          "name": "最大长度",
-          "message": "超过最大长度",
-          "enable": true,
-          "id": "regexp-f4n0g4881pg",
-          "regexp": "^.{0,10}$"
-        },
-        {
-          "name": "最小长度",
-          "message": "不足最小长度",
-          "enable": true,
-          "id": "regexp-bqdvhur855g",
-          "regexp": "^.{5,}$"
-        }
-      ],
-      "showElementName": true,
-      "events": [
-        {
-          "id": "event-1fvr64hpiu",
-          "eventAction": "valueChange",
-          "eventTargets": [
-            {
-              "id": "event-target-34esesl8kmg",
-              "sourceId": "el-l4beocmddhg",
-              "targetServiceId": "service-9ggt0nodcno",
-              "targetPayload": "append",
-              "updateField": "value",
-              "refreshFlag": 1
-            }
-          ],
-          "eventType": "refreshService"
-        }
-      ],
-      "customCss": "/* 组件样式 */\n#el-l4beocmddhg{\n  color: rgb(46, 167, 248);\n} \n /* 容器样式 */\n#container-l4beocmddhg{\n\n}"
+      "type": "container",
+      "elementName": "容器",
+      "gridSpan": 24,
+      "gridLayout": true,
+      "id": "el-2m3s9sj6sjg"
     },
     {
       "type": "input",
-      "elementName": "单个校验&nbsp;:&nbsp;",
+      "elementName": "输入框",
       "textType": "single",
       "gridSpan": 4,
       "autoSize": true,
       "placeholder": "请输入",
-      "id": "el-1hj23bq12qo",
-      "regExps": [
-        {
-          "required": true,
-          "name": "必填",
-          "message": "该项必填",
-          "enable": true,
-          "id": "regexp-0qnkodv7p7"
-        }
-      ],
-      "showElementName": true,
-      "gridLayout": false,
-      "elementNameDisplay": "vertical",
+      "id": "el-5smorln238g",
       "events": [
         {
-          "id": "event-hseq7tl1h4g",
+          "id": "event-ljb6m7jkl2o",
           "eventAction": "valueChange",
           "eventTargets": [
             {
-              "id": "event-target-i03r1sq0he8",
-              "sourceId": "el-1hj23bq12qo",
-              "validateField": "el-1hj23bq12qo"
+              "id": "event-target-dqlmkvv8o4g",
+              "sourceId": "el-5smorln238g",
+              "targetElementId": "el-co0cfjpjguo",
+              "targetPayload": "custom",
+              "setValue": "'http://gips3.baidu.com/it/u=3419425165,837936650&fm=3028&app=3028&f=JPEG&fmt=auto?w=1024&h=1024'"
             }
           ],
-          "eventType": "validate"
+          "eventType": "settingValue"
         }
       ]
     },
     {
-      "type": "radio",
-      "elementName": "关联服务-设置组件值",
-      "gridSpan": 24,
-      "alignDirection": "horizontal",
-      "valueOptions": [
-        {
-          "label": "选项1",
-          "value": "1",
-          "id": "1"
-        },
-        {
-          "label": "选项2",
-          "value": "2",
-          "id": "2"
-        }
-      ],
-      "id": "el-m7ebp9rft6o",
+      "type": "image",
+      "elementName": "图片",
+      "gridSpan": 4,
+      "preview": true,
+      "placeholder": "data:image/png;base64,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",
+      "id": "el-co0cfjpjguo",
+      "defaultImgSrc": "http://gips3.baidu.com/it/u=3886271102,3123389489&fm=3028&app=3028&f=JPEG&fmt=auto?w=1280&h=96",
+      "customCss": "/* 组件样式 */\n#el{\n\t\n} \n /* 容器样式 */\n#container{\n\t\n}",
       "gridLayout": true,
-      "showElementName": true,
+      "previewSrc": "http://gips1.baidu.com/it/u=1410005327,4082018016&fm=3028&app=3028&f=JPEG&fmt=auto?w=960&h=1280",
       "events": [
         {
-          "id": "event-r8arujnithg",
+          "id": "event-e0h4p3m2ppo",
           "eventAction": "onLoaded",
           "eventTargets": [
             {
-              "id": "event-target-f25fbb5fv98",
-              "sourceId": "el-m7ebp9rft6o",
-              "targetServiceId": "service-9ggt0nodcno",
-              "linkRefreshField": "fieldValue",
-              "getFieldFromService": "data1"
-            },
-            {
-              "id": "event-target-3mq29mcvi08",
-              "sourceId": "el-m7ebp9rft6o",
-              "targetServiceId": "service-31bs5m1tdf8",
-              "linkRefreshField": "valueOptions",
-              "getFieldFromService": "data1"
-            }
-          ],
-          "eventType": "linkService"
-        },
-        {
-          "id": "event-dmqoad863do",
-          "eventAction": "onLoaded",
-          "eventTargets": [
-            {
-              "id": "event-target-frq22303ob",
-              "sourceId": "el-m7ebp9rft6o",
-              "targetServiceId": "service-31bs5m1tdf8",
+              "id": "event-target-gj381mev24",
+              "sourceId": "el-co0cfjpjguo",
+              "targetServiceId": "service-sldmqsn18i",
               "targetPayload": "clear",
               "refreshFlag": 1
             }
           ],
           "eventType": "refreshService"
-        }
-      ]
-    },
-    {
-      "type": "button",
-      "gridSpan": 24,
-      "id": "el-ejvdv9gqqbo",
-      "gridOffset": 0,
-      "gridLayout": true,
-      "elementName": "123",
-      "showElementName": false,
-      "btnText": "表单校验",
-      "events": [
+        },
         {
-          "id": "event-dvf36fo282g",
-          "eventAction": "onClick",
+          "id": "event-lfqgqigsd18",
+          "eventAction": "onLoaded",
           "eventTargets": [
             {
-              "id": "event-target-sk3uodmatto",
-              "sourceId": "el-ejvdv9gqqbo",
-              "validateField": ""
+              "id": "event-target-d28jlloqtj8",
+              "sourceId": "el-co0cfjpjguo",
+              "targetServiceId": "service-sldmqsn18i",
+              "linkRefreshField": "fieldValue"
             }
           ],
-          "eventType": "validate"
+          "eventType": "linkService"
         }
+      ],
+      "linkServices": [
+        "service-sldmqsn18i"
       ]
     }
   ],
   "fieldValues": {},
   "formAttrs": {
-    "isProcessForm": false,
+    "verticalGap": 8,
     "horizontalGap": 8,
-    "verticalGap": 9,
-    "formId": "form-070c7qjr6v8",
-    "id": "form-62u3152dahg",
-    "customCss": "#form-62u3152dahg{\n\tpadding: 10px;\n}"
+    "id": "form-c2j399eunso",
+    "customCss": "#form{\n\tpadding: 10px;\n}"
   },
   "formServices": [
     {
-      "name": "设置值",
-      "originalUrl": "http://localhost:8888",
+      "name": "获取图片",
+      "url": "http://localhost:8888/getSrc",
       "method": "GET",
-      "id": "service-9ggt0nodcno",
-      "linkingElements": [
-        "el-usd1n2ik7j",
-        {
-          "id": "el-29kfskk463g",
-          "field": "fieldValue"
-        },
-        {
-          "id": "el-m7ebp9rft6o",
-          "field": "fieldValue"
-        },
-        {
-          "id": "el-m7ebp9rft6o",
-          "field": "fieldValue",
-          "getFieldFromService": "data1"
-        }
-      ],
-      "url": "http://localhost:8888/value",
-      "data": {},
-      "previewData": "export default {\n\tvalue: 123\n}",
-      "interceptors": "axios.interceptors.request.use(config =>{\n  return config\n})\n\nconst DEFAULT_ERROR_MESSAGE = '请求服务报错';\n\nconst HttpStatusCode = { Ok: 200 };\n\naxios.interceptors.response.use(function (res) {\n  try {\n    if (res.status !== HttpStatusCode.Ok) {\n      message.error(DEFAULT_ERROR_MESSAGE);\n      return {};\n    }\n    const { data, errMsg, code } = res.data;\n    if (HttpStatusCode.Ok === code) {\n      return data;\n    }\n    message.error(errMsg || DEFAULT_ERROR_MESSAGE);\n  } catch (e) {\n    message.error(DEFAULT_ERROR_MESSAGE);\n  }\n},\nfunction (err) {\n  message.error(err?.message || DEFAULT_ERROR_MESSAGE);\n  return Promise.reject(err);\n})\n"
-    },
-    {
-      "name": "获取选项",
-      "url": "http://localhost:8888/options",
-      "method": "GET",
-      "id": "service-31bs5m1tdf8",
+      "interceptors": "axios.interceptors.request.use(config =>{\n  return config\n})\n\nconst DEFAULT_ERROR_MESSAGE = '请求服务报错';\n\nconst HttpStatusCode = { Ok: 200 };\n\naxios.interceptors.response.use(function (res) {\n  try {\n    if (res.status !== HttpStatusCode.Ok) {\n      message.error(DEFAULT_ERROR_MESSAGE);\n      return {};\n    }\n    const { code } = res.data;\n    if (HttpStatusCode.Ok === code) {\n      return res.data;\n    }\n    message.error(errMsg || DEFAULT_ERROR_MESSAGE);\n  } catch (e) {\n    message.error(DEFAULT_ERROR_MESSAGE);\n  }\n},\nfunction (err) {\n  message.error(err?.message || DEFAULT_ERROR_MESSAGE);\n  return Promise.reject(err);\n})\n",
+      "id": "service-sldmqsn18i",
       "linkingElements": [
         {
-          "id": "el-sq3spubdesg"
-        },
-        {
-          "id": "el-737ilkto2q8",
-          "field": "valueOptions"
-        },
-        {
-          "id": "el-29kfskk463g",
-          "field": "valueOptions"
-        },
-        {
-          "id": "el-m7ebp9rft6o",
-          "field": "valueOptions",
-          "getFieldFromService": "data1"
+          "id": "el-co0cfjpjguo",
+          "field": "fieldValue"
         }
-      ],
-      "interceptors": "axios.interceptors.request.use(config =>{\n  return config\n})\n\nconst DEFAULT_ERROR_MESSAGE = '请求服务报错';\n\nconst HttpStatusCode =  { Ok: 200 };\n\naxios.interceptors.response.use(function (res) {\n  try {\n    if (res.status !== 200) {\n      message.error(DEFAULT_ERROR_MESSAGE);\n      return {};\n    }\n    const { data, errMsg, code } = res.data;\n    if (HttpStatusCode.Ok === code) {\n      return data;\n    }\n    message.error(errMsg || DEFAULT_ERROR_MESSAGE);\n  } catch (e) {\n    message.error(DEFAULT_ERROR_MESSAGE);\n  }\n},\nfunction (err) {\n  message.error(err?.message || DEFAULT_ERROR_MESSAGE);\n  return Promise.reject(err);\n})\n"
+      ]
     }
   ]
 }

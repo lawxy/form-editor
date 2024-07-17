@@ -12,13 +12,6 @@ export default {
    */
   formElements: [],
 
-  formElementMap: new Map(),
-
-  flatElement(el: IBaseElement) {
-    if (this.formElementMap.has(el.id!)) return;
-    this.formElementMap.set(el.id!, el);
-  },
-
   setFormElements(els: IBaseElement[]) {
     this.formElements = els;
   },
@@ -31,9 +24,7 @@ export default {
    * 通过id获取元素
    */
   getElement(id?: string) {
-    if (!id) return;
-    // return this.formElements.find((el) => el?.id === id);
-    return this.formElementMap.get(id);
+    return this.formElements.find((el) => el?.id === id);
   },
 
   /**
@@ -66,15 +57,12 @@ export default {
   /**
    * 删除元素
    */
-  async deleteEl(el?: IBaseElement, move?: boolean) {
+  async deleteEl(el?: IBaseElement) {
     if (!el) return;
+    const confirmDelete = await eventStore.deleteId(el.id!);
+    if (!confirmDelete) return;
     const idx = this.formElements.findIndex((item) => item.id === el.id);
-    // 容器间的移动会删除原有元素 但是绑定的服务和事件不变
-    if (!move) {
-      const confirmDelete = await eventStore.deleteId(el.id!);
-      if (!confirmDelete) return;
-      unBindFromElement(el.id as string);
-    }
+    unBindFromElement(el.id as string);
     this.formElements.splice(idx, 1);
   },
 

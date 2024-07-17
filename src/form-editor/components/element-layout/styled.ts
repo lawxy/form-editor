@@ -1,9 +1,13 @@
 import styled, { css } from 'styled-components';
 
-export const Mask = styled.div<{ horizontal: number; vertical: number }>(
-  ({ horizontal, vertical }) => {
-    return `
+export const Mask = styled.div<{
+  horizontal: number;
+  vertical: number;
+  visible: boolean;
+}>(({ horizontal, vertical, visible }) => {
+  return `
     ${css({
+      display: visible ? 'block' : 'none',
       position: 'absolute',
       top: 0,
       left: 0,
@@ -15,8 +19,7 @@ export const Mask = styled.div<{ horizontal: number; vertical: number }>(
       cursor: 'pointer',
     }).join(';')}
   `;
-  },
-);
+});
 
 export const DesignWrapDiv = styled.div<{
   selected: boolean;

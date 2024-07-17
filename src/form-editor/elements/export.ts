@@ -16,6 +16,9 @@ export { ELEMENT_BUTTON, RenderButton, SettingButton, BUTTON_TEXT } from './butt
 import { ELEMENT_CHECKBOX, RenderCheckbox, SettingCheckbox, CHECKBOX_TEXT, initialData as Checkbox_initData, eventActions as Checkbox_eventActions, Icon as CHECKBOX_Icon } from './checkbox'
 export { ELEMENT_CHECKBOX, RenderCheckbox, SettingCheckbox, CHECKBOX_TEXT } from './checkbox'
         
+import { ELEMENT_CONTAINER, RenderContainer, SettingContainer, CONTAINER_TEXT, initialData as Container_initData, eventActions as Container_eventActions, Icon as CONTAINER_Icon } from './container'
+export { ELEMENT_CONTAINER, RenderContainer, SettingContainer, CONTAINER_TEXT } from './container'
+        
 import { ELEMENT_DATE, RenderDate, SettingDate, DATE_TEXT, initialData as Date_initData, eventActions as Date_eventActions, Icon as DATE_Icon } from './date'
 export { ELEMENT_DATE, RenderDate, SettingDate, DATE_TEXT } from './date'
         
@@ -48,6 +51,16 @@ export { ELEMENT_TIME, RenderTime, SettingTime, TIME_TEXT } from './time'
         
 export const ElementsList: Record<string, IDragElementProp> = {
       
+  [ELEMENT_CONTAINER]: {
+    type: ELEMENT_CONTAINER,
+    render: RenderContainer,
+    setting: SettingContainer,
+    text: CONTAINER_TEXT,
+    eventActions: Container_eventActions,
+    initialData: Container_initData,
+    Icon: CONTAINER_Icon
+  },
+
   [ELEMENT_TEXT]: {
     type: ELEMENT_TEXT,
     render: RenderText,

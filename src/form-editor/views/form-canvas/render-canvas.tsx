@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Row } from 'antd';
 import { observer } from 'mobx-react-lite';
 import Sortable from 'sortablejs';
+import type { SortableEvent } from 'sortablejs';
 import c from 'classnames';
 import { useRegisterEvents, useFormUpdate, useDesignEffect } from '@/hooks';
 import { EEventAction } from '@/types';
@@ -11,7 +12,7 @@ import { ElementsList } from '@/elements/export';
 import eventStore from '@/store/eventStore';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
-import { idCreator, handleOnEvent, parseCSS } from '@/utils';
+import { idCreator, handleOnEvent, parseCSS, handelSort } from '@/utils';
 
 import './style.less';
 export interface IEditorCanvasProp {
@@ -43,21 +44,43 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
 
     const sortIns = new Sortable(rowEl, {
       animation: 150,
-      group: 'list',
-      onSort: function (e: any) {
+      group: 'nested',
+      fallbackOnBody: true,
+      onMove() {
+        // return false;
+      },
+      onSort: function (e: SortableEvent) {
+        if (e.to?.dataset.type === 'el') return;
+
         const { newIndex, item, oldIndex } = e;
-        // 新增
-        if (item.classList.contains('fm-drag-item')) {
-          if (item.parentNode) item.parentNode.removeChild(item);
-          const element = ElementsList[item.dataset.type];
-          const { initialData } = element;
-          store.insertEl(
-            { type: item.dataset.type, ...initialData, id: idCreator() },
-            newIndex,
-          );
+        const { add, newEl } = handelSort(item, store.formAttrs.id!);
+        if (add) {
+          store.insertEl(newEl!, newIndex!);
+          // if (e.to?.dataset.type === 'el') {
+          //   store.deleteEl(newEl, true);
+          // }
         } else {
-          store.moveEl(oldIndex, newIndex);
+          store.moveEl(oldIndex!, newIndex!);
         }
+
+        // // 新增
+        // if (!item.dataset.parentId) {
+        //   // if (item.classList.contains('fm-drag-item')) {
+        //   if (item.parentNode) item.parentNode.removeChild(item);
+        //   const element = ElementsList[item.dataset.type];
+        //   const { initialData } = element;
+        //   store.insertEl(
+        //     {
+        //       type: item.dataset.type,
+        //       ...initialData,
+        //       id: idCreator(),
+        //       parentId: store.formAttrs.id,
+        //     },
+        //     newIndex,
+        //   );
+        // } else {
+        //   store.moveEl(oldIndex, newIndex);
+        // }
       },
     });
 
@@ -111,6 +134,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
           {store.formElements.map((item: IBaseElement) => {
             const Component = ElementsList[item.type!]?.render;
             if (!Component) return null;
+            store.flatElement(item);
             return (
               <Component
                 key={item.id || String(+new Date())}
