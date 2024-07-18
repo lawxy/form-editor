@@ -46,40 +46,25 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
       animation: 150,
       group: 'nested',
       fallbackOnBody: true,
-      onMove() {
-        // return false;
+      // onMove() {
+      //   // return false;
+      // },
+      onEnd: function (e: SortableEvent) {
+        e.originalEvent.stopPropagation();
+        e.originalEvent.preventDefault();
+        console.log('onEnd');
       },
       onSort: function (e: SortableEvent) {
-        if (e.to?.dataset.type === 'el') return;
-
-        const { newIndex, item, oldIndex } = e;
-        const { add, newEl } = handelSort(item, store.formAttrs.id!);
-        if (add) {
-          store.insertEl(newEl!, newIndex!);
-          // if (e.to?.dataset.type === 'el') {
-          //   store.deleteEl(newEl, true);
-          // }
-        } else {
-          store.moveEl(oldIndex!, newIndex!);
-        }
-
-        // // 新增
-        // if (!item.dataset.parentId) {
-        //   // if (item.classList.contains('fm-drag-item')) {
-        //   if (item.parentNode) item.parentNode.removeChild(item);
-        //   const element = ElementsList[item.dataset.type];
-        //   const { initialData } = element;
-        //   store.insertEl(
-        //     {
-        //       type: item.dataset.type,
-        //       ...initialData,
-        //       id: idCreator(),
-        //       parentId: store.formAttrs.id,
-        //     },
-        //     newIndex,
-        //   );
+        e.originalEvent.stopPropagation();
+        e.originalEvent.preventDefault();
+        console.log('onSort');
+        // if (e.to?.dataset.type === 'el') return;
+        // const { newIndex, item, oldIndex } = e;
+        // const { add, newEl } = handelSort(item, store.formAttrs.id!);
+        // if (add) {
+        //   store.insertEl(newEl!, newIndex!);
         // } else {
-        //   store.moveEl(oldIndex, newIndex);
+        //   store.moveEl(oldIndex!, newIndex!);
         // }
       },
     });
@@ -119,6 +104,8 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
     };
   }, [store.formServices]);
 
+  // console.log(JSON.stringify(store.formElements));
+
   return (
     <div className={prefixCls('canvas-wrap')}>
       {actions && <>{actions}</>}
@@ -137,7 +124,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
             store.flatElement(item);
             return (
               <Component
-                key={item.id || String(+new Date())}
+                key={item.id}
                 fieldValue={store.fieldValues[item.id as string]}
                 element={item}
               />

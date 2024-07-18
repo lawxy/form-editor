@@ -50,10 +50,12 @@ const RenderContainerContent: React.FC<{
       onSort: function (e: SortableEvent) {
         // debugger;
         const { newIndex, item, oldIndex } = e;
+
         const { add, newEl } = handelSort(item, elementRef.current!.id!);
-        console.log('add', add);
-        console.log('newEl', newEl);
-        console.log('newIndex', newIndex);
+
+        // console.log('add', add);
+        // console.log('newEl', newEl);
+        // console.log('newIndex', newIndex);
         const { children = [] } = elementRef.current!;
         if (add) {
           children.splice(newIndex!, 0, newEl!);
@@ -83,7 +85,7 @@ const RenderContainerContent: React.FC<{
       sortIns?.destroy?.();
     };
   });
-  console.log('element.children', element.children);
+  // console.log('element.children', element.children);
 
   return (
     <ElementLayout element={element}>

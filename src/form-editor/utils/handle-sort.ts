@@ -16,7 +16,7 @@ export const handelSort = (
       add: false,
     };
   }
-  console.log(item);
+  // console.log(item);
 
   if (item.parentNode) item.parentNode.removeChild(item);
   // 1. 新增 (容器内部的元素移动也是新增)
@@ -25,10 +25,10 @@ export const handelSort = (
   if (item?.dataset?.parentId) {
     const parent = store.getElement(item.dataset.parentId);
     const current = store.getElement(item.dataset.id);
-    console.log('?', parent);
-    console.log('current', current, { ...current });
+    // console.log('?', parent);
+    // console.log('current', current, { ...current });
     if (!parent) {
-      // store.deleteEl(current, true);
+      store.deleteEl(current, true);
     } else {
       // const idx = parent.children?.findIndex((item) => item.id === current.id);
       // const { children } = parent;
