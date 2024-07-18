@@ -13,6 +13,7 @@ import eventStore from '@/store/eventStore';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
 import { idCreator, handleOnEvent, parseCSS, handelSort } from '@/utils';
+import { ReactSortable } from '@/components/react-sortable';
 
 import './style.less';
 export interface IEditorCanvasProp {
@@ -39,40 +40,40 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
     return Object.values(cssObj)[0];
   }, [customCss]);
 
-  useDesignEffect(() => {
-    const rowEl = el.current.querySelector('.ant-row');
+  // useDesignEffect(() => {
+  //   const rowEl = el.current.querySelector('.ant-row');
 
-    const sortIns = new Sortable(rowEl, {
-      animation: 150,
-      group: 'nested',
-      fallbackOnBody: true,
-      // onMove() {
-      //   // return false;
-      // },
-      onEnd: function (e: SortableEvent) {
-        e.originalEvent.stopPropagation();
-        e.originalEvent.preventDefault();
-        console.log('onEnd');
-      },
-      onSort: function (e: SortableEvent) {
-        e.originalEvent.stopPropagation();
-        e.originalEvent.preventDefault();
-        console.log('onSort');
-        // if (e.to?.dataset.type === 'el') return;
-        // const { newIndex, item, oldIndex } = e;
-        // const { add, newEl } = handelSort(item, store.formAttrs.id!);
-        // if (add) {
-        //   store.insertEl(newEl!, newIndex!);
-        // } else {
-        //   store.moveEl(oldIndex!, newIndex!);
-        // }
-      },
-    });
+  //   const sortIns = new Sortable(rowEl, {
+  //     animation: 150,
+  //     group: 'nested',
+  //     fallbackOnBody: true,
+  //     // onMove() {
+  //     //   // return false;
+  //     // },
+  //     onEnd: function (e: SortableEvent) {
+  //       e.originalEvent.stopPropagation();
+  //       e.originalEvent.preventDefault();
+  //       console.log('onEnd');
+  //     },
+  //     onSort: function (e: SortableEvent) {
+  //       e.originalEvent.stopPropagation();
+  //       e.originalEvent.preventDefault();
+  //       console.log('onSort');
+  //       // if (e.to?.dataset.type === 'el') return;
+  //       // const { newIndex, item, oldIndex } = e;
+  //       // const { add, newEl } = handelSort(item, store.formAttrs.id!);
+  //       // if (add) {
+  //       //   store.insertEl(newEl!, newIndex!);
+  //       // } else {
+  //       //   store.moveEl(oldIndex!, newIndex!);
+  //       // }
+  //     },
+  //   });
 
-    return () => {
-      sortIns?.destroy?.();
-    };
-  });
+  //   return () => {
+  //     sortIns?.destroy?.();
+  //   };
+  // });
 
   useDesignEffect(() => {
     const keydonwFn = (e: KeyboardEvent) => {
@@ -106,32 +107,65 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
 
   // console.log(JSON.stringify(store.formElements));
 
+  const handleSort = (e: SortableEvent) => {
+    if (e.to?.dataset.type === 'el') return;
+    const { newIndex, item, oldIndex } = e;
+    const { add, newEl } = handelSort(item, store.formAttrs.id!);
+    if (add) {
+      store.insertEl(newEl!, newIndex!);
+    } else {
+      store.moveEl(oldIndex!, newIndex!);
+    }
+  };
+
   return (
     <div className={prefixCls('canvas-wrap')}>
       {actions && <>{actions}</>}
-      <div
+      {/* <div
         className={c([
           prefixCls('canvas'),
           mode === 'design' ? prefixCls('canvas-design') : '',
         ])}
         style={formStyle}
         ref={el}
+      > */}
+      <ReactSortable
+        className={c([
+          prefixCls('canvas'),
+          mode === 'design' ? prefixCls('canvas-design') : '',
+        ])}
+        style={formStyle}
+        list={store.formElements}
+        setList={(v) => {
+          console.log('sorted', v);
+        }}
+        onSort={handleSort}
+        animation={150}
+        group="nested"
+        rowProps={{
+          className: prefixCls('row'),
+          gutter: [horizontalGap, verticalGap],
+        }}
       >
-        <Row className={prefixCls('row')} gutter={[horizontalGap, verticalGap]}>
-          {store.formElements.map((item: IBaseElement) => {
-            const Component = ElementsList[item.type!]?.render;
-            if (!Component) return null;
-            store.flatElement(item);
-            return (
-              <Component
-                key={item.id}
-                fieldValue={store.fieldValues[item.id as string]}
-                element={item}
-              />
-            );
-          })}
-        </Row>
-      </div>
+        {/* <Row
+            className={prefixCls('row')}
+            gutter={[horizontalGap, verticalGap]}
+          > */}
+        {store.formElements.map((item: IBaseElement) => {
+          const Component = ElementsList[item.type!]?.render;
+          if (!Component) return null;
+          store.flatElement(item);
+          return (
+            <Component
+              key={item.id}
+              fieldValue={store.fieldValues[item.id as string]}
+              element={item}
+            />
+          );
+        })}
+        {/* </Row> */}
+      </ReactSortable>
+      {/* </div> */}
     </div>
   );
 };

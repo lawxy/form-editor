@@ -10,4 +10,5 @@ export const initialData: Partial<IBaseElement> = {
   elementName: '容器',
   gridSpan: 24,
   gridLayout: true,
+  children: [],
 };

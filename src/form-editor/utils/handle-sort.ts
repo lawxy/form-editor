@@ -18,7 +18,7 @@ export const handelSort = (
   }
   // console.log(item);
 
-  if (item.parentNode) item.parentNode.removeChild(item);
+  // if (item.parentNode) item.parentNode.removeChild(item);
   // 1. 新增 (容器内部的元素移动也是新增)
   // 2. 原先的容器需要将元素删除
   // debugger;
