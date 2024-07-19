@@ -1,8 +1,6 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import type { FC, PropsWithChildren } from 'react';
-import { Row } from 'antd';
 import { observer } from 'mobx-react-lite';
-import Sortable from 'sortablejs';
 import type { SortableEvent } from 'sortablejs';
 import c from 'classnames';
 import { useRegisterEvents, useFormUpdate, useDesignEffect } from '@/hooks';
@@ -12,7 +10,7 @@ import { ElementsList } from '@/elements/export';
 import eventStore from '@/store/eventStore';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
-import { idCreator, handleOnEvent, parseCSS, handelSort } from '@/utils';
+import { handleOnEvent, parseCSS, handelSort } from '@/utils';
 import { ReactSortable } from '@/components/react-sortable';
 
 import './style.less';
@@ -32,48 +30,12 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
   actions,
 }) => {
   const { horizontalGap, verticalGap, id, events, customCss } = store.formAttrs;
-  const el = useRef<any>();
   const { eventFunctions } = useRegisterEvents({ id, events });
   const formStyle = useMemo(() => {
     if (!customCss) return {};
     const cssObj = parseCSS(customCss);
     return Object.values(cssObj)[0];
   }, [customCss]);
-
-  // useDesignEffect(() => {
-  //   const rowEl = el.current.querySelector('.ant-row');
-
-  //   const sortIns = new Sortable(rowEl, {
-  //     animation: 150,
-  //     group: 'nested',
-  //     fallbackOnBody: true,
-  //     // onMove() {
-  //     //   // return false;
-  //     // },
-  //     onEnd: function (e: SortableEvent) {
-  //       e.originalEvent.stopPropagation();
-  //       e.originalEvent.preventDefault();
-  //       console.log('onEnd');
-  //     },
-  //     onSort: function (e: SortableEvent) {
-  //       e.originalEvent.stopPropagation();
-  //       e.originalEvent.preventDefault();
-  //       console.log('onSort');
-  //       // if (e.to?.dataset.type === 'el') return;
-  //       // const { newIndex, item, oldIndex } = e;
-  //       // const { add, newEl } = handelSort(item, store.formAttrs.id!);
-  //       // if (add) {
-  //       //   store.insertEl(newEl!, newIndex!);
-  //       // } else {
-  //       //   store.moveEl(oldIndex!, newIndex!);
-  //       // }
-  //     },
-  //   });
-
-  //   return () => {
-  //     sortIns?.destroy?.();
-  //   };
-  // });
 
   useDesignEffect(() => {
     const keydonwFn = (e: KeyboardEvent) => {
@@ -105,8 +67,6 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
     };
   }, [store.formServices]);
 
-  // console.log(JSON.stringify(store.formElements));
-
   const handleSort = (e: SortableEvent) => {
     if (e.to?.dataset.type === 'el') return;
     const { newIndex, item, oldIndex } = e;
@@ -121,24 +81,14 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
   return (
     <div className={prefixCls('canvas-wrap')}>
       {actions && <>{actions}</>}
-      {/* <div
-        className={c([
-          prefixCls('canvas'),
-          mode === 'design' ? prefixCls('canvas-design') : '',
-        ])}
-        style={formStyle}
-        ref={el}
-      > */}
-      <ReactSortable
+
+      <ReactSortable<IBaseElement>
         className={c([
           prefixCls('canvas'),
           mode === 'design' ? prefixCls('canvas-design') : '',
         ])}
         style={formStyle}
         list={store.formElements}
-        setList={(v) => {
-          console.log('sorted', v);
-        }}
         onSort={handleSort}
         animation={150}
         group="nested"
@@ -147,10 +97,6 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
           gutter: [horizontalGap, verticalGap],
         }}
       >
-        {/* <Row
-            className={prefixCls('row')}
-            gutter={[horizontalGap, verticalGap]}
-          > */}
         {store.formElements.map((item: IBaseElement) => {
           const Component = ElementsList[item.type!]?.render;
           if (!Component) return null;
@@ -163,9 +109,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
             />
           );
         })}
-        {/* </Row> */}
       </ReactSortable>
-      {/* </div> */}
     </div>
   );
 };

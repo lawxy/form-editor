@@ -1,7 +1,8 @@
 import { PropsWithChildren } from 'react';
 import Sortable, { Options } from 'sortablejs';
 import { MultiDragEvent } from './react-sortable';
-import { AllMethodNames, ItemInterface, ReactSortableProps } from './types';
+import type { IBaseElement } from '@/types';
+import { AllMethodNames, ReactSortableProps } from './types';
 
 /**
  * Removes the `node` from the DOM
@@ -26,24 +27,21 @@ export function insertNodeAt(
   parent.insertBefore(newChild, refChild);
 }
 
-// @todo - create a dom handler function for arrays or not at all
-
 /** removes stuff from the dom in a nice order */
-// @todo - do I need parenElement?
-export function handleDOMChanges<T extends ItemInterface>(
+export function handleDOMChanges<T extends IBaseElement>(
   customs: Normalized<T>[],
 ): void {
   removeNodes(customs);
   insertNodes(customs);
 }
 
-export function removeNodes<T extends ItemInterface>(
+export function removeNodes<T extends IBaseElement>(
   customs: Normalized<T>[],
 ): void {
   customs.forEach((curr) => removeNode(curr.element));
 }
 
-export function insertNodes<T extends ItemInterface>(
+export function insertNodes<T extends IBaseElement>(
   customs: Normalized<T>[],
 ): void {
   customs.forEach((curr) => {
@@ -51,48 +49,19 @@ export function insertNodes<T extends ItemInterface>(
   });
 }
 
-export function createCustoms<T extends ItemInterface>(
+export function createCustoms<T extends IBaseElement>(
   evt: MultiDragEvent,
   list: T[],
 ): Normalized<T>[] {
-  const mode = getMode(evt);
-  const parentElement = { parentElement: evt.from };
-  let custom = [];
-  switch (mode) {
-    case 'normal':
-      /* eslint-disable */
-      const item = {
-        element: evt.item,
-        newIndex: evt.newIndex!,
-        oldIndex: evt.oldIndex!,
-        parentElement: evt.from,
-      };
-      custom = [item];
-      break;
-    case 'swap':
-      const drag: Input = {
-        element: evt.item,
-        oldIndex: evt.oldIndex!,
-        newIndex: evt.newIndex!,
-        ...parentElement,
-      };
-      const swap: Input = {
-        element: evt.swapItem!,
-        oldIndex: evt.newIndex!,
-        newIndex: evt.oldIndex!,
-        ...parentElement,
-      };
-      custom = [drag, swap];
-      break;
-    case 'multidrag':
-      custom = evt.oldIndicies.map<Input>((curr, index) => ({
-        element: curr.multiDragElement,
-        oldIndex: curr.index,
-        newIndex: evt.newIndicies[index].index,
-        ...parentElement,
-      }));
-      break;
-  }
+  const custom = [
+    {
+      element: evt.item,
+      newIndex: evt.newIndex!,
+      oldIndex: evt.oldIndex!,
+      parentElement: evt.from,
+    },
+  ];
+
   /* eslint-enable */
 
   const customs = createNormalized(custom, list);
@@ -100,7 +69,7 @@ export function createCustoms<T extends ItemInterface>(
 }
 
 /** moves items form old index to new index without breaking anything ideally. */
-export function handleStateChanges<T extends ItemInterface>(
+export function handleStateChanges<T extends IBaseElement>(
   normalized: Normalized<T>[],
   list: T[],
 ): T[] {
@@ -109,7 +78,7 @@ export function handleStateChanges<T extends ItemInterface>(
   return b;
 }
 
-export function handleStateRemove<T extends ItemInterface>(
+export function handleStateRemove<T extends IBaseElement>(
   normalized: Normalized<T>[],
   list: T[],
 ): T[] {
@@ -121,7 +90,7 @@ export function handleStateRemove<T extends ItemInterface>(
   return newList;
 }
 
-export function handleStateAdd<T extends ItemInterface>(
+export function handleStateAdd<T extends IBaseElement>(
   normalized: Normalized<T>[],
   list: T[],
   evt?: Sortable.SortableEvent,
@@ -135,13 +104,7 @@ export function handleStateAdd<T extends ItemInterface>(
   return newList;
 }
 
-export function getMode(evt: MultiDragEvent): 'multidrag' | 'swap' | 'normal' {
-  if (evt.oldIndicies && evt.oldIndicies.length > 0) return 'multidrag';
-  if (evt.swapItem) return 'swap';
-  return 'normal';
-}
-
-export function createNormalized<T extends ItemInterface>(
+export function createNormalized<T extends IBaseElement>(
   inputs: Input[],
   list: T[],
 ): Normalized<T>[] {
@@ -174,7 +137,6 @@ export function destructurePropsForOptions<T>(
   const {
     // react sortable props
     list,
-    setList,
     children,
     tag,
     style,

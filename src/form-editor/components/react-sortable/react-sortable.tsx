@@ -11,10 +11,10 @@ import {
 } from 'react';
 import { Row } from 'antd';
 import Sortable, { MoveEvent, Options, SortableEvent } from 'sortablejs';
+import type { IBaseElement } from '@/types';
 import {
   AllMethodsExceptMove,
   HandledMethodNames,
-  ItemInterface,
   ReactSortableProps,
   Store,
   UnHandledMethodNames,
@@ -22,8 +22,6 @@ import {
 import {
   createCustoms,
   destructurePropsForOptions,
-  getMode,
-  handleStateAdd,
   handleStateChanges,
   handleStateRemove,
   insertNodes,
@@ -32,13 +30,11 @@ import {
 } from './util';
 
 /** Holds a global reference for which react element is being dragged */
-// @todo - use context to manage this. How does one use 2 different providers?
 const store: Store = { dragging: null };
 
-export class ReactSortable<T extends ItemInterface> extends Component<
+export class ReactSortable<T extends IBaseElement> extends Component<
   ReactSortableProps<T>
 > {
-  /* eslint-disable-next-line */
   static defaultProps: Partial<ReactSortableProps<any>> = {
     clone: (item) => item,
   };
@@ -47,22 +43,11 @@ export class ReactSortable<T extends ItemInterface> extends Component<
   private ref: RefObject<HTMLElement>;
   constructor(props: ReactSortableProps<T>) {
     super(props);
-    // @todo forward ref this component
     this.ref = createRef<HTMLElement>();
-
-    // make all state false because we can't change sortable unless a mouse gesture is made.
-    const newList = [...props.list].map((item) =>
-      Object.assign({}, item, {
-        // chosen: false,
-        // selected: false,
-      }),
-    );
-
-    props.setList(newList, this.sortable, store);
   }
 
   private isRow(): boolean {
-    return this.props.rowProps;
+    return !!this.props.rowProps;
   }
 
   componentDidMount(): void {
@@ -100,7 +85,6 @@ export class ReactSortable<T extends ItemInterface> extends Component<
     return createElement(
       newTag,
       {
-        // @todo - find a way (perhaps with the callback) to allow AntD components to work
         ref: this.ref,
         ...classicProps,
       },
@@ -109,48 +93,18 @@ export class ReactSortable<T extends ItemInterface> extends Component<
   }
 
   private getChildren() {
-    const {
-      children,
-      dataIdAttr,
-      selectedClass = 'sortable-selected',
-      chosenClass = 'sortable-chosen',
-      /* eslint-disable */
-      dragClass = 'sortable-drag',
-      fallbackClass = 'sortable-falback',
-      ghostClass = 'sortable-ghost',
-      swapClass = 'sortable-swap-highlight',
-      /* eslint-enable */
-      filter = 'sortable-filter',
-      list,
-    } = this.props;
+    const { children } = this.props;
 
     // if no children, don't do anything.
-    if (!children || children == null) return null;
-    const dataid = dataIdAttr || 'data-id';
-    /* eslint-disable-next-line */
-    return Children.map(children as ReactElement<any>[], (child, index) => {
+    if (!children) return null;
+    return Children.map(children as ReactElement<any>[], (child) => {
       if (child === undefined) return undefined;
 
-      const item = list[index] || {};
       const { className: prevClassName } = child.props;
 
-      // @todo - handle the function if avalable. I don't think anyone will be doing this soon.
-      const filtered = typeof filter === 'string' && {
-        [filter.replace('.', '')]: !!item.filtered,
-      };
-
-      const className = classNames(prevClassName, {
-        [selectedClass]: item.selected,
-        [chosenClass]: item.chosen,
-        ...filtered,
-        // [dragClass]: true,
-        // [fallbackClass]: true,
-        // [ghostClass]: true,
-        // [swapClass]: true
-      });
+      const className = classNames(prevClassName, {});
 
       return cloneElement(child, {
-        [dataid]: child.key,
         className,
       });
     });
@@ -162,7 +116,6 @@ export class ReactSortable<T extends ItemInterface> extends Component<
     if (!el) return null;
     const key = Object.keys(el).find((k) => k.includes('Sortable'));
     if (!key) return null;
-    //@ts-expect-error: fix me.
     return el[key] as Sortable;
   }
 
@@ -218,7 +171,6 @@ export class ReactSortable<T extends ItemInterface> extends Component<
       // call the component prop
       this.callOnHandlerProp(evt, evtName);
       // calls state change
-      //@ts-expect-error: until @types multidrag item is in
       this[evtName](evt);
     };
   }
@@ -240,26 +192,15 @@ export class ReactSortable<T extends ItemInterface> extends Component<
   }
 
   // SORTABLE DOM HANDLING
-
-  onAdd(evt: MultiDragEvent): void {
-    const { list, setList, clone } = this.props;
-    /* eslint-disable-next-line */
+  onAdd(evt: SortableEvent): void {
     const otherList = [...store.dragging!.props.list];
     const customs = createCustoms(evt, otherList);
     removeNodes(customs);
-
-    const newList = handleStateAdd(customs, list, evt, clone).map((item) =>
-      Object.assign({}, item, {
-        selected: false,
-      }),
-    );
-
-    setList(newList, this.sortable, store);
   }
 
-  onRemove(evt: MultiDragEvent): void {
-    const { list, setList } = this.props;
-    const mode = getMode(evt);
+  onRemove(evt: SortableEvent): void {
+    const { list } = this.props;
+    // const mode = getMode(evt);
     const customs = createCustoms(evt, list);
     insertNodes(customs);
 
@@ -267,33 +208,11 @@ export class ReactSortable<T extends ItemInterface> extends Component<
     // remove state if not in clone mode. otherwise, keep.
     if (evt.pullMode !== 'clone') newList = handleStateRemove(customs, newList);
     // if clone, it doesn't really remove. instead it clones in place.
-    // @todo -
     else {
-      // switch used to get the clone
-      let customClones = customs;
-      switch (mode) {
-        case 'multidrag':
-          customClones = customs.map((item, index) => ({
-            ...item,
-            element: evt.clones[index],
-          }));
-          break;
-        case 'normal':
-          customClones = customs.map((item) => ({
-            ...item,
-            element: evt.clone,
-          }));
-          break;
-        case 'swap':
-        default: {
-        }
-      }
-      removeNodes(customClones);
-
+      removeNodes(customs);
       // replace selected items with cloned items
       customs.forEach((curr) => {
         const index = curr.oldIndex;
-        /* eslint-disable-next-line */
         const newItem = this.props.clone!(curr.item, evt);
         newList.splice(index, 1, newItem);
       });
@@ -305,17 +224,14 @@ export class ReactSortable<T extends ItemInterface> extends Component<
         selected: false,
       }),
     );
-
-    setList(newList, this.sortable, store);
   }
 
-  onUpdate(evt: MultiDragEvent): void {
-    const { list, setList } = this.props;
+  onUpdate(evt: SortableEvent): void {
+    const { list } = this.props;
     const customs = createCustoms(evt, list);
     removeNodes(customs);
     insertNodes(customs);
-    const newList = handleStateChanges(customs, list);
-    return setList(newList, this.sortable, store);
+    handleStateChanges(customs, list);
   }
 
   onStart(): void {
@@ -326,41 +242,17 @@ export class ReactSortable<T extends ItemInterface> extends Component<
     store.dragging = null;
   }
 
-  onChoose(evt: SortableEvent): void {
-    const { list, setList } = this.props;
-    const newList = list.map((item, index) => {
-      let newItem = item;
-      if (index === evt.oldIndex) {
-        newItem = Object.assign({}, item, {
-          chosen: true,
-        });
-      }
-      return newItem;
-    });
-    setList(newList, this.sortable, store);
-  }
+  onChoose(): void {}
 
-  onUnchoose(evt: SortableEvent): void {
-    const { list, setList } = this.props;
-    const newList = list.map((item, index) => {
-      let newItem = item;
-      if (index === evt.oldIndex) {
-        newItem = Object.assign({}, newItem, {
-          chosen: false,
-        });
-      }
-      return newItem;
-    });
-    setList(newList, this.sortable, store);
-  }
+  onUnchoose(): void {}
 
   onSpill(evt: SortableEvent): void {
     const { removeOnSpill, revertOnSpill } = this.props;
     if (removeOnSpill && !revertOnSpill) removeNode(evt.item);
   }
 
-  onSelect(evt: MultiDragEvent): void {
-    const { list, setList } = this.props;
+  onSelect(evt: SortableEvent): void {
+    const { list } = this.props;
     const newList = list.map((item) =>
       Object.assign({}, item, {
         selected: false,
@@ -378,11 +270,10 @@ export class ReactSortable<T extends ItemInterface> extends Component<
       }
       newList[index].selected = true;
     });
-    setList(newList, this.sortable, store);
   }
 
-  onDeselect(evt: MultiDragEvent): void {
-    const { list, setList } = this.props;
+  onDeselect(evt: SortableEvent): void {
+    const { list } = this.props;
     const newList = list.map((item) =>
       Object.assign({}, item, {
         selected: false,
@@ -393,21 +284,17 @@ export class ReactSortable<T extends ItemInterface> extends Component<
       if (index === -1) return;
       newList[index].selected = true;
     });
-    setList(newList, this.sortable, store);
   }
 }
 
-// everything below this point can be removed
-// once @types has been merged. PR submited
-interface MultiIndices {
-  multiDragElement: HTMLElement;
-  index: number;
-}
+// interface MultiIndices {
+//   multiDragElement: HTMLElement;
+//   index: number;
+// }
 
-export interface MultiDragEvent extends SortableEvent {
-  // @todo - add this to @types
-  clones: HTMLElement[];
-  oldIndicies: MultiIndices[];
-  newIndicies: MultiIndices[];
-  swapItem: HTMLElement | null;
-}
+// export interface SortableEvent extends SortableEvent {
+//   clones: HTMLElement[];
+//   oldIndicies: MultiIndices[];
+//   newIndicies: MultiIndices[];
+//   swapItem: HTMLElement | null;
+// }

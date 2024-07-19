@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
-import Sortable, { Options } from "sortablejs";
-import { MultiDragEvent } from "./react-sortable";
-import { AllMethodNames, ItemInterface, ReactSortableProps } from "./types";
+import { PropsWithChildren } from 'react';
+import Sortable, { Options } from 'sortablejs';
+import { MultiDragEvent } from './react-sortable';
+import { AllMethodNames, ItemInterface, ReactSortableProps } from './types';
 
 /**
  * Removes the `node` from the DOM
@@ -20,7 +20,7 @@ export function removeNode(node: HTMLElement): void {
 export function insertNodeAt(
   parent: HTMLElement,
   newChild: HTMLElement,
-  index: number
+  index: number,
 ): void {
   const refChild = parent.children[index] || null;
   parent.insertBefore(newChild, refChild);
@@ -31,20 +31,20 @@ export function insertNodeAt(
 /** removes stuff from the dom in a nice order */
 // @todo - do I need parenElement?
 export function handleDOMChanges<T extends ItemInterface>(
-  customs: Normalized<T>[]
+  customs: Normalized<T>[],
 ): void {
   removeNodes(customs);
   insertNodes(customs);
 }
 
 export function removeNodes<T extends ItemInterface>(
-  customs: Normalized<T>[]
+  customs: Normalized<T>[],
 ): void {
   customs.forEach((curr) => removeNode(curr.element));
 }
 
 export function insertNodes<T extends ItemInterface>(
-  customs: Normalized<T>[]
+  customs: Normalized<T>[],
 ): void {
   customs.forEach((curr) => {
     insertNodeAt(curr.parentElement, curr.element, curr.oldIndex);
@@ -53,13 +53,13 @@ export function insertNodes<T extends ItemInterface>(
 
 export function createCustoms<T extends ItemInterface>(
   evt: MultiDragEvent,
-  list: T[]
+  list: T[],
 ): Normalized<T>[] {
   const mode = getMode(evt);
   const parentElement = { parentElement: evt.from };
   let custom = [];
   switch (mode) {
-    case "normal":
+    case 'normal':
       /* eslint-disable */
       const item = {
         element: evt.item,
@@ -69,7 +69,7 @@ export function createCustoms<T extends ItemInterface>(
       };
       custom = [item];
       break;
-    case "swap":
+    case 'swap':
       const drag: Input = {
         element: evt.item,
         oldIndex: evt.oldIndex!,
@@ -84,7 +84,7 @@ export function createCustoms<T extends ItemInterface>(
       };
       custom = [drag, swap];
       break;
-    case "multidrag":
+    case 'multidrag':
       custom = evt.oldIndicies.map<Input>((curr, index) => ({
         element: curr.multiDragElement,
         oldIndex: curr.index,
@@ -102,7 +102,7 @@ export function createCustoms<T extends ItemInterface>(
 /** moves items form old index to new index without breaking anything ideally. */
 export function handleStateChanges<T extends ItemInterface>(
   normalized: Normalized<T>[],
-  list: T[]
+  list: T[],
 ): T[] {
   const a = handleStateRemove(normalized, list);
   const b = handleStateAdd(normalized, a);
@@ -111,7 +111,7 @@ export function handleStateChanges<T extends ItemInterface>(
 
 export function handleStateRemove<T extends ItemInterface>(
   normalized: Normalized<T>[],
-  list: T[]
+  list: T[],
 ): T[] {
   const newList = [...list];
   normalized
@@ -125,7 +125,7 @@ export function handleStateAdd<T extends ItemInterface>(
   normalized: Normalized<T>[],
   list: T[],
   evt?: Sortable.SortableEvent,
-  clone?: ((currentItem: T, evt: Sortable.SortableEvent) => T) | undefined
+  clone?: ((currentItem: T, evt: Sortable.SortableEvent) => T) | undefined,
 ): T[] {
   const newList = [...list];
   normalized.forEach((curr) => {
@@ -135,15 +135,15 @@ export function handleStateAdd<T extends ItemInterface>(
   return newList;
 }
 
-export function getMode(evt: MultiDragEvent): "multidrag" | "swap" | "normal" {
-  if (evt.oldIndicies && evt.oldIndicies.length > 0) return "multidrag";
-  if (evt.swapItem) return "swap";
-  return "normal";
+export function getMode(evt: MultiDragEvent): 'multidrag' | 'swap' | 'normal' {
+  if (evt.oldIndicies && evt.oldIndicies.length > 0) return 'multidrag';
+  if (evt.swapItem) return 'swap';
+  return 'normal';
 }
 
 export function createNormalized<T extends ItemInterface>(
   inputs: Input[],
-  list: T[]
+  list: T[],
 ): Normalized<T>[] {
   const normalized = inputs
     .map<Normalized<T>>((curr) => ({ ...curr, item: list[curr.oldIndex] }))
@@ -168,7 +168,7 @@ export interface Normalized<T> extends Input {
  * @param props `ReactSortable.Props`
  */
 export function destructurePropsForOptions<T>(
-  props: PropsWithChildren<ReactSortableProps<T>>
+  props: PropsWithChildren<ReactSortableProps<T>>,
 ): Exclude<Options, AllMethodNames> {
   /* eslint-disable */
   const {
@@ -196,6 +196,7 @@ export function destructurePropsForOptions<T>(
     onSpill,
     onSelect,
     onDeselect,
+    rowProps,
     ...options
   } = props;
   /* eslint-enable */

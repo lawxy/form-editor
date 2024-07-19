@@ -1,3 +1,4 @@
+import React from 'react';
 import classNames from 'classnames';
 import {
   Children,
@@ -8,6 +9,7 @@ import {
   ReactElement,
   RefObject,
 } from 'react';
+import { Row } from 'antd';
 import Sortable, { MoveEvent, Options, SortableEvent } from 'sortablejs';
 import {
   AllMethodsExceptMove,
@@ -41,6 +43,7 @@ export class ReactSortable<T extends ItemInterface> extends Component<
     clone: (item) => item,
   };
 
+  wrapEl: any;
   private ref: RefObject<HTMLElement>;
   constructor(props: ReactSortableProps<T>) {
     super(props);
@@ -58,10 +61,18 @@ export class ReactSortable<T extends ItemInterface> extends Component<
     props.setList(newList, this.sortable, store);
   }
 
+  private isRow(): boolean {
+    return this.props.rowProps;
+  }
+
   componentDidMount(): void {
     if (this.ref.current === null) return;
     const newOptions = this.makeOptions();
-    Sortable.create(this.ref.current, newOptions);
+
+    this.wrapEl = this.isRow()
+      ? this.ref.current.querySelector('.ant-row')
+      : this.ref.current;
+    Sortable.create(this.wrapEl, newOptions);
   }
 
   componentDidUpdate(prevProps: ReactSortableProps<T>): void {
@@ -71,11 +82,21 @@ export class ReactSortable<T extends ItemInterface> extends Component<
   }
 
   render(): JSX.Element {
-    const { tag, style, className, id } = this.props;
+    const { tag, style, className, id, rowProps } = this.props;
     const classicProps = { style, className, id };
 
     // if no tag, default to a `div` element.
     const newTag = !tag || tag === null ? 'div' : tag;
+    if (!this.isRow()) {
+      return createElement(
+        newTag,
+        {
+          ref: this.ref,
+          ...classicProps,
+        },
+        this.getChildren(),
+      );
+    }
     return createElement(
       newTag,
       {
@@ -83,7 +104,7 @@ export class ReactSortable<T extends ItemInterface> extends Component<
         ref: this.ref,
         ...classicProps,
       },
-      this.getChildren(),
+      <Row {...rowProps}>{this.getChildren()}</Row>,
     );
   }
 
@@ -137,8 +158,8 @@ export class ReactSortable<T extends ItemInterface> extends Component<
 
   /** Appends the `sortable` property to this component */
   private get sortable(): Sortable | null {
-    const el = this.ref.current;
-    if (el === null) return null;
+    const el = this.wrapEl;
+    if (!el) return null;
     const key = Object.keys(el).find((k) => k.includes('Sortable'));
     if (!key) return null;
     //@ts-expect-error: fix me.
