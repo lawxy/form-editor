@@ -11,23 +11,30 @@ import {
   type IEventTarget,
 } from '@/types';
 
+const getComponentsOptions = () => {
+  const options = [];
+  // @ts-ignore
+  for (const el of store.formElementMap.values()) {
+    options.push({
+      label: (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: el?.elementName || (el.id as string),
+          }}
+        />
+      ),
+      value: el.id,
+      disabled: store.selectedElement.id === el.id,
+    });
+  }
+  return options;
+};
+
 const SetElementValue: React.FC<{
   onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
   eventTarget?: IEventTarget;
 }> = ({ onChange, eventTarget }) => {
   const { targetElementId, targetPayload, setValue } = eventTarget || {};
-
-  const componentsOptions = store.formElements.map((el) => ({
-    label: (
-      <div
-        dangerouslySetInnerHTML={{
-          __html: el?.elementName || (el.id as string),
-        }}
-      />
-    ),
-    value: el.id,
-    disabled: store.selectedElement.id === el.id,
-  }));
 
   return (
     <div style={{ lineHeight: '40px' }}>
@@ -36,7 +43,7 @@ const SetElementValue: React.FC<{
         <Select
           allowClear
           className={prefixCls('event-input')}
-          options={componentsOptions}
+          options={getComponentsOptions()}
           style={{ width: 200 }}
           defaultValue={targetElementId}
           onChange={(v) => {

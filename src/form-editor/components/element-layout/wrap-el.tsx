@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  type PropsWithChildren,
-} from 'react';
+import React, { useCallback, useRef, type PropsWithChildren } from 'react';
 import { observer } from 'mobx-react-lite';
 import store, { tabStore } from '@/store';
 import type { IBaseElement, TCustomEvents, TMode } from '@/types';
@@ -41,7 +36,7 @@ const WrapDesignEl: React.FC<
   const ref = useRef<HTMLDivElement>(null);
 
   useDesignEffect(() => {
-    eventStore.iterate(el.events);
+    eventStore.iterateEl(el);
   }, [el.events]);
 
   const handleSelect = useCallback(() => {

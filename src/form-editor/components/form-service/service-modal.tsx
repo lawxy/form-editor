@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from 'react';
 import { Button, Flex, Form, Input, Modal, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 
 import { prefixCls } from '@/const';
@@ -62,6 +62,11 @@ const ServiceModal: FC<
       interceptors: defaultInterceptor,
     };
   };
+  useEffect(() => {
+    if (!open) {
+      form.resetFields();
+    }
+  }, [open]);
 
   return (
     <>

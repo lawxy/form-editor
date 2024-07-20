@@ -19,15 +19,23 @@ export interface IElementStore {
 
   getElement: (id?: string) => IBaseElement;
 
+  getParentChildren: (id?: string) => IBaseElement[];
+
   appendEl: (el: IBaseElement) => void;
 
   insertEl: (el: IBaseElement, idx: number) => void;
 
-  moveEl: (fromIndex: number, toIndex: number) => void;
+  moveEl: (parentId: string, fromIndex: number, toIndex: number) => void;
+
+  dfsEl: (
+    el: IBaseElement,
+    callback: (el: IBaseElement) => void,
+    containParent?: boolean,
+  ) => void;
 
   deleteEl: (el: IBaseElement, move?: boolean) => void;
 
-  copyEl: (el: IBaseElement) => void;
+  copyEl: (el: IBaseElement) => IBaseElement;
 
   selectedElement: IBaseElement;
 

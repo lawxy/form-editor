@@ -3,7 +3,7 @@
  */
 import { makeAutoObservable } from 'mobx';
 import { EventEmitter, ModalPromisify } from '@/utils';
-import { TCustomEvents } from '@/types';
+import { IBaseElement, TCustomEvents } from '@/types';
 import baseStore from '.';
 
 class EventStore {
@@ -21,24 +21,50 @@ class EventStore {
     this.eventMap.set(targetId, set);
   }
 
-  deleteId(targetId: string) {
+  getSetsFromId(targetId: string) {
+    const sets: Array<Set<string>> = [];
     const set = this.eventMap.get(targetId);
-    if (!set) return Promise.resolve(true);
-    // 删除元素对应的事件源 判断是否还存在
-    let exist = false;
-    for (const sourceId of set.keys()) {
-      if (baseStore.getElement(sourceId) || baseStore.getService(sourceId)) {
-        exist = true;
-      } else {
-        set.delete(sourceId);
-      }
+    if (set) sets.push(set);
+
+    const targetElement = baseStore.getElement(targetId);
+
+    // 容器组件要判断内部子组件
+    if (targetElement && targetElement?.children?.length) {
+      targetElement.children.forEach((child) => {
+        sets.push(...this.getSetsFromId(child.id!));
+      });
     }
-    if (!exist) return Promise.resolve(true);
+    return sets;
+  }
+
+  deleteId(targetId: string) {
+    const sets = this.getSetsFromId(targetId);
+
+    let exist = false;
+
+    if (sets.length) {
+      sets.forEach((set) => {
+        for (const sourceId of set.keys()) {
+          if (
+            baseStore.getElement(sourceId) ||
+            baseStore.getService(sourceId)
+          ) {
+            exist = true;
+          } else {
+            set.delete(sourceId);
+          }
+        }
+      });
+    }
+
     const map = this.eventMap;
+
     return ModalPromisify({
-      title: '此组件或服务有事件关联, 确认删除?',
+      title: `${exist ? '此组件或服务有事件关联, ' : ''}确认删除?`,
       onOk() {
-        map.delete(targetId);
+        if (exist) {
+          map.delete(targetId);
+        }
       },
     });
   }
@@ -51,6 +77,14 @@ class EventStore {
         if (targetElementId) this.addRelation(targetElementId, sourceId);
         if (targetServiceId) this.addRelation(targetServiceId, sourceId);
       });
+    });
+  }
+
+  iterateEl(el: IBaseElement) {
+    const { events } = el;
+    this.iterate(events);
+    baseStore.dfsEl(el, (child) => {
+      this.iterateEl(child);
     });
   }
 }

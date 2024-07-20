@@ -2,65 +2,48 @@ import { ElementsList } from '@/elements';
 import { IBaseElement } from '@/types';
 import store from '@/store';
 import { idCreator } from './id-creator';
+import type { SortableEvent } from 'sortablejs';
 
-export const handelSort = (
-  item: HTMLElement,
-  parentId: string,
-): { add: boolean; newEl?: IBaseElement } => {
-  const newly =
-    !item?.dataset?.parentId ||
-    (parentId && item?.dataset?.parentId !== parentId);
+export const handleSort = (e: SortableEvent, parentId: string) => {
+  const { from, to, newIndex, item, oldIndex } = e;
+  // 目标不在当前组件的不管  否则表单和容器组件间拖拽 会触发两次
+  if (to?.dataset?.id !== parentId) return;
+  // 从物料区拖过来的
+  if (!item?.dataset?.parentId) {
+    const element = ElementsList[item.dataset.type as string];
 
-  if (!newly) {
-    return {
-      add: false,
-    };
-  }
-  // console.log(item);
-
-  // if (item.parentNode) item.parentNode.removeChild(item);
-  // 1. 新增 (容器内部的元素移动也是新增)
-  // 2. 原先的容器需要将元素删除
-  // debugger;
-  if (item?.dataset?.parentId) {
-    const parent = store.getElement(item.dataset.parentId);
-    const current = store.getElement(item.dataset.id);
-    // console.log('?', parent);
-    // console.log('current', current, { ...current });
-    if (!parent) {
-      store.deleteEl(current, true);
-    } else {
-      // const idx = parent.children?.findIndex((item) => item.id === current.id);
-      // const { children } = parent;
-      // children?.splice(idx!, 1);
-      // store.setElementProp(parent.id!, 'children', children);
-    }
-
-    item.setAttribute('data-parent-id', parentId);
+    const { initialData } = element;
 
     const newEl = {
-      ...current,
+      type: item.dataset.type,
+      ...initialData,
+      id: idCreator(),
       parentId,
     };
 
-    store.formElementMap.set(item.dataset.id!, newEl);
-
-    return {
-      add: true,
-      newEl: newEl,
-    };
+    store.insertEl(newEl, newIndex!);
+    return;
   }
 
-  const element = ElementsList[item.dataset.type as string];
-  const { initialData } = element;
+  // 同一个容器去间的移动
+  if (from?.dataset?.id === to?.dataset?.id) {
+    store.moveEl(parentId, oldIndex!, newIndex!);
+    return;
+  }
+
+  // 不同容器(表单)之间移动
+  const current = store.getElement(item.dataset.id);
+
+  store.deleteEl(current, true);
+
+  item.setAttribute('data-parent-id', parentId);
+
   const newEl = {
-    type: item.dataset.type,
-    ...initialData,
-    id: idCreator(),
+    ...current,
     parentId,
   };
-  return {
-    add: true,
-    newEl,
-  };
+
+  store.formElementMap.set(item.dataset.id!, newEl);
+
+  store.insertEl(newEl, newIndex!);
 };

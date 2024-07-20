@@ -98,9 +98,9 @@ export class ReactSortable<T extends IBaseElement> extends Component<
     // if no children, don't do anything.
     if (!children) return null;
     return Children.map(children as ReactElement<any>[], (child) => {
-      if (child === undefined) return undefined;
+      if (!child) return undefined;
 
-      const { className: prevClassName } = child.props;
+      const { className: prevClassName = '' } = child?.props || {};
 
       const className = classNames(prevClassName, {});
 

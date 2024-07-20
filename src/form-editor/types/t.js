@@ -1,11 +1,10 @@
-const map = new Map();
-const obj = [
-  { id: '1', data: 1 },
-  { id: '2', data: 2 },
-];
+const arr = [1,2,3,4,5,6,7,8,9,10]
 
-obj.forEach((item) => map.set(item.id, item));
+// arr.forEach(item => {
+//   console.log('item', item)
+//   let idx = arr.findIndex(i => i === item)
+//   console.log('idx', idx)
+//   arr.splice(idx, 1);
+// })
 
-const item = map.get('1');
-item.data = 3;
-console.log(obj[0] === item);
+const arr2 =  [{data: 1}, { data: 2 }, {data: 3}]

@@ -16,7 +16,6 @@ export default {
   formElementMap: new Map(),
 
   flatElement(el: IBaseElement) {
-    // if (this.formElementMap.has(el.id!)) return;
     this.formElementMap.set(el.id!, el);
   },
 
@@ -33,20 +32,27 @@ export default {
    */
   getElement(id?: string) {
     if (!id) return;
-    // const fromElements = this.formElements.find((el) => el?.id === id);
-    // const fromMap = this.formElementMap.get(id);
-    // console.log('fromElements', fromElements);
-    // console.log('fromMap', fromMap);
-    // console.log(fromElements === fromMap);
-    // return this.formElements.find((el) => el?.id === id);
     return this.formElementMap.get(id);
+  },
+
+  /**
+   * 通过id获取父元素的子元素列表
+   */
+  getParentChildren(id?: string) {
+    const parent = this.getElement(id);
+    if (parent) {
+      if (!parent.children) parent.children = [];
+      return parent.children;
+    }
+    return this.formElements;
   },
 
   /**
    * 新增元素
    */
   appendEl(el: IBaseElement) {
-    this.formElements.push(el);
+    const parentChildren = this.getParentChildren(el.parentId);
+    parentChildren.push(el);
     this.formElementMap.set(el.id!, el);
     this.setSelectedElement(el);
   },
@@ -55,7 +61,9 @@ export default {
    * 插入元素
    */
   insertEl(el: IBaseElement, idx: number) {
-    this.formElements.splice(idx, 0, el);
+    const parentChildren = this.getParentChildren(el.parentId);
+
+    parentChildren.splice(idx, 0, el);
     this.formElementMap.set(el.id!, el);
     this.setSelectedElement(el);
   },
@@ -63,12 +71,24 @@ export default {
   /**
    * 移动元素
    */
-  moveEl(fromIndex: number, toIndex: number) {
-    this.formElements = arrayMoveImmutable(
-      this.formElements,
-      fromIndex,
-      toIndex,
-    );
+  moveEl(parentId: string, fromIndex: number, toIndex: number) {
+    const el = this.getElement(parentId);
+    const parentChildren = this.getParentChildren(parentId);
+    const afterSort = arrayMoveImmutable(parentChildren, fromIndex, toIndex);
+    if (!el) {
+      this.formElements = afterSort;
+    } else {
+      this.setElementProp(parentId, 'children', afterSort);
+    }
+  },
+
+  dfsEl(el, callback, containParent) {
+    if (containParent) callback(el);
+    if (el?.children?.length) {
+      el.children.forEach((child) => {
+        callback(child);
+      });
+    }
   },
 
   /**
@@ -76,33 +96,69 @@ export default {
    */
   async deleteEl(el?: IBaseElement, move?: boolean) {
     if (!el) return;
-    const idx = this.formElements.findIndex((item) => item.id === el.id);
+
+    const parentChildren = this.getParentChildren(el.parentId);
+
+    const idx = parentChildren.findIndex((item) => item.id === el.id);
     // 容器间的移动会删除原有元素 但是绑定的服务和事件不变
     if (!move) {
       const confirmDelete = await eventStore.deleteId(el.id!);
-      if (!confirmDelete) return;
-      unBindFromElement(el.id as string);
+      if (!confirmDelete) return false;
+      this.dfsEl(
+        el,
+        (child) => {
+          unBindFromElement(child.id!);
+        },
+        true,
+      );
     }
+
+    this.dfsEl(el, (child) => {
+      this.formElementMap.delete(child.id!);
+    });
+
     this.formElementMap.delete(el.id!);
-    this.formElements.splice(idx, 1);
+    parentChildren.splice(idx, 1);
   },
 
   /**
    * 复制元素
    */
-  copyEl(el: IBaseElement) {
-    const idx = this.formElements.findIndex((item) => item.id === el.id);
+  copyEl(el: IBaseElement): IBaseElement {
+    const parentChildren = this.getParentChildren(el.parentId);
+
+    const idx = parentChildren.findIndex((item) => item.id === el.id);
+
     const newId = idCreator();
+
     const newEl: IBaseElement = { ...cloneDeep(el), id: newId };
+
+    // 复制的事件源id修改
     newEl?.events?.forEach((event) => {
+      event.id = idCreator('event');
       const { eventTargets } = event;
       eventTargets?.forEach((target) => {
         target.sourceId = newId;
+        target.id = idCreator('event-target');
       });
     });
-    this.formElements.splice(idx + 1, 0, newEl);
+
     this.formElementMap.set(newId, newEl);
+    // 关联服务相关设置
     bindFromCopiedElement(el.id as string, newId);
+
+    // 容器组件中的子组件递归操作
+    if (el?.children?.length) {
+      const children: IBaseElement[] = [];
+      el.children.forEach((child: IBaseElement) => {
+        const newChild = { ...cloneDeep(child), parentId: newId };
+        children.push(this.copyEl(newChild));
+      });
+      newEl.children = children;
+    }
+
+    parentChildren.splice(idx + 1, 0, newEl);
+
     return newEl;
   },
 

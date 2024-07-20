@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { observer } from 'mobx-react-lite';
-import type { SortableEvent } from 'sortablejs';
 import c from 'classnames';
 import { useRegisterEvents, useFormUpdate, useDesignEffect } from '@/hooks';
 import { EEventAction } from '@/types';
@@ -10,7 +9,7 @@ import { ElementsList } from '@/elements/export';
 import eventStore from '@/store/eventStore';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
-import { handleOnEvent, parseCSS, handelSort } from '@/utils';
+import { handleOnEvent, parseCSS, handleSort } from '@/utils';
 import { ReactSortable } from '@/components/react-sortable';
 
 import './style.less';
@@ -67,17 +66,6 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
     };
   }, [store.formServices]);
 
-  const handleSort = (e: SortableEvent) => {
-    if (e.to?.dataset.type === 'el') return;
-    const { newIndex, item, oldIndex } = e;
-    const { add, newEl } = handelSort(item, store.formAttrs.id!);
-    if (add) {
-      store.insertEl(newEl!, newIndex!);
-    } else {
-      store.moveEl(oldIndex!, newIndex!);
-    }
-  };
-
   return (
     <div className={prefixCls('canvas-wrap')}>
       {actions && <>{actions}</>}
@@ -89,12 +77,13 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
         ])}
         style={formStyle}
         list={store.formElements}
-        onSort={handleSort}
+        onSort={(e) => handleSort(e, id!)}
         animation={150}
         group="nested"
         rowProps={{
           className: prefixCls('row'),
           gutter: [horizontalGap, verticalGap],
+          'data-id': id,
         }}
       >
         {store.formElements.map((item: IBaseElement) => {

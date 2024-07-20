@@ -1,46 +1,21 @@
-import React, { useRef } from 'react';
-import type { SortableEvent } from 'sortablejs';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { arrayMoveImmutable } from 'array-move';
+import c from 'classnames';
+import { useEditorContext } from '@/context';
 import { prefixCls } from '@/const';
-import { handelSort } from '@/utils';
+import { handleSort } from '@/utils';
 import store from '@/store';
 import { ElementLayout } from '@/components';
 import type { IBaseElement } from '@/types';
 import { ElementsList } from '@/elements/export';
 import { ReactSortable } from '@/components/react-sortable';
+import './style.less';
 
 const RenderContainerContent: React.FC<{
   element: IBaseElement;
 }> = ({ element }) => {
-  const elementRef = useRef<IBaseElement>();
-  elementRef.current = element;
   const { horizontalGap, verticalGap } = store.formAttrs;
-
-  const handleSort = (e: SortableEvent) => {
-    const { newIndex, item, oldIndex } = e;
-
-    const { add, newEl } = handelSort(item, elementRef.current!.id!);
-
-    const { children = [] } = elementRef.current!;
-    if (add) {
-      children.splice(newIndex!, 0, newEl!);
-      store.setElementProp(
-        elementRef.current!.id as string,
-        'children',
-        children,
-      );
-    } else {
-      const newChildren = arrayMoveImmutable(children, oldIndex!, newIndex!);
-      store.setElementProp(
-        elementRef.current!.id as string,
-        'children',
-        newChildren,
-      );
-    }
-    console.log(item);
-    console.log(item.dataset);
-  };
+  const { mode } = useEditorContext();
 
   return (
     <ElementLayout element={element}>
@@ -48,12 +23,17 @@ const RenderContainerContent: React.FC<{
         list={element.children}
         animation={150}
         group="nested"
-        onSort={handleSort}
+        onSort={(e) => handleSort(e, element.id!)}
         rowProps={{
-          className: prefixCls('row'),
-          style: { margin: 0 },
+          className: c([
+            prefixCls('row'),
+            prefixCls('row-el'),
+            mode === 'design' && !element.children?.length
+              ? prefixCls('row-empty')
+              : '',
+          ]),
           gutter: [horizontalGap, verticalGap],
-          'data-type': 'el',
+          'data-id': element.id,
         }}
       >
         {element.children?.map((item: IBaseElement) => {
