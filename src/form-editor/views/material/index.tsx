@@ -3,26 +3,28 @@ import { prefixCls } from '@/const';
 import { ElementsList } from '@/elements';
 import type { IDragElementProp } from '@/types';
 import { ReactSortable } from '@/components/react-sortable';
-import { ELEMENT_CONTAINER } from '@/elements';
+import { CONTAINERS, FILTER_ELEMENT } from '@/const';
 
 import DragItem from './drag-item';
 
 import './style.less';
 
-const titles = ['基础组件', '容器布局', '自定义组件'];
+const titles = ['基础组件', '容器组件', '自定义组件'];
 
 export const Material = () => {
   const renderList = useMemo(() => {
     const basic: IDragElementProp[] = [];
     const container: IDragElementProp[] = [];
     const custom: IDragElementProp[] = [];
-    Object.entries(ElementsList).forEach(([name, el]) => {
-      if (name === ELEMENT_CONTAINER) {
-        container.push(el);
-      } else {
-        basic.push(el);
-      }
-    });
+    Object.entries(ElementsList)
+      .filter(([name]) => !FILTER_ELEMENT.includes(name))
+      .forEach(([name, el]) => {
+        if (CONTAINERS.includes(name)) {
+          container.push(el);
+        } else {
+          basic.push(el);
+        }
+      });
     return [basic, container, custom];
   }, [ElementsList]);
 

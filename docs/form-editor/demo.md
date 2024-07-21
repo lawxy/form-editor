@@ -2,4 +2,4 @@
 
 设计模式
 
-<code src='./demo.tsx'></code>
+<code src='./index.tsx'></code>

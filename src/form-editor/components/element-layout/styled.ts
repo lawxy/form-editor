@@ -3,11 +3,11 @@ import styled, { css } from 'styled-components';
 export const Mask = styled.div<{
   horizontal: number;
   vertical: number;
-  visible: boolean;
-}>(({ horizontal, vertical, visible }) => {
+  hide: boolean;
+}>(({ horizontal, vertical, hide }) => {
   return `
     ${css({
-      display: visible ? 'block' : 'none',
+      display: hide ? 'none' : 'block',
       position: 'absolute',
       top: 0,
       left: 0,

@@ -85,6 +85,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
           gutter: [horizontalGap, verticalGap],
           'data-id': id,
         }}
+        forbidden={mode !== 'design'}
       >
         {store.formElements.map((item: IBaseElement) => {
           const Component = ElementsList[item.type!]?.render;

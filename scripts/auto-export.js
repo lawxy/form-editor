@@ -8,21 +8,28 @@ const path = require('path');
 const componentsDir = path.join(__dirname, '../src/form-editor/elements');
 const exportFile = path.join(componentsDir, 'export.ts');
 
-// 由于文件目录会自己根据首字母排序， 这里要自己排序一下([文件名大写]_TEXT)
-const sort = [
-  'TEXT_TEXT', // 文本框
-  'INPUT_TEXT', // 输入框
-  'NUMBER_TEXT', // 数字框
-  'DATE_TEXT', // 日期
-  'TIME_TEXT', // 时间
-  'SELECT_TEXT', // 下拉
-  'RADIO_TEXT', // 单选
-  'CHECKBOX_TEXT', // 多选
-  'SWITCH_TEXT', // 开关
-  'BUTTON_TEXT', // 按钮
-  'IMAGE_TEXT', // 图片
-  'TABLE_TEXT', // 表格
+// 文件目录会自己根据首字母排序， 这里要自己排序一下([文件名])
+const SortedName = [
+  'text', // 文本框
+  'input', // 输入框
+  'number', // 数字框
+  'date', // 日期
+  'time', // 时间
+  'select', // 下拉
+  'radio', // 单选
+  'checkbox', // 多选
+  'switch', // 开关
+  'button', // 按钮
+  'image', // 图片
+  'table', // 表格
+  'container', // 容器
+  'tabs',// tabs
 ];
+
+const handleSort = (v1, v2) => {
+  const getType = str => str.replace('_TEXT', '').toLowerCase();
+  return SortedName.indexOf(getType(v1.text)) - SortedName.indexOf(getType(v2.text))
+}
 
 fs.readdir(componentsDir, (err, files) => {
   if (err) return console.log(err);
@@ -56,6 +63,7 @@ import type { IDragElementProp } from '../types'
       const typeKey = `ELEMENT_${AllUpper}`;
       // 元素中文名
       const text = `${AllUpper}_TEXT`;
+
       // 元素默认值
       const initData = `${OnlyFirstUpper}_initData`;
       // 事件动作
@@ -79,9 +87,7 @@ export { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text} } from './
 export const ElementsList: Record<string, IDragElementProp> = {
       `;
   elementList
-    .sort((v1, v2) => {
-      return sort.indexOf(v1.text) - sort.indexOf(v2.text);
-    })
+    .sort(handleSort)
     .forEach((item) => {
       content += `
   [${item.typeKey}]: {

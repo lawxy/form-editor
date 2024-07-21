@@ -28,12 +28,16 @@ class EventStore {
 
     const targetElement = baseStore.getElement(targetId);
 
+    baseStore.dfsEl(targetElement, (child) => {
+      sets.push(...this.getSetsFromId(child.id!));
+    });
+
     // 容器组件要判断内部子组件
-    if (targetElement && targetElement?.children?.length) {
-      targetElement.children.forEach((child) => {
-        sets.push(...this.getSetsFromId(child.id!));
-      });
-    }
+    // if (targetElement && targetElement?.children?.length) {
+    //   targetElement.children.forEach((child) => {
+    //     sets.push(...this.getSetsFromId(child.id!));
+    //   });
+    // }
     return sets;
   }
 
@@ -60,7 +64,7 @@ class EventStore {
 
     return ModalPromisify({
       // title: `${exist ? '此组件或服务有事件关联, ' : ''}确认删除?`,
-      title: '此组件或服务有事件关联, 确认删除?',
+      title: '此组件(含内部组件)或服务有事件关联, 确认删除?',
       onOk() {
         if (exist) {
           map.delete(targetId);

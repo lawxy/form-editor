@@ -1,12 +1,7 @@
-import {
-  MinusCircleOutlined,
-  PlusCircleOutlined,
-  MenuOutlined,
-  QuestionCircleOutlined,
-} from '@ant-design/icons';
+import React, { useState, useEffect, useRef } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import {
   Modal,
-  Table,
   Space,
   Button,
   Input,
@@ -14,12 +9,11 @@ import {
   Popover,
   type TableColumnProps,
 } from 'antd';
-import { arrayMoveImmutable } from 'array-move';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { MinusIcon, PlusIcon } from '@/components';
 import { cloneDeep } from 'lodash-es';
 import { observer } from 'mobx-react-lite';
-import type { FC, PropsWithChildren } from 'react';
-import React, { useState, useEffect, useRef } from 'react';
-import Sortable from 'sortablejs';
+import { TableSortable } from '@/components';
 
 import { BatchGenerateOptions } from '../batch-generate-options';
 
@@ -30,7 +24,6 @@ import { idCreator } from '@/utils';
 const OptionModal: FC<PropsWithChildren> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [valueOptions, setOption] = useState<TOption[]>([]);
-  const tableRef = useRef<any>();
   const valueOptionsRef = useRef<TOption[]>();
   valueOptionsRef.current = valueOptions;
 
@@ -58,46 +51,7 @@ const OptionModal: FC<PropsWithChildren> = ({ children }) => {
     setOption(newOptions);
   };
 
-  useEffect(() => {
-    if (!open || !tableRef.current) return;
-    const rowEl = tableRef.current.querySelector('.ant-table-tbody');
-    const sortIns = new Sortable(rowEl, {
-      animation: 150,
-      group: 'table',
-      handle: '.draggble-btn',
-      onSort: function (e: any) {
-        const { newIndex, oldIndex } = e;
-        // 为什么这里的索引都会比真实的大1 ？？
-        const newValueOptions = arrayMoveImmutable(
-          valueOptionsRef.current || [],
-          oldIndex - 1,
-          newIndex - 1,
-        );
-        setOption(newValueOptions);
-      },
-    });
-    return () => {
-      sortIns?.destroy?.();
-    };
-  }, [open, tableRef.current]);
-
   const columns: TableColumnProps<TOption>[] = [
-    {
-      key: 'sort',
-      align: 'center',
-      width: 40,
-      render: () => {
-        return (
-          <Button
-            className="draggble-btn"
-            type="text"
-            size="small"
-            icon={<MenuOutlined />}
-            style={{ cursor: 'move' }}
-          />
-        );
-      },
-    },
     {
       title: '选项名',
       dataIndex: 'label',
@@ -144,15 +98,11 @@ const OptionModal: FC<PropsWithChildren> = ({ children }) => {
                 }
               }}
             >
-              <MinusCircleOutlined
-                style={{ color: '#D40000', cursor: 'pointer' }}
-              />
+              <MinusIcon />
             </span>
             {idx === valueOptions.length - 1 && (
               <span onClick={addOption}>
-                <PlusCircleOutlined
-                  style={{ color: '#287DFA', cursor: 'pointer' }}
-                />
+                <PlusIcon />
               </span>
             )}
           </Space>
@@ -198,15 +148,14 @@ const OptionModal: FC<PropsWithChildren> = ({ children }) => {
           setOpen(false);
         }}
       >
-        <div ref={tableRef}>
-          <Table<TOption>
-            columns={columns}
-            rowKey="id"
-            dataSource={valueOptions}
-            pagination={false}
-            scroll={{ y: 300 }}
-          />
-        </div>
+        <TableSortable
+          onSort={(newDatas: any) => setOption(newDatas)}
+          columns={columns}
+          rowKey="id"
+          dataSource={valueOptions}
+          pagination={false}
+          scroll={{ y: 300 }}
+        />
       </Modal>
     </>
   );

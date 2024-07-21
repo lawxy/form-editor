@@ -51,7 +51,7 @@ export class ReactSortable<T extends IBaseElement> extends Component<
   }
 
   componentDidMount(): void {
-    if (this.ref.current === null) return;
+    if (this.ref.current === null || this.props.forbidden) return;
     const newOptions = this.makeOptions();
 
     this.wrapEl = this.isRow()
@@ -72,6 +72,7 @@ export class ReactSortable<T extends IBaseElement> extends Component<
 
     // if no tag, default to a `div` element.
     const newTag = !tag || tag === null ? 'div' : tag;
+
     if (!this.isRow()) {
       return createElement(
         newTag,

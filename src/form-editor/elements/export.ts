@@ -43,6 +43,9 @@ export { ELEMENT_SWITCH, RenderSwitch, SettingSwitch, SWITCH_TEXT } from './swit
 import { ELEMENT_TABLE, RenderTable, SettingTable, TABLE_TEXT, initialData as Table_initData, eventActions as Table_eventActions, Icon as TABLE_Icon } from './table'
 export { ELEMENT_TABLE, RenderTable, SettingTable, TABLE_TEXT } from './table'
         
+import { ELEMENT_TABS, RenderTabs, SettingTabs, TABS_TEXT, initialData as Tabs_initData, eventActions as Tabs_eventActions, Icon as TABS_Icon } from './tabs'
+export { ELEMENT_TABS, RenderTabs, SettingTabs, TABS_TEXT } from './tabs'
+        
 import { ELEMENT_TEXT, RenderText, SettingText, TEXT_TEXT, initialData as Text_initData, eventActions as Text_eventActions, Icon as TEXT_Icon } from './text'
 export { ELEMENT_TEXT, RenderText, SettingText, TEXT_TEXT } from './text'
         
@@ -51,16 +54,6 @@ export { ELEMENT_TIME, RenderTime, SettingTime, TIME_TEXT } from './time'
         
 export const ElementsList: Record<string, IDragElementProp> = {
       
-  [ELEMENT_CONTAINER]: {
-    type: ELEMENT_CONTAINER,
-    render: RenderContainer,
-    setting: SettingContainer,
-    text: CONTAINER_TEXT,
-    eventActions: Container_eventActions,
-    initialData: Container_initData,
-    Icon: CONTAINER_Icon
-  },
-
   [ELEMENT_TEXT]: {
     type: ELEMENT_TEXT,
     render: RenderText,
@@ -179,5 +172,25 @@ export const ElementsList: Record<string, IDragElementProp> = {
     eventActions: Table_eventActions,
     initialData: Table_initData,
     Icon: TABLE_Icon
+  },
+
+  [ELEMENT_CONTAINER]: {
+    type: ELEMENT_CONTAINER,
+    render: RenderContainer,
+    setting: SettingContainer,
+    text: CONTAINER_TEXT,
+    eventActions: Container_eventActions,
+    initialData: Container_initData,
+    Icon: CONTAINER_Icon
+  },
+
+  [ELEMENT_TABS]: {
+    type: ELEMENT_TABS,
+    render: RenderTabs,
+    setting: SettingTabs,
+    text: TABS_TEXT,
+    eventActions: Tabs_eventActions,
+    initialData: Tabs_initData,
+    Icon: TABS_Icon
   },
 }

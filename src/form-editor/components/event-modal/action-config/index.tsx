@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { Popconfirm, Space } from 'antd';
 import c from 'classnames';
 import { cloneDeep } from 'lodash-es';
-import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 
+import { MinusIcon, PlusIcon } from '@/components/common-icon';
 import { prefixCls } from '@/const';
 import { TCustomEvent, EEventType, IEventTarget, EChangeType } from '@/types';
 import { idCreator } from '@/utils';
@@ -32,7 +32,7 @@ const ActionItem: React.FC<{
       case EEventType.LINK_SERVICE:
         return <LinkServcie {...props} />;
       case EEventType.VALIDATE:
-        return <Validate {...props} />
+        return <Validate {...props} />;
       default:
         return null;
     }
@@ -47,17 +47,12 @@ const ActionItem: React.FC<{
         <Space>
           <Popconfirm title="确认删除" onConfirm={onDelete}>
             <span>
-              <MinusCircleOutlined
-                style={{ color: '#D40000', cursor: 'pointer' }}
-              />
+              <MinusIcon />
             </span>
           </Popconfirm>
           {last && (
             <span>
-              <PlusCircleOutlined
-                style={{ color: '#287DFA', cursor: 'pointer' }}
-                onClick={onAdd}
-              />
+              <PlusIcon onClick={onAdd} />
             </span>
           )}
         </Space>
@@ -74,7 +69,7 @@ export const ActionConfig: React.FC<{
   title: string;
   className?: string;
   currentEvent: TCustomEvent;
-  operationType: EChangeType
+  operationType: EChangeType;
 }> = ({ title, className, currentEvent, operationType }) => {
   const { handleChangeEvent, setEdit, sourceId } =
     useContext(EventModalContext);
@@ -108,7 +103,11 @@ export const ActionConfig: React.FC<{
   };
 
   useEffect(() => {
-    if (currentEvent?.eventTargets?.length || operationType === EChangeType.EDIT) return;
+    if (
+      currentEvent?.eventTargets?.length ||
+      operationType === EChangeType.EDIT
+    )
+      return;
     handleChange(EChangeType.ADD);
   }, [currentEvent?.eventTargets, operationType]);
 
@@ -126,23 +125,23 @@ export const ActionConfig: React.FC<{
             <ActionItem
               key={eventTarget.id}
               type={currentEvent.eventType!}
-              onChange={(targetAttr) => handleChange(EChangeType.EDIT, targetAttr, i)}
+              onChange={(targetAttr) =>
+                handleChange(EChangeType.EDIT, targetAttr, i)
+              }
               eventTarget={eventTarget}
               last={i === currentEvent?.eventTargets!.length - 1}
               onAdd={() => handleChange(EChangeType.ADD)}
               onDelete={() => handleDelete(i)}
             />
           ))}
-          {
-            !currentEvent?.eventTargets?.length && (
-              <div className={prefixCls('event-action-config')} style={{justifyContent: 'flex-end'}}>
-                <PlusCircleOutlined
-                  style={{ color: '#287DFA', cursor: 'pointer' }}
-                  onClick={() => handleChange('add')}
-                />
-              </div>
-            )
-          }
+          {!currentEvent?.eventTargets?.length && (
+            <div
+              className={prefixCls('event-action-config')}
+              style={{ justifyContent: 'flex-end' }}
+            >
+              <PlusIcon onClick={() => handleChange(EChangeType.ADD)} />
+            </div>
+          )}
         </>
       )}
     </div>

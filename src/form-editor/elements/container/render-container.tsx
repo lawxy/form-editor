@@ -11,7 +11,7 @@ import { ElementsList } from '@/elements/export';
 import { ReactSortable } from '@/components/react-sortable';
 import './style.less';
 
-const RenderContainerContent: React.FC<{
+export const RenderContainerContent: React.FC<{
   element: IBaseElement;
 }> = ({ element }) => {
   const { horizontalGap, verticalGap } = store.formAttrs;
@@ -35,6 +35,7 @@ const RenderContainerContent: React.FC<{
           gutter: [horizontalGap, verticalGap],
           'data-id': element.id,
         }}
+        forbidden={mode !== 'design'}
       >
         {element.children?.map((item: IBaseElement) => {
           const Component = ElementsList[item.type!]?.render;

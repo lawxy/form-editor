@@ -1,3 +1,5 @@
+import { ELEMENT_CONTAINER, ELEMENT_TABS } from './elements';
+
 export const prefixCls = (className: string) => `fm-${className}`;
 export const DirectionOpions = [
   {
@@ -10,6 +12,10 @@ export const DirectionOpions = [
   },
 ];
 export const DEFAULT_ERROR_MESSAGE = '请求服务报错';
+
+export const CONTAINERS = [ELEMENT_CONTAINER, ELEMENT_TABS];
+
+export const FILTER_ELEMENT = [];
 
 export const RequestMethod = [
   'GET',

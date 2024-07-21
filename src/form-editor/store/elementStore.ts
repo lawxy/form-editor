@@ -85,7 +85,7 @@ export default {
     if (containParent) callback(el);
     if (el?.children?.length) {
       el.children.forEach((child) => {
-        callback(child);
+        this.dfsEl(child, callback, true);
       });
     }
   },
@@ -94,7 +94,7 @@ export default {
    * 删除元素
    */
   async deleteEl(el?: IBaseElement, move?: boolean) {
-    if (!el) return;
+    if (!el) return false;
 
     const parentChildren = this.getParentChildren(el.parentId);
 
@@ -118,6 +118,7 @@ export default {
 
     this.formElementMap.delete(el.id!);
     parentChildren.splice(idx, 1);
+    return true;
   },
 
   /**

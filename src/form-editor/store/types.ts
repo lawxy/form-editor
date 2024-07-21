@@ -33,7 +33,7 @@ export interface IElementStore {
     containParent?: boolean,
   ) => void;
 
-  deleteEl: (el: IBaseElement, move?: boolean) => void;
+  deleteEl: (el: IBaseElement, move?: boolean) => Promise<boolean>;
 
   copyEl: (el: IBaseElement) => IBaseElement;
 

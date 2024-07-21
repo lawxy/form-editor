@@ -6,7 +6,7 @@ import { useDesignEffect } from '@/hooks';
 import eventStore from '@/store/eventStore';
 import { SelectedActions } from './selected-actions';
 import { DesignWrapDiv, Mask, Icon } from './styled';
-import { ELEMENT_CONTAINER } from '@/elements';
+import { CONTAINERS } from '@/const';
 
 const EventIcon: React.FC<{
   events?: TCustomEvents;
@@ -53,7 +53,7 @@ const WrapDesignEl: React.FC<
       <Mask
         horizontal={store.formAttrs.horizontalGap + 2}
         vertical={store.formAttrs.verticalGap + 2}
-        visible={el.type !== ELEMENT_CONTAINER}
+        hide={CONTAINERS.includes(el.type!)}
       />
       {store.selectedElement?.id === el.id && <SelectedActions />}
       {children}

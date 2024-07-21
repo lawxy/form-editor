@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { MonacoEditor } from '@/components';
 import { prefixCls } from '@/const';
 import store from '@/store';
+import { PreviewJson } from './preview-json';
 import './style.less';
 
 const ActionItem: React.FC<
@@ -19,8 +20,6 @@ const ActionItem: React.FC<
 };
 
 const ActionGroup = () => {
-  const [openCode, setOpenCode] = useState(false);
-
   const handleSave = useCallback(() => {
     /**
      * todo 组件属性校验(暂时没这个需求)
@@ -44,14 +43,16 @@ const ActionGroup = () => {
   const handlePreview = async () => {
     await handleSave();
     setTimeout(() => {
-      window.open('/~demos/docs-preview-demo-demo-demo', 'preview');
+      window.open('/~demos/docs-preview-demo-demo-preview', 'preview');
     }, 200);
   };
 
   return (
     <div className={prefixCls('action-group')}>
       <ActionItem text="预览" onClick={handlePreview} />
-      <ActionItem text="查看json" onClick={() => setOpenCode(true)} />
+      <PreviewJson>
+        <ActionItem text="查看json" />
+      </PreviewJson>
       <ActionItem text="保存" onClick={handleSave} />
       <Popconfirm
         title="确定要清空所有组件吗？"
@@ -70,30 +71,6 @@ const ActionGroup = () => {
           <ActionItem text="清空" />
         </div>
       </Popconfirm>
-
-      <Modal
-        width={600}
-        open={openCode}
-        onCancel={() => {
-          setOpenCode(false);
-        }}
-        destroyOnClose
-        footer={<Button onClick={() => setOpenCode(false)}>关闭</Button>}
-      >
-        <div style={{ marginTop: 20 }}>
-          <MonacoEditor
-            language="json"
-            value={JSON.stringify(store.getFormJson(), null, 2)}
-            style={{
-              width: '100%',
-              height: 560,
-            }}
-            options={{
-              readOnly: true,
-            }}
-          />
-        </div>
-      </Modal>
     </div>
   );
 };
