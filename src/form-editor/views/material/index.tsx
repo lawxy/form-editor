@@ -1,31 +1,56 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { prefixCls } from '@/const';
 import { ElementsList } from '@/elements';
 import type { IDragElementProp } from '@/types';
 import { ReactSortable } from '@/components/react-sortable';
+import { ELEMENT_CONTAINER } from '@/elements';
 
 import DragItem from './drag-item';
 
 import './style.less';
 
+const titles = ['基础组件', '容器布局', '自定义组件'];
+
 export const Material = () => {
-  const mapList = Object.values(ElementsList);
+  const renderList = useMemo(() => {
+    const basic: IDragElementProp[] = [];
+    const container: IDragElementProp[] = [];
+    const custom: IDragElementProp[] = [];
+    Object.entries(ElementsList).forEach(([name, el]) => {
+      if (name === ELEMENT_CONTAINER) {
+        container.push(el);
+      } else {
+        basic.push(el);
+      }
+    });
+    return [basic, container, custom];
+  }, [ElementsList]);
 
   return (
     <div className={prefixCls('material')}>
       <div className={prefixCls('title')}>组件库</div>
       <div style={{ height: 10, backgroundColor: '#f5f5f5' }} />
-      <ReactSortable
-        list={mapList}
-        className={prefixCls('element-wrap')}
-        animation={150}
-        sort={false}
-        group={{ name: 'nested', pull: 'clone', put: false }}
-      >
-        {mapList.map((item: IDragElementProp) => (
-          <DragItem key={item.type} item={item} />
-        ))}
-      </ReactSortable>
+      {renderList.map((list, i) => (
+        <React.Fragment key={i}>
+          {!!list.length && (
+            <>
+              <div className={prefixCls('title')}>{titles[i]}</div>
+              <ReactSortable
+                list={list}
+                className={prefixCls('element-wrap')}
+                animation={150}
+                sort={false}
+                group={{ name: 'nested', pull: 'clone', put: false }}
+                draggable={`.${prefixCls('drag-item')}`}
+              >
+                {list.map((item: IDragElementProp) => (
+                  <DragItem key={item.type} item={item} />
+                ))}
+              </ReactSortable>
+            </>
+          )}
+        </React.Fragment>
+      ))}
     </div>
   );
 };

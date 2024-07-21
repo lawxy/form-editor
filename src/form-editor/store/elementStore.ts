@@ -1,5 +1,4 @@
 import { arrayMoveImmutable } from 'array-move';
-import { runInAction } from 'mobx';
 import { cloneDeep } from 'lodash-es';
 import { idCreator, bindFromCopiedElement, unBindFromElement } from '@/utils';
 import { tabStore } from './tabStore';

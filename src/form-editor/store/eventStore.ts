@@ -40,27 +40,27 @@ class EventStore {
   deleteId(targetId: string) {
     const sets = this.getSetsFromId(targetId);
 
+    if (!sets.length) return Promise.resolve(true);
+
     let exist = false;
 
-    if (sets.length) {
-      sets.forEach((set) => {
-        for (const sourceId of set.keys()) {
-          if (
-            baseStore.getElement(sourceId) ||
-            baseStore.getService(sourceId)
-          ) {
-            exist = true;
-          } else {
-            set.delete(sourceId);
-          }
+    sets.forEach((set) => {
+      for (const sourceId of set.keys()) {
+        if (baseStore.getElement(sourceId) || baseStore.getService(sourceId)) {
+          exist = true;
+        } else {
+          set.delete(sourceId);
         }
-      });
-    }
+      }
+    });
+
+    if (!exist) return Promise.resolve(true);
 
     const map = this.eventMap;
 
     return ModalPromisify({
-      title: `${exist ? '此组件或服务有事件关联, ' : ''}确认删除?`,
+      // title: `${exist ? '此组件或服务有事件关联, ' : ''}确认删除?`,
+      title: '此组件或服务有事件关联, 确认删除?',
       onOk() {
         if (exist) {
           map.delete(targetId);
