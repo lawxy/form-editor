@@ -4,7 +4,6 @@ import { Table, Button, type TableProps } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { arrayMoveImmutable } from 'array-move';
 import Sortable from 'sortablejs';
-import type { TOption } from '@/types';
 
 export const TableSortable: FC<
   TableProps & {
@@ -34,7 +33,8 @@ export const TableSortable: FC<
       },
     });
     return () => {
-      sortIns?.destroy?.();
+      // 这里destroy后会出现元素不能第一时间拖拽，这个方法会造成全局污染？
+      // sortIns?.destroy?.();
     };
   }, [tableRef.current]);
 

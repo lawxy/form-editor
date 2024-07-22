@@ -1,8 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import { cloneDeep } from 'lodash-es';
 import { Input, Space, Popconfirm } from 'antd';
 import { MinusCircleOutlined } from '@ant-design/icons';
-import { SettingWrap, SettingItem, MinusIcon, PlusIcon } from '@/components';
+import { SettingWrap, PlusIcon } from '@/components';
 import { TableSortable } from '@/components';
 import store from '@/store';
 import { createPanel } from './const';
@@ -29,9 +30,10 @@ const SettingTabsContent = () => {
                 onConfirm={async () => {
                   const confirDelete = await store.deleteEl(children![idx]);
                   if (!confirDelete) return;
-                  children?.splice(idx, 1);
+                  const clonedChildren = cloneDeep(children);
+                  clonedChildren?.splice(idx, 1);
                   if (children?.length) {
-                    store.setSelectedProp('children', children);
+                    store.setSelectedProp('children', clonedChildren);
                   } else {
                     store.setSelectedProp('children', [createPanel()]);
                   }
@@ -49,8 +51,10 @@ const SettingTabsContent = () => {
                     const newPanel = createPanel({
                       elementName: `tab选项卡${idx + 1}`,
                     });
-                    children?.push(newPanel);
-                    store.setSelectedProp('children', children);
+                    const clonedChildren = cloneDeep(children);
+
+                    clonedChildren?.push(newPanel);
+                    store.setSelectedProp('children', clonedChildren);
                   }}
                 />
               </span>
