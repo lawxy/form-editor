@@ -1,11 +1,12 @@
-import React, { useCallback, useState } from 'react';
-import { Popconfirm, Modal, Button, message } from 'antd';
+import React, { useCallback } from 'react';
+import { Popconfirm, message } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { MonacoEditor } from '@/components';
 import { prefixCls } from '@/const';
 import store from '@/store';
 import { PreviewJson } from './preview-json';
 import './style.less';
+
+console.log(process.env);
 
 const ActionItem: React.FC<
   {
@@ -43,7 +44,10 @@ const ActionGroup = () => {
   const handlePreview = async () => {
     await handleSave();
     setTimeout(() => {
-      window.open('/~demos/docs-preview-demo-demo-preview', 'preview');
+      window.open(
+        `${process.env.PUBLIC_PATH}~demos/docs-preview-demo-demo-preview`,
+        'preview',
+      );
     }, 200);
   };
 

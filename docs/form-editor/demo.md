@@ -1,5 +1,3 @@
-# low-code
-
-设计模式
+# 设计
 
 <code src='./index.tsx'></code>

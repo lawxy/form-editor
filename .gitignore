@@ -8,3 +8,4 @@ node_modules
 /es
 .idea
 .history
+/docs-dist
