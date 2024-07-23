@@ -34,6 +34,7 @@ export interface ReactSortableProps<T>
   children?: ReactNode;
   rowProps?: RowProps & { [key in string]: any };
   forbidden?: boolean;
+  sortableClass?: string;
 }
 
 /**

@@ -54,9 +54,13 @@ export class ReactSortable<T extends IBaseElement> extends Component<
     if (this.ref.current === null || this.props.forbidden) return;
     const newOptions = this.makeOptions();
 
+    const { sortableClass } = this.props;
+
     this.wrapEl = this.isRow()
-      ? this.ref.current.querySelector('.ant-row')
+      ? this.ref.current.querySelector(sortableClass ?? '.ant-row')
       : this.ref.current;
+
+    if (!this.wrapEl) return;
     Sortable.create(this.wrapEl, newOptions);
   }
 

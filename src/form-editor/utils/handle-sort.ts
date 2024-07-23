@@ -1,5 +1,4 @@
 import { ElementsList } from '@/elements';
-import { IBaseElement } from '@/types';
 import store from '@/store';
 import { idCreator } from './id-creator';
 import type { SortableEvent } from 'sortablejs';

@@ -157,6 +157,10 @@ export interface IBaseElement {
    */
   previewSrc?: string;
   /**
+   * tabs类型
+   */
+  tabType?: 'line' | 'card';
+  /**
    * 子节点
    */
   children?: Array<IBaseElement>;

@@ -2,31 +2,17 @@
   "compilerOptions": {
     "strict": true,
     "declaration": true,
-    "skipLibCheck": true,   
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "jsx": "react",
     "baseUrl": "./",
     "paths": {
-      "@@/*": [
-        ".dumi/tmp/*"
-      ],
-      "@/*": [
-        "src/form-editor/*"
-      ],
-      "gfpage": [
-        "src/index.ts"
-      ],
-      "gfpage/*": [
-        "./src/*",
-        "*"
-      ],
-      "gfpage/es/*": [
-        "src/*"
-      ]
+      "@@/*": [".dumi/tmp/*"],
+      "@/*": ["src/form-editor/*"],
+      "gfpage": ["src/index.ts"],
+      "gfpage/*": ["./src/*", "*"],
+      "gfpage/es/*": ["src/*"]
     }
   },
-  "include": [
-    ".dumirc.ts",
-    "src/**/*"
-  ]
+  "include": [".dumirc.ts", "src/**/*"]
 }

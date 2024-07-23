@@ -21,7 +21,7 @@ export interface IElementStore {
 
   getParentChildren: (id?: string) => IBaseElement[];
 
-  appendEl: (el: IBaseElement) => void;
+  appendEl: (el: IBaseElement, selectNewElement?: boolean) => void;
 
   insertEl: (el: IBaseElement, idx: number) => void;
 

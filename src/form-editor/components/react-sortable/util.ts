@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
-import Sortable, { Options } from 'sortablejs';
-import { MultiDragEvent } from './react-sortable';
+import Sortable, { Options, SortableEvent } from 'sortablejs';
 import type { IBaseElement } from '@/types';
 import { AllMethodNames, ReactSortableProps } from './types';
 
@@ -50,7 +49,7 @@ export function insertNodes<T extends IBaseElement>(
 }
 
 export function createCustoms<T extends IBaseElement>(
-  evt: MultiDragEvent,
+  evt: SortableEvent,
   list: T[],
 ): Normalized<T>[] {
   const custom = [

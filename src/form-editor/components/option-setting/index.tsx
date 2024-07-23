@@ -1,7 +1,9 @@
-import { Table, Select, Button, type TableColumnProps } from 'antd';
-import { observer } from 'mobx-react-lite';
-import type { FC } from 'react';
 import React from 'react';
+import type { FC } from 'react';
+import { Table, Button, type TableColumnProps } from 'antd';
+import { observer } from 'mobx-react-lite';
+
+import { prefixCls } from '@/const';
 
 import OptionModal from './option-modal';
 
@@ -25,7 +27,7 @@ export const OptionSetting: FC = observer(() => {
     <>
       <SettingItem label="选项">
         <OptionModal>
-          <Button className="fm-attr-setting-btn" size="small">
+          <Button className={`${prefixCls('attr-setting-btn')}`} size="small">
             编辑
           </Button>
         </OptionModal>

@@ -49,6 +49,7 @@ class EventStore {
     let exist = false;
 
     sets.forEach((set) => {
+      // @ts-ignore
       for (const sourceId of set.keys()) {
         if (baseStore.getElement(sourceId) || baseStore.getService(sourceId)) {
           exist = true;

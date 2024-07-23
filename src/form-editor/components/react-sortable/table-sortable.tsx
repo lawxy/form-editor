@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import type { FC } from 'react';
+import Sortable from 'sortablejs';
 import { Table, Button, type TableProps } from 'antd';
+import { cloneDeep } from 'lodash-es';
 import { MenuOutlined } from '@ant-design/icons';
 import { arrayMoveImmutable } from 'array-move';
-import Sortable from 'sortablejs';
 
 export const TableSortable: FC<
   TableProps & {
@@ -12,17 +13,19 @@ export const TableSortable: FC<
 > = ({ onSort, ...props }) => {
   const tableRef = useRef<any>();
   const dataSourceRef = useRef<any>();
-  dataSourceRef.current = props.dataSource;
+  dataSourceRef.current = cloneDeep(props.dataSource);
 
   useEffect(() => {
     if (!tableRef.current) return;
     const rowEl = tableRef.current.querySelector('.ant-table-tbody');
     const sortIns = new Sortable(rowEl, {
       animation: 150,
-      group: 'table',
+      // group: 'list',
       handle: '.draggble-btn',
       onSort: function (e: any) {
         const { newIndex, oldIndex } = e;
+        console.log('newIndex', newIndex);
+        console.log('oldIndex', oldIndex);
         // 为什么这里的索引都会比真实的大1 ？？
         const newValueOptions = arrayMoveImmutable(
           dataSourceRef.current || [],

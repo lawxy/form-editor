@@ -31,6 +31,7 @@ export default {
    */
   getElement(id?: string) {
     if (!id) return;
+
     return this.formElementMap.get(id);
   },
 
@@ -49,11 +50,15 @@ export default {
   /**
    * 新增元素
    */
-  appendEl(el: IBaseElement) {
+  appendEl(el: IBaseElement, selectNewElement = true) {
     const parentChildren = this.getParentChildren(el.parentId);
     parentChildren.push(el);
+
+    if (selectNewElement) {
+      this.setSelectedElement(el);
+    }
+
     this.formElementMap.set(el.id!, el);
-    this.setSelectedElement(el);
   },
 
   /**
