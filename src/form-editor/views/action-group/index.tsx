@@ -6,8 +6,6 @@ import store from '@/store';
 import { PreviewJson } from './preview-json';
 import './style.less';
 
-console.log(process.env);
-
 const ActionItem: React.FC<
   {
     text: string;

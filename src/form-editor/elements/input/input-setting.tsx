@@ -13,6 +13,7 @@ import store from '@/store';
 const typeOptions = [
   { label: '单行文本', value: 'single' },
   { label: '多行文本', value: 'multiple' },
+  { label: '密码框', value: 'password' },
 ];
 
 const SettingInputContent = () => {

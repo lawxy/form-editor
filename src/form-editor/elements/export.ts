@@ -52,6 +52,9 @@ export { ELEMENT_TEXT, RenderText, SettingText, TEXT_TEXT } from './text'
 import { ELEMENT_TIME, RenderTime, SettingTime, TIME_TEXT, initialData as Time_initData, eventActions as Time_eventActions, Icon as TIME_Icon } from './time'
 export { ELEMENT_TIME, RenderTime, SettingTime, TIME_TEXT } from './time'
         
+import { ELEMENT_UPLOAD, RenderUpload, SettingUpload, UPLOAD_TEXT, initialData as Upload_initData, eventActions as Upload_eventActions, Icon as UPLOAD_Icon } from './upload'
+export { ELEMENT_UPLOAD, RenderUpload, SettingUpload, UPLOAD_TEXT } from './upload'
+        
 export const ElementsList: Record<string, IDragElementProp> = {
       
   [ELEMENT_TEXT]: {
@@ -162,6 +165,16 @@ export const ElementsList: Record<string, IDragElementProp> = {
     eventActions: Image_eventActions,
     initialData: Image_initData,
     Icon: IMAGE_Icon
+  },
+
+  [ELEMENT_UPLOAD]: {
+    type: ELEMENT_UPLOAD,
+    render: RenderUpload,
+    setting: SettingUpload,
+    text: UPLOAD_TEXT,
+    eventActions: Upload_eventActions,
+    initialData: Upload_initData,
+    Icon: UPLOAD_Icon
   },
 
   [ELEMENT_TABLE]: {

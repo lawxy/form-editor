@@ -38,16 +38,7 @@ const RenderInputContent: React.FC<{
 
   return (
     <ElementLayout element={element}>
-      {textType === 'single' ? (
-        <Input
-          placeholder={placeholder}
-          id={id}
-          onChange={handleChange}
-          onFocus={handleEvent(EEventAction.ON_FOCUS)}
-          onBlur={handleEvent(EEventAction.ON_BLUR)}
-          value={fieldValue}
-        />
-      ) : (
+      {textType === 'multiple' ? (
         <Input.TextArea
           autoSize={
             autoSize
@@ -63,6 +54,17 @@ const RenderInputContent: React.FC<{
           onChange={handleChange}
           onFocus={handleEvent(EEventAction.ON_FOCUS)}
           onBlur={handleEvent(EEventAction.ON_BLUR)}
+        />
+      ) : (
+        <Input
+          placeholder={placeholder}
+          id={id}
+          onChange={handleChange}
+          onFocus={handleEvent(EEventAction.ON_FOCUS)}
+          onBlur={handleEvent(EEventAction.ON_BLUR)}
+          value={fieldValue}
+          type={textType === 'single' ? 'text' : 'password'}
+          autoComplete="new-password"
         />
       )}
     </ElementLayout>

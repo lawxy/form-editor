@@ -71,7 +71,7 @@ export interface IBaseElement {
   /**
    * 文本类型
    */
-  textType?: 'single' | 'multiple';
+  textType?: 'single' | 'multiple' | 'password';
   /**
    * placeholder
    */

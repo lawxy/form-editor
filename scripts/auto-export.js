@@ -21,6 +21,7 @@ const SortedName = [
   'switch', // 开关
   'button', // 按钮
   'image', // 图片
+  'upload', // 上传
   'table', // 表格
   'container', // 容器
   'tabs',// tabs
