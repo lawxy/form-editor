@@ -1,6 +1,6 @@
 import { ELEMENT_CONTAINER, ELEMENT_TABS } from './elements';
 
-export const prefixCls = (className: string) => `fm-${className}`;
+export const prefixCls = (className: string) => `fe-${className}`;
 export const DirectionOpions = [
   {
     label: '垂直方向',
@@ -11,6 +11,13 @@ export const DirectionOpions = [
     value: 'horizontal',
   },
 ];
+
+export const defaultFormAttrs = {
+  horizontalGap: 8,
+  verticalGap: 8,
+  customCss: '#form {\n\tpadding: 10px;\n}',
+};
+
 export const DEFAULT_ERROR_MESSAGE = '请求服务报错';
 
 export const CONTAINERS = [ELEMENT_CONTAINER, ELEMENT_TABS];

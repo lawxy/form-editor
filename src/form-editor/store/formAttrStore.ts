@@ -5,10 +5,7 @@ export default {
   /**
    * 表单属性
    */
-  formAttrs: {
-    horizontalGap: 8,
-    verticalGap: 8,
-  },
+  formAttrs: {},
 
   setFormAttrs(attrs: IFormAttributesProps) {
     this.formAttrs = attrs;

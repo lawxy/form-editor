@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormEditor, Material, Settings, FormCanvas } from 'gfpage';
+import { FormEditor, Material, Settings, FormCanvas } from 'form-editor';
 const Comp = () => {
   return (
     <FormEditor mode="design">

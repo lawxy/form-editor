@@ -4,7 +4,7 @@ import { ConfigProvider, Form } from 'antd';
 import locale from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
 import type { TMode, IFormSchema } from './types';
-import { prefixCls } from './const';
+import { prefixCls, defaultFormAttrs } from './const';
 import store from './store';
 import { EditorContext } from './context';
 
@@ -41,7 +41,7 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
     const {
       formElements = [],
       fieldValues = {},
-      formAttrs = { verticalGap: 8, horizontalGap: 8, id: idCreator('form') },
+      formAttrs = defaultFormAttrs,
       formServices = [],
     } = schema;
     store.setFormElements(formElements);

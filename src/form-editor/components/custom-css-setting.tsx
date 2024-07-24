@@ -79,7 +79,7 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
           <Button
             disabled={!canSave}
             onClick={handleSave}
-            className="fm-attr-setting-btn"
+            className="fe-attr-setting-btn"
             size="small"
             type="primary"
           >

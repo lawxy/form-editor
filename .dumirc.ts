@@ -7,7 +7,7 @@ export default defineConfig({
   publicPath: '/editor/',
   // mfsu: false,
   themeConfig: {
-    name: 'luo',
+    name: 'form-editor',
   },
   chainWebpack,
   alias: {

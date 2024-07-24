@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { observer } from 'mobx-react-lite';
-import c from 'classnames';
 import { useRegisterEvents, useFormUpdate, useDesignEffect } from '@/hooks';
 import { EEventAction } from '@/types';
 import { prefixCls } from '@/const';
@@ -71,10 +70,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
       {actions && <>{actions}</>}
 
       <ReactSortable<IBaseElement>
-        className={c([
-          prefixCls('canvas'),
-          mode === 'design' ? prefixCls('canvas-design') : '',
-        ])}
+        className={prefixCls('canvas')}
         style={formStyle}
         list={store.formElements}
         onSort={(e) => handleSort(e, id!)}

@@ -30,7 +30,7 @@ const SettingTableContent = () => {
             store.setSelectedProp('tableAttributes', val);
           }}
         >
-          <Button className="fm-attr-setting-btn" size="small">
+          <Button className="fe-attr-setting-btn" size="small">
             编辑
           </Button>
         </AttributesSetting>
@@ -68,7 +68,7 @@ const SettingTableContent = () => {
             store.setSelectedProp('tableColumns', val);
           }}
         >
-          <Button className="fm-attr-setting-btn" size="small">
+          <Button className="fe-attr-setting-btn" size="small">
             编辑
           </Button>
         </AttributesSetting>

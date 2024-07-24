@@ -9,9 +9,9 @@
     "paths": {
       "@@/*": [".dumi/tmp/*"],
       "@/*": ["src/form-editor/*"],
-      "gfpage": ["src/index.ts"],
-      "gfpage/*": ["./src/*", "*"],
-      "gfpage/es/*": ["src/*"]
+      "form-editor": ["src/index.ts"],
+      "form-editor/*": ["./src/*", "*"],
+      "form-editor/es/*": ["src/*"]
     }
   },
   "include": [".dumirc.ts", "src/**/*"]

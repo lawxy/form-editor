@@ -1,5 +1,5 @@
 {
-  "name": "gfpage",
+  "name": "form-editor",
   "version": "0.0.1",
   "description": "低代码",
   "keywords": [
@@ -38,9 +38,9 @@
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky install && dumi setup",
     "prepublishOnly": "npm run build",
+    "pub": "node ./scripts/publish",
     "start": "npm run dev",
-    "watch": "node ./scripts/watch",
-    "pub": "node ./scripts/publish"
+    "watch": "node ./scripts/watch"
   },
   "commitlint": {
     "extends": [

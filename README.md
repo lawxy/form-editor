@@ -1,8 +1,8 @@
-# gfpage
+# form-editor
 
 ## Usage
 
-创建页面
+表单生成
 
 ## TODO
 
