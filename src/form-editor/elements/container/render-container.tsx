@@ -14,8 +14,9 @@ import './style.less';
 export const RenderContainerContent: React.FC<{
   element: IBaseElement;
 }> = ({ element }) => {
-  const { horizontalGap, verticalGap } = store.formAttrs;
+  const { horizontalGap, verticalGap, id } = store.formAttrs;
   const { mode } = useEditorContext();
+  const { parentId } = element;
 
   return (
     <ElementLayout element={element}>
@@ -34,6 +35,7 @@ export const RenderContainerContent: React.FC<{
           ]),
           gutter: [horizontalGap, verticalGap],
           'data-id': element.id,
+          'data-parent-id': parentId || id,
         }}
         forbidden={mode !== 'design'}
       >

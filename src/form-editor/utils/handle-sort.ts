@@ -7,6 +7,8 @@ export const handleSort = (e: SortableEvent, parentId: string) => {
   const { from, to, newIndex, item, oldIndex } = e;
   // 目标不在当前组件的不管  否则表单和容器组件间拖拽 会触发两次
   if (to?.dataset?.id !== parentId) return;
+
+  // debugger;
   // 从物料区拖过来的
   if (!item?.dataset?.parentId) {
     const element = ElementsList[item.dataset.type as string];

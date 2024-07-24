@@ -1,4 +1,5 @@
 import { ELEMENT_CONTAINER, ELEMENT_TABS } from './elements';
+import { idCreator } from './utils';
 
 export const prefixCls = (className: string) => `fe-${className}`;
 export const DirectionOpions = [
@@ -13,6 +14,7 @@ export const DirectionOpions = [
 ];
 
 export const defaultFormAttrs = {
+  id: idCreator('form'),
   horizontalGap: 8,
   verticalGap: 8,
   customCss: '#form {\n\tpadding: 10px;\n}',
