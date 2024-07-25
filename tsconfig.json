@@ -8,10 +8,11 @@
     "baseUrl": "./",
     "paths": {
       "@@/*": [".dumi/tmp/*"],
-      "@/*": ["src/form-editor/*"],
+      "@/*": ["src/*"],
       "@tsword/form-editor": ["src/index.ts"],
       "@tsword/form-editor/*": ["./src/*", "*"],
-      "@tsword/form-editor/es/*": ["src/*"]
+      "@tsword/form-editor/es/*": ["src/*"],
+      "@tsword/form-editor/lib/*": ["src/*"]
     }
   },
   "include": [".dumirc.ts", "src/**/*"]

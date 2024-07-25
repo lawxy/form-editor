@@ -7770,7 +7770,7 @@ fastq@^1.6.0:
 
 father-build@^1.22.5:
   version "1.22.5"
-  resolved "https://npm.zhichidata.com/father-build/-/father-build-1.22.5.tgz#1c49a4b17367a4955cc04a8ad52e10ba27a31220"
+  resolved "https://registry.npmjs.org/father-build/-/father-build-1.22.5.tgz#1c49a4b17367a4955cc04a8ad52e10ba27a31220"
   integrity sha512-SoEghgQ5fZb3UbwyFQAhow4UBqRkxCG7yIdLgqoPS6dde+3YYjZztMyubXCjuNQ8o3UAIWczuBsww4wzpGFP/g==
   dependencies:
     "@babel/core" "7.18.2"

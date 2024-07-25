@@ -1,6 +1,6 @@
 {
   "name": "@tsword/form-editor",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "低代码",
   "keywords": [
     "react"
@@ -14,6 +14,7 @@
     "url": "https://github.com/lawxy/low-code.git"
   },
   "license": "MIT",
+  "author": "Roddan",
   "sideEffects": [
     "es/**/style/*",
     "lib/**/style/*",
@@ -37,7 +38,6 @@
     "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky install && dumi setup",
-    "prepublishOnly": "npm run build",
     "pub": "node ./scripts/publish",
     "start": "npm run dev",
     "watch": "node ./scripts/watch"
@@ -115,5 +115,8 @@
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
   },
-  "authors": []
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

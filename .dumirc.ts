@@ -11,6 +11,6 @@ export default defineConfig({
   },
   chainWebpack,
   alias: {
-    '@': '/src/form-editor',
+    '@': '/src',
   },
 });

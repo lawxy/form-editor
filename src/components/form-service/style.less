@@ -1,0 +1,46 @@
+.fe {
+  &-form-service-wrap {
+    padding: 0 8px;
+    margin-top: 10px;
+  }
+  &-form-service-add {
+    width: 100%;
+    color: #4096ff;
+  }
+
+  &-action-select {
+    width: 173px;
+  }
+
+  &-service-modal-editor {
+    .margin {
+      display: none;
+    }
+    .monaco-scrollable-element {
+      width: 100% !important;
+      left: 0 !important;
+    }
+  }
+  &-service-modal-form-item {
+    label {
+      width: 100%;
+      &::after {
+        display: none;
+      }
+    }
+  }
+  &-service-item {
+    background-color: var(--primary-color);
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    color: #333;
+    margin-top: 8px;
+    padding: 0 12px;
+    display: flex;
+    justify-content: space-between;
+    span.anticon {
+      margin-left: 8px;
+      cursor: pointer;
+    }
+  }
+}

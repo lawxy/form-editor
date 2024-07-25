@@ -9,3 +9,4 @@ node_modules
 .idea
 .history
 /docs-dist
+.npmrc
