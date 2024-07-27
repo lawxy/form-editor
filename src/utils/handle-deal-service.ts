@@ -8,6 +8,7 @@ const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {
   if (eventType !== EEventType.LINK_SERVICE) return;
 
   const store = dynamicGetStore();
+
   eventTargets?.forEach((target) => {
     const { targetServiceId, sourceId, linkRefreshField, getFieldFromService } =
       target;

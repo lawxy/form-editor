@@ -11,11 +11,6 @@ import { Preview } from './preview';
 
 import { AttributesSetting } from '../attributes-setting';
 
-const methodOptions = RequestMethod?.map((item) => ({
-  label: item,
-  value: item,
-}));
-
 const defaultInterceptor = `axios.interceptors.request.use(config =>{
   return config
 })
@@ -54,6 +49,11 @@ const ServiceModal: FC<
   const [form] = Form.useForm();
   Form.useWatch('previewData', form);
   Form.useWatch('interceptors', form);
+
+  const methodOptions = RequestMethod.map((item) => ({
+    label: item,
+    value: item,
+  }));
 
   const getDefaultService = (serv?: TFormSerive) => {
     if (serv?.id) return serv;

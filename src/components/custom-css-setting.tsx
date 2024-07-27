@@ -95,7 +95,6 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
           language="css"
           value={value}
           onChange={(v) => {
-            console.log('css seting');
             setCanSave(true);
             tempVal.current = v as string;
           }}

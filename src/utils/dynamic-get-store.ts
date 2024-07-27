@@ -1,8 +1,7 @@
 /**
- * 解决utils中使用store导致循环引用的问题
+ * 解决utils中使用store导致循环引用的问题，并且兼容vite
  */
-export const dynamicGetStore = async () => {
-  // return require('@/store').default; // 使用 require 动态加载
-  const store = await import('@/store');
-  return store.default;
+export const dynamicGetStore = () => {
+  const module = require('@/store');
+  return module.default || module;
 };
