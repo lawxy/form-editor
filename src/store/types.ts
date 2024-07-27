@@ -4,6 +4,7 @@ import type {
   IFormAttributesProps,
   TFormSerive,
   TFormSerives,
+  IFormSchema,
 } from '../types';
 
 export interface IElementStore {
@@ -93,10 +94,5 @@ export interface IBaseStore
     IElementStore,
     IFormAttrStore,
     IFieldValuesStore {
-  getFormJson: () => {
-    formElements: IBaseElement[];
-    fieldValues: Record<string, any>;
-    formAttrs: IFormAttributesProps;
-    formServices: TFormSerives;
-  };
+  getSchema: () => IFormSchema;
 }

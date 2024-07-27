@@ -1,12 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useImperativeHandle } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { ConfigProvider, Form } from 'antd';
+import type { FormInstance } from 'antd';
 import locale from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
 import type { TMode, IFormSchema } from './types';
 import { prefixCls, defaultFormAttrs } from './const';
 import store from './store';
-import { EditorContext } from './context';
+import { EditorContext, type IEditorContext } from './context';
 
 import './index.less';
 
@@ -14,16 +15,18 @@ export * from './views';
 export * from './const';
 export * from './utils';
 
-export interface IForm {
-  mode: TMode;
+export interface IEditorInstance {
+  form: FormInstance;
+  getSchema: () => void;
+}
+export interface IFormProps extends IEditorContext {
   defaultValue?: IFormSchema;
 }
 
-export const FormEditor: FC<PropsWithChildren<IForm>> = ({
-  mode,
-  defaultValue,
-  children,
-}) => {
+const FormEditorContent: React.ForwardRefRenderFunction<
+  IEditorInstance,
+  PropsWithChildren<IFormProps>
+> = ({ mode, defaultValue, onSave, children }, ref) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -51,9 +54,16 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
     store.setFormServices(formServices);
   }, [defaultValue]);
 
+  useImperativeHandle(ref, () => ({
+    form,
+    getSchema() {
+      return store.getSchema();
+    },
+  }));
+
   const contextValue = useMemo(() => {
-    return { mode };
-  }, [mode]);
+    return { mode, onSave };
+  }, [mode, onSave]);
 
   return (
     <EditorContext.Provider value={contextValue}>
@@ -65,3 +75,7 @@ export const FormEditor: FC<PropsWithChildren<IForm>> = ({
     </EditorContext.Provider>
   );
 };
+
+export const FormEditor = React.forwardRef<IEditorInstance, IFormProps>(
+  FormEditorContent,
+);

@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import { Popconfirm, message } from 'antd';
 import { observer } from 'mobx-react-lite';
+import { cloneDeep } from 'lodash-es';
+import { useEditorContext } from '@/context';
 import { prefixCls } from '@/const';
 import store from '@/store';
 import { PreviewJson } from './preview-json';
@@ -19,6 +21,7 @@ const ActionItem: React.FC<
 };
 
 const ActionGroup = () => {
+  const { onSave } = useEditorContext();
   const handleSave = useCallback(() => {
     /**
      * todo 组件属性校验(暂时没这个需求)
@@ -34,8 +37,9 @@ const ActionGroup = () => {
     //   message.error('表单校验失败')
     //   return;
     // }
-
-    localStorage.setItem('schema', JSON.stringify(store.getFormJson()));
+    console.log();
+    onSave?.(cloneDeep(store.getSchema()));
+    localStorage.setItem('schema', JSON.stringify(store.getSchema()));
     message.success('保存成功');
   }, []);
 

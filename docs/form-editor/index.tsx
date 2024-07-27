@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   FormEditor,
   Material,
@@ -6,8 +6,16 @@ import {
   FormCanvas,
 } from '@roddan/form-editor';
 const Comp = () => {
+  const ref = useRef();
   return (
-    <FormEditor mode="design">
+    <FormEditor
+      mode="design"
+      ref={ref}
+      onSave={(schema) => {
+        console.log('schema');
+        console.log(schema);
+      }}
+    >
       <Material />
       <FormCanvas />
       <Settings />

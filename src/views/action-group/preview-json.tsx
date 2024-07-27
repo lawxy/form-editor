@@ -26,7 +26,7 @@ export const PreviewJson: FC<PropsWithChildren> = ({ children }) => {
         <div style={{ marginTop: 20 }}>
           <MonacoEditor
             language="json"
-            value={JSON.stringify(store.getFormJson(), null, 2)}
+            value={JSON.stringify(store.getSchema(), null, 2)}
             style={{
               width: '100%',
               height: 560,

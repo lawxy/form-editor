@@ -33,7 +33,7 @@ class Store {
     makeAutoObservable(this);
   }
 
-  getFormJson() {
+  getSchema() {
     return {
       formElements: this.formElements,
       fieldValues: this.fieldValues,
