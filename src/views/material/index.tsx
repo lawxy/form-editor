@@ -4,7 +4,8 @@ import { prefixCls } from '@/const';
 import { idCreator } from '@/utils';
 import { ElementsList } from '@/elements';
 import type { IDragElementProp } from '@/types';
-import { ReactSortable } from '@/components/react-sortable';
+// import { ReactSortable } from '@/components/react-sortable';
+import { ReactSortable } from '@roddan/ui';
 import { CONTAINERS } from '@/const';
 import store from '@/store';
 

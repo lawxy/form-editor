@@ -1,8 +1,8 @@
 import React, { useMemo, useState, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, message } from 'antd';
+import { MonacoEditor, useMonaco } from '@roddan/ui';
 import { useCurrent, useDesignEffect } from '@/hooks';
-import { MonacoEditor, useMonaco } from './monaco-editor';
 
 import { SettingItem } from './setting-common';
 
@@ -53,7 +53,7 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
 
     useDesignEffect(() => {
       if (!monaco) return;
-      console.log(monaco.languages);
+      // console.log(monaco.languages);
       monaco.languages.css.cssDefaults.setDiagnosticsOptions({
         validate: true,
         lint: {
@@ -95,6 +95,7 @@ export const CustomCssSetting: React.FC<{ type: 'element' | 'form' }> =
           language="css"
           value={value}
           onChange={(v) => {
+            console.log('css seting');
             setCanSave(true);
             tempVal.current = v as string;
           }}

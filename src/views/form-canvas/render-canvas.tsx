@@ -9,7 +9,8 @@ import eventStore from '@/store/eventStore';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
 import { handleOnEvent, parseCSS, handleSort } from '@/utils';
-import { ReactSortable } from '@/components/react-sortable';
+// import { ReactSortable } from '@/components/react-sortable';
+import { ReactSortable } from '@roddan/ui';
 
 import './style.less';
 export interface IEditorCanvasProp {

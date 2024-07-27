@@ -9,10 +9,10 @@
     "paths": {
       "@@/*": [".dumi/tmp/*"],
       "@/*": ["src/*"],
-      "@tsword/form-editor": ["src/index.ts"],
-      "@tsword/form-editor/*": ["./src/*", "*"],
-      "@tsword/form-editor/es/*": ["src/*"],
-      "@tsword/form-editor/lib/*": ["src/*"]
+      "@roddan/form-editor": ["src/index.ts"],
+      "@roddan/form-editor/*": ["./src/*", "*"],
+      "@roddan/form-editor/es/*": ["src/*"],
+      "@roddan/form-editor/lib/*": ["src/*"]
     }
   },
   "include": [".dumirc.ts", "src/**/*"]

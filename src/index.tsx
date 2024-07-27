@@ -10,9 +10,9 @@ import { EditorContext } from './context';
 
 import './index.less';
 
+export * from './views';
 export * from './const';
 export * from './utils';
-export * from './views';
 
 export interface IForm {
   mode: TMode;

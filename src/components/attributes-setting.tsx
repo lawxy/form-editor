@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Modal, message } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { MonacoEditor, useMonaco } from '@/components';
+import { MonacoEditor } from '@roddan/ui';
 
 export const AttributesSetting: FC<
   PropsWithChildren<{
@@ -51,7 +51,7 @@ export const AttributesSetting: FC<
           }
           language={editorType}
           value={val}
-          onChange={setVal}
+          onChange={(v) => setVal(v!)}
           onValidate={(errors) => {
             // 参数变量未使用时不校验
             isJsonValidate.current =

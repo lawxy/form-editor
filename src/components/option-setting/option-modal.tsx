@@ -13,7 +13,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { MinusIcon, PlusIcon } from '@/components';
 import { cloneDeep } from 'lodash-es';
 import { observer } from 'mobx-react-lite';
-import { TableSortable } from '@/components';
+import { TableSortable } from '@roddan/ui';
 
 import { BatchGenerateOptions } from '../batch-generate-options';
 

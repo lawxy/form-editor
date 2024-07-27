@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Input, Space, Popconfirm, Select } from 'antd';
 import { MinusCircleOutlined } from '@ant-design/icons';
 import { SettingWrap, PlusIcon, SettingItem } from '@/components';
-import { TableSortable } from '@/components';
+import { TableSortable } from '@roddan/ui';
 import store from '@/store';
 import { createPanel } from './render-tabs';
 

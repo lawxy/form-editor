@@ -1,12 +1,10 @@
 import React from 'react'
 import * as Antd from 'antd';
 import * as AntdIcons from '@ant-design/icons'
-const Babel = require("@babel/standalone");
+// const Babel = require("@babel/standalone");
 
 export const parseJSX = (code: string) => {
-  const transformedCode = Babel.transform(code, {
-    plugins: ['transform-react-jsx']
-  }).code;
+  const transformedCode = ''
   const componentNames = Object.keys(Antd);
 
   // @ts-ignore

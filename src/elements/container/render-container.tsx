@@ -8,7 +8,8 @@ import store from '@/store';
 import { ElementLayout } from '@/components';
 import type { IBaseElement } from '@/types';
 import { ElementsList } from '@/elements/export';
-import { ReactSortable } from '@/components/react-sortable';
+// import { ReactSortable } from '@/components/react-sortable';
+import { ReactSortable } from '@roddan/ui';
 import './style.less';
 
 export const RenderContainerContent: React.FC<{
@@ -20,8 +21,8 @@ export const RenderContainerContent: React.FC<{
 
   return (
     <ElementLayout element={element}>
-      <ReactSortable
-        list={element.children}
+      <ReactSortable<IBaseElement>
+        list={element.children || []}
         animation={150}
         group="nested"
         onSort={(e) => handleSort(e, element.id!)}

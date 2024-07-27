@@ -11,7 +11,7 @@ import { Preview } from './preview';
 
 import { AttributesSetting } from '../attributes-setting';
 
-const methodOptions = RequestMethod.map((item) => ({
+const methodOptions = RequestMethod?.map((item) => ({
   label: item,
   value: item,
 }));

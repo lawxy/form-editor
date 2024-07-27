@@ -4,7 +4,7 @@ import {
   Material,
   Settings,
   FormCanvas,
-} from '@tsword/form-editor';
+} from '@roddan/form-editor';
 const Comp = () => {
   return (
     <FormEditor mode="design">

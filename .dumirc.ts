@@ -1,5 +1,4 @@
 import { defineConfig } from 'dumi';
-import chainWebpack from './webpack';
 
 export default defineConfig({
   outputPath: 'docs-dist',
@@ -9,8 +8,8 @@ export default defineConfig({
   themeConfig: {
     name: 'form-editor',
   },
-  chainWebpack,
   alias: {
     '@': '/src',
+    // monaco: '/Users/luoxy/Desktop/code/mine/editor-cmp/dist/index.js',
   },
 });
