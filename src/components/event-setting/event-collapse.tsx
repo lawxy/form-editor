@@ -1,6 +1,8 @@
-import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
+import React, { useEffect, useRef } from 'react';
+import type { PropsWithChildren, FC } from 'react';
 import { Collapse, Dropdown, Popconfirm } from 'antd';
-import React, { PropsWithChildren, type FC } from 'react';
+import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
+import Sortable, { type SortableEvent } from 'sortablejs';
 
 import { prefixCls } from '@/const';
 import { eventTypeChinese, type TCustomEvent } from '@/types';
@@ -9,7 +11,25 @@ export const EventCollapse: FC<{
   onDelete: (id: string) => void;
   collopaseItems: Array<{ label: string; events: TCustomEvent[] }>;
   EditComponent: FC<PropsWithChildren<{ evt: TCustomEvent }>>;
-}> = ({ collopaseItems, onDelete, EditComponent }) => {
+  onSort: (e: SortableEvent) => void;
+}> = ({ collopaseItems, onDelete, EditComponent, onSort }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const wrap = ref.current.querySelector(
+      '.ant-collapse-content-box',
+    ) as HTMLElement;
+
+    if (!wrap) return;
+
+    new Sortable(wrap, {
+      animation: 150,
+      onSort,
+    });
+  }, [onSort]);
+
   const items = collopaseItems.map((item, i) => ({
     key: i,
     label: item.label,
@@ -43,7 +63,7 @@ export const EventCollapse: FC<{
     )),
   }));
   return (
-    <div className={prefixCls('event-collapse')}>
+    <div className={prefixCls('event-collapse')} ref={ref}>
       <Collapse
         ghost
         items={items}

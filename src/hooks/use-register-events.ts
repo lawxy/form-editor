@@ -5,8 +5,8 @@ import {
   handleOnEvent,
   type TEventFormatFunctions,
 } from '@/utils';
-import { useForceRender, useFormEffect } from '.';
 import eventStore from '@/store/eventStore';
+import { useForceRender, useFormEffect } from '.';
 
 export * from '@/utils/handle-emit-event';
 
@@ -23,7 +23,7 @@ export const useRegisterEvents: IRegisterEvents = (element) => {
     if (!id) return;
     eventStore.emitter.on(id!, handleOnEvent);
     return () => {
-      eventStore.emitter.off(id!, handleOnEvent);
+      eventStore.emitter.off(id!);
     };
   }, [id]);
 

@@ -68,14 +68,14 @@ export const triggerRefreshService = async (params: TEmitData) => {
   }
 };
 
-export const handleOnEvent = (params: TEmitData) => {
+export const handleOnEvent = async (params: TEmitData) => {
   const { eventType } = params;
   switch (eventType) {
     case EEventType.SETTING_VALUE:
-      triggerSettingValue(params);
+      await triggerSettingValue(params);
       break;
     case EEventType.UPDATE_SERVICE:
-      triggerRefreshService(params);
+      await triggerRefreshService(params);
       break;
   }
 };

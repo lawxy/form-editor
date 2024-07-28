@@ -172,4 +172,8 @@ export interface IEventTarget {
    * 设置关联服务后，获取服务返回的字段值 比如data.a.b
    */
   getFieldFromService?: string;
+  /**
+   * 串联执行，如果设置为true, 同配置列表下后面的事件会等待此事件执行完成
+   */
+  series?: boolean;
 }

@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import {
   EEventAction,
   EEventType,
@@ -5,10 +6,10 @@ import {
   TCustomEvent,
   TCustomEvents,
   EValidateType,
+  eventActionInChinese,
 } from '@/types';
 import { EventEmitter, getValueFromInput, dynamicGetStore } from '@/utils';
 import { validateParams } from '.';
-
 interface IParams {
   emitter: EventEmitter;
   eventType: EEventType;
@@ -30,27 +31,36 @@ export type TEmitData = Partial<IEventTarget> & {
   value?: any;
 };
 
+const withSeries = (fn: (v: IParams) => Promise<any>, series?: boolean) => {
+  Object.assign(fn, { series });
+  return fn;
+};
+
 // 设置组件值
 export const emitSettingValue = (params: IParams) => {
   const { emitter, eventType, target } = params;
-  const { targetElementId, setValue, targetPayload } = target;
+  const { targetElementId, setValue, targetPayload, series } = target;
   const validate = validateParams([targetElementId, targetPayload]);
   if (!validate) return;
-  return (value: any) => {
-    emitter.emit(targetElementId!, {
-      targetElementId,
-      eventType,
-      setValue: getValueFromInput(setValue),
-      targetPayload,
-      value,
-    } as TEmitData);
-  };
+
+  return withSeries(
+    async (value: any) =>
+      await emitter.emit(targetElementId!, {
+        targetElementId,
+        eventType,
+        setValue: getValueFromInput(setValue),
+        targetPayload,
+        value,
+      } as TEmitData),
+    series,
+  );
 };
 
 // 刷新服务
 export const emitRefreshService = (params: IParams) => {
   const { emitter, eventType, target } = params;
-  const { targetServiceId, targetPayload, refreshFlag, updateField } = target;
+  const { targetServiceId, targetPayload, refreshFlag, updateField, series } =
+    target;
   const validate = validateParams([
     targetServiceId,
     targetPayload,
@@ -60,16 +70,19 @@ export const emitRefreshService = (params: IParams) => {
   const store = dynamicGetStore();
 
   if (!store.getService(targetServiceId!)) return;
-  return (value: any) => {
-    emitter.emit(targetServiceId!, {
-      targetServiceId,
-      eventType,
-      updateField,
-      targetPayload,
-      value,
-      refreshFlag,
-    } as TEmitData);
-  };
+
+  return withSeries(
+    async (value: any) =>
+      await emitter.emit(targetServiceId!, {
+        targetServiceId,
+        eventType,
+        updateField,
+        targetPayload,
+        value,
+        refreshFlag,
+      } as TEmitData),
+    series,
+  );
 };
 
 // 表单校验
@@ -77,10 +90,15 @@ export const emitValidateForm = (params: IParams) => {
   const store = dynamicGetStore();
 
   const { target } = params;
-  const { validateField, sourceId } = target;
+  const { validateField, sourceId, series } = target;
   const fields =
     validateField === EValidateType.CURRENT ? [sourceId] : undefined;
-  return () => store.formInstance?.validateFields(fields);
+  /**
+   * 为什么直接返回 async () => await validateFn(fields) 每次校验报错都会重新加载umi.js
+   * 仅开发环境会这样？测试umi框架也会这样，只要validateFields方法通过await接收，就会重新加载umi.js
+   * */
+
+  return withSeries(() => store.formInstance?.validateFields(fields), series);
 };
 
 export const handleEmitEvent = (
@@ -118,7 +136,24 @@ export const handleEmitEvent = (
     functions,
   ).reduce((memo: TEventFormatFunctions, [action, emitFns]) => {
     // @ts-ignore
-    memo[action] = (v: any) => emitFns.forEach((fn) => fn?.(v));
+    memo[action] = async (v: any) => {
+      for (let i = 0; i < emitFns.length; i++) {
+        const fn: any = emitFns[i];
+        try {
+          if (fn?.series) {
+            await fn?.(v);
+          } else {
+            fn(v);
+          }
+        } catch (e) {
+          console.log(e);
+          return message.error(
+            `${eventActionInChinese[action as EEventAction]}事件报错`,
+          );
+        }
+      }
+    };
+
     return memo;
   }, {});
 

@@ -8,18 +8,15 @@ import {
   changeStateActions,
   EChangeStatePayload,
   refreshOptions,
-  type IEventTarget,
 } from '@/types';
+import type { IConfig } from '.';
 
 const actions = changeStateActions([
   EChangeStatePayload.UPDATE,
   EChangeStatePayload.CLEAR,
   EChangeStatePayload.APPEND,
 ]);
-const RefreshService: React.FC<{
-  onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
-  eventTarget?: IEventTarget;
-}> = ({ onChange, eventTarget }) => {
+const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
   const { targetServiceId, targetPayload, refreshFlag, updateField } =
     eventTarget || {};
 
@@ -37,7 +34,7 @@ const RefreshService: React.FC<{
             key="action"
             defaultValue={targetPayload}
             onChange={(v) => {
-              onChange({ targetPayload: v });
+              onChange?.({ targetPayload: v });
             }}
           />
           &nbsp;
@@ -45,7 +42,7 @@ const RefreshService: React.FC<{
             className={prefixCls('event-input')}
             defaultValue={updateField}
             onChange={(e) => {
-              onChange({ updateField: e.target.value });
+              onChange?.({ updateField: e.target.value });
             }}
           />
           &nbsp;字段
@@ -62,7 +59,7 @@ const RefreshService: React.FC<{
           key="action"
           defaultValue={targetPayload}
           onChange={(v) => {
-            onChange({ targetPayload: v });
+            onChange?.({ targetPayload: v });
           }}
         />
         &nbsp;所有字段，
@@ -71,7 +68,7 @@ const RefreshService: React.FC<{
   };
 
   return (
-    <div style={{ lineHeight: '40px' }}>
+    <>
       <div>
         目标服务 ={' '}
         <Select
@@ -82,7 +79,7 @@ const RefreshService: React.FC<{
           style={{ width: 200 }}
           defaultValue={targetServiceId}
           onChange={(v) => {
-            onChange({ targetServiceId: v });
+            onChange?.({ targetServiceId: v });
           }}
         />
       </div>
@@ -92,11 +89,11 @@ const RefreshService: React.FC<{
         options={refreshOptions}
         defaultValue={refreshFlag}
         onChange={(v) => {
-          onChange({ refreshFlag: v });
+          onChange?.({ refreshFlag: v });
         }}
       />{' '}
       服务
-    </div>
+    </>
   );
 };
 

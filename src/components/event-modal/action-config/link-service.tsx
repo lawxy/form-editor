@@ -5,17 +5,14 @@ import { observer } from 'mobx-react-lite';
 import { prefixCls } from '@/const';
 import store from '@/store';
 import { linkRefreshFieldOptions } from '@/types';
-import type { IEventTarget } from '@/types';
+import type { IConfig } from '.';
 
-const LinkService: React.FC<{
-  onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
-  eventTarget?: IEventTarget;
-}> = ({ onChange, eventTarget }) => {
+const LinkService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
   const { targetServiceId, linkRefreshField, getFieldFromService } =
     eventTarget || {};
 
   return (
-    <div style={{ lineHeight: '40px' }}>
+    <>
       <div>
         目标服务 ={' '}
         <Select
@@ -24,7 +21,7 @@ const LinkService: React.FC<{
           fieldNames={{ label: 'name', value: 'id' }}
           defaultValue={targetServiceId}
           onChange={(v) => {
-            onChange({ targetServiceId: v });
+            onChange?.({ targetServiceId: v });
           }}
         />
       </div>
@@ -34,7 +31,7 @@ const LinkService: React.FC<{
           className={prefixCls('event-select')}
           value={getFieldFromService ?? 'data'}
           onChange={(e) => {
-            onChange({ getFieldFromService: e.target.value });
+            onChange?.({ getFieldFromService: e.target.value });
           }}
         />
       </div>
@@ -45,7 +42,7 @@ const LinkService: React.FC<{
           options={linkRefreshFieldOptions}
           defaultValue={linkRefreshField}
           onChange={(v) => {
-            onChange({ linkRefreshField: v });
+            onChange?.({ linkRefreshField: v });
           }}
         />
         {/* {linkRefreshField === ELinkRefreshField.CUSTOMFIELD && (
@@ -58,7 +55,7 @@ const LinkService: React.FC<{
           />
         )} */}
       </div>
-    </div>
+    </>
   );
 };
 

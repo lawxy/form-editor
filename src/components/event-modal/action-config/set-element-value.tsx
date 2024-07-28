@@ -10,6 +10,7 @@ import {
   EChangeStatePayload,
   type IEventTarget,
 } from '@/types';
+import type { IConfig } from '.';
 
 const getComponentsOptions = () => {
   const options = [];
@@ -30,14 +31,11 @@ const getComponentsOptions = () => {
   return options;
 };
 
-const SetElementValue: React.FC<{
-  onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
-  eventTarget?: IEventTarget;
-}> = ({ onChange, eventTarget }) => {
+const SetElementValue: React.FC<IConfig> = ({ onChange, eventTarget }) => {
   const { targetElementId, targetPayload, setValue } = eventTarget || {};
 
   return (
-    <div style={{ lineHeight: '40px' }}>
+    <>
       <div>
         目标组件 ={' '}
         <Select
@@ -64,7 +62,7 @@ const SetElementValue: React.FC<{
           defaultValue={targetPayload}
           onChange={(v) => {
             const prop: Partial<IEventTarget> = { targetPayload: v };
-            onChange(prop);
+            onChange?.(prop);
           }}
         />
         &nbsp;目标组件值为
@@ -81,13 +79,13 @@ const SetElementValue: React.FC<{
               className={prefixCls('event-input')}
               defaultValue={setValue}
               onChange={(e) => {
-                onChange({ setValue: e.target.value });
+                onChange?.({ setValue: e.target.value });
               }}
             />
           </>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

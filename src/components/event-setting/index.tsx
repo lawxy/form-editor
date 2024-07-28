@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { cloneDeep, groupBy } from 'lodash-es';
 import { observer } from 'mobx-react-lite';
+import { arrayMoveImmutable } from 'array-move';
 import { prefixCls } from '@/const';
 import { useCurrent } from '@/hooks';
 import { handleLinkService, handleUnLinkService } from '@/utils';
@@ -43,19 +44,19 @@ export const EventSetting: React.FC<{
     const events = cloneDeep(current?.events || []);
     if (type === EChangeType.ADD) {
       if (!event?.eventTargets?.length) return;
-      let sameActionEvent: TCustomEvent | undefined = events.find(
-        (existEvent) =>
-          existEvent.eventAction === event.eventAction &&
-          existEvent.eventType === event.eventType,
-      );
-      if (sameActionEvent) {
-        sameActionEvent.eventTargets = sameActionEvent.eventTargets?.concat(
-          event.eventTargets || [],
-        );
-        message.success('新增事件已被合并');
-      } else {
-        events.push(event);
-      }
+      // let sameActionEvent: TCustomEvent | undefined = events.find(
+      //   (existEvent) =>
+      //     existEvent.eventAction === event.eventAction &&
+      //     existEvent.eventType === event.eventType,
+      // );
+      // if (sameActionEvent) {
+      //   sameActionEvent.eventTargets = sameActionEvent.eventTargets?.concat(
+      //     event.eventTargets || [],
+      //   );
+      //   message.success('新增事件已被合并');
+      // } else {
+      // }
+      events.push(event);
       handleLinkService(event);
     } else {
       const idx = current?.events?.findIndex((evt) => event.id === evt.id);
@@ -96,6 +97,11 @@ export const EventSetting: React.FC<{
       </EventModal>
       <EventCollapse
         collopaseItems={formatForCollapse(current?.events || [])}
+        onSort={({ newIndex, oldIndex }) => {
+          const newEvents = cloneDeep(current?.events || []);
+          const afterSort = arrayMoveImmutable(newEvents, newIndex!, oldIndex!);
+          setProp('events', afterSort);
+        }}
         onDelete={handleDelete}
         EditComponent={({ children, evt }) => {
           return (

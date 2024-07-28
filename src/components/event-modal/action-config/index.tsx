@@ -1,38 +1,45 @@
 import React, { useContext, useEffect } from 'react';
-import { Popconfirm, Space } from 'antd';
+import { Popconfirm, Space, Popover } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import c from 'classnames';
 import { cloneDeep } from 'lodash-es';
+import { ReactSortable } from '@roddan/ui';
+import { arrayMoveImmutable } from 'array-move';
 
 import { MinusIcon, PlusIcon } from '@/components/common-icon';
 import { prefixCls } from '@/const';
 import { TCustomEvent, EEventType, IEventTarget, EChangeType } from '@/types';
 import { idCreator } from '@/utils';
+import { WithSeries } from './with-series';
 
 import LinkServcie from './link-service';
 import RefreshService from './refresh-service';
 import SetElementValue from './set-element-value';
 import Validate from './validate';
 import { EventModalContext } from '../context';
-
-const ActionItem: React.FC<{
-  type: EEventType;
-  onChange: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
+export interface IConfig {
+  onChange?: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
   eventTarget?: IEventTarget;
-  last: boolean;
-  onAdd: () => void;
-  onDelete: () => void;
-}> = ({ type, onChange, eventTarget, last, onAdd, onDelete }) => {
+}
+
+const ActionItem: React.FC<
+  IConfig & {
+    type: EEventType;
+    last: boolean;
+    onAdd: () => void;
+    onDelete: () => void;
+  }
+> = ({ type, onChange, eventTarget, last, onAdd, onDelete }) => {
   const renderConfig = () => {
-    const props = { onChange, eventTarget };
     switch (type) {
       case EEventType.SETTING_VALUE:
-        return <SetElementValue {...props} />;
+        return <SetElementValue />;
       case EEventType.UPDATE_SERVICE:
-        return <RefreshService {...props} />;
+        return <RefreshService />;
       case EEventType.LINK_SERVICE:
-        return <LinkServcie {...props} />;
+        return <LinkServcie />;
       case EEventType.VALIDATE:
-        return <Validate {...props} />;
+        return <Validate />;
       default:
         return null;
     }
@@ -43,7 +50,11 @@ const ActionItem: React.FC<{
   return (
     Config && (
       <div className={prefixCls('event-action-config')}>
-        {Config}
+        {Config ? (
+          <WithSeries onChange={onChange} eventTarget={eventTarget}>
+            {Config}
+          </WithSeries>
+        ) : null}
         <Space>
           <Popconfirm title="确认删除" onConfirm={onDelete}>
             <span>
@@ -106,8 +117,9 @@ export const ActionConfig: React.FC<{
     if (
       currentEvent?.eventTargets?.length ||
       operationType === EChangeType.EDIT
-    )
+    ) {
       return;
+    }
     handleChange(EChangeType.ADD);
   }, [currentEvent?.eventTargets, operationType]);
 
@@ -118,9 +130,23 @@ export const ActionConfig: React.FC<{
         style={{ borderRight: 'none' }}
       >
         {title}
+        <Popover content="可拖拽排序">
+          <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
+        </Popover>
       </div>
       {currentEvent?.eventAction && currentEvent?.eventType && (
-        <>
+        <ReactSortable
+          list={currentEvent?.eventTargets || []}
+          onSort={({ newIndex, oldIndex }) => {
+            const newEventTargets = cloneDeep(currentEvent!.eventTargets);
+            const afterMove = arrayMoveImmutable(
+              newEventTargets!,
+              newIndex!,
+              oldIndex!,
+            );
+            handleChangeEvent('eventTargets', afterMove);
+          }}
+        >
           {currentEvent?.eventTargets?.map((eventTarget, i) => (
             <ActionItem
               key={eventTarget.id}
@@ -142,7 +168,7 @@ export const ActionConfig: React.FC<{
               <PlusIcon onClick={() => handleChange(EChangeType.ADD)} />
             </div>
           )}
-        </>
+        </ReactSortable>
       )}
     </div>
   );

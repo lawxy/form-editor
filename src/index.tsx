@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useImperativeHandle } from 'react';
-import type { FC, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 import { ConfigProvider, Form } from 'antd';
 import type { FormInstance } from 'antd';
 import locale from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
-import type { TMode, IFormSchema } from './types';
+import type { IFormSchema } from './types';
 import { prefixCls, defaultFormAttrs } from './const';
 import store from './store';
 import { EditorContext, type IEditorContext } from './context';
