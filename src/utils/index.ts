@@ -15,3 +15,4 @@ export * from './event-emitter';
 export * from './get-value-from-input';
 export * from './handle-sort';
 export * from './dynamic-get-store';
+export * from './function-async';

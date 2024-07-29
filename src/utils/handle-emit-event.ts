@@ -1,5 +1,4 @@
 import { message } from 'antd';
-import { debounce, throttle } from 'lodash-es';
 import {
   EEventAction,
   EEventType,
@@ -11,7 +10,7 @@ import {
   EDelay,
 } from '@/types';
 import { EventEmitter, getValueFromInput, dynamicGetStore } from '@/utils';
-import { validateParams } from '.';
+import { validateParams, asyncDebounce, asyncThrottle } from '.';
 interface IParams {
   emitter: EventEmitter;
   eventType: EEventType;
@@ -33,36 +32,13 @@ export type TEmitData = Partial<IEventTarget> & {
   value?: any;
 };
 
-const withSeries = (fn: (v: IParams) => Promise<any>, series?: boolean) => {
-  Object.assign(fn, { series });
-  return fn;
-};
-
-const debounceProsify = (fn, wait) => {
-  const debouncedFunc = debounce(async (...args) => {
-    await fn(...args);
-  }, wait);
-
-  return (...args) =>
-    new Promise((resolve) => debouncedFunc(...args)?.then(resolve));
-};
-
-const throttleProsify = (fn, wait) => {
-  const throttledFunc = throttle(async (...args) => {
-    await fn(...args);
-  }, wait);
-
-  return (...args) =>
-    new Promise((resolve) => throttledFunc(...args)?.then(resolve));
-};
-
 const withConfig = (fn: (v: IParams) => Promise<any>, target: IEventTarget) => {
   const { series, delayTime, delayType } = target;
   if (delayType === EDelay.DEBOUNCE && delayTime) {
-    fn = debounceProsify(fn, delayTime);
+    fn = asyncDebounce(fn, delayTime);
   }
   if (delayType === EDelay.THROTTLE && delayTime) {
-    fn = throttleProsify(fn, delayTime);
+    fn = asyncThrottle(fn, delayTime);
   }
   Object.assign(fn, { series });
   return fn;
