@@ -126,6 +126,16 @@ export const validateTypeOptions = [
   { label: '当前组件', value: EValidateType.CURRENT },
   { label: '表单', value: EValidateType.ALL },
 ];
+
+export enum EDelay {
+  THROTTLE = 'throttle',
+  DEBOUNCE = 'debounce',
+}
+
+export const delayOptions = [
+  { label: '防抖', value: EDelay.DEBOUNCE },
+  { label: '节流', value: EDelay.THROTTLE },
+];
 export interface IEventTarget {
   id: string;
   /**
@@ -176,4 +186,9 @@ export interface IEventTarget {
    * 串联执行，如果设置为true, 同配置列表下后面的事件会等待此事件执行完成
    */
   series?: boolean;
+  /**
+   * 防抖或节流
+   */
+  delayType?: 'throttle' | 'debounce';
+  delayTime?: number;
 }

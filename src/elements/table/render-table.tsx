@@ -12,7 +12,7 @@ const RenderTableContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ fieldValue = [], element }) => {
-  const { tableColumns = '[]', tableAttributes = '{}' } = element;
+  const { tableColumns = '[]', tableAttributes = '{}', linkLoading } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -26,6 +26,7 @@ const RenderTableContent: React.FC<{
         columns={parseJSX(tableColumns)}
         rowKey="id"
         dataSource={fieldValue}
+        loading={linkLoading}
         {...parseJSX(`[${tableAttributes}]`)[0]}
       />
     </ElementLayout>

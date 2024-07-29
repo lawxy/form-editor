@@ -61,7 +61,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
     });
     return () => {
       store.formServices.forEach((serv) => {
-        eventStore.emitter.off(serv.id!, handleOnEvent);
+        eventStore.emitter.off(serv.id!);
       });
     };
   }, [store.formServices]);

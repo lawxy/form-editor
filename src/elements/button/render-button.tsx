@@ -10,7 +10,7 @@ const RenderButtonContent: React.FC<{
   element: IBaseElement;
 }> = ({ element }) => {
   const { eventFunctions } = useRegisterEvents(element);
-  const { btnText } = element;
+  const { btnText, linkLoading } = element;
 
   return (
     <ElementLayout element={element}>
@@ -18,6 +18,7 @@ const RenderButtonContent: React.FC<{
         onClick={() => {
           eventFunctions[EEventAction.ON_CLICK]?.();
         }}
+        loading={linkLoading}
       >
         {btnText}
       </Button>

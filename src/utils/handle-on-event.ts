@@ -49,12 +49,18 @@ export const triggerRefreshService = async (params: TEmitData) => {
 
   // 刷新服务
   if (refreshFlag) {
-    const serviceRes: any = await triggerService(targetServiceId!);
     // 触发关联服务
     const { linkingElements } = currentService;
+    linkingElements?.forEach((item) => {
+      const { id } = item;
+      store.setElementProp(id, 'linkLoading', true);
+    });
+    const serviceRes: any = await triggerService(targetServiceId!);
 
     linkingElements?.forEach((item) => {
       const { id, field, getFieldFromService = 'data' } = item;
+      store.setElementProp(id, 'linkLoading', false);
+
       const finalRes: any = result(serviceRes, getFieldFromService);
 
       const element = store.getElement(id);

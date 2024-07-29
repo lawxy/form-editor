@@ -4,7 +4,6 @@ import type { SortableEvent } from 'sortablejs';
 
 export const handleSort = async (e: SortableEvent, parentId: string) => {
   const store = await dynamicGetStore();
-  console.log('store', store);
   const { from, to, newIndex, item, oldIndex } = e;
   // 目标不在当前组件的不管  否则表单和容器组件间拖拽 会触发两次
   if (to?.dataset?.id !== parentId) return;

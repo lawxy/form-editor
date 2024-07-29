@@ -11,7 +11,7 @@ const RenderSelectContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ element, fieldValue }) => {
-  const { id, valueOptions, placeholder } = element;
+  const { id, valueOptions, placeholder, linkLoading } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -33,6 +33,7 @@ const RenderSelectContent: React.FC<{
         placeholder={placeholder}
         options={valueOptions}
         onChange={onChange}
+        loading={linkLoading}
       />
     </ElementLayout>
   );

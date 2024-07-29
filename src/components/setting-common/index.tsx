@@ -1,7 +1,6 @@
 import React, { type FC, type PropsWithChildren } from 'react';
-import { Popover } from 'antd';
 import styled from 'styled-components';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { QuestionPopover } from '../question-popover';
 import { prefixCls } from '@/const';
 import './style.less';
 
@@ -33,11 +32,7 @@ export const SettingItem: FC<
     >
       <div className={prefixCls('setting-item-label')}>
         {label}&nbsp;
-        {tips && (
-          <Popover content={tips}>
-            <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
-          </Popover>
-        )}
+        {tips && <QuestionPopover content={tips} />}
       </div>
       <div className={prefixCls('setting-item-value')}>{children}</div>
     </Flex>

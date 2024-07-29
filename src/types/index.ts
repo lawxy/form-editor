@@ -1,5 +1,7 @@
 export * from './event';
 export * from './service';
+export * from '../store/types';
+
 import { TCustomEvents } from './event';
 import { TFormSerives } from './service';
 import { EEventAction } from './event';
@@ -164,6 +166,10 @@ export interface IBaseElement {
    * 子节点
    */
   children?: Array<IBaseElement>;
+  /**
+   * 组件关联服务时的loading
+   */
+  linkLoading?: boolean;
 }
 export interface IFormAttributesProps {
   formName?: string;

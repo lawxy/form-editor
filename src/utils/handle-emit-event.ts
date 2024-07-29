@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import { debounce, throttle } from 'lodash-es';
 import {
   EEventAction,
   EEventType,
@@ -7,6 +8,7 @@ import {
   TCustomEvents,
   EValidateType,
   eventActionInChinese,
+  EDelay,
 } from '@/types';
 import { EventEmitter, getValueFromInput, dynamicGetStore } from '@/utils';
 import { validateParams } from '.';
@@ -36,6 +38,36 @@ const withSeries = (fn: (v: IParams) => Promise<any>, series?: boolean) => {
   return fn;
 };
 
+const debounceProsify = (fn, wait) => {
+  const debouncedFunc = debounce(async (...args) => {
+    await fn(...args);
+  }, wait);
+
+  return (...args) =>
+    new Promise((resolve) => debouncedFunc(...args)?.then(resolve));
+};
+
+const throttleProsify = (fn, wait) => {
+  const throttledFunc = throttle(async (...args) => {
+    await fn(...args);
+  }, wait);
+
+  return (...args) =>
+    new Promise((resolve) => throttledFunc(...args)?.then(resolve));
+};
+
+const withConfig = (fn: (v: IParams) => Promise<any>, target: IEventTarget) => {
+  const { series, delayTime, delayType } = target;
+  if (delayType === EDelay.DEBOUNCE && delayTime) {
+    fn = debounceProsify(fn, delayTime);
+  }
+  if (delayType === EDelay.THROTTLE && delayTime) {
+    fn = throttleProsify(fn, delayTime);
+  }
+  Object.assign(fn, { series });
+  return fn;
+};
+
 // 设置组件值
 export const emitSettingValue = (params: IParams) => {
   const { emitter, eventType, target } = params;
@@ -43,7 +75,7 @@ export const emitSettingValue = (params: IParams) => {
   const validate = validateParams([targetElementId, targetPayload]);
   if (!validate) return;
 
-  return withSeries(
+  return withConfig(
     async (value: any) =>
       await emitter.emit(targetElementId!, {
         targetElementId,
@@ -52,7 +84,7 @@ export const emitSettingValue = (params: IParams) => {
         targetPayload,
         value,
       } as TEmitData),
-    series,
+    target,
   );
 };
 
@@ -71,7 +103,7 @@ export const emitRefreshService = (params: IParams) => {
 
   if (!store.getService(targetServiceId!)) return;
 
-  return withSeries(
+  return withConfig(
     async (value: any) =>
       await emitter.emit(targetServiceId!, {
         targetServiceId,
@@ -81,7 +113,7 @@ export const emitRefreshService = (params: IParams) => {
         value,
         refreshFlag,
       } as TEmitData),
-    series,
+    target,
   );
 };
 
@@ -98,7 +130,10 @@ export const emitValidateForm = (params: IParams) => {
    * 仅开发环境会这样？测试umi框架也会这样，只要validateFields方法通过await接收，就会重新加载umi.js
    * */
 
-  return withSeries(() => store.formInstance?.validateFields(fields), series);
+  return withConfig(
+    () => store.formInstance?.validateFields(fields) as Promise<any>,
+    target,
+  );
 };
 
 export const handleEmitEvent = (

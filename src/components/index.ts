@@ -12,3 +12,4 @@ export * from './reg-pattern';
 export * from './setting-common';
 export * from './tabs-setting';
 export * from './common-icon';
+export * from './question-popover';

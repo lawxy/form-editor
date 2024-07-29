@@ -1,16 +1,15 @@
 import React, { useContext, useEffect } from 'react';
-import { Popconfirm, Space, Popover } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Popconfirm, Space } from 'antd';
 import c from 'classnames';
 import { cloneDeep } from 'lodash-es';
 import { ReactSortable } from '@roddan/ui';
 import { arrayMoveImmutable } from 'array-move';
 
-import { MinusIcon, PlusIcon } from '@/components/common-icon';
+import { MinusIcon, PlusIcon, QuestionPopover } from '@/components';
 import { prefixCls } from '@/const';
 import { TCustomEvent, EEventType, IEventTarget, EChangeType } from '@/types';
 import { idCreator } from '@/utils';
-import { WithSeries } from './with-series';
+import { WithCommon } from './with-common';
 
 import LinkServcie from './link-service';
 import RefreshService from './refresh-service';
@@ -24,14 +23,14 @@ export interface IConfig {
 
 const ActionItem: React.FC<
   IConfig & {
-    type: EEventType;
     last: boolean;
     onAdd: () => void;
     onDelete: () => void;
+    event: TCustomEvent;
   }
-> = ({ type, onChange, eventTarget, last, onAdd, onDelete }) => {
+> = ({ onChange, eventTarget, last, onAdd, onDelete, event }) => {
   const renderConfig = () => {
-    switch (type) {
+    switch (event.eventType) {
       case EEventType.SETTING_VALUE:
         return <SetElementValue />;
       case EEventType.UPDATE_SERVICE:
@@ -51,9 +50,13 @@ const ActionItem: React.FC<
     Config && (
       <div className={prefixCls('event-action-config')}>
         {Config ? (
-          <WithSeries onChange={onChange} eventTarget={eventTarget}>
+          <WithCommon
+            event={event}
+            onChange={onChange}
+            eventTarget={eventTarget}
+          >
             {Config}
-          </WithSeries>
+          </WithCommon>
         ) : null}
         <Space>
           <Popconfirm title="确认删除" onConfirm={onDelete}>
@@ -130,9 +133,7 @@ export const ActionConfig: React.FC<{
         style={{ borderRight: 'none' }}
       >
         {title}
-        <Popover content="可拖拽排序">
-          <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
-        </Popover>
+        <QuestionPopover content="可拖拽排序" />
       </div>
       {currentEvent?.eventAction && currentEvent?.eventType && (
         <ReactSortable
@@ -154,6 +155,7 @@ export const ActionConfig: React.FC<{
               onChange={(targetAttr) =>
                 handleChange(EChangeType.EDIT, targetAttr, i)
               }
+              event={currentEvent}
               eventTarget={eventTarget}
               last={i === currentEvent?.eventTargets!.length - 1}
               onAdd={() => handleChange(EChangeType.ADD)}

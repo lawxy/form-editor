@@ -1,8 +1,8 @@
 import React from 'react';
-import { Input, Select, Popover } from 'antd';
+import { Input, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { QuestionCircleOutlined } from '@ant-design/icons';
 
+import { QuestionPopover } from '@/components';
 import store from '@/store';
 import { prefixCls } from '@/const';
 import {
@@ -45,7 +45,7 @@ const SetElementValue: React.FC<IConfig> = ({ onChange, eventTarget }) => {
           style={{ width: 200 }}
           defaultValue={targetElementId}
           onChange={(v) => {
-            onChange({ targetElementId: v });
+            onChange?.({ targetElementId: v });
           }}
         />
       </div>
@@ -71,9 +71,7 @@ const SetElementValue: React.FC<IConfig> = ({ onChange, eventTarget }) => {
         ) : (
           <>
             &nbsp;
-            <Popover content="按照基本数据类型填写, 比如 true 或 1 或 '1'">
-              <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
-            </Popover>
+            <QuestionPopover content="按照基本数据类型填写, 比如 true 或 1 或 '1'" />
             &nbsp;
             <Input
               className={prefixCls('event-input')}

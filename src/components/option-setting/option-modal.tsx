@@ -1,15 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
-import {
-  Modal,
-  Space,
-  Input,
-  message,
-  Popover,
-  type TableColumnProps,
-} from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { MinusIcon, PlusIcon } from '@/components';
+import { Modal, Space, Input, message, type TableColumnProps } from 'antd';
+import { MinusIcon, PlusIcon, QuestionPopover } from '@/components';
 import { cloneDeep } from 'lodash-es';
 import { observer } from 'mobx-react-lite';
 import { TableSortable } from '@roddan/ui';
@@ -123,9 +115,7 @@ const OptionModal: FC<PropsWithChildren> = ({ children }) => {
             title={
               <>
                 属性设置&nbsp;
-                <Popover content="格式: 属性名: 属性值, 多字段换行分隔">
-                  <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
-                </Popover>
+                <QuestionPopover content="格式: 属性名: 属性值, 多字段换行分隔" />
               </>
             }
             options={valueOptions}

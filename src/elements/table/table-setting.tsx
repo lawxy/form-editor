@@ -1,10 +1,13 @@
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Button, Popover } from 'antd';
-import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { Button } from 'antd';
+import { observer } from 'mobx-react-lite';
 
-import { AttributesSetting } from '@/components';
-import { SettingItem, SettingWrap } from '@/components';
+import {
+  AttributesSetting,
+  SettingItem,
+  SettingWrap,
+  QuestionPopover,
+} from '@/components';
 import store from '@/store';
 
 const SettingTableContent = () => {
@@ -53,15 +56,13 @@ const SettingTableContent = () => {
           title={
             <>
               列表项设置&nbsp;
-              <Popover
+              <QuestionPopover
                 content={
                   <>
                     render函数中可直接使用antd组件及AntdIcons.XXX的方式使用icon图标
                   </>
                 }
-              >
-                <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
-              </Popover>
+              />
             </>
           }
           onChange={(val) => {
