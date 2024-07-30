@@ -151,7 +151,6 @@ export const ActionConfig: React.FC<{
           {currentEvent?.eventTargets?.map((eventTarget, i) => (
             <ActionItem
               key={eventTarget.id}
-              type={currentEvent.eventType!}
               onChange={(targetAttr) =>
                 handleChange(EChangeType.EDIT, targetAttr, i)
               }

@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import type { PropsWithChildren, FC } from 'react';
 import { Collapse, Dropdown, Popconfirm } from 'antd';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
-import Sortable, { type SortableEvent } from 'sortablejs';
+import { Sortable } from '@roddan/ui';
+import type { SortableEvent } from 'sortablejs';
 
 import { prefixCls } from '@/const';
 import { eventTypeChinese, type TCustomEvent } from '@/types';

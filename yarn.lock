@@ -2743,10 +2743,10 @@
     rc-resize-observer "^1.3.1"
     rc-util "^5.38.0"
 
-"@roddan/ui@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.npmjs.org/@roddan/ui/-/ui-0.0.3.tgz#a5034e031c9000d73d0fe51bbb1d61a5b66eab86"
-  integrity sha512-cjDaq3DPlSDdnbf2TWtuoCJOD4LSV0Uf6ZIqBvGs6YwTDCKbwM+E0ZHGYbtIdlxA7Go62z7SuS971l6iz+Hp/A==
+"@roddan/ui@0.0.4":
+  version "0.0.4"
+  resolved "https://npm.zhichidata.com/@roddan%2fui/-/ui-0.0.4.tgz#4227dcfff7ddc55f234b3a9a15d7f47e91fc0318"
+  integrity sha512-mVZ47b1/HLOof7P+DUjwRKUeCeIkWpxJP5qVw6FYUsV+EpNSfZk6dJJPn1aJfcKkxoPOVLJ8ChPQ/bi5sM+xrw==
   dependencies:
     "@ant-design/icons" "^5.3.7"
     "@monaco-editor/loader" "^1.4.0"
@@ -6449,6 +6449,8 @@ debug@^3.1.0:
   version "3.2.7"
   resolved "https://registry.npmjs.org/debug/-/debug-3.2.7.tgz#72580b7e9145fb39b6676f9c5e5fb100b934179a"
   integrity sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==
+  dependencies:
+    ms "^2.1.1"
 
 debug@^4.0.0, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4:
   version "4.3.6"
@@ -11802,7 +11804,7 @@ ms@2.1.2:
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-ms@2.1.3, ms@^2.0.0:
+ms@2.1.3, ms@^2.0.0, ms@^2.1.1:
   version "2.1.3"
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==

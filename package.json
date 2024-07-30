@@ -1,6 +1,6 @@
 {
   "name": "@roddan/form-editor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "低代码",
   "keywords": [
     "react"
@@ -69,7 +69,7 @@
     "@babel/core": "^7.24.6",
     "@babel/standalone": "^7.24.6",
     "@monaco-editor/loader": "^1.4.0",
-    "@roddan/ui": "^0.0.3",
+    "@roddan/ui": "0.0.4",
     "@types/styled-components": "^5.1.9",
     "array-move": "^4.0.0",
     "axios": "^1.6.7",
