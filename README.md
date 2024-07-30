@@ -25,8 +25,10 @@
 - <s>打包后 vite mako 报错 1.EventEmitter 不是构造函数(循环依赖问题) 2.umi 报错 monaco(worker 请求报错)</s>
 - <s>组件化 - 兼容保存接口传入</s>
 - <s>事件顺序 比如: 按钮点击先表单校验 再刷新服务</s>
-- <s>组件关联服务时的 loading, 事件防抖节流?</s>
+- <s>组件关联服务时的 loading, 事件防抖节流</s>
+- 去掉 styled-component
 - 静态页面生成
+- 设计模式可通过 modal 传入 schema
 - 组件化 - 自定义组件
 - 组件其余属性、剩余组件支持
 - ssr next

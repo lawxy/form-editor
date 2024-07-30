@@ -21,11 +21,7 @@ const HttpStatusCode = { Ok: 200 };
 
 axios.interceptors.response.use(function (res) {
   try {
-    if (res.status !== HttpStatusCode.Ok) {
-      message.error(DEFAULT_ERROR_MESSAGE);
-      return {};
-    }
-    const { code } = res.data;
+    const { code } = res.data || {};
     if (HttpStatusCode.Ok === code) {
       return res.data;
     }

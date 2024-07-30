@@ -11,6 +11,7 @@ import { EditorContext, type IEditorContext } from './context';
 
 import './index.less';
 
+export * from './types';
 export * from './views';
 export * from './const';
 export * from './utils';
@@ -76,6 +77,7 @@ const FormEditorContent: React.ForwardRefRenderFunction<
   );
 };
 
-export const FormEditor = React.forwardRef<IEditorInstance, IFormProps>(
-  FormEditorContent,
-);
+export const FormEditor = React.forwardRef<
+  IEditorInstance,
+  PropsWithChildren<IFormProps>
+>(FormEditorContent);

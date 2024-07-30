@@ -47,7 +47,7 @@ const withConfig = (fn: (v: IParams) => Promise<any>, target: IEventTarget) => {
 // 设置组件值
 export const emitSettingValue = (params: IParams) => {
   const { emitter, eventType, target } = params;
-  const { targetElementId, setValue, targetPayload, series } = target;
+  const { targetElementId, setValue, targetPayload } = target;
   const validate = validateParams([targetElementId, targetPayload]);
   if (!validate) return;
 
@@ -67,8 +67,7 @@ export const emitSettingValue = (params: IParams) => {
 // 刷新服务
 export const emitRefreshService = (params: IParams) => {
   const { emitter, eventType, target } = params;
-  const { targetServiceId, targetPayload, refreshFlag, updateField, series } =
-    target;
+  const { targetServiceId, targetPayload, refreshFlag, updateField } = target;
   const validate = validateParams([
     targetServiceId,
     targetPayload,
@@ -98,7 +97,7 @@ export const emitValidateForm = (params: IParams) => {
   const store = dynamicGetStore();
 
   const { target } = params;
-  const { validateField, sourceId, series } = target;
+  const { validateField, sourceId } = target;
   const fields =
     validateField === EValidateType.CURRENT ? [sourceId] : undefined;
   /**
@@ -149,12 +148,16 @@ export const handleEmitEvent = (
     // @ts-ignore
     memo[action] = async (v: any) => {
       for (let i = 0; i < emitFns.length; i++) {
-        const fn: any = emitFns[i];
+        const emitFn: any = emitFns[i];
         try {
-          if (fn?.series) {
-            await fn?.(v);
+          if (emitFn?.series) {
+            await emitFn?.(v);
           } else {
-            fn(v);
+            emitFn(v)?.catch(() => {
+              return message.error(
+                `${eventActionInChinese[action as EEventAction]}事件报错`,
+              );
+            });
           }
         } catch (e) {
           console.log(e);
