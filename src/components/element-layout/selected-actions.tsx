@@ -1,54 +1,15 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import c from 'classnames';
 import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 import store from '@/store';
-
-const StyledDiv = styled.div(() => {
-  return `
-    ${css({
-      position: 'absolute',
-      right: 0,
-      top: -8,
-      display: 'flex',
-      zIndex: 20,
-    }).join(';')}
-    .fe-selected-action{
-      ${css({
-        marginRight: 6,
-        borderColor: '#409EFF',
-        color: '#409EFF',
-        background: '#fff',
-        width: 22,
-        height: 22,
-        lineHeight: '20px',
-        textAlign: 'center',
-        borderRadius: '50%',
-        fontSize: 12,
-        border: '1px solid',
-        cursor: 'pointer',
-      }).join(';')}
-      :hover {
-        color: white;
-      }
-    }
-    .copy-action:hover {
-      background: #409EFF;
-    }
-    .delete-action {
-      border-color: #F56C6C;
-      color: #F56C6C;
-    }
-    .delete-action:hover {
-      background: #F56C6C;
-    }
-  `;
-});
+import { prefixCls } from '@/const';
 
 export const SelectedActions = () => {
   return (
-    <StyledDiv>
+    <div className={prefixCls('action-wrap')}>
       <div
-        className="fe-selected-action copy-action"
+        // className="fe-selected-action copy-action"
+        className={c([prefixCls('selected-action'), prefixCls('copy-action')])}
         onClick={() => {
           const newEl = store.copyEl(store.selectedElement);
           store.setSelectedElement(newEl!);
@@ -57,7 +18,8 @@ export const SelectedActions = () => {
         <CopyOutlined />
       </div>
       <div
-        className="fe-selected-action delete-action"
+        // className="fe-selected-action delete-action"
+        className={c([prefixCls('selected-action'), prefixCls('delete-action')])}
         onClick={() => {
           store.deleteEl(store.selectedElement);
           store.setSelectedElement({});
@@ -65,6 +27,6 @@ export const SelectedActions = () => {
       >
         <DeleteOutlined />
       </div>
-    </StyledDiv>
+    </div>
   );
 };

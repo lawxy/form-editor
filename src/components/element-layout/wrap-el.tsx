@@ -5,7 +5,7 @@ import type { IBaseElement, TCustomEvents, TMode } from '@/types';
 import { useDesignEffect } from '@/hooks';
 import eventStore from '@/store/eventStore';
 import { SelectedActions } from './selected-actions';
-import { DesignWrapDiv, Mask, Icon } from './styled';
+import { DesignWrap, Mask, Icon } from './styled';
 import { CONTAINERS } from '@/const';
 
 const EventIcon: React.FC<{
@@ -45,7 +45,7 @@ const WrapDesignEl: React.FC<
   }, [el]);
 
   return (
-    <DesignWrapDiv
+    <DesignWrap
       selected={store.selectedElement?.id === el.id}
       onMouseDownCapture={handleSelect}
       ref={ref}
@@ -58,7 +58,7 @@ const WrapDesignEl: React.FC<
       {store.selectedElement?.id === el.id && <SelectedActions />}
       {children}
       <EventIcon events={el.events} />
-    </DesignWrapDiv>
+    </DesignWrap>
   );
 });
 

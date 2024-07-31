@@ -21,7 +21,7 @@ export const Mask = styled.div<{
   `;
 });
 
-export const DesignWrapDiv = styled.div<{
+export const DesignWrap = styled.div<{
   selected: boolean;
 }>(({ selected }) => {
   return `

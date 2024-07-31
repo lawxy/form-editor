@@ -1,0 +1,53 @@
+.fe {
+  &-action-wrap {
+    position: absolute;
+    right: 0;
+    top: -8px;
+    display: flex;
+    z-index: 20;
+  }
+  &-with-element-name {
+    display: flex;
+    flex-direction: column;
+  }
+  &-with-element-name-horizontal {
+    flex-direction: row;
+    align-items: center;
+  }
+  &-title-required::before {
+    display: inline-block;
+    margin-inline-end: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: "*";
+  }
+  &-selected-action {
+    margin-right: 6px;
+    border-color: #409eff;
+    color: #409eff;
+    background: #fff;
+    width: 22px;
+    height: 22px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 12px;
+    border: 1px solid;
+    cursor: pointer;
+    :hover {
+      color: white;
+    }
+  }
+  &-copy-action:hover {
+    background: #409EFF;
+  }
+  &-delete-action {
+    border-color: #F56C6C;
+    color: #F56C6C;
+  }
+  &-delete-action:hover {
+    background: #F56C6C;
+  }
+}

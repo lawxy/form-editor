@@ -1,19 +1,8 @@
 import React, { type FC, type PropsWithChildren } from 'react';
-import styled from 'styled-components';
+import c from 'classnames'
 import { QuestionPopover } from '../question-popover';
 import { prefixCls } from '@/const';
 import './style.less';
-
-const Flex = styled.div<{ vertical?: boolean }>(({ vertical }) => {
-  if (!vertical) return '';
-  return `
-      flex-direction: column;
-      align-items: start;
-      .${prefixCls('setting-item-label')} {
-        margin-bottom: 8px;
-      }
-    `;
-});
 
 export const SettingItem: FC<
   PropsWithChildren<{
@@ -25,17 +14,21 @@ export const SettingItem: FC<
   }>
 > = ({ label, children, style, tips, vertical }) => {
   return (
-    <Flex
+    <div
       style={style || {}}
-      className={prefixCls('setting-item')}
-      vertical={vertical}
+      // className={prefixCls('setting-item')}
+      className={c({
+        [prefixCls('setting-item')]: true,
+        [prefixCls('setting-item-vertical')]: !!vertical,
+      })}
+      // vertical={vertical}
     >
       <div className={prefixCls('setting-item-label')}>
         {label}&nbsp;
         {tips && <QuestionPopover content={tips} />}
       </div>
       <div className={prefixCls('setting-item-value')}>{children}</div>
-    </Flex>
+    </div>
   );
 };
 

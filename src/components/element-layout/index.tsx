@@ -3,33 +3,14 @@ import type { FC, PropsWithChildren } from 'react';
 import { Col, Form } from 'antd';
 import { Rule } from 'antd/es/form';
 import { observer } from 'mobx-react-lite';
-import styled, { css } from 'styled-components';
 import { cloneDeep } from 'lodash-es';
+import c from 'classnames'
+import { prefixCls } from '@/const';
 import { useElementCommon } from '@/hooks';
 import { useEditorContext } from '@/context';
-import type { IBaseElement, TDirection } from '../../types';
+import type { IBaseElement } from '../../types';
 import { WrapEl } from './wrap-el';
-
-const StyledDiv = styled.div<{ elementNameDisplay?: TDirection }>(
-  ({ elementNameDisplay }) => {
-    return `
-    ${css({
-      display: 'flex',
-      flexDirection: elementNameDisplay === 'horizontal' ? 'row' : 'column',
-      alignItems: elementNameDisplay === 'horizontal' ? 'center' : '',
-    }).join(';')}
-    .title-required::before {
-      display: inline-block;
-      margin-inline-end: 4px;
-      color: #ff4d4f;
-      font-size: 14px;
-      font-family: SimSun, sans-serif;
-      line-height: 1;
-      content: "*";
-    }
-  `;
-  },
-);
+import './style.less';
 
 export const ElementLayout: FC<
   PropsWithChildren<{
@@ -106,14 +87,17 @@ export const ElementLayout: FC<
     >
       <Form.Item name={id} rules={rules} style={{ marginBottom: 0 }}>
         <WrapEl el={element} mode={mode}>
-          <StyledDiv elementNameDisplay={elementNameDisplay}>
+          <div className={c({
+            [prefixCls('with-element-name')]: true,
+            [prefixCls('with-element-name-horizontal')]: elementNameDisplay === 'horizontal',
+          })}>
             {showElementName && (
               <div
                 dangerouslySetInnerHTML={{
                   __html: elementName as string,
                 }}
                 // @ts-ignore
-                className={rules?.[0]?.required ? 'title-required' : ''}
+                className={rules?.[0]?.required ? prefixCls('title-required') : ''}
               />
             )}
             <div style={{ flex: 1 }}>
@@ -123,7 +107,7 @@ export const ElementLayout: FC<
                   style: elCss || {},
                 })}
             </div>
-          </StyledDiv>
+          </div>
         </WrapEl>
       </Form.Item>
     </Col>
