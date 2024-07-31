@@ -26,7 +26,7 @@
 - <s>组件化 - 兼容保存接口传入</s>
 - <s>事件顺序 比如: 按钮点击先表单校验 再刷新服务</s>
 - <s>组件关联服务时的 loading, 事件防抖节流</s>
-- 去掉 styled-component
+- <s>去掉 styled-component</s>
 - 设计模式可通过 modal 传入 schema
 - 组件化 - 自定义组件
 - 静态页面生成

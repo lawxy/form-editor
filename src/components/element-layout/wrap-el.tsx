@@ -1,19 +1,19 @@
 import React, { useCallback, useRef, type PropsWithChildren } from 'react';
 import { observer } from 'mobx-react-lite';
+import c from 'classnames';
 import store, { tabStore } from '@/store';
 import type { IBaseElement, TCustomEvents, TMode } from '@/types';
 import { useDesignEffect } from '@/hooks';
 import eventStore from '@/store/eventStore';
+import { CONTAINERS, prefixCls } from '@/const';
 import { SelectedActions } from './selected-actions';
-import { DesignWrap, Mask, Icon } from './styled';
-import { CONTAINERS } from '@/const';
 
 const EventIcon: React.FC<{
   events?: TCustomEvents;
 }> = observer(({ events }) => {
   if (!events?.length) return null;
 
-  const validate = events.every((event) => {
+  const valid = events.every((event) => {
     const { eventTargets } = event;
     if (!eventTargets?.length) return true;
     return eventTargets.every((target) => {
@@ -25,7 +25,14 @@ const EventIcon: React.FC<{
     });
   });
 
-  return <Icon validate={validate} />;
+  return (
+    <div
+      className={c({
+        [prefixCls('event-icon')]: true,
+        [prefixCls('event-icon-invalid')]: !valid,
+      })}
+    />
+  )
 });
 
 const WrapDesignEl: React.FC<
@@ -44,21 +51,33 @@ const WrapDesignEl: React.FC<
     tabStore.init();
   }, [el]);
 
+  const getMaskStyle = () => {
+    const horizontal = store.formAttrs.horizontalGap + 2
+    const vertical = store.formAttrs.verticalGap + 2
+    return {
+      padding: `${vertical / 2}px ${horizontal / 2}px`,
+      margin: `-${vertical / 2}px -${horizontal / 2}px`,
+      display: CONTAINERS.includes(el.type!) ? 'none' : 'block',
+    }
+  }
+
   return (
-    <DesignWrap
-      selected={store.selectedElement?.id === el.id}
+    <div
+      className={c({
+        [prefixCls('design-wrap')]: true,
+        [prefixCls('design-wrap-selected')]: store.selectedElement?.id === el.id,
+      })}
       onMouseDownCapture={handleSelect}
       ref={ref}
     >
-      <Mask
-        horizontal={store.formAttrs.horizontalGap + 2}
-        vertical={store.formAttrs.verticalGap + 2}
-        hide={CONTAINERS.includes(el.type!)}
+      <div
+        className={prefixCls('element-mask')}
+        style={getMaskStyle()}
       />
       {store.selectedElement?.id === el.id && <SelectedActions />}
       {children}
       <EventIcon events={el.events} />
-    </DesignWrap>
+    </div>
   );
 });
 

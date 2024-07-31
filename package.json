@@ -70,7 +70,6 @@
     "@babel/standalone": "^7.24.6",
     "@monaco-editor/loader": "^1.4.0",
     "@roddan/ui": "0.0.4",
-    "@types/styled-components": "^5.1.9",
     "array-move": "^4.0.0",
     "axios": "^1.6.7",
     "classnames": "2.5.1",
@@ -80,7 +79,8 @@
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
     "monaco-editor": "^0.32.0",
-    "styled-components": "^5.3.0"
+    "@ant-design/icons": "^5.3.7",
+    "antd": "^5.8.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
@@ -110,8 +110,6 @@
     "stylelint": "^14.9.1"
   },
   "peerDependencies": {
-    "@ant-design/icons": "^5.3.7",
-    "antd": "^5.8.1",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
   },
