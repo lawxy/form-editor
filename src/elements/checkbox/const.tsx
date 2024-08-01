@@ -1,7 +1,7 @@
 import type { IBaseElement } from '@/types';
 import { EEventAction } from '@/types';
 
-export const ELEMENT_CHECKBOX = 'checkbox';
+export const ELEMENT_CHECKBOX = 'fe-checkbox';
 export const CHECKBOX_TEXT = '多选';
 export const eventActions = [EEventAction.ON_LOADED, EEventAction.VALUE_CHANGE];
 export const initialData: Partial<IBaseElement> = {

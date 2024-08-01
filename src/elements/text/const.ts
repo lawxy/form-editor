@@ -1,6 +1,6 @@
 import type { IBaseElement } from '@/types';
 
-export const ELEMENT_TEXT = 'text';
+export const ELEMENT_TEXT = 'fe-text';
 
 export const TEXT_TEXT = '文本框';
 

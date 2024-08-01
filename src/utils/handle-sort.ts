@@ -1,4 +1,4 @@
-import { ElementsList } from '@/elements';
+import { ElementsMap } from '@/elements';
 import { idCreator, dynamicGetStore } from '.';
 import type { SortableEvent } from 'sortablejs';
 
@@ -11,7 +11,7 @@ export const handleSort = async (e: SortableEvent, parentId: string) => {
   // debugger;
   // 从物料区拖过来的
   if (!item?.dataset?.parentId) {
-    const element = ElementsList[item.dataset.type as string];
+    const element = ElementsMap[item.dataset.type as string];
 
     const { initialData } = element;
 

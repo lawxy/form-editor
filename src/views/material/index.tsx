@@ -2,12 +2,11 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { prefixCls } from '@/const';
 import { idCreator } from '@/utils';
-import { ElementsList } from '@/elements';
+import { ElementsMap } from '@/elements';
 import type { IDragElementProp } from '@/types';
-// import { ReactSortable } from '@/components/react-sortable';
 import { ReactSortable } from '@roddan/ui';
-import { CONTAINERS } from '@/const';
 import store from '@/store';
+import { useEditorContext } from '@/context';
 
 import DragItem from './drag-item';
 
@@ -17,30 +16,36 @@ const titles = ['基础组件', '容器组件', '自定义组件'];
 
 export const Material = observer(() => {
   const wrapEl = useRef<HTMLDivElement>(null);
+  const { customElements = [] } = useEditorContext();
+  const allElements = Object.assign(ElementsMap, customElements);
 
   const renderList = useMemo(() => {
     const basic: IDragElementProp[] = [];
     const container: IDragElementProp[] = [];
     const custom: IDragElementProp[] = [];
 
-    Object.entries(ElementsList)
-      // .filter(([name]) => !FILTER_ELEMENT.includes(name))
-      .forEach(([name, el]) => {
-        if (CONTAINERS.includes(name)) {
-          container.push(el);
-        } else {
-          basic.push(el);
-        }
+    Object.values(ElementsMap).forEach((el) => {
+      if (el?.initialData?.isContainer) {
+        container.push(el);
+      } else {
+        basic.push(el);
+      }
+    });
+
+    if (customElements.length) {
+      Object.values(customElements).forEach((el) => {
+        custom.push(el);
       });
+    }
     return [basic, container, custom];
-  }, [ElementsList]);
+  }, []);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const item = e.target as HTMLElement;
       if (item?.classList?.contains(prefixCls('drag-item'))) {
         const { type } = item.dataset;
-        const { initialData } = ElementsList[type!];
+        const { initialData } = allElements[type!];
         store.appendEl({
           ...initialData,
           type,

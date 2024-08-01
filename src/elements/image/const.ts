@@ -1,7 +1,7 @@
 import { EEventAction } from '@/types';
 import type { IBaseElement } from '@/types';
 
-export const ELEMENT_IMAGE = 'image';
+export const ELEMENT_IMAGE = 'fe-image';
 
 export const IMAGE_TEXT = '图片';
 

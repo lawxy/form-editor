@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { useRegisterEvents, useFormUpdate, useDesignEffect } from '@/hooks';
 import { EEventAction } from '@/types';
 import { prefixCls } from '@/const';
-import { ElementsList } from '@/elements/export';
+import { ElementsMap } from '@/elements/export';
 import eventStore from '@/store/eventStore';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
@@ -85,7 +85,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
         forbidden={mode !== 'design'}
       >
         {store.formElements.map((item: IBaseElement) => {
-          const Component = ElementsList[item.type!]?.render;
+          const Component = ElementsMap[item.type!]?.render;
           if (!Component) return null;
           store.flatElement(item);
           return (

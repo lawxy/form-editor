@@ -1,7 +1,7 @@
 import { EEventAction } from '@/types';
 import type { IBaseElement } from '@/types';
 
-export const ELEMENT_INPUT = 'input';
+export const ELEMENT_INPUT = 'fe-input';
 
 export const INPUT_TEXT = '输入框';
 

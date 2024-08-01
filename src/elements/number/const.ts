@@ -22,7 +22,7 @@ export const valueTypeOptions = [
   },
 ];
 
-export const ELEMENT_NUMBER = 'number';
+export const ELEMENT_NUMBER = 'fe-number';
 export const NUMBER_TEXT = '数字框';
 export const eventActions = [
   EEventAction.ON_LOADED,

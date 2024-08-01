@@ -55,7 +55,7 @@ export { ELEMENT_TIME, RenderTime, SettingTime, TIME_TEXT } from './time'
 import { ELEMENT_UPLOAD, RenderUpload, SettingUpload, UPLOAD_TEXT, initialData as Upload_initData, eventActions as Upload_eventActions, Icon as UPLOAD_Icon } from './upload'
 export { ELEMENT_UPLOAD, RenderUpload, SettingUpload, UPLOAD_TEXT } from './upload'
         
-export const ElementsList: Record<string, IDragElementProp> = {
+export const ElementsMap: Record<string, IDragElementProp> = {
       
   [ELEMENT_TEXT]: {
     type: ELEMENT_TEXT,

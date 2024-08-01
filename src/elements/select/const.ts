@@ -1,7 +1,7 @@
 import type { IBaseElement } from '@/types';
 import { EEventAction } from '@/types';
 
-export const ELEMENT_SELECT = 'select';
+export const ELEMENT_SELECT = 'fe-select';
 export const SELECT_TEXT = '下拉框';
 export const eventActions = [
   EEventAction.ON_LOADED,

@@ -7,7 +7,7 @@ import { handleSort } from '@/utils';
 import store from '@/store';
 import { ElementLayout } from '@/components';
 import type { IBaseElement } from '@/types';
-import { ElementsList } from '@/elements/export';
+import { ElementsMap } from '@/elements/export';
 // import { ReactSortable } from '@/components/react-sortable';
 import { ReactSortable } from '@roddan/ui';
 import './style.less';
@@ -41,7 +41,7 @@ export const RenderContainerContent: React.FC<{
         forbidden={mode !== 'design'}
       >
         {element.children?.map((item: IBaseElement) => {
-          const Component = ElementsList[item.type!]?.render;
+          const Component = ElementsMap[item.type!]?.render;
           if (!Component) return null;
           store.flatElement(item);
           return (

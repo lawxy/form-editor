@@ -5,7 +5,7 @@ import store, { tabStore } from '@/store';
 import type { IBaseElement, TCustomEvents, TMode } from '@/types';
 import { useDesignEffect } from '@/hooks';
 import eventStore from '@/store/eventStore';
-import { CONTAINERS, prefixCls } from '@/const';
+import { prefixCls } from '@/const';
 import { SelectedActions } from './selected-actions';
 
 const EventIcon: React.FC<{
@@ -32,7 +32,7 @@ const EventIcon: React.FC<{
         [prefixCls('event-icon-invalid')]: !valid,
       })}
     />
-  )
+  );
 });
 
 const WrapDesignEl: React.FC<
@@ -52,28 +52,26 @@ const WrapDesignEl: React.FC<
   }, [el]);
 
   const getMaskStyle = () => {
-    const horizontal = store.formAttrs.horizontalGap + 2
-    const vertical = store.formAttrs.verticalGap + 2
+    const horizontal = store.formAttrs.horizontalGap + 2;
+    const vertical = store.formAttrs.verticalGap + 2;
     return {
       padding: `${vertical / 2}px ${horizontal / 2}px`,
       margin: `-${vertical / 2}px -${horizontal / 2}px`,
-      display: CONTAINERS.includes(el.type!) ? 'none' : 'block',
-    }
-  }
+      display: el?.isContainer ? 'none' : 'block',
+    };
+  };
 
   return (
     <div
       className={c({
         [prefixCls('design-wrap')]: true,
-        [prefixCls('design-wrap-selected')]: store.selectedElement?.id === el.id,
+        [prefixCls('design-wrap-selected')]:
+          store.selectedElement?.id === el.id,
       })}
       onMouseDownCapture={handleSelect}
       ref={ref}
     >
-      <div
-        className={prefixCls('element-mask')}
-        style={getMaskStyle()}
-      />
+      <div className={prefixCls('element-mask')} style={getMaskStyle()} />
       {store.selectedElement?.id === el.id && <SelectedActions />}
       {children}
       <EventIcon events={el.events} />

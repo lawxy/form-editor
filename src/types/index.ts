@@ -13,7 +13,7 @@ export interface IDragElementProp {
   setting: React.FC<any>;
   text: string;
   eventActions: EEventAction[];
-  initialData: Record<string, any>;
+  initialData: Partial<IBaseElement>;
   Icon: React.ReactNode;
 }
 
@@ -162,6 +162,10 @@ export interface IBaseElement {
    * tabs类型
    */
   tabType?: 'line' | 'card';
+  /**
+   * 是否属于容器组件
+   */
+  isContainer?: boolean;
   /**
    * 子节点
    */

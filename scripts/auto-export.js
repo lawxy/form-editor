@@ -5,7 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const componentsDir = path.join(__dirname, '../src/form-editor/elements');
+const componentsDir = path.join(__dirname, '../src/elements');
 const exportFile = path.join(componentsDir, 'export.ts');
 
 // 文件目录会自己根据首字母排序， 这里要自己排序一下([文件名])
@@ -85,7 +85,7 @@ export { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text} } from './
       });
     });
   content += `
-export const ElementsList: Record<string, IDragElementProp> = {
+export const ElementsMap: Record<string, IDragElementProp> = {
       `;
   elementList
     .sort(handleSort)

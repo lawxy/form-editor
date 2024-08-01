@@ -1,6 +1,6 @@
 import type { IBaseElement } from '@/types';
 
-export const ELEMENT_CONTAINER = 'container';
+export const ELEMENT_CONTAINER = 'fe-container';
 
 export const CONTAINER_TEXT = '容器';
 
@@ -11,4 +11,5 @@ export const initialData: Partial<IBaseElement> = {
   gridSpan: 24,
   gridLayout: true,
   children: [],
+  isContainer: true,
 };

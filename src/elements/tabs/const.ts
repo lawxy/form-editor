@@ -1,6 +1,6 @@
 import type { IBaseElement } from '@/types';
 
-export const ELEMENT_TABS = 'tabs';
+export const ELEMENT_TABS = 'fe-tabs';
 
 export const TABS_TEXT = 'tabs';
 
@@ -12,4 +12,5 @@ export const initialData: Partial<IBaseElement> = {
   gridLayout: true,
   tabType: 'line',
   children: [],
+  isContainer: true,
 };

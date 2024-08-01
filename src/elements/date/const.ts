@@ -1,7 +1,7 @@
 import type { IBaseElement } from '@/types';
 import { EEventAction } from '@/types';
 
-export const ELEMENT_DATE = 'date';
+export const ELEMENT_DATE = 'fe-date';
 
 export const DATE_TEXT = '日期';
 
