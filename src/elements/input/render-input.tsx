@@ -8,7 +8,7 @@ import type { IBaseElement } from '@/types';
 export const RenderInput: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ fieldValue, element = {} }) => {
+}> = ({ fieldValue, element = {}, ...props }) => {
   const { textType, minRows, maxRows, id, autoSize, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
@@ -51,6 +51,7 @@ export const RenderInput: React.FC<{
           onChange={handleChange}
           onFocus={handleEvent(EEventAction.ON_FOCUS)}
           onBlur={handleEvent(EEventAction.ON_BLUR)}
+          {...props}
         />
       ) : (
         <Input
@@ -62,6 +63,7 @@ export const RenderInput: React.FC<{
           value={fieldValue}
           type={textType === 'single' ? 'text' : 'password'}
           autoComplete="new-password"
+          {...props}
         />
       )}
     </>

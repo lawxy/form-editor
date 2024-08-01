@@ -20,7 +20,7 @@ export const createPanel = (props = {}) => {
 
 export const RenderTabs: React.FC<{
   element: IBaseElement;
-}> = ({ element }) => {
+}> = ({ element, ...props }) => {
   const { children } = element;
   const { ElementsMap } = useEditorContext();
 
@@ -41,5 +41,5 @@ export const RenderTabs: React.FC<{
     }
   }, [children?.length]);
 
-  return <Tabs items={items} type={element.tabType} />;
+  return <Tabs items={items} type={element.tabType} {...props} />;
 };

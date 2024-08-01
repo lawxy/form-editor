@@ -2,11 +2,11 @@ import React from 'react';
 import { IBaseElement } from '@roddan/form-editor';
 import { Input } from 'antd';
 
-export const RenderContent = () => {
-  return <Input />;
+export const RenderContent = ({ element, fieldValue, ...props }) => {
+  return <Input {...props} />;
 };
 
-export const SettingContent = () => {
+export const SettingContent = ({element, setElementProp}) => {
   return null;
 };
 

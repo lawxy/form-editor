@@ -8,7 +8,7 @@ import type { IBaseElement } from '@/types';
 export const RenderImage: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ element, fieldValue }) => {
+}> = ({ element, fieldValue, ...props }) => {
   const { placeholder, preview, defaultImgSrc, previewSrc } = element;
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -21,6 +21,7 @@ export const RenderImage: React.FC<{
       src={fieldValue || defaultImgSrc}
       fallback={placeholder}
       preview={preview ? (previewSrc ? { src: previewSrc } : true) : false}
+      {...props}
     />
   );
 };

@@ -9,7 +9,7 @@ import { useFormUpdate, useRegisterEvents } from '@/hooks';
 export const RenderTable: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ fieldValue = [], element }) => {
+}> = ({ fieldValue = [], element, ...props }) => {
   const { tableColumns = '[]', tableAttributes = '{}', linkLoading } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
@@ -25,6 +25,7 @@ export const RenderTable: React.FC<{
       dataSource={fieldValue}
       loading={linkLoading}
       {...parseJSX(`[${tableAttributes}]`)[0]}
+      {...props}
     />
   );
 };

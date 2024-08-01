@@ -8,7 +8,7 @@ import type { IBaseElement } from '@/types';
 export const RenderSelect: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ element, fieldValue }) => {
+}> = ({ element, fieldValue, ...props }) => {
   const { id, valueOptions, placeholder, linkLoading } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
@@ -31,6 +31,7 @@ export const RenderSelect: React.FC<{
       options={valueOptions}
       onChange={onChange}
       loading={linkLoading}
+      {...props}
     />
   );
 };

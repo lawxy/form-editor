@@ -10,7 +10,7 @@ import type { IBaseElement } from '@/types';
 export const RenderTime: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ fieldValue, element }) => {
+}> = ({ fieldValue, element, ...props }) => {
   const { id, dateFormat, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
@@ -36,6 +36,7 @@ export const RenderTime: React.FC<{
       onFocus={handleEvent(EEventAction.ON_FOCUS)}
       onBlur={handleEvent(EEventAction.ON_BLUR)}
       placeholder={placeholder}
+      {...props}
     />
   );
 };

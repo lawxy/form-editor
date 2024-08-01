@@ -11,7 +11,7 @@ import './style.less';
 
 export const RenderContainer: React.FC<{
   element: IBaseElement;
-}> = ({ element }) => {
+}> = ({ element, ...props }) => {
   const { horizontalGap, verticalGap, id } = store.formAttrs;
   const { mode, ElementsMap } = useEditorContext();
   const { parentId } = element;
@@ -35,6 +35,7 @@ export const RenderContainer: React.FC<{
         'data-parent-id': parentId || id,
       }}
       forbidden={mode !== 'design'}
+      {...props}
     >
       {element.children?.map((item: IBaseElement) => {
         store.flatElement(item);

@@ -3,6 +3,7 @@ import type { PropsWithChildren } from 'react';
 import { ConfigProvider, Form } from 'antd';
 import type { FormInstance } from 'antd';
 import locale from 'antd/locale/zh_CN';
+import 'reflect-metadata';
 import 'dayjs/locale/zh-cn';
 import { ElementsMap } from './elements';
 import type { IFormSchema, TDragElement } from './types';
@@ -11,7 +12,6 @@ import store from './store';
 import { injectSchema } from '.';
 import { EditorContext, type IEditorContext } from './context';
 import { wrapObserver } from './utils';
-import 'reflect-metadata';
 
 import './index.less';
 

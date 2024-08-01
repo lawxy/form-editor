@@ -6,7 +6,7 @@ import { EEventAction, type IBaseElement } from '@/types';
 
 export const RenderButton: React.FC<{
   element: IBaseElement;
-}> = ({ element }) => {
+}> = ({ element, ...props }) => {
   const { eventFunctions } = useRegisterEvents(element);
   const { btnText, linkLoading } = element;
 
@@ -16,6 +16,7 @@ export const RenderButton: React.FC<{
         eventFunctions[EEventAction.ON_CLICK]?.();
       }}
       loading={linkLoading}
+      {...props}
     >
       {btnText}
     </Button>

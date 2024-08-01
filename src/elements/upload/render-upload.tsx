@@ -5,7 +5,7 @@ import { type IBaseElement } from '@/types';
 
 export const RenderUpload: React.FC<{
   element: IBaseElement;
-}> = ({ element }) => {
+}> = ({ element, ...props }) => {
   const { btnText, defaultImgSrc } = element;
 
   const handleChange = (info: any) => {
@@ -20,7 +20,7 @@ export const RenderUpload: React.FC<{
   };
 
   return (
-    <Upload onChange={handleChange} action={defaultImgSrc}>
+    <Upload onChange={handleChange} action={defaultImgSrc} {...props}>
       <Button icon={<UploadOutlined />}>{btnText}</Button>
     </Upload>
   );

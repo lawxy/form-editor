@@ -9,7 +9,7 @@ import type { IBaseElement } from '@/types';
 export const RenderRadio: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ fieldValue, element }) => {
+}> = ({ fieldValue, element, ...props }) => {
   const { id, valueOptions, alignDirection } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
@@ -27,7 +27,7 @@ export const RenderRadio: React.FC<{
   }, [fieldValue]);
 
   return (
-    <Radio.Group onChange={onChange} value={fieldValue}>
+    <Radio.Group onChange={onChange} value={fieldValue} {...props}>
       <Space direction={alignDirection}>
         {valueOptions?.map((opt) => (
           <Radio key={opt.id} value={opt.value}>

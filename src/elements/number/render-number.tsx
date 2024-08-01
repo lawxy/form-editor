@@ -9,7 +9,7 @@ import { EValueType } from './const';
 export const RenderNumber: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ element = {}, fieldValue }) => {
+}> = ({ element = {}, fieldValue, ...props }) => {
   const { id, minNum, maxNum, valueType } = element;
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -54,6 +54,7 @@ export const RenderNumber: React.FC<{
       max={maxNum}
       precision={precision}
       step={step}
+      {...props}
     />
   );
 };

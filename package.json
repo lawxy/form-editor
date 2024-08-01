@@ -66,10 +66,12 @@
     ]
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.7",
     "@babel/core": "^7.24.6",
     "@babel/standalone": "^7.24.6",
     "@monaco-editor/loader": "^1.4.0",
     "@roddan/ui": "0.0.4",
+    "antd": "^5.8.1",
     "array-move": "^4.0.0",
     "axios": "^1.6.7",
     "classnames": "2.5.1",
@@ -79,8 +81,7 @@
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
     "monaco-editor": "^0.32.0",
-    "@ant-design/icons": "^5.3.7",
-    "antd": "^5.8.1"
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

@@ -4,8 +4,11 @@ import type { IBaseElement } from '@/types';
 
 export const RenderText: React.FC<{
   element: IBaseElement;
-}> = ({ element }) => {
+}> = ({ element, ...props }) => {
   return (
-    <div dangerouslySetInnerHTML={{ __html: element?.elementName || '' }} />
+    <div
+      dangerouslySetInnerHTML={{ __html: element?.elementName || '' }}
+      {...props}
+    />
   );
 };

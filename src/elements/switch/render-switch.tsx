@@ -12,7 +12,7 @@ import { getValueFromInput } from '@/utils';
 const RenderSwitchContent: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ element, fieldValue }) => {
+}> = ({ element, fieldValue, ...props }) => {
   const { id, checkedValue } = element;
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -36,6 +36,7 @@ const RenderSwitchContent: React.FC<{
       onChange={(checked) => {
         store.setFieldValue(id!, checked ? realCheckedValue : '');
       }}
+      {...props}
     />
   );
 };

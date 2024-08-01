@@ -10,7 +10,7 @@ import type { IBaseElement } from '@/types';
 export const RenderCheckbox: React.FC<{
   fieldValue: any;
   element: IBaseElement;
-}> = ({ fieldValue, element }) => {
+}> = ({ fieldValue, element, ...props }) => {
   const { id, valueOptions, alignDirection } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
@@ -28,7 +28,7 @@ export const RenderCheckbox: React.FC<{
   }, [fieldValue]);
 
   return (
-    <Checkbox.Group onChange={handleChange} value={fieldValue}>
+    <Checkbox.Group onChange={handleChange} value={fieldValue} {...props}>
       <Space direction={alignDirection}>
         {valueOptions?.map((opt) => (
           <Checkbox key={opt.id} value={opt.value}>
