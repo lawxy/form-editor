@@ -7,6 +7,7 @@ import 'dayjs/locale/zh-cn';
 import type { IFormSchema } from './types';
 import { prefixCls, defaultFormAttrs } from './const';
 import store from './store';
+import { injectSchema } from '.';
 import { EditorContext, type IEditorContext } from './context';
 
 import './index.less';
@@ -43,16 +44,7 @@ const FormEditorContent: React.ForwardRefRenderFunction<
         schema = JSON.parse(localStorage.getItem('schema')!);
       } catch (e) {}
     }
-    const {
-      formElements = [],
-      fieldValues = {},
-      formAttrs = defaultFormAttrs,
-      formServices = [],
-    } = schema;
-    store.setFormElements(formElements);
-    store.setFieldsValues(fieldValues);
-    store.setFormAttrs(formAttrs);
-    store.setFormServices(formServices);
+    injectSchema(schema);
   }, [defaultValue]);
 
   useImperativeHandle(ref, () => ({

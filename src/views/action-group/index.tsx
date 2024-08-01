@@ -6,6 +6,7 @@ import { useEditorContext } from '@/context';
 import { prefixCls } from '@/const';
 import store from '@/store';
 import { PreviewJson } from './preview-json';
+import { InjectJson } from './inject-json';
 import './style.less';
 
 const ActionItem: React.FC<
@@ -59,6 +60,9 @@ const ActionGroup = () => {
       <PreviewJson>
         <ActionItem text="查看json" />
       </PreviewJson>
+      <InjectJson>
+        <ActionItem text="注入json" />
+      </InjectJson>
       <ActionItem text="保存" onClick={handleSave} />
       <Popconfirm
         title="确定要清空所有组件吗？"

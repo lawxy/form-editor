@@ -2,7 +2,6 @@ import React, { useState, type FC, type PropsWithChildren } from 'react';
 import { Modal, Button } from 'antd';
 import { MonacoEditor } from '@roddan/ui';
 import store from '@/store';
-import './style.less';
 
 export const PreviewJson: FC<PropsWithChildren> = ({ children }) => {
   const [openCode, setOpenCode] = useState(false);
