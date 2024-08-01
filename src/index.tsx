@@ -4,11 +4,14 @@ import { ConfigProvider, Form } from 'antd';
 import type { FormInstance } from 'antd';
 import locale from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
-import type { IFormSchema, IDragElementProp } from './types';
+import { ElementsMap } from './elements';
+import type { IFormSchema, TDragElement } from './types';
 import { prefixCls } from './const';
 import store from './store';
 import { injectSchema } from '.';
 import { EditorContext, type IEditorContext } from './context';
+import { wrapObserver } from './utils';
+import 'reflect-metadata';
 
 import './index.less';
 
@@ -23,7 +26,7 @@ export interface IEditorInstance {
 }
 export interface IFormProps extends IEditorContext {
   defaultValue?: IFormSchema;
-  customElements?: Record<IDragElementProp['type'], IDragElementProp>;
+  customElements?: TDragElement;
 }
 
 const FormEditorContent: React.ForwardRefRenderFunction<
@@ -56,8 +59,16 @@ const FormEditorContent: React.ForwardRefRenderFunction<
   }));
 
   const contextValue = useMemo(() => {
-    return { mode, onSave, customElements };
-  }, [mode, onSave, customElements]);
+    wrapObserver(ElementsMap);
+    wrapObserver(customElements || {}, true);
+    Object.assign(ElementsMap, customElements || {});
+
+    return {
+      mode,
+      onSave,
+      ElementsMap,
+    };
+  }, [mode, onSave, customElements, ElementsMap]);
 
   return (
     <EditorContext.Provider value={contextValue}>

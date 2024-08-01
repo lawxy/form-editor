@@ -4,7 +4,8 @@ import { Col, Form } from 'antd';
 import { Rule } from 'antd/es/form';
 import { observer } from 'mobx-react-lite';
 import { cloneDeep } from 'lodash-es';
-import c from 'classnames'
+import c from 'classnames';
+import store from '@/store';
 import { prefixCls } from '@/const';
 import { useElementCommon } from '@/hooks';
 import { useEditorContext } from '@/context';
@@ -87,17 +88,22 @@ export const ElementLayout: FC<
     >
       <Form.Item name={id} rules={rules} style={{ marginBottom: 0 }}>
         <WrapEl el={element} mode={mode}>
-          <div className={c({
-            [prefixCls('with-element-name')]: true,
-            [prefixCls('with-element-name-horizontal')]: elementNameDisplay === 'horizontal',
-          })}>
+          <div
+            className={c({
+              [prefixCls('with-element-name')]: true,
+              [prefixCls('with-element-name-horizontal')]:
+                elementNameDisplay === 'horizontal',
+            })}
+          >
             {showElementName && (
               <div
                 dangerouslySetInnerHTML={{
                   __html: elementName as string,
                 }}
-                // @ts-ignore
-                className={rules?.[0]?.required ? prefixCls('title-required') : ''}
+                className={
+                  // @ts-ignore
+                  rules?.[0]?.required ? prefixCls('title-required') : ''
+                }
               />
             )}
             <div style={{ flex: 1 }}>
@@ -111,5 +117,28 @@ export const ElementLayout: FC<
         </WrapEl>
       </Form.Item>
     </Col>
+  );
+});
+
+export const RenderElementWithLayout: FC<{
+  element: IBaseElement;
+}> = observer(({ element }) => {
+  const { ElementsMap } = useEditorContext();
+
+  const Component = useMemo(() => {
+    const RenderComponent = ElementsMap[element.type!]?.render;
+    if (!RenderComponent) return null;
+    return RenderComponent;
+  }, [element.type, ElementsMap]);
+
+  if (!Component) return null;
+
+  return (
+    <ElementLayout element={element}>
+      <Component
+        fieldValue={store.fieldValues[element.id as string]}
+        element={element}
+      />
+    </ElementLayout>
   );
 });

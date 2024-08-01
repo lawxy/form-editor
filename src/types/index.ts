@@ -16,6 +16,7 @@ export interface IDragElementProp {
   initialData: Partial<IBaseElement>;
   Icon: React.ReactNode;
 }
+export type TDragElement = Record<IDragElementProp['type'], IDragElementProp>;
 
 export type TDirection = 'vertical' | 'horizontal';
 export type TMode = 'design' | 'form';

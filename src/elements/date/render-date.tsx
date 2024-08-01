@@ -1,15 +1,13 @@
 import React, { useMemo } from 'react';
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
-import { observer } from 'mobx-react-lite';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { formatDate } from '@/utils';
 import { EEventAction } from '@/types';
-import { ElementLayout } from '@/components';
 import store from '@/store';
 import type { IBaseElement } from '@/types';
 
-const RenderDateContent: React.FC<{
+export const RenderDate: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ fieldValue, element }) => {
@@ -43,22 +41,17 @@ const RenderDateContent: React.FC<{
     return res;
   }, [dateFormat]);
   return (
-    <ElementLayout element={element}>
-      <DatePicker
-        format={dateFormat}
-        // @ts-ignore
-        value={fieldValue ? dayjs(fieldValue) : undefined}
-        showTime={showTime}
-        getPopupContainer={(n: any) => n.parentElement}
-        placement="bottomRight"
-        onChange={handleChange}
-        onFocus={handleEvent(EEventAction.ON_FOCUS)}
-        onBlur={handleEvent(EEventAction.ON_BLUR)}
-        placeholder={placeholder}
-      />
-    </ElementLayout>
+    <DatePicker
+      format={dateFormat}
+      // @ts-ignore
+      value={fieldValue ? dayjs(fieldValue) : undefined}
+      showTime={showTime}
+      getPopupContainer={(n: any) => n.parentElement}
+      placement="bottomRight"
+      onChange={handleChange}
+      onFocus={handleEvent(EEventAction.ON_FOCUS)}
+      onBlur={handleEvent(EEventAction.ON_BLUR)}
+      placeholder={placeholder}
+    />
   );
 };
-
-// store.setAllElementsList(ELEMENT_INPUT, 'render', RenderInput)
-export const RenderDate = observer(RenderDateContent);

@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
 import { Tabs } from 'antd';
 
+import { useEditorContext } from '@/context';
 import store from '@/store';
-import { ElementLayout } from '@/components';
 import type { IBaseElement } from '@/types';
 import { idCreator } from '@/utils';
-// import { createPanel } from './const';
 import { initialData, ELEMENT_CONTAINER } from '../container';
-
-import { RenderContainer } from '../container';
 
 export const createPanel = (props = {}) => {
   const panel = {
@@ -22,17 +18,19 @@ export const createPanel = (props = {}) => {
   store.appendEl(panel, false);
 };
 
-const RenderTabsContent: React.FC<{
+export const RenderTabs: React.FC<{
   element: IBaseElement;
 }> = ({ element }) => {
   const { children } = element;
+  const { ElementsMap } = useEditorContext();
 
   const items = children?.map((child) => {
     store.flatElement(child);
+    const Container = ElementsMap[ELEMENT_CONTAINER].render;
     return {
       label: child.elementName!,
       key: child.id!,
-      children: <RenderContainer element={child} />,
+      children: <Container element={child} />,
     };
   });
 
@@ -43,11 +41,5 @@ const RenderTabsContent: React.FC<{
     }
   }, [children?.length]);
 
-  return (
-    <ElementLayout element={element}>
-      <Tabs items={items} type={element.tabType} />
-    </ElementLayout>
-  );
+  return <Tabs items={items} type={element.tabType} />;
 };
-
-export const RenderTabs = observer(RenderTabsContent);

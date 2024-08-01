@@ -24,13 +24,15 @@ const SortedName = [
   'upload', // 上传
   'table', // 表格
   'container', // 容器
-  'tabs',// tabs
+  'tabs', // tabs
 ];
 
 const handleSort = (v1, v2) => {
-  const getType = str => str.replace('_TEXT', '').toLowerCase();
-  return SortedName.indexOf(getType(v1.text)) - SortedName.indexOf(getType(v2.text))
-}
+  const getType = (str) => str.replace('_TEXT', '').toLowerCase();
+  return (
+    SortedName.indexOf(getType(v1.text)) - SortedName.indexOf(getType(v2.text))
+  );
+};
 
 fs.readdir(componentsDir, (err, files) => {
   if (err) return console.log(err);
@@ -87,10 +89,8 @@ export { ${typeKey}, ${renderComponent}, ${settingComponent}, ${text} } from './
   content += `
 export const ElementsMap: Record<string, IDragElementProp> = {
       `;
-  elementList
-    .sort(handleSort)
-    .forEach((item) => {
-      content += `
+  elementList.sort(handleSort).forEach((item) => {
+    content += `
   [${item.typeKey}]: {
     type: ${item.typeKey},
     render: ${item.renderComponent},
@@ -100,7 +100,7 @@ export const ElementsMap: Record<string, IDragElementProp> = {
     initialData: ${item.initData},
     Icon: ${item.icon}
   },\n`;
-    });
+  });
   content += '}';
   // console.log(content)
   fs.writeFileSync(exportFile, content);

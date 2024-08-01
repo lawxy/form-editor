@@ -1,14 +1,11 @@
 import React from 'react';
 import { Input } from 'antd';
-import { observer } from 'mobx-react-lite';
-
-import { ElementLayout } from '@/components';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import store from '@/store';
 import { EEventAction } from '@/types';
 import type { IBaseElement } from '@/types';
 
-const RenderInputContent: React.FC<{
+export const RenderInput: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ fieldValue, element = {} }) => {
@@ -37,7 +34,7 @@ const RenderInputContent: React.FC<{
   }, [fieldValue]);
 
   return (
-    <ElementLayout element={element}>
+    <>
       {textType === 'multiple' ? (
         <Input.TextArea
           autoSize={
@@ -67,8 +64,6 @@ const RenderInputContent: React.FC<{
           autoComplete="new-password"
         />
       )}
-    </ElementLayout>
+    </>
   );
 };
-
-export const RenderInput = observer(RenderInputContent);

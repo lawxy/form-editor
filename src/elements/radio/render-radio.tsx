@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Radio, Space, type RadioChangeEvent } from 'antd';
-import { observer } from 'mobx-react-lite';
 
-import { ElementLayout } from '@/components';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
 import store from '@/store';
 import type { IBaseElement } from '@/types';
 
-const RenderRadioContent: React.FC<{
+export const RenderRadio: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ fieldValue, element }) => {
@@ -29,18 +27,14 @@ const RenderRadioContent: React.FC<{
   }, [fieldValue]);
 
   return (
-    <ElementLayout element={element}>
-      <Radio.Group onChange={onChange} value={fieldValue}>
-        <Space direction={alignDirection}>
-          {valueOptions?.map((opt) => (
-            <Radio key={opt.id} value={opt.value}>
-              {opt.label}
-            </Radio>
-          ))}
-        </Space>
-      </Radio.Group>
-    </ElementLayout>
+    <Radio.Group onChange={onChange} value={fieldValue}>
+      <Space direction={alignDirection}>
+        {valueOptions?.map((opt) => (
+          <Radio key={opt.id} value={opt.value}>
+            {opt.label}
+          </Radio>
+        ))}
+      </Space>
+    </Radio.Group>
   );
 };
-
-export const RenderRadio = observer(RenderRadioContent);

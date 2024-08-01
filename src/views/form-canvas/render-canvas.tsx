@@ -1,18 +1,18 @@
 import React, { useMemo } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { observer } from 'mobx-react-lite';
+import { ReactSortable } from '@roddan/ui';
 import { useRegisterEvents, useFormUpdate, useDesignEffect } from '@/hooks';
 import { EEventAction } from '@/types';
 import { prefixCls } from '@/const';
-import { ElementsMap } from '@/elements/export';
 import eventStore from '@/store/eventStore';
 import store from '@/store';
 import type { IBaseElement, TMode } from '@/types';
 import { handleOnEvent, parseCSS, handleSort } from '@/utils';
-// import { ReactSortable } from '@/components/react-sortable';
-import { ReactSortable } from '@roddan/ui';
+import { RenderElementWithLayout } from '@/components';
 
 import './style.less';
+import { useEditorContext } from '@/context';
 export interface IEditorCanvasProp {
   /**
    * 表单模式
@@ -30,6 +30,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
 }) => {
   const { horizontalGap, verticalGap, id, events, customCss } = store.formAttrs;
   const { eventFunctions } = useRegisterEvents({ id, events });
+  const { ElementsMap } = useEditorContext();
   const formStyle = useMemo(() => {
     if (!customCss) return {};
     const cssObj = parseCSS(customCss);
@@ -74,7 +75,7 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
         className={prefixCls('canvas')}
         style={formStyle}
         list={store.formElements}
-        onSort={(e) => handleSort(e, id!)}
+        onSort={(e) => handleSort(ElementsMap, e, id!)}
         animation={150}
         group="nested"
         rowProps={{
@@ -85,16 +86,8 @@ const EditorCanvas: FC<PropsWithChildren<IEditorCanvasProp>> = ({
         forbidden={mode !== 'design'}
       >
         {store.formElements.map((item: IBaseElement) => {
-          const Component = ElementsMap[item.type!]?.render;
-          if (!Component) return null;
           store.flatElement(item);
-          return (
-            <Component
-              key={item.id}
-              fieldValue={store.fieldValues[item.id as string]}
-              element={item}
-            />
-          );
+          return <RenderElementWithLayout key={item.id} element={item} />;
         })}
       </ReactSortable>
     </div>

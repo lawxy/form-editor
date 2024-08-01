@@ -1,13 +1,11 @@
 import React from 'react';
 import { Select } from 'antd';
-import { observer } from 'mobx-react-lite';
 import store from '@/store';
-import { ElementLayout } from '@/components';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
 import type { IBaseElement } from '@/types';
 
-const RenderSelectContent: React.FC<{
+export const RenderSelect: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ element, fieldValue }) => {
@@ -28,15 +26,11 @@ const RenderSelectContent: React.FC<{
   }, [fieldValue]);
 
   return (
-    <ElementLayout element={element}>
-      <Select
-        placeholder={placeholder}
-        options={valueOptions}
-        onChange={onChange}
-        loading={linkLoading}
-      />
-    </ElementLayout>
+    <Select
+      placeholder={placeholder}
+      options={valueOptions}
+      onChange={onChange}
+      loading={linkLoading}
+    />
   );
 };
-
-export const RenderSelect = observer(RenderSelectContent);

@@ -1,14 +1,12 @@
 import React, { useMemo } from 'react';
 import { InputNumber } from 'antd';
-import { observer } from 'mobx-react-lite';
 import store from '@/store';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
-import { ElementLayout } from '@/components';
 import type { IBaseElement } from '@/types';
 import { EValueType } from './const';
 
-const RenderNumberContent: React.FC<{
+export const RenderNumber: React.FC<{
   fieldValue: any;
   element: IBaseElement;
 }> = ({ element = {}, fieldValue }) => {
@@ -46,20 +44,16 @@ const RenderNumberContent: React.FC<{
   }, [fieldValue]);
 
   return (
-    <ElementLayout element={element}>
-      <InputNumber
-        value={fieldValue}
-        id={id}
-        onChange={handleChange}
-        onFocus={handleEvent(EEventAction.ON_FOCUS)}
-        onBlur={handleEvent(EEventAction.ON_BLUR)}
-        min={minNum}
-        max={maxNum}
-        precision={precision}
-        step={step}
-      />
-    </ElementLayout>
+    <InputNumber
+      value={fieldValue}
+      id={id}
+      onChange={handleChange}
+      onFocus={handleEvent(EEventAction.ON_FOCUS)}
+      onBlur={handleEvent(EEventAction.ON_BLUR)}
+      min={minNum}
+      max={maxNum}
+      precision={precision}
+      step={step}
+    />
   );
 };
-
-export const RenderNumber = observer(RenderNumberContent);

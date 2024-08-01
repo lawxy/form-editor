@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { prefixCls } from '@/const';
 import { idCreator } from '@/utils';
-import { ElementsMap } from '@/elements';
 import type { IDragElementProp } from '@/types';
 import { ReactSortable } from '@roddan/ui';
 import store from '@/store';
@@ -16,27 +15,24 @@ const titles = ['基础组件', '容器组件', '自定义组件'];
 
 export const Material = observer(() => {
   const wrapEl = useRef<HTMLDivElement>(null);
-  const { customElements = [] } = useEditorContext();
-  const allElements = Object.assign(ElementsMap, customElements);
+  const { ElementsMap } = useEditorContext();
 
   const renderList = useMemo(() => {
     const basic: IDragElementProp[] = [];
     const container: IDragElementProp[] = [];
     const custom: IDragElementProp[] = [];
-
     Object.values(ElementsMap).forEach((el) => {
+      const customMetadata = Reflect.getMetadata('custom', el);
+      if (customMetadata) {
+        custom.push(el);
+        return;
+      }
       if (el?.initialData?.isContainer) {
         container.push(el);
       } else {
         basic.push(el);
       }
     });
-
-    if (customElements.length) {
-      Object.values(customElements).forEach((el) => {
-        custom.push(el);
-      });
-    }
     return [basic, container, custom];
   }, []);
 
@@ -45,7 +41,7 @@ export const Material = observer(() => {
       const item = e.target as HTMLElement;
       if (item?.classList?.contains(prefixCls('drag-item'))) {
         const { type } = item.dataset;
-        const { initialData } = allElements[type!];
+        const { initialData } = ElementsMap[type!];
         store.appendEl({
           ...initialData,
           type,

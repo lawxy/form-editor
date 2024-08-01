@@ -17,3 +17,4 @@ export * from './handle-sort';
 export * from './dynamic-get-store';
 export * from './function-async';
 export * from './indject-schema';
+export * from './wrap-observer';

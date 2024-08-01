@@ -31,15 +31,13 @@ const RenderSwitchContent: React.FC<{
   }, [fieldValue, realCheckedValue]);
 
   return (
-    <ElementLayout element={element}>
-      <Switch
-        checked={!isNil(fieldValue) && fieldValue === realCheckedValue}
-        onChange={(checked) => {
-          store.setFieldValue(id!, checked ? realCheckedValue : '');
-        }}
-      />
-    </ElementLayout>
+    <Switch
+      checked={!isNil(fieldValue) && fieldValue === realCheckedValue}
+      onChange={(checked) => {
+        store.setFieldValue(id!, checked ? realCheckedValue : '');
+      }}
+    />
   );
 };
 
-export const RenderSwitch = observer(RenderSwitchContent);
+export const RenderSwitch = RenderSwitchContent;

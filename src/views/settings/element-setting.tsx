@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { TabsSetting } from '@/components';
-import { EventSetting } from '@/components';
-import { ElementsMap } from '@/elements';
+import { TabsSetting, EventSetting } from '@/components';
 import store from '@/store';
+import { useEditorContext } from '@/context';
 
 const ElementSetting = () => {
+  const { ElementsMap } = useEditorContext();
   if (!store.selectedElement?.id) return null;
 
   const { setting: Component, eventActions } =

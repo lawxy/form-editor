@@ -5,6 +5,8 @@ import {
   Settings,
   FormCanvas,
 } from '@roddan/form-editor';
+import { customElement, type } from '../common/customEl';
+
 const Comp = () => {
   const ref = useRef();
   return (
@@ -14,6 +16,9 @@ const Comp = () => {
       onSave={(schema) => {
         console.log('schema');
         console.log(schema);
+      }}
+      customElements={{
+        [type]: customElement,
       }}
     >
       <Material />
