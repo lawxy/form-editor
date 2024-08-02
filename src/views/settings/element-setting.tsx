@@ -13,7 +13,7 @@ const ElementSetting = () => {
 
   return store.selectedElement?.id ? (
     <TabsSetting
-      attributes={<Component />}
+      attributes={<Component element={store.selectedElement} setElementProp={store.setSelectedProp} />}
       events={<EventSetting eventActions={eventActions} type="element" />}
     />
   ) : null;

@@ -2,11 +2,9 @@ import React from 'react';
 import { Button } from 'antd';
 import { useRegisterEvents } from '@/hooks';
 
-import { EEventAction, type IBaseElement } from '@/types';
+import { EEventAction, TElementRender, type IBaseElement } from '@/types';
 
-export const RenderButton: React.FC<{
-  element: IBaseElement;
-}> = ({ element, ...props }) => {
+export const RenderButton: TElementRender = ({ element, ...props }) => {
   const { eventFunctions } = useRegisterEvents(element);
   const { btnText, linkLoading } = element;
 

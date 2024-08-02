@@ -16,7 +16,7 @@ const dateOptions = [
   'YYYY-MM-DD HH:mm:ss',
 ].map((per) => ({ label: per, value: per }));
 
-const SettingDateContent = () => {
+export const SettingDate = () => {
   const { dateFormat } = store.selectedElement;
   return (
     <>
@@ -37,4 +37,3 @@ const SettingDateContent = () => {
     </>
   );
 };
-export const SettingDate = observer(SettingDateContent);

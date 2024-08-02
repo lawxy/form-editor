@@ -1,4 +1,3 @@
-const SettingTextContent = () => {
+export const SettingText = () => {
   return null;
 };
-export const SettingText = SettingTextContent;

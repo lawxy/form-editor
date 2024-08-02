@@ -1,4 +1,3 @@
-const SettingContainerContent = () => {
+export const SettingContainer = () => {
   return null;
 };
-export const SettingContainer = SettingContainerContent;

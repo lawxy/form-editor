@@ -2,19 +2,20 @@ export * from './event';
 export * from './service';
 export * from '../store/types';
 
+import type { FC, ReactNode } from 'react';
 import { TCustomEvents } from './event';
 import { TFormSerives } from './service';
 import { EEventAction } from './event';
-import React from 'react';
+import { IBaseStore } from '../store/types';
 
 export interface IDragElementProp {
   type: string;
-  render: React.FC<any>;
-  setting: React.FC<any>;
+  render: FC<any>;
+  setting: FC<any>;
   text: string;
   eventActions: EEventAction[];
   initialData: Partial<IBaseElement>;
-  Icon: React.ReactNode;
+  Icon: ReactNode;
 }
 export type TDragElement = Record<IDragElementProp['type'], IDragElementProp>;
 
@@ -192,3 +193,6 @@ export interface IFormSchema {
   formAttrs?: IFormAttributesProps;
   formServices?: TFormSerives;
 }
+
+export type TElementRender = FC<{ element: IBaseElement, fieldValue: any }>;
+export type TElementSetting = FC<{ element: IBaseElement, setElementProp: IBaseStore['setSelectedProp'] }>;

@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { SettingWrap, SettingItem } from '@/components';
 import store from '@/store';
 
-const SettingImageContent = () => {
+export const SettingImage = () => {
   const { defaultImgSrc, placeholder, preview, previewSrc } =
     store.selectedElement;
   return (
@@ -47,4 +47,3 @@ const SettingImageContent = () => {
     </>
   );
 };
-export const SettingImage = observer(SettingImageContent);

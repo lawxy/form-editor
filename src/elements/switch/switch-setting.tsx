@@ -4,7 +4,7 @@ import { Input } from 'antd';
 import store from '@/store';
 import { SettingItem, SettingWrap } from '@/components';
 
-const SettingSwitchContent = () => {
+export const SettingSwitch = () => {
   return (
     <SettingWrap title="元素设置">
       <SettingItem
@@ -21,4 +21,3 @@ const SettingSwitchContent = () => {
     </SettingWrap>
   );
 };
-export const SettingSwitch = observer(SettingSwitchContent);

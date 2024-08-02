@@ -2,15 +2,11 @@ import React from 'react';
 import { Checkbox, Space } from 'antd';
 
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
-import { EEventAction } from '@/types';
+import { EEventAction, type TElementRender } from '@/types';
 
 import store from '@/store';
-import type { IBaseElement } from '@/types';
 
-export const RenderCheckbox: React.FC<{
-  fieldValue: any;
-  element: IBaseElement;
-}> = ({ fieldValue, element, ...props }) => {
+export const RenderCheckbox: TElementRender = ({ fieldValue, element, ...props }) => {
   const { id, valueOptions, alignDirection } = element;
 
   const { eventFunctions } = useRegisterEvents(element);

@@ -19,7 +19,7 @@ const ObserverInput: React.FC<{ idx: number }> = observer(({ idx }) => {
   );
 });
 
-const SettingTabsContent = () => {
+export const SettingTabs = () => {
   const { children, id, tabType } = store.selectedElement;
   const { length } = children!;
 
@@ -95,4 +95,3 @@ const SettingTabsContent = () => {
     </SettingWrap>
   );
 };
-export const SettingTabs = observer(SettingTabsContent);

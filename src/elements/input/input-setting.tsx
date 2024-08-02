@@ -16,7 +16,7 @@ const typeOptions = [
   { label: '密码框', value: 'password' },
 ];
 
-const SettingInputContent = () => {
+export const SettingInput = () => {
   const { textType, minRows, maxRows, autoSize } = store.selectedElement;
   return (
     <>
@@ -72,4 +72,3 @@ const SettingInputContent = () => {
     </>
   );
 };
-export const SettingInput = observer(SettingInputContent);

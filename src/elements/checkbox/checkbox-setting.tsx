@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Select } from 'antd';
 import {
   OptionSetting,
@@ -8,18 +7,18 @@ import {
   RegPattern,
 } from '@/components';
 import { DirectionOpions } from '@/const';
-import store from '@/store';
+import type { TElementSetting } from '@/types';
 
-const SettingCheckboxContent = () => {
+export const SettingCheckbox: TElementSetting = ({ element, setElementProp }) => {
   return (
     <>
       <SettingWrap title="元素设置">
         <SettingItem label="排列方式">
           <Select
             options={DirectionOpions}
-            value={store.selectedElement.alignDirection}
+            value={element.alignDirection}
             onChange={(val) => {
-              store.setSelectedProp('alignDirection', val);
+              setElementProp('alignDirection', val);
             }}
           />
         </SettingItem>
@@ -29,4 +28,3 @@ const SettingCheckboxContent = () => {
     </>
   );
 };
-export const SettingCheckbox = observer(SettingCheckboxContent);

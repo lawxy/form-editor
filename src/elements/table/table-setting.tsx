@@ -10,7 +10,7 @@ import {
 } from '@/components';
 import store from '@/store';
 
-const SettingTableContent = () => {
+export const SettingTable = () => {
   return (
     <SettingWrap title="元素设置">
       <SettingItem
@@ -77,4 +77,3 @@ const SettingTableContent = () => {
     </SettingWrap>
   );
 };
-export const SettingTable = observer(SettingTableContent);

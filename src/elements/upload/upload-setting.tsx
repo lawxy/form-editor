@@ -4,7 +4,7 @@ import { Input } from 'antd';
 import store from '@/store';
 import { SettingItem } from '@/components';
 
-const SettingUploadContent = () => {
+export const SettingUpload = () => {
   return (
     <>
       <SettingItem label="上传地址">
@@ -18,4 +18,3 @@ const SettingUploadContent = () => {
     </>
   );
 };
-export const SettingUpload = observer(SettingUploadContent);

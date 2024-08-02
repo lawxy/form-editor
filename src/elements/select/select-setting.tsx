@@ -7,7 +7,7 @@ import {
   RegPattern,
 } from '@/components';
 
-const SettingSelectContent = () => {
+export const SettingSelect = () => {
   return (
     <>
       <SettingWrap title="元素设置">
@@ -18,4 +18,3 @@ const SettingSelectContent = () => {
     </>
   );
 };
-export const SettingSelect = observer(SettingSelectContent);

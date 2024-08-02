@@ -6,7 +6,7 @@ import { SettingItem, SettingWrap, RegPattern } from '@/components';
 import type { IBaseElement } from '@/types';
 import { valueTypeOptions } from './const';
 
-const SettingNumberContent = () => {
+export const SettingNumber = () => {
   const handleChange = useCallback((field: keyof IBaseElement) => {
     return (val: any) => store.setSelectedProp(field, val);
   }, []);
@@ -38,4 +38,3 @@ const SettingNumberContent = () => {
     </>
   );
 };
-export const SettingNumber = observer(SettingNumberContent);

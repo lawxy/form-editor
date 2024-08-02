@@ -10,7 +10,7 @@ import {
 import { DirectionOpions } from '@/const';
 import store from '@/store';
 
-const SettingRadioContent = () => {
+export const SettingRadio = () => {
   return (
     <>
       <SettingWrap title="元素设置">
@@ -29,4 +29,3 @@ const SettingRadioContent = () => {
     </>
   );
 };
-export const SettingRadio = observer(SettingRadioContent);
