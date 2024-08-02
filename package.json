@@ -69,18 +69,15 @@
     "@ant-design/icons": "^5.3.7",
     "@babel/core": "^7.24.6",
     "@babel/standalone": "^7.24.6",
-    "@monaco-editor/loader": "^1.4.0",
     "@roddan/ui": "0.0.4",
     "antd": "^5.8.1",
     "array-move": "^4.0.0",
     "axios": "^1.6.7",
     "classnames": "2.5.1",
     "dayjs": "^1.11.11",
-    "immer": "^10.0.2",
     "lodash-es": "^4.17.21",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
-    "monaco-editor": "^0.32.0",
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
