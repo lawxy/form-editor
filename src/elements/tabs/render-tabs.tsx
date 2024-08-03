@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { Tabs } from 'antd';
 
-import { useEditorContext } from '@/context';
 import store from '@/store';
-import type { IBaseElement, TElementRender } from '@/types';
+import type { TElementRender } from '@/types';
 import { idCreator } from '@/utils';
-import { initialData, ELEMENT_CONTAINER } from '../container';
+import { initialData, ELEMENT_CONTAINER, Container } from '../container';
 
 export const createPanel = (props = {}) => {
   const panel = {
@@ -20,11 +19,9 @@ export const createPanel = (props = {}) => {
 
 export const RenderTabs: TElementRender = ({ element, customStyle }) => {
   const { children } = element;
-  const { ElementsMap } = useEditorContext();
 
   const items = children?.map((child) => {
     store.flatElement(child);
-    const Container = ElementsMap[ELEMENT_CONTAINER].render;
     return {
       label: child.elementName!,
       key: child.id!,

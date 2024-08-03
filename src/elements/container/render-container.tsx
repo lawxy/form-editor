@@ -5,8 +5,9 @@ import { prefixCls } from '@/const';
 import { handleSort } from '@/utils';
 import store from '@/store';
 import { RenderElementWithLayout } from '@/components';
-import type { IBaseElement, TElementRender } from '@/types';
+import type { IBaseElement, TElementRender, TElementProps } from '@/types';
 import { ReactSortable } from '@roddan/ui';
+import { ELEMENT_CONTAINER } from '.';
 import './style.less';
 
 export const RenderContainer: TElementRender = ({ element, customStyle }) => {
@@ -42,3 +43,10 @@ export const RenderContainer: TElementRender = ({ element, customStyle }) => {
     </ReactSortable>
   );
 };
+
+// 容器组件中使用此组件进行嵌套
+export const Container: React.FC<Partial<TElementProps>> = (props) => {
+  const { ElementsMap } = useEditorContext();
+  const Component = ElementsMap[ELEMENT_CONTAINER].render;
+  return <Component {...props} />
+}

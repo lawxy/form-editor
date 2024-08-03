@@ -195,5 +195,6 @@ export interface IFormSchema {
   formServices?: TFormSerives;
 }
 
-export type TElementRender = FC<{ element: IBaseElement, customStyle: CSSProperties, fieldValue: any, setFieldValue: (value: any) => void }>;
+export type TElementProps = { element: IBaseElement, customStyle: CSSProperties, fieldValue: any, setFieldValue: (value: any) => void }
+export type TElementRender = FC<TElementProps>;
 export type TElementSetting = FC<{ element: IBaseElement, setElementProp: IBaseStore['setSelectedProp'] }>;
