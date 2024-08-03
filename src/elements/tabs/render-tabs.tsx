@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 
 import { useEditorContext } from '@/context';
 import store from '@/store';
-import type { IBaseElement } from '@/types';
+import type { IBaseElement, TElementRender } from '@/types';
 import { idCreator } from '@/utils';
 import { initialData, ELEMENT_CONTAINER } from '../container';
 
@@ -18,9 +18,7 @@ export const createPanel = (props = {}) => {
   store.appendEl(panel, false);
 };
 
-export const RenderTabs: React.FC<{
-  element: IBaseElement;
-}> = ({ element, ...props }) => {
+export const RenderTabs: TElementRender = ({ element, customStyle }) => {
   const { children } = element;
   const { ElementsMap } = useEditorContext();
 
@@ -41,5 +39,5 @@ export const RenderTabs: React.FC<{
     }
   }, [children?.length]);
 
-  return <Tabs items={items} type={element.tabType} {...props} />;
+  return <Tabs items={items} type={element.tabType} style={customStyle} />;
 };

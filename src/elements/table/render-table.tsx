@@ -2,14 +2,11 @@ import React from 'react';
 import { Table } from 'antd';
 
 import { EEventAction } from '@/types';
-import type { IBaseElement } from '@/types';
+import type { TElementRender } from '@/types';
 import { parseJSX } from '@/utils';
 import { useFormUpdate, useRegisterEvents } from '@/hooks';
 
-export const RenderTable: React.FC<{
-  fieldValue: any;
-  element: IBaseElement;
-}> = ({ fieldValue = [], element, ...props }) => {
+export const RenderTable: TElementRender = ({ fieldValue = [], element, customStyle }) => {
   const { tableColumns = '[]', tableAttributes = '{}', linkLoading } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
@@ -25,7 +22,7 @@ export const RenderTable: React.FC<{
       dataSource={fieldValue}
       loading={linkLoading}
       {...parseJSX(`[${tableAttributes}]`)[0]}
-      {...props}
+      style={customStyle}
     />
   );
 };

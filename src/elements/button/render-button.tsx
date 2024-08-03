@@ -2,9 +2,9 @@ import React from 'react';
 import { Button } from 'antd';
 import { useRegisterEvents } from '@/hooks';
 
-import { EEventAction, TElementRender, type IBaseElement } from '@/types';
+import { EEventAction, TElementRender } from '@/types';
 
-export const RenderButton: TElementRender = ({ element, ...props }) => {
+export const RenderButton: TElementRender = ({ element, customStyle }) => {
   const { eventFunctions } = useRegisterEvents(element);
   const { btnText, linkLoading } = element;
 
@@ -14,7 +14,7 @@ export const RenderButton: TElementRender = ({ element, ...props }) => {
         eventFunctions[EEventAction.ON_CLICK]?.();
       }}
       loading={linkLoading}
-      {...props}
+      style={customStyle}
     >
       {btnText}
     </Button>

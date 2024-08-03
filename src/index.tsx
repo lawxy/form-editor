@@ -46,7 +46,7 @@ const FormEditorContent: React.ForwardRefRenderFunction<
     } else if (localStorage.getItem('schema')) {
       try {
         schema = JSON.parse(localStorage.getItem('schema')!);
-      } catch (e) {}
+      } catch (e) { }
     }
     injectSchema(schema);
   }, [defaultValue]);
@@ -59,9 +59,7 @@ const FormEditorContent: React.ForwardRefRenderFunction<
   }));
 
   const contextValue = useMemo(() => {
-    wrapObserver(ElementsMap);
-    wrapObserver(customElements || {}, true);
-    Object.assign(ElementsMap, customElements || {});
+    Object.assign(wrapObserver(ElementsMap), wrapObserver(customElements || {}, true));
 
     return {
       mode,

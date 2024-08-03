@@ -5,12 +5,9 @@ import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { formatDate } from '@/utils';
 import { EEventAction } from '@/types';
 import store from '@/store';
-import type { IBaseElement } from '@/types';
+import type { TElementRender } from '@/types';
 
-export const RenderDate: React.FC<{
-  fieldValue: any;
-  element: IBaseElement;
-}> = ({ fieldValue, element, ...props }) => {
+export const RenderDate: TElementRender = ({ fieldValue, element, customStyle, setFieldValue }) => {
   const { id, dateFormat, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
@@ -20,7 +17,7 @@ export const RenderDate: React.FC<{
   };
 
   const handleChange = (date: Date) => {
-    store.setFieldValue(id!, date ? formatDate(date, dateFormat!) : undefined);
+    setFieldValue(date ? formatDate(date, dateFormat!) : undefined);
   };
 
   useFormUpdate(() => {
@@ -52,7 +49,7 @@ export const RenderDate: React.FC<{
       onFocus={handleEvent(EEventAction.ON_FOCUS)}
       onBlur={handleEvent(EEventAction.ON_BLUR)}
       placeholder={placeholder}
-      {...props}
+      style={customStyle}
     />
   );
 };

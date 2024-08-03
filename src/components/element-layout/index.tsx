@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Col, Form } from 'antd';
 import { Rule } from 'antd/es/form';
@@ -110,7 +110,7 @@ export const ElementLayout: FC<
               {React.isValidElement(children) &&
                 React.cloneElement<any>(children, {
                   ...(children?.props || {}),
-                  style: elCss || {},
+                  customStyle: elCss || {},
                 })}
             </div>
           </div>
@@ -131,12 +131,17 @@ export const RenderElementWithLayout: FC<{
     return RenderComponent;
   }, [element.type, ElementsMap]);
 
+  const setFieldValue = useCallback((value: any) => {
+    store.setFieldValue(element.id!, value)
+  }, [element.id])
+
   if (!Component) return null;
 
   return (
     <ElementLayout element={element}>
       <Component
         fieldValue={store.fieldValues[element.id as string]}
+        setFieldValue={setFieldValue}
         element={element}
       />
     </ElementLayout>

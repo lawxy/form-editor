@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Select } from 'antd';
 import {
@@ -8,18 +7,18 @@ import {
   RegPattern,
 } from '@/components';
 import { DirectionOpions } from '@/const';
-import store from '@/store';
+import type { TElementSetting } from '@/types';
 
-export const SettingRadio = () => {
+export const SettingRadio: TElementSetting = ({ element, setElementProp }) => {
   return (
     <>
       <SettingWrap title="元素设置">
         <SettingItem label="排列方式">
           <Select
             options={DirectionOpions}
-            value={store.selectedElement.alignDirection}
+            value={element.alignDirection}
             onChange={(val) => {
-              store.setSelectedProp('alignDirection', val);
+              setElementProp('alignDirection', val);
             }}
           />
         </SettingItem>

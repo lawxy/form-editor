@@ -1,17 +1,17 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Input } from 'antd';
 import store from '@/store';
 import { SettingItem } from '@/components';
+import type { TElementSetting } from '@/types';
 
-export const SettingUpload = () => {
+export const SettingUpload: TElementSetting = ({ element, setElementProp }) => {
   return (
     <>
       <SettingItem label="上传地址">
         <Input
-          value={store.selectedElement.defaultImgSrc}
+          value={element.defaultImgSrc}
           onChange={(e) => {
-            store.setSelectedProp('defaultImgSrc', e.target.value);
+            setElementProp('defaultImgSrc', e.target.value);
           }}
         />
       </SettingItem>

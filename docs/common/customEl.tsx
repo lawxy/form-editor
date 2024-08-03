@@ -1,16 +1,18 @@
 import React from 'react';
-import { IBaseElement } from '@roddan/form-editor';
+import { IBaseElement, SettingItem, SettingWrap } from '@roddan/form-editor';
+import type { TElementRender, TElementSetting } from '@roddan/form-editor'
 import { Input } from 'antd';
 
-export const RenderContent = ({ element, fieldValue, ...props }) => {
-  return <Input {...props} />;
+export const RenderContent: TElementRender = ({ element, fieldValue = '', customStyle, setFieldValue }) => {
+  console.log('fieldValue', fieldValue)
+  return <Input style={customStyle} />;
 };
 
-export const SettingContent = ({element, setElementProp}) => {
+export const SettingContent: TElementSetting = ({ element, setElementProp }) => {
   return null;
 };
 
-export const Icon = <div>test</div>;
+export const Icon = <div>test-</div>;
 
 export const ELEMENT_CONTAINER = 'fe-container';
 

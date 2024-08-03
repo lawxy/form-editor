@@ -3,26 +3,23 @@ import { Input } from 'antd';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import store from '@/store';
 import { EEventAction } from '@/types';
-import type { IBaseElement } from '@/types';
+import type { TElementRender } from '@/types';
 
-export const RenderInput: React.FC<{
-  fieldValue: any;
-  element: IBaseElement;
-}> = ({ fieldValue, element = {}, ...props }) => {
+export const RenderInput: TElementRender = ({ fieldValue, element = {}, customStyle, setFieldValue }) => {
   const { textType, minRows, maxRows, id, autoSize, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
   const handleEvent =
     (action: EEventAction) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      eventFunctions[action]?.(e.target.value);
-    };
+      (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        eventFunctions[action]?.(e.target.value);
+      };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    store.setFieldValue(id!, e.target.value);
+    setFieldValue(e.target.value);
   };
 
   useFormUpdate(() => {
@@ -41,9 +38,9 @@ export const RenderInput: React.FC<{
             autoSize
               ? true
               : {
-                  minRows,
-                  maxRows,
-                }
+                minRows,
+                maxRows,
+              }
           }
           value={fieldValue}
           placeholder={placeholder}
@@ -51,7 +48,7 @@ export const RenderInput: React.FC<{
           onChange={handleChange}
           onFocus={handleEvent(EEventAction.ON_FOCUS)}
           onBlur={handleEvent(EEventAction.ON_BLUR)}
-          {...props}
+          style={customStyle}
         />
       ) : (
         <Input
@@ -63,7 +60,7 @@ export const RenderInput: React.FC<{
           value={fieldValue}
           type={textType === 'single' ? 'text' : 'password'}
           autoComplete="new-password"
-          {...props}
+          style={customStyle}
         />
       )}
     </>

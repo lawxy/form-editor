@@ -1,10 +1,9 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Input } from 'antd';
-import store from '@/store';
 import { SettingItem, SettingWrap } from '@/components';
+import type { TElementSetting } from '@/types';
 
-export const SettingSwitch = () => {
+export const SettingSwitch: TElementSetting = ({ element, setElementProp }) => {
   return (
     <SettingWrap title="元素设置">
       <SettingItem
@@ -12,9 +11,9 @@ export const SettingSwitch = () => {
         label="开启值"
       >
         <Input
-          value={store.selectedElement?.checkedValue}
+          value={element?.checkedValue}
           onChange={(e) => {
-            store.setSelectedProp('checkedValue', e.target.value);
+            setElementProp('checkedValue', e.target.value);
           }}
         />
       </SettingItem>

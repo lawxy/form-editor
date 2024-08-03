@@ -4,18 +4,15 @@ import { Radio, Space, type RadioChangeEvent } from 'antd';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
 import store from '@/store';
-import type { IBaseElement } from '@/types';
+import type { TElementRender } from '@/types';
 
-export const RenderRadio: React.FC<{
-  fieldValue: any;
-  element: IBaseElement;
-}> = ({ fieldValue, element, ...props }) => {
+export const RenderRadio: TElementRender = ({ fieldValue, element, customStyle, setFieldValue }) => {
   const { id, valueOptions, alignDirection } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
   const onChange = (e: RadioChangeEvent) => {
-    store.setFieldValue(id!, e.target.value);
+    setFieldValue(e.target.value);
   };
 
   useFormUpdate(() => {
@@ -27,7 +24,7 @@ export const RenderRadio: React.FC<{
   }, [fieldValue]);
 
   return (
-    <Radio.Group onChange={onChange} value={fieldValue} {...props}>
+    <Radio.Group onChange={onChange} value={fieldValue} style={customStyle}>
       <Space direction={alignDirection}>
         {valueOptions?.map((opt) => (
           <Radio key={opt.id} value={opt.value}>

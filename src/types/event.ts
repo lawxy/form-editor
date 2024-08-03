@@ -68,7 +68,7 @@ export const eventTypeChinese = {
 };
 
 /**
- * 改变组件状态动作，包括显示隐藏，允许、禁止编辑，
+ * 事件动作
  */
 export enum EChangeStatePayload {
   // SHOW = 'show',
@@ -81,6 +81,7 @@ export enum EChangeStatePayload {
   REFRESH = 'refresh',
   NOT_REFRESH = 'not_refresh',
   CUSTOM = 'custom',
+  SUBMIT = 'submit'
 }
 
 export const changeStatePayloadInChinese = {
@@ -91,6 +92,7 @@ export const changeStatePayloadInChinese = {
   [EChangeStatePayload.CUSTOM]: '自定义',
   [EChangeStatePayload.REFRESH]: '刷新',
   [EChangeStatePayload.NOT_REFRESH]: '不刷新',
+  [EChangeStatePayload.SUBMIT]: '提交表单',
 };
 
 export const changeStateActions = (fields: Array<EChangeStatePayload>) => {

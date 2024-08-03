@@ -5,13 +5,11 @@ import { prefixCls } from '@/const';
 import { handleSort } from '@/utils';
 import store from '@/store';
 import { RenderElementWithLayout } from '@/components';
-import type { IBaseElement } from '@/types';
+import type { IBaseElement, TElementRender } from '@/types';
 import { ReactSortable } from '@roddan/ui';
 import './style.less';
 
-export const RenderContainer: React.FC<{
-  element: IBaseElement;
-}> = ({ element, ...props }) => {
+export const RenderContainer: TElementRender = ({ element, customStyle }) => {
   const { horizontalGap, verticalGap, id } = store.formAttrs;
   const { mode, ElementsMap } = useEditorContext();
   const { parentId } = element;
@@ -35,7 +33,7 @@ export const RenderContainer: React.FC<{
         'data-parent-id': parentId || id,
       }}
       forbidden={mode !== 'design'}
-      {...props}
+      style={customStyle}
     >
       {element.children?.map((item: IBaseElement) => {
         store.flatElement(item);

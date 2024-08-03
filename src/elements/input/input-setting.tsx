@@ -1,6 +1,5 @@
 import React from 'react';
 import { InputNumber, Select, Switch } from 'antd';
-import { observer } from 'mobx-react-lite';
 
 import {
   PlaceholderSetting,
@@ -8,7 +7,7 @@ import {
   SettingItem,
   SettingWrap,
 } from '@/components';
-import store from '@/store';
+import type { TElementSetting } from '@/types';
 
 const typeOptions = [
   { label: '单行文本', value: 'single' },
@@ -16,8 +15,8 @@ const typeOptions = [
   { label: '密码框', value: 'password' },
 ];
 
-export const SettingInput = () => {
-  const { textType, minRows, maxRows, autoSize } = store.selectedElement;
+export const SettingInput: TElementSetting = ({ element, setElementProp }) => {
+  const { textType, minRows, maxRows, autoSize } = element;
   return (
     <>
       <SettingWrap title="元素设置">
@@ -28,7 +27,7 @@ export const SettingInput = () => {
             style={{ width: '100%' }}
             options={typeOptions}
             onChange={(val) => {
-              store.setSelectedProp('textType', val);
+              setElementProp('textType', val);
             }}
           />
         </SettingItem>
@@ -38,7 +37,7 @@ export const SettingInput = () => {
               <Switch
                 checked={autoSize}
                 onChange={(val) => {
-                  store.setSelectedProp('autoSize', val);
+                  setElementProp('autoSize', val);
                 }}
               />
             </SettingItem>
@@ -49,7 +48,7 @@ export const SettingInput = () => {
                     value={minRows}
                     style={{ width: '100%' }}
                     onChange={(val) => {
-                      store.setSelectedProp('minRows', Number(val));
+                      setElementProp('minRows', Number(val));
                     }}
                   />
                 </SettingItem>
@@ -59,7 +58,7 @@ export const SettingInput = () => {
                     min={minRows}
                     style={{ width: '100%' }}
                     onChange={(val) => {
-                      store.setSelectedProp('maxRows', Number(val));
+                      setElementProp('maxRows', Number(val));
                     }}
                   />
                 </SettingItem>

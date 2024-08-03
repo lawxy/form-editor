@@ -1,14 +1,12 @@
 import React from 'react';
 
-import type { IBaseElement } from '@/types';
+import type { TElementRender } from '@/types';
 
-export const RenderText: React.FC<{
-  element: IBaseElement;
-}> = ({ element, ...props }) => {
+export const RenderText: TElementRender = ({ element, customStyle }) => {
   return (
     <div
       dangerouslySetInnerHTML={{ __html: element?.elementName || '' }}
-      {...props}
+      style={customStyle}
     />
   );
 };

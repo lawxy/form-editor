@@ -1,12 +1,10 @@
 import React from 'react';
 import { Input, Switch } from 'antd';
-import { observer } from 'mobx-react-lite';
 import { SettingWrap, SettingItem } from '@/components';
-import store from '@/store';
+import type { TElementSetting } from '@/types';
 
-export const SettingImage = () => {
-  const { defaultImgSrc, placeholder, preview, previewSrc } =
-    store.selectedElement;
+export const SettingImage: TElementSetting = ({ element, setElementProp }) => {
+  const { defaultImgSrc, placeholder, preview, previewSrc } = element;
   return (
     <>
       <SettingWrap title="元素设置">
@@ -14,7 +12,7 @@ export const SettingImage = () => {
           <Input
             value={defaultImgSrc}
             onChange={(e) => {
-              store.setSelectedProp('defaultImgSrc', e.target.value);
+              setElementProp('defaultImgSrc', e.target.value);
             }}
           />
         </SettingItem>
@@ -22,7 +20,7 @@ export const SettingImage = () => {
           <Input
             value={placeholder}
             onChange={(e) => {
-              store.setSelectedProp('placeholder', e.target.value);
+              setElementProp('placeholder', e.target.value);
             }}
           />
         </SettingItem>
@@ -30,7 +28,7 @@ export const SettingImage = () => {
           <Switch
             checked={preview}
             size="small"
-            onChange={(val) => store.setSelectedProp('preview', val)}
+            onChange={(val) => setElementProp('preview', val)}
           />
         </SettingItem>
         {preview && (
@@ -38,7 +36,7 @@ export const SettingImage = () => {
             <Input
               value={previewSrc}
               onChange={(e) => {
-                store.setSelectedProp('previewSrc', e.target.value);
+                setElementProp('previewSrc', e.target.value);
               }}
             />
           </SettingItem>

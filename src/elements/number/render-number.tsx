@@ -3,13 +3,10 @@ import { InputNumber } from 'antd';
 import store from '@/store';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { EEventAction } from '@/types';
-import type { IBaseElement } from '@/types';
+import type { TElementRender } from '@/types';
 import { EValueType } from './const';
 
-export const RenderNumber: React.FC<{
-  fieldValue: any;
-  element: IBaseElement;
-}> = ({ element = {}, fieldValue, ...props }) => {
+export const RenderNumber: TElementRender = ({ element = {}, fieldValue, customStyle, setFieldValue }) => {
   const { id, minNum, maxNum, valueType } = element;
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -27,12 +24,12 @@ export const RenderNumber: React.FC<{
 
   const handleEvent =
     (action: EEventAction) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      eventFunctions[action]?.(e.target.value);
-    };
+      (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        eventFunctions[action]?.(e.target.value);
+      };
 
   const handleChange = (val: number | null) => {
-    store.setFieldValue(id!, val);
+    setFieldValue(val);
   };
 
   useFormUpdate(() => {
@@ -54,7 +51,7 @@ export const RenderNumber: React.FC<{
       max={maxNum}
       precision={precision}
       step={step}
-      {...props}
+      style={customStyle}
     />
   );
 };

@@ -6,6 +6,7 @@ import { SettingWrap, PlusIcon, SettingItem } from '@/components';
 import { TableSortable } from '@roddan/ui';
 import store from '@/store';
 import { createPanel } from './render-tabs';
+import type { TElementSetting } from '@/types';
 
 const ObserverInput: React.FC<{ idx: number }> = observer(({ idx }) => {
   const current = store.selectedElement.children![idx];
@@ -19,8 +20,8 @@ const ObserverInput: React.FC<{ idx: number }> = observer(({ idx }) => {
   );
 });
 
-export const SettingTabs = () => {
-  const { children, id, tabType } = store.selectedElement;
+export const SettingTabs: TElementSetting = ({ element, setElementProp }) => {
+  const { children, id, tabType } = element;
   const { length } = children!;
 
   const handleAddPanel = () => {
@@ -76,7 +77,7 @@ export const SettingTabs = () => {
             value: item,
           }))}
           onChange={(val) => {
-            store.setSelectedProp('tabType', val);
+            setElementProp('tabType', val);
           }}
         />
       </SettingItem>
@@ -84,7 +85,7 @@ export const SettingTabs = () => {
         columns={columns}
         rowKey="id"
         onSort={(newChildren: any) => {
-          store.setSelectedProp('children', newChildren);
+          setElementProp('children', newChildren);
         }}
         dataSource={children}
         pagination={false}

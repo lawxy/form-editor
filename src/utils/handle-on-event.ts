@@ -46,6 +46,13 @@ export const triggerRefreshService = async (params: TEmitData) => {
   if (targetPayload === EChangeStatePayload.CLEAR) {
     store.setService(servId, { data: {} });
   }
+  // 提交表单
+  if (targetPayload === EChangeStatePayload.SUBMIT) {
+    const { data = {} } = currentService;
+    const newData = cloneDeep(data);
+    newData[updateField!] = value;
+    store.setService(servId, { data: store.getSchema() });
+  }
 
   // 刷新服务
   if (refreshFlag) {

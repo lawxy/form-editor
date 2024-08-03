@@ -17,9 +17,7 @@ const Comp = () => {
         console.log('schema');
         console.log(schema);
       }}
-      customElements={{
-        [type]: customElement,
-      }}
+      customElements={[customElement]}
     >
       <Material />
       <FormCanvas />

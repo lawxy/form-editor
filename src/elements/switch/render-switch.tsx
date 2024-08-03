@@ -1,18 +1,13 @@
 import React, { useMemo } from 'react';
 import { Switch } from 'antd';
-import { observer } from 'mobx-react-lite';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { isNil } from 'lodash-es';
 
 import store from '@/store';
-import { ElementLayout } from '@/components';
-import { EEventAction, type IBaseElement } from '@/types';
+import { EEventAction, type TElementRender } from '@/types';
 import { getValueFromInput } from '@/utils';
 
-const RenderSwitchContent: React.FC<{
-  fieldValue: any;
-  element: IBaseElement;
-}> = ({ element, fieldValue, ...props }) => {
+const RenderSwitchContent: TElementRender = ({ element, fieldValue, customStyle, setFieldValue }) => {
   const { id, checkedValue } = element;
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -34,9 +29,9 @@ const RenderSwitchContent: React.FC<{
     <Switch
       checked={!isNil(fieldValue) && fieldValue === realCheckedValue}
       onChange={(checked) => {
-        store.setFieldValue(id!, checked ? realCheckedValue : '');
+        setFieldValue(checked ? realCheckedValue : '');
       }}
-      {...props}
+      style={customStyle}
     />
   );
 };

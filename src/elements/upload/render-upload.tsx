@@ -1,11 +1,9 @@
 import React from 'react';
 import { Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { type IBaseElement } from '@/types';
+import type { TElementRender } from '@/types';
 
-export const RenderUpload: React.FC<{
-  element: IBaseElement;
-}> = ({ element, ...props }) => {
+export const RenderUpload: TElementRender = ({ element, customStyle }) => {
   const { btnText, defaultImgSrc } = element;
 
   const handleChange = (info: any) => {
@@ -20,7 +18,7 @@ export const RenderUpload: React.FC<{
   };
 
   return (
-    <Upload onChange={handleChange} action={defaultImgSrc} {...props}>
+    <Upload onChange={handleChange} action={defaultImgSrc} style={customStyle}>
       <Button icon={<UploadOutlined />}>{btnText}</Button>
     </Upload>
   );

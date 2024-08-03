@@ -1,6 +1,5 @@
 import React from 'react';
 import { Select } from 'antd';
-import { observer } from 'mobx-react-lite';
 
 import {
   SettingItem,
@@ -8,7 +7,7 @@ import {
   PlaceholderSetting,
   RegPattern,
 } from '@/components';
-import store from '@/store';
+import type { TElementSetting } from '@/types';
 
 const dateOptions = [
   'YYYY-MM-DD',
@@ -16,19 +15,18 @@ const dateOptions = [
   'YYYY-MM-DD HH:mm:ss',
 ].map((per) => ({ label: per, value: per }));
 
-export const SettingDate = () => {
-  const { dateFormat } = store.selectedElement;
+export const SettingDate: TElementSetting = ({ element, setElementProp }) => {
   return (
     <>
       <SettingWrap title="元素设置">
         <PlaceholderSetting />
         <SettingItem label="日期格式">
           <Select
-            value={dateFormat}
+            value={element.dateFormat}
             style={{ width: '100%' }}
             options={dateOptions}
             onChange={(val) => {
-              store.setSelectedProp('dateFormat', val);
+              setElementProp('dateFormat', val);
             }}
           />
         </SettingItem>

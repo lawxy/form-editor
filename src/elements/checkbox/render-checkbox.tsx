@@ -4,15 +4,13 @@ import { Checkbox, Space } from 'antd';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { EEventAction, type TElementRender } from '@/types';
 
-import store from '@/store';
-
-export const RenderCheckbox: TElementRender = ({ fieldValue, element, ...props }) => {
+export const RenderCheckbox: TElementRender = ({ fieldValue, element, customStyle, setFieldValue }) => {
   const { id, valueOptions, alignDirection } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
   const handleChange = (val: Array<string | number | boolean>) => {
-    store.setFieldValue(id!, val);
+    setFieldValue(val);
   };
 
   useFormUpdate(() => {
@@ -24,7 +22,7 @@ export const RenderCheckbox: TElementRender = ({ fieldValue, element, ...props }
   }, [fieldValue]);
 
   return (
-    <Checkbox.Group onChange={handleChange} value={fieldValue} {...props}>
+    <Checkbox.Group onChange={handleChange} value={fieldValue} style={customStyle}>
       <Space direction={alignDirection}>
         {valueOptions?.map((opt) => (
           <Checkbox key={opt.id} value={opt.value}>

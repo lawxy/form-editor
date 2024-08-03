@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from 'antd';
-import { observer } from 'mobx-react-lite';
 
 import {
   AttributesSetting,
@@ -8,9 +7,9 @@ import {
   SettingWrap,
   QuestionPopover,
 } from '@/components';
-import store from '@/store';
+import type { TElementSetting } from '@/types';
 
-export const SettingTable = () => {
+export const SettingTable: TElementSetting = ({ element, setElementProp }) => {
   return (
     <SettingWrap title="元素设置">
       <SettingItem
@@ -27,10 +26,10 @@ export const SettingTable = () => {
       >
         <AttributesSetting
           editorType="json"
-          value={store.selectedElement.tableAttributes}
+          value={element.tableAttributes}
           title="表格配置"
           onChange={(val) => {
-            store.setSelectedProp('tableAttributes', val);
+            setElementProp('tableAttributes', val);
           }}
         >
           <Button className="fe-attr-setting-btn" size="small">
@@ -52,7 +51,7 @@ export const SettingTable = () => {
       >
         <AttributesSetting
           editorType="javascript"
-          value={store.selectedElement.tableColumns}
+          value={element.tableColumns}
           title={
             <>
               列表项设置&nbsp;
@@ -66,7 +65,7 @@ export const SettingTable = () => {
             </>
           }
           onChange={(val) => {
-            store.setSelectedProp('tableColumns', val);
+            setElementProp('tableColumns', val);
           }}
         >
           <Button className="fe-attr-setting-btn" size="small">
