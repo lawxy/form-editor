@@ -1,9 +1,9 @@
 import type { SortableEvent } from 'sortablejs';
 import { idCreator, dynamicGetStore } from '.';
-import type { TDragElement } from '@/types';
+import type { TDragElementObject } from '@/types';
 
 export const handleSort = async (
-  ElementsMap: TDragElement,
+  ElementsMap: TDragElementObject,
   e: SortableEvent,
   parentId: string,
 ) => {

@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import type { TDragElement, IDragElementProp } from '@/types';
+import type { TDragElement, TDragElementObject, IDragElementProp } from '@/types';
 
 
 export const wrapObserver = (elements: TDragElement, custom?: boolean) => {
   if (Array.isArray(elements)) {
-    elements = elements.reduce((memo: Record<IDragElementProp['type'], IDragElementProp>, el: IDragElementProp) => {
+    elements = elements.reduce((memo: TDragElementObject, el: IDragElementProp) => {
       memo[el.type] = el
       return memo
     }, {})
