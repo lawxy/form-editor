@@ -22,13 +22,13 @@ export const RenderContainer: TElementRender = ({ element, customStyle }) => {
       group="nested"
       onSort={(e) => handleSort(ElementsMap, e, element.id!)}
       rowProps={{
-        className: c([
-          prefixCls('row'),
-          prefixCls('row-el'),
-          mode === 'design' && !element.children?.length
-            ? prefixCls('row-empty')
-            : '',
-        ]),
+        className: c({
+          [`${prefixCls('row')}`]: true,
+          [`${prefixCls('row-el')}`]: true,
+          [`${prefixCls('row-el-design')}`]: mode === 'design',
+          [`${prefixCls('row-empty')}`]:
+            mode === 'design' && !element.children?.length,
+        }),
         gutter: [horizontalGap, verticalGap],
         'data-id': element.id,
         'data-parent-id': parentId || id,
@@ -48,5 +48,5 @@ export const RenderContainer: TElementRender = ({ element, customStyle }) => {
 export const Container: React.FC<Partial<TElementProps>> = (props) => {
   const { ElementsMap } = useEditorContext();
   const Component = ElementsMap[ELEMENT_CONTAINER].render;
-  return <Component {...props} />
-}
+  return <Component {...props} />;
+};
