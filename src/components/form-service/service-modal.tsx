@@ -9,7 +9,7 @@ import { TFormSerive } from '@/types';
 import { idCreator } from '@/utils';
 import { Preview } from './preview';
 
-import { AttributesSetting } from '../attributes-setting';
+import { AttributesSetting } from '../element-settings/attributes-setting';
 
 const defaultInterceptor = `axios.interceptors.request.use(config =>{
   return config

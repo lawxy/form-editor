@@ -3,7 +3,8 @@ import {
   EEventType,
   EChangeStatePayload,
   TFormSerive,
-  ELinkRefreshField,
+  ELinkRefreshType,
+  type IBaseElement,
 } from '@/types';
 import { dynamicGetStore } from '.';
 import { triggerService, appendUrl } from './trigger-service';
@@ -65,17 +66,28 @@ export const triggerRefreshService = async (params: TEmitData) => {
     const serviceRes: any = await triggerService(targetServiceId!);
 
     linkingElements?.forEach((item) => {
-      const { id, field, getFieldFromService = 'data' } = item;
+      const {
+        id,
+        customRefreshField,
+        linkRefreshType,
+        getFieldFromService = 'data',
+      } = item;
       store.setElementProp(id, 'linkLoading', false);
 
       const finalRes: any = result(serviceRes, getFieldFromService);
 
       const element = store.getElement(id);
-      if (!element || !field) return;
-      if (field === ELinkRefreshField.VALUEOPTIONS) {
-        store.setElementProp(id, ELinkRefreshField.VALUEOPTIONS, finalRes);
-      } else {
+      if (!element || !linkRefreshType) return;
+      if (linkRefreshType === ELinkRefreshType.FIELDVALUE) {
         store.setFieldValue(id, finalRes);
+      } else {
+        const updateField =
+          linkRefreshType === ELinkRefreshType.VALUEOPTIONS
+            ? ELinkRefreshType.VALUEOPTIONS
+            : (customRefreshField as keyof IBaseElement);
+        if (updateField) {
+          store.setElementProp(id, updateField, finalRes);
+        }
       }
     });
   }

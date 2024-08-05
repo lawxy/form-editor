@@ -4,12 +4,16 @@ import { observer } from 'mobx-react-lite';
 
 import { prefixCls } from '@/const';
 import store from '@/store';
-import { linkRefreshFieldOptions } from '@/types';
+import { linkRefreshFieldOptions, ELinkRefreshType } from '@/types';
 import type { IConfig } from '.';
 
 const LinkService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
-  const { targetServiceId, linkRefreshField, getFieldFromService } =
-    eventTarget || {};
+  const {
+    targetServiceId,
+    linkRefreshType,
+    getFieldFromService,
+    customRefreshField,
+  } = eventTarget || {};
 
   return (
     <>
@@ -36,24 +40,25 @@ const LinkService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
         />
       </div>
       <div>
-        获取结果更新组件{' '}
+        更新组件{' '}
         <Select
           style={{ width: 120 }}
           options={linkRefreshFieldOptions}
-          defaultValue={linkRefreshField}
+          defaultValue={linkRefreshType}
           onChange={(v) => {
-            onChange?.({ linkRefreshField: v });
+            onChange?.({ linkRefreshType: v });
           }}
-        />
-        {/* {linkRefreshField === ELinkRefreshField.CUSTOMFIELD && (
+        />{' '}
+        &nbsp;
+        {linkRefreshType === ELinkRefreshType.CUSTOMFIELD && (
           <Input
-            defaultValue={updateField}
+            defaultValue={customRefreshField}
             className={prefixCls('event-input')}
             onChange={(e) => {
-              onChange({ updateField: e.target.value });
+              onChange?.({ customRefreshField: e.target.value });
             }}
           />
-        )} */}
+        )}
       </div>
     </>
   );

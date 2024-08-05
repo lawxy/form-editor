@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Input } from 'antd';
-import { SettingItem } from './setting-common';
-import store from '../store';
+import { SettingItem } from '../setting-common';
+import store from '../../store';
 
 export const PlaceholderSetting = observer(() => {
   return (

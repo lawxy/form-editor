@@ -1,5 +1,5 @@
 import React, { type FC, type PropsWithChildren } from 'react';
-import c from 'classnames'
+import c from 'classnames';
 import { QuestionPopover } from '../question-popover';
 import { prefixCls } from '@/const';
 import './style.less';
@@ -16,12 +16,10 @@ export const SettingItem: FC<
   return (
     <div
       style={style || {}}
-      // className={prefixCls('setting-item')}
       className={c({
         [prefixCls('setting-item')]: true,
         [prefixCls('setting-item-vertical')]: !!vertical,
       })}
-      // vertical={vertical}
     >
       <div className={prefixCls('setting-item-label')}>
         {label}&nbsp;

@@ -17,7 +17,10 @@ export interface IDragElementProp {
   initialData: Partial<IBaseElement>;
   Icon: ReactNode;
 }
-export type TDragElementObject = Record<IDragElementProp['type'], IDragElementProp>
+export type TDragElementObject = Record<
+  IDragElementProp['type'],
+  IDragElementProp
+>;
 export type TDragElement = TDragElementObject | IDragElementProp[];
 
 export type TDirection = 'vertical' | 'horizontal';
@@ -150,9 +153,9 @@ export interface IBaseElement {
    */
   linkServices?: string[];
   /**
-   * 图片默认地址
+   * 上传地址
    */
-  defaultImgSrc?: string;
+  uploadUrl?: string;
   /**
    * 支持预览
    */
@@ -195,6 +198,15 @@ export interface IFormSchema {
   formServices?: TFormSerives;
 }
 
-export type TElementProps = { element: IBaseElement, customStyle: CSSProperties, fieldValue: any, setFieldValue: (value: any) => void }
+export type TElementProps = {
+  element: IBaseElement;
+  customStyle: CSSProperties;
+  fieldValue: any;
+  setFieldValue: (value: any) => void;
+};
 export type TElementRender = FC<TElementProps>;
-export type TElementSetting = FC<{ element: IBaseElement, setElementProp: IBaseStore['setSelectedProp'] }>;
+export type TElementSetting = FC<{
+  element: IBaseElement;
+  setElementProp: IBaseStore['setSelectedProp'];
+  setFieldValue: (value: any) => void;
+}>;

@@ -1,8 +1,10 @@
-import type { ELinkRefreshField } from './event';
+import type { ELinkRefreshType } from './event';
 
 export type TLinkElement = {
   id: string;
-  field?: ELinkRefreshField;
+  field?: ELinkRefreshType;
+  linkRefreshType?: ELinkRefreshType;
+  customRefreshField?: string; // 自定义更新字段
   /**
    * 设置关联服务后，获取服务返回的字段值 比如data.a.b
    */

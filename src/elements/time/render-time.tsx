@@ -4,11 +4,15 @@ import dayjs from 'dayjs';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { formatDate } from '@/utils';
 import { EEventAction } from '@/types';
-import store from '@/store';
 import type { TElementRender } from '@/types';
 
-export const RenderTime: TElementRender = ({ fieldValue, element, customStyle, setFieldValue }) => {
-  const { id, dateFormat, placeholder } = element;
+export const RenderTime: TElementRender = ({
+  fieldValue,
+  element,
+  customStyle,
+  setFieldValue,
+}) => {
+  const { dateFormat, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 

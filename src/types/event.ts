@@ -58,6 +58,10 @@ export enum EEventType {
    * 表单校验
    */
   VALIDATE = 'validate',
+  /**
+   * 链接跳转
+   */
+  JMUP = 'jump',
 }
 
 export const eventTypeChinese = {
@@ -65,6 +69,7 @@ export const eventTypeChinese = {
   [EEventType.SETTING_VALUE]: '设置组件值',
   [EEventType.LINK_SERVICE]: '关联服务',
   [EEventType.VALIDATE]: '表单校验',
+  [EEventType.JMUP]: '跳转链接',
 };
 
 /**
@@ -81,7 +86,7 @@ export enum EChangeStatePayload {
   REFRESH = 'refresh',
   NOT_REFRESH = 'not_refresh',
   CUSTOM = 'custom',
-  SUBMIT = 'submit'
+  SUBMIT = 'submit',
 }
 
 export const changeStatePayloadInChinese = {
@@ -110,15 +115,15 @@ export const refreshOptions = [
   { label: '刷新', value: EServiceRefesh.REFRESH },
   { label: '不刷新', value: EServiceRefesh.NOT_REFRESH },
 ];
-export enum ELinkRefreshField {
+export enum ELinkRefreshType {
   FIELDVALUE = 'fieldValue',
   VALUEOPTIONS = 'valueOptions',
   CUSTOMFIELD = 'customField',
 }
 export const linkRefreshFieldOptions = [
-  { label: '值', value: ELinkRefreshField.FIELDVALUE },
-  { label: '选项', value: ELinkRefreshField.VALUEOPTIONS },
-  // { label: '自定义字段', value: ELinkRefreshField.CUSTOMFIELD },
+  { label: '值', value: ELinkRefreshType.FIELDVALUE },
+  { label: '选项', value: ELinkRefreshType.VALUEOPTIONS },
+  { label: '自定义字段', value: ELinkRefreshType.CUSTOMFIELD },
 ];
 export enum EValidateType {
   CURRENT = 'current',
@@ -161,9 +166,13 @@ export interface IEventTarget {
    */
   refreshFlag?: EServiceRefesh;
   /**
-   * 服务更新的参数字段 | 关联服务时的组件更新字段
+   * 服务更新的参数字段
    * */
   updateField?: string;
+  /**
+   * 关联服务时的组件更新字段
+   */
+  customRefreshField?: string;
   /**
    * 服务url拼接参数
    * */
@@ -179,7 +188,7 @@ export interface IEventTarget {
   /**
    * 设置关联服务后，刷新服务需要更新的字段
    */
-  linkRefreshField?: ELinkRefreshField;
+  linkRefreshType?: ELinkRefreshType;
   /**
    * 设置关联服务后，获取服务返回的字段值 比如data.a.b
    */
@@ -193,4 +202,8 @@ export interface IEventTarget {
    */
   delayType?: 'throttle' | 'debounce';
   delayTime?: number;
+  /**
+   * 链接跳转
+   */
+  jumpUrl?: string;
 }

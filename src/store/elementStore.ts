@@ -3,8 +3,10 @@ import { cloneDeep } from 'lodash-es';
 import { idCreator, bindFromCopiedElement, unBindFromElement } from '@/utils';
 import { tabStore } from './tabStore';
 import eventStore from './eventStore';
+import fieldValuesStore from './fieldValuesStore';
 import type { IBaseElement } from '../types';
-import { IBaseStore, IElementStore } from './types';
+import { IBaseStore, IElementStore, IFieldValuesStore } from './types';
+import baseStore from '.';
 
 export default {
   /**
@@ -123,6 +125,10 @@ export default {
 
     this.formElementMap.delete(el.id!);
     parentChildren.splice(idx, 1);
+
+    const formValues = baseStore.fieldValues;
+    delete formValues[el.id!];
+    baseStore.setFieldsValues(formValues);
     return true;
   },
 
@@ -163,6 +169,8 @@ export default {
     }
 
     parentChildren.splice(idx + 1, 0, newEl);
+
+    baseStore.setFieldValue(newEl.id!, baseStore.fieldValues[el.id!]);
 
     return newEl;
   },

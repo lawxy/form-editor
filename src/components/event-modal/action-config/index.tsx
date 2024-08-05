@@ -15,6 +15,7 @@ import LinkServcie from './link-service';
 import RefreshService from './refresh-service';
 import SetElementValue from './set-element-value';
 import Validate from './validate';
+import JumpLink from './jump-link';
 import { EventModalContext } from '../context';
 export interface IConfig {
   onChange?: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
@@ -39,6 +40,8 @@ const ActionItem: React.FC<
         return <LinkServcie />;
       case EEventType.VALIDATE:
         return <Validate />;
+      case EEventType.JMUP:
+        return <JumpLink />;
       default:
         return null;
     }
@@ -138,6 +141,7 @@ export const ActionConfig: React.FC<{
       {currentEvent?.eventAction && currentEvent?.eventType && (
         <ReactSortable
           list={currentEvent?.eventTargets || []}
+          // handle=".fe-event-action-config"
           onSort={({ newIndex, oldIndex }) => {
             const newEventTargets = cloneDeep(currentEvent!.eventTargets);
             const afterMove = arrayMoveImmutable(

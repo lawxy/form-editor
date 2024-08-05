@@ -1,14 +1,19 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import { useRegisterEvents, useFormUpdate } from '@/hooks';
 import { formatDate } from '@/utils';
 import { EEventAction } from '@/types';
-import store from '@/store';
 import type { TElementRender } from '@/types';
+import { showTimeFormat } from './const';
 
-export const RenderDate: TElementRender = ({ fieldValue, element, customStyle, setFieldValue }) => {
-  const { id, dateFormat, placeholder } = element;
+export const RenderDate: TElementRender = ({
+  fieldValue,
+  element,
+  customStyle,
+  setFieldValue,
+}) => {
+  const { dateFormat, placeholder } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -28,21 +33,12 @@ export const RenderDate: TElementRender = ({ fieldValue, element, customStyle, s
     eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
   }, [fieldValue]);
 
-  const showTime = useMemo(() => {
-    const timeFormat = dateFormat?.split(' ');
-    if (!timeFormat) return false;
-    const res: Record<string, true> = {};
-    if (timeFormat.includes('HH')) res.showHour = true;
-    if (timeFormat.includes('mm')) res.showMinute = true;
-    if (timeFormat.includes('ss')) res.showSecond = true;
-    return res;
-  }, [dateFormat]);
   return (
     <DatePicker
       format={dateFormat}
       // @ts-ignore
       value={fieldValue ? dayjs(fieldValue) : undefined}
-      showTime={showTime}
+      showTime={showTimeFormat(dateFormat!)}
       getPopupContainer={(n: any) => n.parentElement}
       placement="bottomRight"
       onChange={handleChange}

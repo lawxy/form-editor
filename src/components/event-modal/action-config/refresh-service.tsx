@@ -8,7 +8,6 @@ import {
   changeStateActions,
   EChangeStatePayload,
   refreshOptions,
-  TOption
 } from '@/types';
 import type { IConfig } from '.';
 
@@ -19,72 +18,83 @@ const actions = changeStateActions([
   EChangeStatePayload.CLEAR,
 ]);
 
+const generateActionInput = (
+  defaultValue?: string,
+  onChange?: IConfig['onChange'],
+) => {
+  return (
+    <Input
+      className={prefixCls('event-input')}
+      defaultValue={defaultValue}
+      onChange={(e) => {
+        onChange?.({ updateField: e.target.value });
+      }}
+    />
+  );
+};
+
+const generateActionSelect = (
+  defaultValue?: string,
+  onChange?: IConfig['onChange'],
+) => {
+  return (
+    <Select
+      className={prefixCls('event-input')}
+      options={actions}
+      defaultValue={defaultValue}
+      onChange={(v) => {
+        onChange?.({ targetPayload: v as EChangeStatePayload });
+      }}
+    />
+  );
+};
+
 const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
   const { targetServiceId, targetPayload, refreshFlag, updateField } =
     eventTarget || {};
 
-  const ActionSelect = () => {
-    return (
-      <Select
-        className={prefixCls('event-input')}
-        options={actions}
-        key="action"
-        defaultValue={targetPayload}
-        onChange={(v) => {
-          onChange?.({ targetPayload: v });
-        }}
-      />
-    )
-  }
-  const ActionInput = () => {
-    return (
-      <Input
-        className={prefixCls('event-input')}
-        defaultValue={updateField}
-        onChange={(e) => {
-          onChange?.({ updateField: e.target.value });
-        }}
-      />
-    )
-  }
-
+  const actionSelect = generateActionSelect(targetPayload, onChange);
+  const actionInput = generateActionInput(updateField, onChange);
   const renderAction = () => {
     switch (targetPayload) {
       case EChangeStatePayload.UPDATE:
         return (
           <>
             传入组件元素值&nbsp;
-            <ActionSelect />
+            {actionSelect}
             &nbsp;
-            <ActionInput />
+            {actionInput}
             &nbsp;字段
           </>
-        )
+        );
       case EChangeStatePayload.APPEND:
         return (
           <>
             传入组件元素值&nbsp;
-            <ActionSelect />
+            {actionSelect}
             &nbsp;
-            <ActionInput />
+            {actionInput}
             &nbsp;字段到url上
           </>
-        )
+        );
       case EChangeStatePayload.SUBMIT:
         return (
           <>
-            <ActionSelect />
+            {actionSelect}
             &nbsp;, 将json传入&nbsp;
-            <ActionInput />
+            {actionInput}
             &nbsp;字段
           </>
         );
       default:
         return (
           <>
-            <ActionSelect />
-            {targetPayload === EChangeStatePayload.CLEAR && <> &nbsp;所有字段，</>}
-          </>);
+            {actionSelect}
+            {targetPayload === EChangeStatePayload.CLEAR && (
+              <> &nbsp;所有字段，</>
+            )}
+          </>
+        );
     }
   };
 

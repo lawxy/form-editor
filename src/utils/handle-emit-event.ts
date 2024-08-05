@@ -9,6 +9,7 @@ import {
   eventActionInChinese,
   EDelay,
 } from '@/types';
+import { history } from 'dumi';
 import { EventEmitter, getValueFromInput, dynamicGetStore } from '@/utils';
 import { validateParams, asyncDebounce, asyncThrottle } from '.';
 interface IParams {
@@ -111,6 +112,22 @@ export const emitValidateForm = (params: IParams) => {
   );
 };
 
+// 跳转链接
+export const emitJumpUrl = (params: IParams) => {
+  const { target } = params;
+  const { jumpUrl } = target;
+  const validate = validateParams([jumpUrl]);
+  if (!validate) return;
+
+  return withConfig(async () => {
+    if (jumpUrl?.startsWith('http')) {
+      window.location.href = jumpUrl;
+    } else {
+      history.push(jumpUrl!);
+    }
+  }, target);
+};
+
 export const handleEmitEvent = (
   emitter: EventEmitter,
   events: TCustomEvents,
@@ -130,6 +147,8 @@ export const handleEmitEvent = (
           break;
         case EEventType.VALIDATE:
           emitFn = emitValidateForm(params);
+        case EEventType.JMUP:
+          emitFn = emitJumpUrl(params);
           break;
       }
 

@@ -4,7 +4,7 @@ import { Button, message } from 'antd';
 import { MonacoEditor, useMonaco } from '@roddan/ui';
 import { useCurrent, useDesignEffect } from '@/hooks';
 
-import { SettingItem } from './setting-common';
+import { SettingItem } from '../setting-common';
 
 const removeId = (id: string) => id?.replace(/\-(.*)?/, '');
 

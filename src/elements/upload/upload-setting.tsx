@@ -9,9 +9,9 @@ export const SettingUpload: TElementSetting = ({ element, setElementProp }) => {
     <>
       <SettingItem label="上传地址">
         <Input
-          value={element.defaultImgSrc}
+          value={element.uploadUrl}
           onChange={(e) => {
-            setElementProp('defaultImgSrc', e.target.value);
+            setElementProp('uploadUrl', e.target.value);
           }}
         />
       </SettingItem>

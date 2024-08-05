@@ -10,8 +10,13 @@ const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {
   const store = dynamicGetStore();
 
   eventTargets?.forEach((target) => {
-    const { targetServiceId, sourceId, linkRefreshField, getFieldFromService } =
-      target;
+    const {
+      targetServiceId,
+      sourceId,
+      linkRefreshType,
+      getFieldFromService,
+      customRefreshField,
+    } = target;
     if (!targetServiceId || !store.getService(targetServiceId!)) return;
     const service = store.getService(targetServiceId) as TFormSerive;
     const { linkingElements } = service;
@@ -19,8 +24,9 @@ const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {
     if (type === 'link') {
       const linkData = {
         id: sourceId,
-        field: linkRefreshField,
+        linkRefreshType,
         getFieldFromService,
+        customRefreshField,
       };
       if (!linkingElements) {
         store.setService(targetServiceId, { linkingElements: [linkData] });

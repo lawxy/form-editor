@@ -19,6 +19,7 @@ export * from './types';
 export * from './views';
 export * from './const';
 export * from './utils';
+export * from './hooks';
 
 export interface IEditorInstance {
   form: FormInstance;
@@ -46,7 +47,7 @@ const FormEditorContent: React.ForwardRefRenderFunction<
     } else if (localStorage.getItem('schema')) {
       try {
         schema = JSON.parse(localStorage.getItem('schema')!);
-      } catch (e) { }
+      } catch (e) {}
     }
     injectSchema(schema);
   }, [defaultValue]);
@@ -59,7 +60,10 @@ const FormEditorContent: React.ForwardRefRenderFunction<
   }));
 
   const contextValue = useMemo(() => {
-    Object.assign(wrapObserver(ElementsMap), wrapObserver(customElements || {}, true));
+    Object.assign(
+      wrapObserver(ElementsMap),
+      wrapObserver(customElements || {}, true),
+    );
 
     return {
       mode,

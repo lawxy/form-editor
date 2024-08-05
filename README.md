@@ -29,7 +29,8 @@
 - <s>去掉 styled-component</s>
 - <s>设计模式可通过 modal 传入 schema</s>
 - <s>组件化 - 自定义组件 todo: settingContent 设置，customElements 改为数组传入</s>
-- 事件-跳转链接
+- <s>事件-跳转链接</s>
+- 默认值设置
 - 静态页面生成
 - 组件其余属性、剩余组件支持
 - ssr next

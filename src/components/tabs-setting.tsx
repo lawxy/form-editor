@@ -5,8 +5,8 @@ import { prefixCls } from '@/const';
 
 import { observer } from 'mobx-react-lite';
 import { tabStore, type TElementTab } from '@/store';
-import BasicInfo from './basic-info';
-import { CustomCssSetting } from './custom-css-setting';
+import BasicInfo from './element-settings/basic-info';
+import { CustomCssSetting } from './element-settings/custom-css-setting';
 
 import { Tabs } from 'antd';
 

@@ -1,5 +1,5 @@
 import React, { type FC, type PropsWithChildren } from 'react';
-import { Switch, Popover, Select, InputNumber } from 'antd';
+import { Switch, Select, InputNumber } from 'antd';
 import { prefixCls } from '@/const';
 import type { IConfig } from '.';
 import { delayOptions, EEventAction, type TCustomEvent } from '@/types';
