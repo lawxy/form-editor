@@ -9,7 +9,6 @@ import {
   eventActionInChinese,
   EDelay,
 } from '@/types';
-import { history } from 'dumi';
 import { EventEmitter, getValueFromInput, dynamicGetStore } from '@/utils';
 import { validateParams, asyncDebounce, asyncThrottle } from '.';
 interface IParams {
@@ -123,7 +122,7 @@ export const emitJumpUrl = (params: IParams) => {
     if (jumpUrl?.startsWith('http')) {
       window.location.href = jumpUrl;
     } else {
-      history.push(jumpUrl!);
+      window.location.href = `${window.location.origin}${jumpUrl!}`
     }
   }, target);
 };

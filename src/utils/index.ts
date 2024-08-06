@@ -18,3 +18,4 @@ export * from './dynamic-get-store';
 export * from './function-async';
 export * from './indject-schema';
 export * from './wrap-observer';
+export * from './component-has-observered'

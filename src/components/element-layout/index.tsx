@@ -122,7 +122,7 @@ export const ElementLayout: FC<
 
 export const RenderElementWithLayout: FC<{
   element: IBaseElement;
-}> = observer(({ element }) => {
+}> = ({ element }) => {
   const { ElementsMap } = useEditorContext();
 
   const Component = useMemo(() => {
@@ -146,4 +146,4 @@ export const RenderElementWithLayout: FC<{
       />
     </ElementLayout>
   );
-});
+};
