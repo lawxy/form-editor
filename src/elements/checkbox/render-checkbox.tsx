@@ -11,6 +11,7 @@ export const RenderCheckbox: TElementRender = ({
   setFieldValue,
 }) => {
   const { valueOptions, alignDirection } = element;
+  console.log('fieldValue', fieldValue)
 
   const { eventFunctions } = useRegisterEvents(element);
 

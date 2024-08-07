@@ -180,6 +180,10 @@ export interface IBaseElement {
    * 组件关联服务时的loading
    */
   linkLoading?: boolean;
+  /**
+   * 下拉模式
+   */
+  mode?: 'multiple' | 'tags';
 }
 export interface IFormAttributesProps {
   formName?: string;

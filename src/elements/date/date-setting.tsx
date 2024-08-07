@@ -27,8 +27,6 @@ export const SettingDate: TElementSetting = ({
   const { dateFormat } = element;
 
   const handleChange = (date: Date) => {
-    console.log('date', date);
-    console.log('dateFormat', dateFormat);
     setFieldValue(date ? formatDate(date, dateFormat!) : undefined);
   };
   return (

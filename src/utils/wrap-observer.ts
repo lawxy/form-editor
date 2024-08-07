@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react-lite';
-import { cloneDeep } from 'lodash-es';
 import type {
   TDragElement,
   TDragElementObject,
@@ -8,7 +7,6 @@ import type {
 import { hasObservered } from '@/utils'
 
 export const wrapObserver = (elements: TDragElement, custom?: boolean) => {
-  elements = cloneDeep(elements);
   if (Array.isArray(elements)) {
     elements = elements.reduce(
       (memo: TDragElementObject, el: IDragElementProp) => {

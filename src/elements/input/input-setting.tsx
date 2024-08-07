@@ -6,6 +6,7 @@ import {
   RegPattern,
   SettingItem,
   SettingWrap,
+  DefaultValueSetting
 } from '@/components';
 import type { TElementSetting } from '@/types';
 
@@ -20,6 +21,7 @@ export const SettingInput: TElementSetting = ({ element, setElementProp }) => {
   return (
     <>
       <SettingWrap title="元素设置">
+        <DefaultValueSetting />
         <PlaceholderSetting />
         <SettingItem label="文本类型">
           <Select
