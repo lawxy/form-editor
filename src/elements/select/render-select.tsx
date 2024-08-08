@@ -10,7 +10,7 @@ export const RenderSelect: TElementRender = ({
   customStyle,
   setFieldValue,
 }) => {
-  const { mode, valueOptions, placeholder, linkLoading } = element;
+  const { mode, valueOptions, placeholder, linkLoading, allowClear } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -33,6 +33,8 @@ export const RenderSelect: TElementRender = ({
       onChange={onChange}
       loading={linkLoading}
       style={customStyle}
+      mode={mode}
+      allowClear={allowClear}
     />
   );
 };

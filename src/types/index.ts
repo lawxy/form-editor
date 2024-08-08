@@ -184,6 +184,10 @@ export interface IBaseElement {
    * 下拉模式
    */
   mode?: 'multiple' | 'tags';
+  /**
+   * 允许清空输入(选择)框
+   */
+  allowClear?: boolean;
 }
 export interface IFormAttributesProps {
   formName?: string;

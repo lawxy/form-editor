@@ -1,4 +1,3 @@
-import { message } from 'antd';
 import {
   EEventAction,
   EEventType,
@@ -7,6 +6,7 @@ import {
   TCustomEvents,
   EValidateType,
   eventActionInChinese,
+  eventTypeChinese,
   EDelay,
 } from '@/types';
 import { EventEmitter, getValueFromInput, dynamicGetStore } from '@/utils';
@@ -17,14 +17,19 @@ interface IParams {
   target: IEventTarget;
 }
 
-export type TEventFunction = (v?: any) => void;
+export interface IEventFunction {
+  (v?: any): Promise<void>;
+  sourceId: string;
+  series?: boolean;
+  eventType: EEventType;
+}
 
 export type TEventFunctions = {
-  [key in EEventAction]?: Array<TEventFunction>;
+  [key in EEventAction]?: Array<IEventFunction>;
 };
 
 export type TEventFormatFunctions = {
-  [key in EEventAction]?: TEventFunction;
+  [key in EEventAction]?: IEventFunction;
 };
 
 export type TEmitData = Partial<IEventTarget> & {
@@ -33,14 +38,14 @@ export type TEmitData = Partial<IEventTarget> & {
 };
 
 const withConfig = (fn: (v: IParams) => Promise<any>, target: IEventTarget) => {
-  const { series, delayTime, delayType } = target;
+  const { series, delayTime, delayType, sourceId } = target;
   if (delayType === EDelay.DEBOUNCE && delayTime) {
     fn = asyncDebounce(fn, delayTime);
   }
   if (delayType === EDelay.THROTTLE && delayTime) {
     fn = asyncThrottle(fn, delayTime);
   }
-  Object.assign(fn, { series });
+  Object.assign(fn, { series, sourceId });
   return fn;
 };
 
@@ -122,9 +127,30 @@ export const emitJumpUrl = (params: IParams) => {
     if (jumpUrl?.startsWith('http')) {
       window.location.href = jumpUrl;
     } else {
-      window.location.href = `${window.location.origin}${jumpUrl!}`
+      window.location.href = `${window.location.origin}${jumpUrl!}`;
     }
   }, target);
+};
+
+const handleError = ({
+  emitFn,
+  error,
+  action,
+}: {
+  emitFn: IEventFunction;
+  error: any;
+  action: EEventAction;
+}) => {
+  const { sourceId, eventType } = emitFn;
+  const store = dynamicGetStore();
+  const el = store.getElement(sourceId);
+  console.log(`
+    事件报错:\n 
+    组件: ${el.elementName ?? sourceId}\n 
+    事件动作: ${eventActionInChinese[action as EEventAction]} - ${
+    eventTypeChinese[eventType]
+  } \n
+    错误返回: ${error}`);
 };
 
 export const handleEmitEvent = (
@@ -136,22 +162,23 @@ export const handleEmitEvent = (
     const { eventAction, eventType, eventTargets } = event;
     eventTargets?.forEach((target) => {
       const params = { emitter, eventType, target } as IParams;
-      let emitFn: TEventFunction | undefined;
+      let emitFn: IEventFunction | undefined;
       switch (eventType) {
         case EEventType.SETTING_VALUE:
-          emitFn = emitSettingValue(params);
+          emitFn = emitSettingValue(params) as IEventFunction;
           break;
         case EEventType.UPDATE_SERVICE:
-          emitFn = emitRefreshService(params);
+          emitFn = emitRefreshService(params) as IEventFunction;
           break;
         case EEventType.VALIDATE:
-          emitFn = emitValidateForm(params);
+          emitFn = emitValidateForm(params) as IEventFunction;
         case EEventType.JMUP:
-          emitFn = emitJumpUrl(params);
+          emitFn = emitJumpUrl(params) as IEventFunction;
           break;
       }
 
       if (!emitFn) return;
+      Object.assign(emitFn, { eventType });
       if (functions[eventAction!]) {
         functions[eventAction!]?.push(emitFn);
       } else {
@@ -162,7 +189,7 @@ export const handleEmitEvent = (
 
   const formatFunctions: TEventFormatFunctions = Object.entries(
     functions,
-  ).reduce((memo: TEventFormatFunctions, [action, emitFns]) => {
+  ).reduce((memo: TEventFormatFunctions, [action, emitFns]: any) => {
     // @ts-ignore
     memo[action] = async (v: any) => {
       for (let i = 0; i < emitFns.length; i++) {
@@ -171,17 +198,20 @@ export const handleEmitEvent = (
           if (emitFn?.series) {
             await emitFn?.(v);
           } else {
-            emitFn(v)?.catch(() => {
-              return message.error(
-                `${eventActionInChinese[action as EEventAction]}事件报错`,
-              );
+            emitFn(v)?.catch((e: any) => {
+              handleError({
+                emitFn,
+                error: e,
+                action,
+              });
             });
           }
         } catch (e) {
-          console.log(e);
-          return message.error(
-            `${eventActionInChinese[action as EEventAction]}事件报错`,
-          );
+          handleError({
+            emitFn,
+            error: e,
+            action,
+          });
         }
       }
     };
