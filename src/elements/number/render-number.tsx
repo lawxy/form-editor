@@ -6,7 +6,12 @@ import { EEventAction } from '@/types';
 import type { TElementRender } from '@/types';
 import { EValueType } from './const';
 
-export const RenderNumber: TElementRender = ({ element = {}, fieldValue, customStyle, setFieldValue }) => {
+export const RenderNumber: TElementRender = ({
+  element = {},
+  fieldValue,
+  customStyle,
+  setFieldValue,
+}) => {
   const { id, minNum, maxNum, valueType } = element;
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -24,9 +29,9 @@ export const RenderNumber: TElementRender = ({ element = {}, fieldValue, customS
 
   const handleEvent =
     (action: EEventAction) =>
-      (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        eventFunctions[action]?.(e.target.value);
-      };
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      eventFunctions[action]?.(e.target.value);
+    };
 
   const handleChange = (val: number | null) => {
     setFieldValue(val);

@@ -125,9 +125,13 @@ export interface IBaseElement {
    */
   alignDirection?: TDirection;
   /**
-   * 开关选中的字段值
+   * 开关开启的值
    */
-  checkedValue?: string;
+  openValue?: string;
+  /**
+   * 开关关闭的值
+   */
+  closeValue?: string;
   /**
    * 表格设置
    */
@@ -181,9 +185,9 @@ export interface IBaseElement {
    */
   linkLoading?: boolean;
   /**
-   * 下拉模式
+   * 下拉是否多选
    */
-  mode?: 'multiple' | 'tags';
+  multiple?: boolean;
   /**
    * 允许清空输入(选择)框
    */

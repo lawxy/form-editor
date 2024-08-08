@@ -4,7 +4,8 @@ import { Tabs } from 'antd';
 import store from '@/store';
 import type { TElementRender } from '@/types';
 import { idCreator } from '@/utils';
-import { initialData, ELEMENT_CONTAINER, Container } from '../container';
+import { RenderElementWithLayout } from '@/components';
+import { initialData, ELEMENT_CONTAINER } from '../container';
 
 export const createPanel = (props = {}) => {
   const panel = {
@@ -25,7 +26,7 @@ export const RenderTabs: TElementRender = ({ element, customStyle }) => {
     return {
       label: child.elementName!,
       key: child.id!,
-      children: <Container element={child} />,
+      children: <RenderElementWithLayout element={child} />,
     };
   });
 

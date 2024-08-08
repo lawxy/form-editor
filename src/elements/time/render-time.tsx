@@ -12,7 +12,7 @@ export const RenderTime: TElementRender = ({
   customStyle,
   setFieldValue,
 }) => {
-  const { dateFormat, placeholder } = element;
+  const { dateFormat, placeholder, allowClear } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -37,6 +37,7 @@ export const RenderTime: TElementRender = ({
       onFocus={handleEvent(EEventAction.ON_FOCUS)}
       onBlur={handleEvent(EEventAction.ON_BLUR)}
       placeholder={placeholder}
+      allowClear={allowClear}
       style={customStyle}
     />
   );

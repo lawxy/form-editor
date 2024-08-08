@@ -27,4 +27,5 @@ export const initialData: Partial<IBaseElement> = {
   dateFormat: 'YYYY-MM-DD',
   gridSpan: 4,
   placeholder: '请选择日期',
+  allowClear: true,
 };

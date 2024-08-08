@@ -1,9 +1,21 @@
-import React from 'react';
-import { Input } from 'antd';
-import { SettingItem, SettingWrap } from '@/components';
+import React, { useMemo } from 'react';
+import { Input, Switch } from 'antd';
+import { isNil } from 'lodash-es';
+import { SettingItem, SettingWrap, DefaultValueSetting } from '@/components';
 import type { TElementSetting } from '@/types';
+import { getValueFromInput } from '@/utils';
 
-export const SettingSwitch: TElementSetting = ({ element, setElementProp }) => {
+export const SettingSwitch: TElementSetting = ({
+  element,
+  setElementProp,
+  setFieldValue,
+}) => {
+  const { openValue, closeValue } = element;
+
+  const realCheckedValue = useMemo(() => {
+    return getValueFromInput(openValue);
+  }, [openValue]);
+
   return (
     <SettingWrap title="元素设置">
       <SettingItem
@@ -11,12 +23,33 @@ export const SettingSwitch: TElementSetting = ({ element, setElementProp }) => {
         label="开启值"
       >
         <Input
-          value={element?.checkedValue}
+          value={element?.openValue}
           onChange={(e) => {
-            setElementProp('checkedValue', e.target.value);
+            setElementProp('openValue', e.target.value);
           }}
         />
       </SettingItem>
+      <SettingItem label="关闭值">
+        <Input
+          value={element?.closeValue}
+          onChange={(e) => {
+            setElementProp('closeValue', e.target.value);
+          }}
+        />
+      </SettingItem>
+      <DefaultValueSetting>
+        {(value) => (
+          <Switch
+            size="small"
+            checked={!isNil(value) && value === realCheckedValue}
+            onChange={(checked) => {
+              setFieldValue(
+                checked ? realCheckedValue : getValueFromInput(closeValue),
+              );
+            }}
+          />
+        )}
+      </DefaultValueSetting>
     </SettingWrap>
   );
 };

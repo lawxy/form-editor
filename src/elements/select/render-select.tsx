@@ -10,11 +10,13 @@ export const RenderSelect: TElementRender = ({
   customStyle,
   setFieldValue,
 }) => {
-  const { mode, valueOptions, placeholder, linkLoading, allowClear } = element;
+  const { multiple, valueOptions, placeholder, linkLoading, allowClear } =
+    element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
   const onChange = (val: any) => {
+    console.log(val);
     setFieldValue(val);
   };
 
@@ -33,8 +35,9 @@ export const RenderSelect: TElementRender = ({
       onChange={onChange}
       loading={linkLoading}
       style={customStyle}
-      mode={mode}
+      mode={multiple ? 'multiple' : undefined}
       allowClear={allowClear}
+      value={fieldValue}
     />
   );
 };

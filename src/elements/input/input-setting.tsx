@@ -6,7 +6,8 @@ import {
   RegPattern,
   SettingItem,
   SettingWrap,
-  DefaultValueSetting
+  DefaultValueSetting,
+  AllowClear,
 } from '@/components';
 import type { TElementSetting } from '@/types';
 
@@ -33,6 +34,7 @@ export const SettingInput: TElementSetting = ({ element, setElementProp }) => {
             }}
           />
         </SettingItem>
+        <AllowClear />
         {textType === 'multiple' && (
           <>
             <SettingItem label="自适应行数">

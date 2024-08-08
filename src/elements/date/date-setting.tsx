@@ -8,6 +8,7 @@ import {
   PlaceholderSetting,
   RegPattern,
   DefaultValueSetting,
+  AllowClear,
 } from '@/components';
 import type { TElementSetting } from '@/types';
 import { formatDate } from '@/utils';
@@ -55,6 +56,7 @@ export const SettingDate: TElementSetting = ({
             }}
           />
         </SettingItem>
+        <AllowClear />
       </SettingWrap>
       <RegPattern />
     </>
