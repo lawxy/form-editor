@@ -91,7 +91,11 @@ export const EventSetting: React.FC<{
         sourceId={sourceId!}
         eventTypeOptions={eventTypeOptions}
       >
-        <Button type="dashed" className={prefixCls('event-button-add')}>
+        <Button
+          type="dashed"
+          className={prefixCls('add-button')}
+          style={{ marginBottom: 8 }}
+        >
           + 新增事件
         </Button>
       </EventModal>

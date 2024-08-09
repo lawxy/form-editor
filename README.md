@@ -31,6 +31,7 @@
 - <s>组件化 - 自定义组件 todo: settingContent 设置，customElements 改为数组传入</s>
 - <s>事件-跳转链接</s>
 - <s>默认值设置</s>
+- table 可编辑
 - 静态页面生成
 - 组件其余属性、剩余组件支持
 - ssr next

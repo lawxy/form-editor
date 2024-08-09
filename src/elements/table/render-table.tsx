@@ -1,13 +1,23 @@
-import React from 'react';
-import { Table } from 'antd';
+import React, { useMemo } from 'react';
+import { EditableProTable, ProTable } from '@ant-design/pro-components';
 
 import { EEventAction } from '@/types';
 import type { TElementRender } from '@/types';
-import { parseJSX } from '@/utils';
+import { parseJSX, idCreator } from '@/utils';
 import { useFormUpdate, useRegisterEvents } from '@/hooks';
 
-export const RenderTable: TElementRender = ({ fieldValue = [], element, customStyle }) => {
-  const { tableColumns = '[]', tableAttributes = '{}', linkLoading } = element;
+export const RenderTable: TElementRender = ({
+  fieldValue = [{ id: 'row1', title: 'a' }],
+  element,
+  customStyle,
+  setFieldValue,
+}) => {
+  const {
+    tableColumns = '[]',
+    tableAttributes = '{}',
+    linkLoading,
+    readonly,
+  } = element;
 
   const { eventFunctions } = useRegisterEvents(element);
 
@@ -15,14 +25,54 @@ export const RenderTable: TElementRender = ({ fieldValue = [], element, customSt
     eventFunctions[EEventAction.ON_LOADED]?.();
   }, [eventFunctions[EEventAction.ON_LOADED]]);
 
+  const columns = useMemo(() => {
+    return [
+      ...parseJSX(tableColumns),
+      !readonly && {
+        title: '操作',
+        valueType: 'option',
+        width: 200,
+        render: (text, record, _, action) => [
+          <a
+            key="editable"
+            onClick={() => {
+              action?.startEditable?.(record.id);
+            }}
+          >
+            编辑
+          </a>,
+          <a
+            key="delete"
+            onClick={() => {
+              // setDataSource(dataSource.filter((item) => item.id !== record.id));
+            }}
+          >
+            删除
+          </a>,
+        ],
+      },
+    ].filter(Boolean);
+  }, [tableColumns, readonly]);
+
   return (
-    <Table
-      columns={parseJSX(tableColumns)}
+    <EditableProTable
+      columns={columns}
       rowKey="id"
-      dataSource={fieldValue}
+      value={fieldValue}
       loading={linkLoading}
       {...parseJSX(`[${tableAttributes}]`)[0]}
       style={customStyle}
+      onChange={(v) => {
+        console.log(v);
+        setFieldValue(v);
+      }}
+      recordCreatorProps={{
+        record: () => ({ id: idCreator('row') }),
+        creatorButtonText: '新增一行',
+        style: {
+          display: readonly ? 'none' : 'block',
+        },
+      }}
     />
   );
 };

@@ -26,6 +26,14 @@ export type TDragElement = TDragElementObject | IDragElementProp[];
 export type TDirection = 'vertical' | 'horizontal';
 export type TMode = 'design' | 'form';
 export type TOption = { label: string; value: string | number; id?: string };
+export type TColumn = {
+  id: string;
+  name: string;
+  field: string;
+  fixed: '' | 'left' | 'right';
+  width?: number;
+  align: 'left' | 'right' | 'center';
+};
 export enum EChangeType {
   ADD = 'add',
   EDIT = 'edit',
@@ -192,6 +200,14 @@ export interface IBaseElement {
    * 允许清空输入(选择)框
    */
   allowClear?: boolean;
+  /**
+   * 只读
+   */
+  readonly?: boolean;
+  /**
+   *
+   */
+  columns?: TColumn[];
 }
 export interface IFormAttributesProps {
   formName?: string;

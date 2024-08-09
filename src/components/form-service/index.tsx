@@ -14,7 +14,7 @@ export const FormService = observer(() => {
   return (
     <div className={prefixCls('form-service-wrap')}>
       <ServiceModal>
-        <Button type="dashed" className={prefixCls('form-service-add')}>
+        <Button type="dashed" className={prefixCls('add-button')}>
           + 新增服务
         </Button>
       </ServiceModal>
