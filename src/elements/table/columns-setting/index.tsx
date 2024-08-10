@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Button } from 'antd';
 import { prefixCls } from '@/const';
 import { MenuOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditModal } from './edit-modal';
 import './style.less';
 
 import store from '@/store';
@@ -29,26 +30,23 @@ export const ColumnsSetting = observer(() => {
           <DeleteOutlined />
         </div>
       ))}
-      <Button
-        size="small"
-        type="dashed"
-        className={prefixCls('add-button')}
-        onClick={() => {
-          store.setSelectedProp('columns', [
-            ...columns,
-            {
-              id: idCreator('col'),
-              name: '标题',
-              field: '',
-              fixed: '',
-              align: 'left',
-            },
-          ]);
+      <EditModal
+        onChange={(values) => {
+          if (!values?.id) {
+            values.id = idCreator('col');
+          }
+          store.setSelectedProp('columns', [...columns, values]);
         }}
-        style={{ fontSize: 12 }}
       >
-        + 新增一列
-      </Button>
+        <Button
+          size="small"
+          type="dashed"
+          className={prefixCls('add-button')}
+          style={{ fontSize: 12 }}
+        >
+          + 新增一列
+        </Button>
+      </EditModal>
     </SettingItem>
   );
 });

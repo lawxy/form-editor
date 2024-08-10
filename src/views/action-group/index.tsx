@@ -58,10 +58,10 @@ const ActionGroup = () => {
     <div className={prefixCls('action-group')}>
       <ActionItem text="预览" onClick={handlePreview} />
       <PreviewJson>
-        <ActionItem text="查看json" />
+        <ActionItem text="查看Schema" />
       </PreviewJson>
       <InjectJson>
-        <ActionItem text="注入json" />
+        <ActionItem text="注入Schema" />
       </InjectJson>
       <ActionItem text="保存" onClick={handleSave} />
       <Popconfirm
