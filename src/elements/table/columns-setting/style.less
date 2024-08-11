@@ -1,10 +1,20 @@
 .fe {
   &-column-setting {
     display: flex;
+    margin-bottom: 10px;
+    align-items: center;
     & span.anticon {
       cursor: pointer;
     }
+    .ant-typography {
+      flex: 1;
+      display: inline-block;
+      margin: 0 10px;
+      position: relative;
+      bottom: 1px;
+    }
   }
+
   &-column-setting-drag-icon {
     cursor: move;
     & span.anticon {

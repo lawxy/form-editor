@@ -1,11 +1,11 @@
 import { arrayMoveImmutable } from 'array-move';
 import { cloneDeep } from 'lodash-es';
+import { runInAction } from 'mobx';
 import { idCreator, bindFromCopiedElement, unBindFromElement } from '@/utils';
 import { tabStore } from './tabStore';
 import eventStore from './eventStore';
-import fieldValuesStore from './fieldValuesStore';
 import type { IBaseElement } from '../types';
-import { IBaseStore, IElementStore, IFieldValuesStore } from './types';
+import { IBaseStore, IElementStore } from './types';
 import baseStore from '.';
 
 export default {
@@ -17,7 +17,9 @@ export default {
   formElementMap: new Map(),
 
   flatElement(el: IBaseElement) {
-    this.formElementMap.set(el.id!, el);
+    runInAction(() => {
+      this.formElementMap.set(el.id!, el);
+    });
   },
 
   setFormElements(els: IBaseElement[]) {
@@ -55,7 +57,6 @@ export default {
   appendEl(el: IBaseElement, selectNewElement = true) {
     const parentChildren = this.getParentChildren(el.parentId);
     parentChildren.push(el);
-
     if (selectNewElement) {
       this.setSelectedElement(el);
     }
@@ -124,7 +125,9 @@ export default {
     });
 
     this.formElementMap.delete(el.id!);
-    parentChildren.splice(idx, 1);
+    runInAction(() => {
+      parentChildren.splice(idx, 1);
+    });
 
     const formValues = baseStore.fieldValues;
     delete formValues[el.id!];

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Popconfirm, message } from 'antd';
+import { Popconfirm } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { cloneDeep } from 'lodash-es';
 import { useEditorContext } from '@/context';
@@ -7,6 +7,7 @@ import { prefixCls } from '@/const';
 import store from '@/store';
 import { PreviewJson } from './preview-json';
 import { InjectJson } from './inject-json';
+import { AntdStaticFunctions } from '@/components';
 import './style.less';
 
 const ActionItem: React.FC<
@@ -23,6 +24,8 @@ const ActionItem: React.FC<
 
 const ActionGroup = () => {
   const { onSave } = useEditorContext();
+  const { message } = AntdStaticFunctions;
+
   const handleSave = useCallback(() => {
     /**
      * todo 组件属性校验(暂时没这个需求)
@@ -38,7 +41,6 @@ const ActionGroup = () => {
     //   message.error('表单校验失败')
     //   return;
     // }
-    console.log();
     onSave?.(cloneDeep(store.getSchema()));
     localStorage.setItem('schema', JSON.stringify(store.getSchema()));
     message.success('保存成功');
@@ -56,6 +58,8 @@ const ActionGroup = () => {
 
   return (
     <div className={prefixCls('action-group')}>
+      {/* {contextHolder} */}
+
       <ActionItem text="预览" onClick={handlePreview} />
       <PreviewJson>
         <ActionItem text="查看Schema" />

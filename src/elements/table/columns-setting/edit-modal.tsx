@@ -13,12 +13,11 @@ export const EditModal: FC<
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (initialValues) {
-      form.setFieldsValue(initialValues);
-    } else {
-      form.resetFields();
+    if (!open || !initialValues) {
+      return form.resetFields();
     }
-  }, [initialValues]);
+    form.setFieldsValue(initialValues);
+  }, [initialValues, open]);
 
   return (
     <>
@@ -30,6 +29,7 @@ export const EditModal: FC<
         })}
       <Modal
         title="列设置"
+        forceRender
         open={open}
         onCancel={() => {
           setOpen(false);
@@ -37,7 +37,7 @@ export const EditModal: FC<
         onOk={async () => {
           try {
             const values = await form.validateFields();
-            onChange(values);
+            onChange({ ...initialValues, ...values });
             setOpen(false);
           } catch (e) {}
         }}
@@ -65,8 +65,7 @@ export const EditModal: FC<
             <Input />
           </Form.Item>
           <Form.Item label="宽度" name="width">
-            <InputNumber min={0} />
-            &nbsp; px
+            <InputNumber min={0} addonAfter="px" />
           </Form.Item>
           <Form.Item label="对齐方式" name="align" initialValue="left">
             <Radio.Group>

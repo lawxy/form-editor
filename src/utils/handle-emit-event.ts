@@ -105,10 +105,6 @@ export const emitValidateForm = (params: IParams) => {
   const { validateField, sourceId } = target;
   const fields =
     validateField === EValidateType.CURRENT ? [sourceId] : undefined;
-  /**
-   * 为什么直接返回 async () => await validateFn(fields) 每次校验报错都会重新加载umi.js
-   * 仅开发环境会这样？测试umi框架也会这样，只要validateFields方法通过await接收，就会重新加载umi.js
-   * */
 
   return withConfig(
     () => store.formInstance?.validateFields(fields) as Promise<any>,
@@ -150,7 +146,7 @@ const handleError = ({
     事件动作: ${eventActionInChinese[action as EEventAction]} - ${
     eventTypeChinese[eventType]
   } \n
-    错误返回: ${error}`);
+    错误返回: ${JSON.stringify(error)}`);
 };
 
 export const handleEmitEvent = (
@@ -172,6 +168,7 @@ export const handleEmitEvent = (
           break;
         case EEventType.VALIDATE:
           emitFn = emitValidateForm(params) as IEventFunction;
+          break;
         case EEventType.JMUP:
           emitFn = emitJumpUrl(params) as IEventFunction;
           break;
@@ -207,7 +204,7 @@ export const handleEmitEvent = (
             });
           }
         } catch (e) {
-          handleError({
+          return handleError({
             emitFn,
             error: e,
             action,

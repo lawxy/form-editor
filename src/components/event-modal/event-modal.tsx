@@ -5,6 +5,7 @@ import type { FC, PropsWithChildren } from 'react';
 import { ActionConfig } from './action-config';
 import { EventModalContext } from './context';
 import { SelectComponent } from './select-component';
+import { AntdStaticFunctions } from '../antd-static-function';
 
 import { prefixCls } from '@/const';
 import {
@@ -43,6 +44,7 @@ export const EventModal: FC<
   sourceId,
   eventTypeOptions,
 }) => {
+  const { modal } = AntdStaticFunctions;
   const [open, setOpen] = useState(false);
   const [tempEvent, setTempEvent] = useState<TCustomEvent>(
     event || getNewEvent(),
@@ -101,7 +103,7 @@ export const EventModal: FC<
   ) => {
     if ((field === 'eventAction' || field === 'eventType') && edit.current) {
       if (tempEvent[field] === value) return;
-      Modal.confirm({
+      modal.confirm({
         title: '编辑数据未保存，切换后将清除数据，确认切换？',
         onOk() {
           setEdit(false);

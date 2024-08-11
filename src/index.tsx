@@ -12,6 +12,7 @@ import store from './store';
 import { injectSchema } from '.';
 import { EditorContext, type IEditorContext } from './context';
 import { wrapObserver } from './utils';
+import { AntdStaticApp } from './components';
 
 import './index.less';
 
@@ -75,9 +76,11 @@ const FormEditorContent: React.ForwardRefRenderFunction<
   return (
     <EditorContext.Provider value={contextValue}>
       <ConfigProvider locale={locale}>
-        <Form form={form}>
-          <div className={prefixCls('form')}>{children}</div>
-        </Form>
+        <AntdStaticApp>
+          <Form form={form}>
+            <div className={prefixCls('form')}>{children}</div>
+          </Form>
+        </AntdStaticApp>
       </ConfigProvider>
     </EditorContext.Provider>
   );

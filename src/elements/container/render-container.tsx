@@ -4,10 +4,9 @@ import { useEditorContext } from '@/context';
 import { prefixCls } from '@/const';
 import { handleSort } from '@/utils';
 import store from '@/store';
-import { RenderElementWithLayout, ElementLayout } from '@/components';
-import type { IBaseElement, TElementRender, TElementProps } from '@/types';
+import { RenderElementWithLayout } from '@/components';
+import type { IBaseElement, TElementRender } from '@/types';
 import { ReactSortable } from '@roddan/ui';
-import { ELEMENT_CONTAINER } from '.';
 import './style.less';
 
 export const RenderContainer: TElementRender = ({ element, customStyle }) => {

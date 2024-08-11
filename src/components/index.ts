@@ -10,3 +10,4 @@ export * from './tabs-setting';
 export * from './common-icon';
 export * from './question-popover';
 export * from './element-settings';
+export * from './antd-static-function';

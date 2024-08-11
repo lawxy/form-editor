@@ -92,7 +92,7 @@ export const RegPattern = observer(() => {
                 title="确认删除"
                 onConfirm={() => handleDelete(i + 1)}
               >
-                <DeleteOutlined className={prefixCls('pattern-delete')} />
+                <DeleteOutlined className={prefixCls('delete-icon')} />
               </Popconfirm>
             </SettingItem>
             {patternItem.enable && (

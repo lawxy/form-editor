@@ -27,17 +27,11 @@ class EventStore {
     if (set) sets.push(set);
 
     const targetElement = baseStore.getElement(targetId);
-
+    // 容器组件要判断内部子组件
     baseStore.dfsEl(targetElement, (child) => {
       sets.push(...this.getSetsFromId(child.id!));
     });
 
-    // 容器组件要判断内部子组件
-    // if (targetElement && targetElement?.children?.length) {
-    //   targetElement.children.forEach((child) => {
-    //     sets.push(...this.getSetsFromId(child.id!));
-    //   });
-    // }
     return sets;
   }
 

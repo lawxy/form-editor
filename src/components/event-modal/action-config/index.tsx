@@ -141,6 +141,7 @@ export const ActionConfig: React.FC<{
       {currentEvent?.eventAction && currentEvent?.eventType && (
         <ReactSortable
           list={currentEvent?.eventTargets || []}
+          animation={150}
           // handle=".fe-event-action-config"
           onSort={({ newIndex, oldIndex }) => {
             const newEventTargets = cloneDeep(currentEvent!.eventTargets);

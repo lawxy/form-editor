@@ -3,7 +3,6 @@ import type { PropsWithChildren, FC } from 'react';
 import { Collapse, Dropdown, Popconfirm } from 'antd';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { Sortable } from '@roddan/ui';
-import type { SortableEvent } from 'sortablejs';
 
 import { prefixCls } from '@/const';
 import { eventTypeChinese, type TCustomEvent } from '@/types';
@@ -12,24 +11,37 @@ export const EventCollapse: FC<{
   onDelete: (id: string) => void;
   collopaseItems: Array<{ label: string; events: TCustomEvent[] }>;
   EditComponent: FC<PropsWithChildren<{ evt: TCustomEvent }>>;
-  onSort: (e: SortableEvent) => void;
+  onSort: (e: {
+    oldIndex: number;
+    newIndex: number;
+    listIndex: number;
+  }) => void;
 }> = ({ collopaseItems, onDelete, EditComponent, onSort }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const sortInsArr = useRef<Sortable[]>([]);
 
-  useEffect(() => {
+  const generateSortIns = () => {
     if (!ref.current) return;
 
-    const wrap = ref.current.querySelector(
-      '.ant-collapse-content-box',
-    ) as HTMLElement;
+    const wrapList = ref.current.querySelectorAll('.ant-collapse-content-box');
 
-    if (!wrap) return;
+    if (!wrapList || !wrapList?.length) return;
 
-    new Sortable(wrap, {
-      animation: 150,
-      onSort,
+    Array.from(wrapList).forEach((wrap, idx) => {
+      const sortIns = new Sortable(wrap as HTMLElement, {
+        animation: 150,
+        onSort({ oldIndex, newIndex }) {
+          onSort({ oldIndex: oldIndex!, newIndex: newIndex!, listIndex: idx });
+        },
+        group: `collapse${idx}`,
+      });
+      sortInsArr.current![idx] = sortIns;
     });
-  }, [onSort]);
+  };
+
+  useEffect(() => {
+    generateSortIns();
+  }, []);
 
   const items = collopaseItems.map((item, i) => ({
     key: i,
@@ -72,6 +84,11 @@ export const EventCollapse: FC<{
         expandIcon={({ isActive }) =>
           isActive ? <MinusSquareOutlined /> : <PlusSquareOutlined />
         }
+        onChange={() => {
+          setTimeout(() => {
+            generateSortIns();
+          });
+        }}
       />
     </div>
   );

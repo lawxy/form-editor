@@ -15,7 +15,7 @@ export const ServiceItem: React.FC<{
     <div className={prefixCls('service-item')}>
       <Typography.Text
         ellipsis={{
-          tooltip: service?.name,
+          tooltip: true,
         }}
         style={{ width: 200 }}
       >

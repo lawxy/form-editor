@@ -1,22 +1,21 @@
-import { Modal } from 'antd';
 import type { ModalFuncProps } from 'antd';
-
-const { confirm } = Modal;
+import { AntdStaticFunctions } from '@/components';
 
 export const ModalPromisify: (config: ModalFuncProps) => Promise<any> = (
   config,
 ) => {
+  const { modal } = AntdStaticFunctions;
   return new Promise((resolve) => {
     const { onOk, onCancel } = config;
-    confirm({
+    modal.confirm({
       ...config,
       okText: '确定',
       cancelText: '取消',
-      onOk: async (...arg) => {
+      onOk: async (...arg: any[]) => {
         if (onOk) await onOk(...arg);
         resolve(true);
       },
-      onCancel: async (...arg) => {
+      onCancel: async (...arg: any[]) => {
         if (onCancel) await onCancel(...arg);
         resolve(false);
       },

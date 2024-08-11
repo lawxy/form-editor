@@ -1,6 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button } from 'antd';
+import { Button, Typography, Input, Popconfirm, Tooltip } from 'antd';
+import { cloneDeep } from 'lodash-es';
+import { ReactSortable } from '@roddan/ui';
+import { arrayMoveImmutable } from 'array-move';
 import { prefixCls } from '@/const';
 import { MenuOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { EditModal } from './edit-modal';
@@ -20,21 +23,63 @@ export const ColumnsSetting = observer(() => {
   const { columns = [] } = store.selectedElement;
   return (
     <SettingItem label="表格列配置" vertical>
-      {columns?.map((column: TColumn) => (
-        <div key={column.id} className={prefixCls('column-setting')}>
-          <span className={prefixCls('column-setting-drag-icon')}>
-            <MenuOutlined />
-          </span>
-          <span>{column.name}</span>
-          <EditOutlined />
-          <DeleteOutlined />
-        </div>
-      ))}
+      <ReactSortable
+        list={columns}
+        animation={150}
+        onSort={({ newIndex, oldIndex }) => {
+          const newColumns = cloneDeep(columns);
+          store.setSelectedProp(
+            'columns',
+            arrayMoveImmutable(newColumns, oldIndex!, newIndex!),
+          );
+        }}
+        handle={'.' + prefixCls('column-setting-drag-icon')}
+      >
+        {columns?.map((column: TColumn, idx: number) => (
+          <div key={column.id} className={prefixCls('column-setting')}>
+            <span className={prefixCls('column-setting-drag-icon')}>
+              <MenuOutlined />
+            </span>
+            <Typography.Text
+              ellipsis={{
+                tooltip: true,
+              }}
+              style={{ width: 200 }}
+            >
+              <Input value={column.name} readOnly />
+            </Typography.Text>
+            <EditModal
+              onChange={(values) => {
+                console.log('values', values);
+                const newColumns = cloneDeep(columns);
+                newColumns[idx] = values;
+                store.setSelectedProp('columns', newColumns);
+              }}
+              initialValues={column}
+            >
+              <Tooltip title="编辑">
+                <EditOutlined />
+              </Tooltip>
+            </EditModal>
+            <Popconfirm
+              placement="topLeft"
+              title="确认删除"
+              onConfirm={() => {
+                const newColumns = cloneDeep(columns);
+                newColumns.splice(idx, 1);
+                store.setSelectedProp('columns', newColumns);
+              }}
+            >
+              <Tooltip title="删除">
+                <DeleteOutlined style={{ marginLeft: 8 }} />
+              </Tooltip>
+            </Popconfirm>
+          </div>
+        ))}
+      </ReactSortable>
       <EditModal
         onChange={(values) => {
-          if (!values?.id) {
-            values.id = idCreator('col');
-          }
+          values.id = idCreator('col');
           store.setSelectedProp('columns', [...columns, values]);
         }}
       >

@@ -56,7 +56,12 @@ export const EventSetting: React.FC<{
       //   message.success('新增事件已被合并');
       // } else {
       // }
-      events.push(event);
+      // @ts-ignore
+      const lastIndex = events.findLastIndex(
+        (evt: TCustomEvent) => evt.eventAction === event.eventAction,
+      );
+
+      events.splice(lastIndex + 1, 0, event);
       handleLinkService(event);
     } else {
       const idx = current?.events?.findIndex((evt) => event.id === evt.id);
@@ -82,6 +87,8 @@ export const EventSetting: React.FC<{
     setProp('events', events);
   };
 
+  const collopaseItems = formatForCollapse(current?.events || []);
+
   return (
     <div className={prefixCls('event-common-wrap')}>
       <EventModal
@@ -100,10 +107,20 @@ export const EventSetting: React.FC<{
         </Button>
       </EventModal>
       <EventCollapse
-        collopaseItems={formatForCollapse(current?.events || [])}
-        onSort={({ newIndex, oldIndex }) => {
+        collopaseItems={collopaseItems}
+        onSort={({ newIndex, oldIndex, listIndex }) => {
+          // 事件是平铺的，但是展示却分类了，分类后可以排序，需要计算真实的索引
+          if (listIndex > 0) {
+            let i = 0;
+            while (i < listIndex) {
+              oldIndex += collopaseItems[i].events.length;
+              newIndex += collopaseItems[i].events.length;
+              i++;
+            }
+          }
+
           const newEvents = cloneDeep(current?.events || []);
-          const afterSort = arrayMoveImmutable(newEvents, newIndex!, oldIndex!);
+          const afterSort = arrayMoveImmutable(newEvents, oldIndex!, newIndex!);
           setProp('events', afterSort);
         }}
         onDelete={handleDelete}
