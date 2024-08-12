@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import type { FC, PropsWithChildren } from 'react';
-import { Modal, Form, Input, Radio, InputNumber } from 'antd';
+import { Modal, Form, Input, Radio, InputNumber, Select } from 'antd';
 import type { TColumn } from '@/types';
+import { valueTypeList } from '../const';
 
 export const EditModal: FC<
   PropsWithChildren<{
@@ -63,6 +64,9 @@ export const EditModal: FC<
             rules={[{ required: true, message: '必填' }]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item label="类型" name="valueType" initialValue="text">
+            <Select options={valueTypeList} />
           </Form.Item>
           <Form.Item label="宽度" name="width">
             <InputNumber min={0} addonAfter="px" />

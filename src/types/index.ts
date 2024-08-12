@@ -33,6 +33,7 @@ export type TColumn = {
   fixed: '' | 'left' | 'right';
   width?: number;
   align: 'left' | 'right' | 'center';
+  valueType?: string;
 };
 export enum EChangeType {
   ADD = 'add',

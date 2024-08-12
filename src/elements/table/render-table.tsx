@@ -29,20 +29,20 @@ export const RenderTable: TElementRender = ({
   useEffect(() => {
     const newColumns = [
       ...columns.map((column) => {
-        const { name, field, fixed, width, align } = column;
+        const { name, field, fixed, width, align, valueType } = column;
         return {
           title: name,
           dataIndex: field,
           fixed,
           width,
           align,
-          shouldCellUpdate: () => true,
+          valueType,
         };
       }),
       !readonly && {
         title: '操作',
         valueType: 'option',
-        width: 200,
+        width: 130,
         render: (text: any, record: any, idx: number, action: any) => [
           <a
             key="editable"

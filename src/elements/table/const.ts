@@ -10,5 +10,43 @@ export const initialData: Partial<IBaseElement> = {
   gridLayout: true,
   readonly: true,
   columns: [],
-
 };
+
+export const valueTypeList = [
+  {
+    label: '文本框',
+    value: 'text',
+  },
+  {
+    label: '下拉框',
+    value: 'select',
+  },
+  {
+    label: '单选',
+    value: 'radio',
+  },
+  {
+    label: '多选',
+    value: 'checkbox',
+  },
+  {
+    label: '数字框',
+    value: 'digit',
+  },
+  {
+    label: '日期',
+    value: 'date',
+  },
+  {
+    label: '时间',
+    value: 'time',
+  },
+  {
+    label: '日期时间',
+    value: 'dateTime',
+  },
+  {
+    label: '日期区间',
+    value: 'dateRange',
+  },
+];
