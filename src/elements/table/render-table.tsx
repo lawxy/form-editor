@@ -1,24 +1,21 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { EditableProTable, ProTable } from '@ant-design/pro-components';
+import React, { useEffect, useState } from 'react';
+import { EditableProTable } from '@ant-design/pro-components';
+import { Popconfirm } from 'antd';
 
 import { EEventAction } from '@/types';
 import type { TElementRender } from '@/types';
-import { parseJSX, idCreator } from '@/utils';
-import { useDesignEffect, useFormUpdate, useRegisterEvents } from '@/hooks';
+import { idCreator } from '@/utils';
+import { useFormUpdate, useRegisterEvents } from '@/hooks';
+import { cloneDeep } from 'lodash-es';
+import store from '@/store';
 
 export const RenderTable: TElementRender = ({
-  fieldValue = [{ id: 'row1', title: 'a' }],
+  fieldValue = [],
   element,
   customStyle,
   setFieldValue,
 }) => {
-  const {
-    // tableColumns = '[]',
-    // tableAttributes = '{}',
-    columns = [],
-    linkLoading,
-    readonly,
-  } = element;
+  const { columns = [], linkLoading, readonly } = element;
 
   const [tableColumns, setColumns] = useState([]);
 
@@ -27,35 +24,6 @@ export const RenderTable: TElementRender = ({
   useFormUpdate(() => {
     eventFunctions[EEventAction.ON_LOADED]?.();
   }, [eventFunctions[EEventAction.ON_LOADED]]);
-
-  // const columns = useMemo(() => {
-  //   return [
-  //     ...parseJSX(tableColumns),
-  //     !readonly && {
-  //       title: '操作',
-  //       valueType: 'option',
-  //       width: 200,
-  //       render: (text, record, _, action) => [
-  //         <a
-  //           key="editable"
-  //           onClick={() => {
-  //             action?.startEditable?.(record.id);
-  //           }}
-  //         >
-  //           编辑
-  //         </a>,
-  //         <a
-  //           key="delete"
-  //           onClick={() => {
-  //             // setDataSource(dataSource.filter((item) => item.id !== record.id));
-  //           }}
-  //         >
-  //           删除
-  //         </a>,
-  //       ],
-  //     },
-  //   ].filter(Boolean);
-  // }, [tableColumns, readonly]);
 
   // 使用useMemo会有bug，列展示不是预期效果
   useEffect(() => {
@@ -75,7 +43,7 @@ export const RenderTable: TElementRender = ({
         title: '操作',
         valueType: 'option',
         width: 200,
-        render: (text, record, _, action) => [
+        render: (text: any, record: any, idx: number, action: any) => [
           <a
             key="editable"
             onClick={() => {
@@ -84,14 +52,17 @@ export const RenderTable: TElementRender = ({
           >
             编辑
           </a>,
-          <a
+          <Popconfirm
             key="delete"
-            onClick={() => {
-              // setDataSource(dataSource.filter((item) => item.id !== record.id));
+            title="确认删除"
+            onConfirm={() => {
+              const newValue = cloneDeep(fieldValue);
+              newValue.splice(idx, 1);
+              setFieldValue(newValue);
             }}
           >
-            删除
-          </a>,
+            <a>删除</a>
+          </Popconfirm>,
         ],
       },
     ].filter(Boolean);
@@ -105,10 +76,8 @@ export const RenderTable: TElementRender = ({
       rowKey="id"
       value={fieldValue}
       loading={linkLoading}
-      // {...parseJSX(`[${tableAttributes}]`)[0]}
       style={customStyle}
       onChange={(v) => {
-        console.log(v);
         setFieldValue(v);
       }}
       recordCreatorProps={{

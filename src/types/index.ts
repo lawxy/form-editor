@@ -141,14 +141,6 @@ export interface IBaseElement {
    */
   closeValue?: string;
   /**
-   * 表格设置
-   */
-  tableAttributes?: string;
-  /**
-   * 表格column
-   */
-  tableColumns?: string;
-  /**
    * 事件
    */
   events?: TCustomEvents;

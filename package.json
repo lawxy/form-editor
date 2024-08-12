@@ -68,8 +68,6 @@
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
     "@ant-design/pro-components": "^2.7.15",
-    "@babel/core": "^7.24.6",
-    "@babel/standalone": "^7.24.6",
     "@roddan/ui": "0.0.4",
     "antd": "^5.8.1",
     "array-move": "^4.0.0",

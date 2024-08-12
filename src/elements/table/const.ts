@@ -8,13 +8,7 @@ export const initialData: Partial<IBaseElement> = {
   elementName: TABLE_TEXT,
   gridSpan: 24,
   gridLayout: true,
-  tableAttributes: '{}',
   readonly: true,
   columns: [],
-  tableColumns: `[
-  {
-    title: '列名', 
-    dataIndex: 'title'
-  }
-]`,
+
 };
