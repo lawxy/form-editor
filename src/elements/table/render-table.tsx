@@ -32,7 +32,16 @@ export const RenderTable: TElementRender = ({
   useEffect(() => {
     const newColumns = [
       ...columns.map((column) => {
-        const { name, field, fixed, width, align, valueType, options } = column;
+        const {
+          name,
+          field,
+          fixed,
+          width,
+          align,
+          valueType,
+          options,
+          required,
+        } = column;
         return {
           title: name,
           dataIndex: field,
@@ -43,6 +52,12 @@ export const RenderTable: TElementRender = ({
           fieldProps: {
             options,
           },
+          formItemProps: () =>
+            required
+              ? {
+                  rules: [{ required: true, message: '此项为必填项' }],
+                }
+              : {},
         };
       }),
       !readonly && {

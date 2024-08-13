@@ -35,6 +35,7 @@ export type TColumn = {
   align: 'left' | 'right' | 'center';
   valueType?: string;
   options?: TOption[];
+  required?: boolean;
 };
 export enum EChangeType {
   ADD = 'add',
