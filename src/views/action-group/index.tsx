@@ -72,6 +72,7 @@ const ActionGroup = () => {
         title="确定要清空所有组件吗？"
         onConfirm={() => {
           store.clearAllElements();
+          store.setFieldsValues({});
           store.formServices?.forEach((serv) => {
             if (serv?.linkingElements?.length) {
               store.setService(serv.id, { linkingElements: [] });

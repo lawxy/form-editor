@@ -22,7 +22,7 @@ export const triggerSettingValue = (params: TEmitData) => {
   }
 };
 
-// 刷新服务
+// 更新服务
 export const triggerRefreshService = async (params: TEmitData) => {
   const { targetServiceId, updateField, targetPayload, value, refreshFlag } =
     params;
@@ -32,15 +32,20 @@ export const triggerRefreshService = async (params: TEmitData) => {
   const currentService = store.getService(servId) as TFormSerive;
   // 拼接参数
   if (targetPayload === EChangeStatePayload.APPEND) {
-    const { url } = currentService;
-    const newUrl = appendUrl(url, { [updateField!]: value });
-    store.setService(servId, { url: newUrl });
+    let { url } = currentService;
+    if (updateField) {
+      url = appendUrl(url, { [updateField!]: value });
+    }
+    store.setService(servId, { url });
   }
   // 更新参数
   if (targetPayload === EChangeStatePayload.UPDATE) {
     const { data = {} } = currentService;
     const newData = cloneDeep(data);
-    newData[updateField!] = value;
+    if (updateField) {
+      newData[updateField!] = value;
+    }
+    console.log('newdata', newData);
     store.setService(servId, { data: newData });
   }
   // 清空参数

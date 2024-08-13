@@ -69,15 +69,11 @@ export const emitSettingValue = (params: IParams) => {
   );
 };
 
-// 刷新服务
+// 更新服务
 export const emitRefreshService = (params: IParams) => {
   const { emitter, eventType, target } = params;
   const { targetServiceId, targetPayload, refreshFlag, updateField } = target;
-  const validate = validateParams([
-    targetServiceId,
-    targetPayload,
-    refreshFlag,
-  ]);
+  const validate = validateParams([targetServiceId, targetPayload]);
   if (!validate) return;
   const store = dynamicGetStore();
 

@@ -24,6 +24,10 @@ export const RenderTable: TElementRender = ({
     eventFunctions[EEventAction.ON_LOADED]?.();
   }, [eventFunctions[EEventAction.ON_LOADED]]);
 
+  useFormUpdate(() => {
+    eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
+  }, [fieldValue]);
+
   // 使用useMemo会有bug，列展示不是预期效果
   useEffect(() => {
     const newColumns = [

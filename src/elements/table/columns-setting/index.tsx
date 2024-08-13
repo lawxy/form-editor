@@ -69,9 +69,7 @@ export const ColumnsSetting = observer(() => {
                 store.setSelectedProp('columns', newColumns);
               }}
             >
-              <Tooltip title="删除">
-                <DeleteOutlined style={{ marginLeft: 8 }} />
-              </Tooltip>
+              <DeleteOutlined style={{ marginLeft: 8 }} />
             </Popconfirm>
           </div>
         ))}
