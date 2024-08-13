@@ -15,6 +15,15 @@ export const SettingTable: TElementSetting = ({ element, setElementProp }) => {
           onChange={(editable) => setElementProp('readonly', !editable)}
         />
       </SettingItem>
+      {!element.readonly && (
+        <SettingItem label="是否可行新增">
+          <Switch
+            size="small"
+            checked={element.lineAdd}
+            onChange={(checked) => setElementProp('lineAdd', checked)}
+          />
+        </SettingItem>
+      )}
       <ColumnsSetting />
     </SettingWrap>
   );

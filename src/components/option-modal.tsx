@@ -1,26 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { FC, PropsWithChildren } from 'react';
 import { Modal, Space, Input, message, type TableColumnProps } from 'antd';
-import { MinusIcon, PlusIcon, QuestionPopover } from '@/components';
 import { cloneDeep } from 'lodash-es';
-import { observer } from 'mobx-react-lite';
 import { TableSortable } from '@roddan/ui';
 
-import { BatchGenerateOptions } from '../batch-generate-options';
-
-import store from '@/store';
+import { MinusIcon, PlusIcon, QuestionPopover } from '@/components';
 import type { TOption } from '@/types';
 import { idCreator } from '@/utils';
+import { BatchGenerateOptions } from './batch-generate-options';
 
-const OptionModal: FC<PropsWithChildren> = ({ children }) => {
+export const OptionModal: FC<
+  PropsWithChildren<{
+    options: TOption[];
+    onChange: (v: TOption[]) => void;
+  }>
+> = ({ children, options, onChange }) => {
   const [open, setOpen] = useState(false);
   const [valueOptions, setOption] = useState<TOption[]>([]);
   const valueOptionsRef = useRef<TOption[]>();
   valueOptionsRef.current = valueOptions;
 
   useEffect(() => {
-    setOption(store.selectedElement?.valueOptions || []);
-  }, [store.selectedElement.valueOptions]);
+    setOption(options);
+  }, [options]);
 
   const handleInputChange = (idx: number, field: keyof TOption, value: any) => {
     const newOptions = cloneDeep(valueOptions);
@@ -112,12 +114,7 @@ const OptionModal: FC<PropsWithChildren> = ({ children }) => {
         open={open}
         title={
           <BatchGenerateOptions
-            title={
-              <>
-                属性设置&nbsp;
-                <QuestionPopover content="格式: 属性名: 属性值, 多字段换行分隔" />
-              </>
-            }
+            title="属性设置"
             options={valueOptions}
             setOptions={setOption}
             labelField="label"
@@ -133,7 +130,7 @@ const OptionModal: FC<PropsWithChildren> = ({ children }) => {
             message.error('属性或值不为空, 补充完成再新增或保存');
             return;
           }
-          store.setSelectedProp('valueOptions', valueOptions);
+          onChange(valueOptions);
           setOpen(false);
         }}
       >
@@ -149,5 +146,3 @@ const OptionModal: FC<PropsWithChildren> = ({ children }) => {
     </>
   );
 };
-
-export default observer(OptionModal);

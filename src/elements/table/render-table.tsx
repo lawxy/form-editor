@@ -7,7 +7,6 @@ import type { TElementRender } from '@/types';
 import { idCreator } from '@/utils';
 import { useFormUpdate, useRegisterEvents } from '@/hooks';
 import { cloneDeep } from 'lodash-es';
-import store from '@/store';
 
 export const RenderTable: TElementRender = ({
   fieldValue = [],
@@ -15,7 +14,7 @@ export const RenderTable: TElementRender = ({
   customStyle,
   setFieldValue,
 }) => {
-  const { columns = [], linkLoading, readonly } = element;
+  const { columns = [], linkLoading, readonly, lineAdd } = element;
 
   const [tableColumns, setColumns] = useState([]);
 
@@ -29,7 +28,7 @@ export const RenderTable: TElementRender = ({
   useEffect(() => {
     const newColumns = [
       ...columns.map((column) => {
-        const { name, field, fixed, width, align, valueType } = column;
+        const { name, field, fixed, width, align, valueType, options } = column;
         return {
           title: name,
           dataIndex: field,
@@ -37,6 +36,9 @@ export const RenderTable: TElementRender = ({
           width,
           align,
           valueType,
+          fieldProps: {
+            options,
+          },
         };
       }),
       !readonly && {
@@ -84,7 +86,7 @@ export const RenderTable: TElementRender = ({
         record: () => ({ id: idCreator('row') }),
         creatorButtonText: '新增一行',
         style: {
-          display: readonly ? 'none' : 'block',
+          display: lineAdd && !readonly ? 'block' : 'none',
         },
       }}
     />

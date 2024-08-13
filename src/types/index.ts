@@ -34,6 +34,7 @@ export type TColumn = {
   width?: number;
   align: 'left' | 'right' | 'center';
   valueType?: string;
+  options?: TOption[];
 };
 export enum EChangeType {
   ADD = 'add',
@@ -198,9 +199,13 @@ export interface IBaseElement {
    */
   readonly?: boolean;
   /**
-   *
+   * 列表列
    */
   columns?: TColumn[];
+  /**
+   * 是否可行新增
+   */
+  lineAdd?: boolean;
 }
 export interface IFormAttributesProps {
   formName?: string;

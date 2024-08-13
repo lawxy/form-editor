@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import type { FC, PropsWithChildren } from 'react';
-import { Modal, Form, Input, Radio, InputNumber, Select } from 'antd';
+import { Modal, Form, Input, Radio, InputNumber, Select, Button } from 'antd';
 import type { TColumn } from '@/types';
-import { valueTypeList } from '../const';
+import { OptionModal } from '@/components';
+import { valueTypeList, elementWithOptions } from '../const';
 
 export const EditModal: FC<
   PropsWithChildren<{
     onChange: (v: TColumn) => void;
     initialValues?: TColumn;
   }>
-> = ({ children, onChange, initialValues = {} }) => {
+> = ({ children, onChange, initialValues }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
 
@@ -35,6 +36,7 @@ export const EditModal: FC<
         onCancel={() => {
           setOpen(false);
         }}
+        maskClosable={false}
         onOk={async () => {
           try {
             const values = await form.validateFields();
@@ -67,6 +69,24 @@ export const EditModal: FC<
           </Form.Item>
           <Form.Item label="类型" name="valueType" initialValue="text">
             <Select options={valueTypeList} />
+          </Form.Item>
+          <Form.Item noStyle shouldUpdate>
+            {({ getFieldValue, setFieldValue }) => (
+              <>
+                {elementWithOptions.includes(getFieldValue('valueType')) && (
+                  <Form.Item label="选项" name="options">
+                    <OptionModal
+                      options={getFieldValue('options') || []}
+                      onChange={(options) => {
+                        setFieldValue('options', options);
+                      }}
+                    >
+                      <Button size="small">编辑</Button>
+                    </OptionModal>
+                  </Form.Item>
+                )}
+              </>
+            )}
           </Form.Item>
           <Form.Item label="宽度" name="width">
             <InputNumber min={0} addonAfter="px" />

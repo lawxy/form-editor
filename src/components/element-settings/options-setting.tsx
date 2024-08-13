@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 
 import { prefixCls } from '@/const';
 
-import OptionModal from './option-modal';
+import { OptionModal } from '../option-modal';
 
 import { SettingItem } from '@/components';
 import store from '@/store';
@@ -26,7 +26,12 @@ export const OptionSetting: FC = observer(() => {
   return (
     <>
       <SettingItem label="选项">
-        <OptionModal>
+        <OptionModal
+          options={store.selectedElement.valueOptions || []}
+          onChange={(options) => {
+            store.setSelectedProp('valueOptions', options);
+          }}
+        >
           <Button className={`${prefixCls('attr-setting-btn')}`} size="small">
             编辑
           </Button>

@@ -50,7 +50,6 @@ export const ColumnsSetting = observer(() => {
             </Typography.Text>
             <EditModal
               onChange={(values) => {
-                console.log('values', values);
                 const newColumns = cloneDeep(columns);
                 newColumns[idx] = values;
                 store.setSelectedProp('columns', newColumns);

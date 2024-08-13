@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import type { FC } from 'react';
 import { Modal, Button, Input } from 'antd';
 import { idCreator } from '@/utils';
+import { QuestionPopover } from './question-popover';
 
 type TOption = Record<string, any>;
 export const BatchGenerateOptions: FC<{
@@ -67,7 +68,13 @@ export const BatchGenerateOptions: FC<{
       </div>
       <Modal
         open={open}
-        title="批量编辑"
+        title={
+          <>
+            批量编辑&nbsp;
+            <QuestionPopover content="格式: 字段名:值, 多字段换行分隔" />
+          </>
+        }
+        maskClosable={false}
         onCancel={() => {
           setOpen(false);
         }}

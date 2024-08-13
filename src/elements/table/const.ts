@@ -3,12 +3,13 @@ import { EEventAction } from '@/types';
 
 export const ELEMENT_TABLE = 'fe-table';
 export const TABLE_TEXT = '表格';
-export const eventActions = [EEventAction.ON_LOADED];
+export const eventActions = [EEventAction.ON_LOADED, EEventAction.VALUE_CHANGE];
 export const initialData: Partial<IBaseElement> = {
   elementName: TABLE_TEXT,
   gridSpan: 24,
   gridLayout: true,
   readonly: true,
+  lineAdd: true,
   columns: [],
 };
 
@@ -50,3 +51,5 @@ export const valueTypeList = [
     value: 'dateRange',
   },
 ];
+
+export const elementWithOptions = ['select', 'radio', 'checkbox'];
