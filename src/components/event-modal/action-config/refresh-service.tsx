@@ -81,7 +81,7 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
         return (
           <>
             {actionSelect}
-            &nbsp;, 将json传入&nbsp;
+            &nbsp;, 将schema赋值于&nbsp;
             {actionInput}
             &nbsp;字段
           </>

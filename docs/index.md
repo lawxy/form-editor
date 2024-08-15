@@ -1,18 +1,18 @@
 ---
 hero:
-  title: library
-  description: 低代码
+  title: form
+  description: 表单生成器
   actions:
     - text: 进入
-      link: /form-editor/demo
+      link: /introduce/usage
 features:
-  - title: 低
+  - title: ''
     emoji: 💎
     description: 富强、民主、文明、和谐
-  - title: 代
+  - title: ' '
     emoji: 🌈
     description: 自由、平等、公正、法治
-  - title: 码
+  - title: '  '
     emoji: 🚀
     description: 爱国、敬业、诚信、友善
 ---

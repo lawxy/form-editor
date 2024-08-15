@@ -6,8 +6,6 @@ export const TIME_TEXT = '时间';
 export const eventActions = [
   EEventAction.ON_LOADED,
   EEventAction.VALUE_CHANGE,
-  EEventAction.ON_FOCUS,
-  EEventAction.ON_BLUR,
 ];
 export const initialData: Partial<IBaseElement> = {
   elementName: '时间',

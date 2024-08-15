@@ -27,7 +27,7 @@ export const WithCommon: FC<
         })}
       <div>
         串联
-        <QuestionPopover content="若设置为true, 后续事件将等待此事件执行完成。若此事件抛错，将终止后续事件。" />
+        <QuestionPopover content="打开后, 后续事件将等待此事件执行完成。若此事件抛错，将终止后续事件。" />
         &nbsp;: &nbsp;
         <Switch
           checked={!!series}

@@ -5,6 +5,7 @@ import type { FormInstance } from 'antd';
 import locale from 'antd/locale/zh_CN';
 import 'reflect-metadata';
 import 'dayjs/locale/zh-cn';
+import c from 'classnames';
 import { ElementsMap } from './elements';
 import type { IFormSchema, TDragElement } from './types';
 import { prefixCls } from './const';
@@ -78,7 +79,10 @@ const FormEditorContent: React.ForwardRefRenderFunction<
       <ConfigProvider locale={locale}>
         <AntdStaticApp>
           <Form form={form}>
-            <div className={prefixCls('form')}>{children}</div>
+            <div className={c({
+              [prefixCls('form')]: true,
+              [prefixCls('form-design')]: mode === 'design',
+            })}>{children}</div>
           </Form>
         </AntdStaticApp>
       </ConfigProvider>
