@@ -1,17 +1,17 @@
 {
   "name": "@roddan/form-editor",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "低代码",
   "keywords": [
     "react"
   ],
-  "homepage": "https://github.com/lawxy/low-code.git",
+  "homepage": "https://github.com/lawxy/form-editor.git",
   "bugs": {
-    "url": "https://github.com/lawxy/low-code.git"
+    "url": "https://github.com/lawxy/form-editor.git"
   },
   "repository": {
     "type": "github",
-    "url": "https://github.com/lawxy/low-code.git"
+    "url": "https://github.com/lawxy/form-editor.git"
   },
   "license": "MIT",
   "author": "Roddan",
@@ -38,7 +38,6 @@
     "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky install && dumi setup",
-    "prepublishOnly": "father doctor && npm run build",
     "pub": "node ./scripts/publish",
     "start": "npm run dev",
     "watch": "node ./scripts/watch"

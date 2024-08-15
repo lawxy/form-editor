@@ -1,6 +1,6 @@
 import React from 'react';
 import type { FC, PropsWithChildren } from 'react';
-import { App, notification } from 'antd';
+import { App } from 'antd';
 
 export let AntdStaticFunctions: any = {
   message: () => {},

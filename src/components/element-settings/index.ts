@@ -4,4 +4,4 @@ export * from './placeholder-setting';
 export * from './attributes-setting';
 export * from './defaultvalue-setting';
 export * from './allow-clear';
-export * from './options-setting';
+export * from '../option-setting/options-setting';

@@ -1,5 +1,5 @@
 import type { ModalFuncProps } from 'antd';
-import { AntdStaticFunctions } from '@/components';
+import { AntdStaticFunctions } from '@/components/antd-static-function';
 
 export const ModalPromisify: (config: ModalFuncProps) => Promise<any> = (
   config,
