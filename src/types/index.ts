@@ -207,6 +207,27 @@ export interface IBaseElement {
    * 是否可行新增
    */
   lineAdd?: boolean;
+  /**
+   * 横向滚动宽度
+   */
+  scrollX?: string | number;
+  /**
+   * 纵向滚动高度
+   */
+  scrollY?: string | number;
+  /**
+   * 是否分页
+   */
+  pagination?: boolean;
+  /**
+   * 分页条数
+   */
+
+  pageSize?: number;
+  /**
+   * 表格数据总条数
+   */
+  total?: number;
 }
 export interface IFormAttributesProps {
   formName?: string;

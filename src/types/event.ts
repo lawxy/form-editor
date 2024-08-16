@@ -25,6 +25,8 @@ export enum EEventAction {
   ON_LOADED = 'onLoaded',
   // 表单加载后
   FORM_LOADED = 'formLoaded',
+  // 分页切换时
+  PAGINATION_CHANGE = 'paginationChange',
 }
 export const eventActionInChinese = {
   [EEventAction.ON_CLICK]: '鼠标单击',
@@ -34,6 +36,7 @@ export const eventActionInChinese = {
   [EEventAction.ON_BLUR]: '失去焦点',
   [EEventAction.ON_LOADED]: '组件加载后',
   [EEventAction.FORM_LOADED]: '表单加载后',
+  [EEventAction.PAGINATION_CHANGE]: '分页切换时',
 };
 
 /**
@@ -87,7 +90,7 @@ export enum EChangeStatePayload {
   NOT_REFRESH = 'not_refresh',
   CUSTOM = 'custom',
   SUBMIT = 'submit',
-  NULL = 'null'
+  NULL = 'null',
 }
 
 export const changeStatePayloadInChinese = {

@@ -8,13 +8,34 @@ import { idCreator } from '@/utils';
 import { useFormUpdate, useRegisterEvents } from '@/hooks';
 import { cloneDeep } from 'lodash-es';
 
+const tableData = Array.from({ length: 20 }, (_, idx) => {
+  return {
+    id: `${idx}`,
+    select: `select${idx}`,
+    radio: `radio${idx}`,
+    checkbox: `checkbox${idx}`,
+    input: `input${idx}`,
+    number: `number${idx}`,
+  };
+});
+
 export const RenderTable: TElementRender = ({
-  fieldValue = [],
+  fieldValue = tableData,
   element,
   customStyle,
   setFieldValue,
 }) => {
-  const { columns = [], linkLoading, readonly, lineAdd } = element;
+  const {
+    columns = [],
+    linkLoading,
+    readonly,
+    lineAdd,
+    scrollX,
+    scrollY,
+    pageSize,
+    pagination,
+    total,
+  } = element;
 
   const [tableColumns, setColumns] = useState([]);
 
@@ -101,6 +122,7 @@ export const RenderTable: TElementRender = ({
       onChange={(v) => {
         setFieldValue(v);
       }}
+      scroll={{ y: scrollY, x: scrollX }}
       recordCreatorProps={{
         record: () => ({ id: idCreator('row') }),
         creatorButtonText: '新增一行',
@@ -108,6 +130,16 @@ export const RenderTable: TElementRender = ({
           display: lineAdd && !readonly ? 'block' : 'none',
         },
       }}
+      pagination={
+        pagination && {
+          total: total ?? fieldValue?.length,
+          pageSize,
+          showTotal: () => null,
+          onChange(currentPage) {
+            eventFunctions[EEventAction.PAGINATION_CHANGE]?.(currentPage);
+          },
+        }
+      }
     />
   );
 };

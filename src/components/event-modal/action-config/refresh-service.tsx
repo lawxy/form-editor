@@ -7,6 +7,7 @@ import store from '@/store';
 import {
   changeStateActions,
   EChangeStatePayload,
+  EEventAction,
   refreshOptions,
   type IEventTarget,
 } from '@/types';
@@ -49,22 +50,47 @@ const generateActionSelect = (
         onChange?.({ targetPayload: v as EChangeStatePayload });
       }}
     />
-  ); 
+  );
 };
 
-const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
-  const { targetServiceId, targetPayload, refreshFlag, updateField, urlAppended } =
-    eventTarget || {};
+const RefreshService: React.FC<IConfig> = ({
+  onChange,
+  eventTarget,
+  event,
+}) => {
+  const {
+    targetServiceId,
+    targetPayload,
+    refreshFlag,
+    updateField,
+    urlAppended,
+  } = eventTarget || {};
 
   const actionSelect = generateActionSelect(targetPayload, onChange);
-  const actionFieldInput = generateActionInput('updateField', updateField, onChange);
-  const actionUrlInput = generateActionInput('urlAppended', urlAppended, onChange);
+
+  const actionFieldInput = generateActionInput(
+    'updateField',
+    updateField,
+    onChange,
+  );
+
+  const actionUrlInput = generateActionInput(
+    'urlAppended',
+    urlAppended,
+    onChange,
+  );
+
+  const { eventAction } = event;
+
+  const useNameInChinese =
+    eventAction === EEventAction.PAGINATION_CHANGE ? '页码' : '组件表单值';
+
   const renderAction = () => {
     switch (targetPayload) {
       case EChangeStatePayload.UPDATE:
         return (
           <>
-            传入组件元素值&nbsp;
+            传入{useNameInChinese}&nbsp;
             {actionSelect}
             &nbsp;
             {actionFieldInput}
@@ -74,7 +100,7 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
       case EChangeStatePayload.APPEND:
         return (
           <>
-            传入组件元素值&nbsp;
+            传入{useNameInChinese}&nbsp;
             {actionSelect}
             &nbsp;
             {actionUrlInput}
@@ -91,7 +117,6 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
           </>
         );
       case EChangeStatePayload.CLEAR:
-
         return (
           <>
             {actionSelect}
@@ -101,11 +126,7 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
           </>
         );
       default:
-        return (
-          <>
-            {actionSelect}
-          </>
-        )
+        return <>{actionSelect}</>;
     }
   };
 
@@ -121,9 +142,9 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
           style={{ width: 200 }}
           defaultValue={targetServiceId}
           onChange={(v) => {
-            const data: Partial<IEventTarget> = { targetServiceId: v }
-            if(!targetPayload) {
-              data.targetPayload = EChangeStatePayload.NULL
+            const data: Partial<IEventTarget> = { targetServiceId: v };
+            if (!targetPayload) {
+              data.targetPayload = EChangeStatePayload.NULL;
             }
             onChange?.(data);
           }}

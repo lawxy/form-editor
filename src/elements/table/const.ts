@@ -3,7 +3,11 @@ import { EEventAction } from '@/types';
 
 export const ELEMENT_TABLE = 'fe-table';
 export const TABLE_TEXT = '表格';
-export const eventActions = [EEventAction.ON_LOADED, EEventAction.VALUE_CHANGE];
+export const eventActions = [
+  EEventAction.ON_LOADED,
+  EEventAction.VALUE_CHANGE,
+  EEventAction.PAGINATION_CHANGE,
+];
 export const initialData: Partial<IBaseElement> = {
   elementName: TABLE_TEXT,
   gridSpan: 24,
@@ -11,6 +15,7 @@ export const initialData: Partial<IBaseElement> = {
   readonly: true,
   lineAdd: true,
   columns: [],
+  pagination: false,
 };
 
 export const valueTypeList = [

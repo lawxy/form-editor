@@ -5,13 +5,12 @@ import type { IConfig } from '.';
 import { delayOptions, EEventAction, type TCustomEvent } from '@/types';
 import { QuestionPopover } from '@/components';
 
-export const WithCommon: FC<
-  PropsWithChildren<
-    IConfig & {
-      event: TCustomEvent;
-    }
-  >
-> = ({ children, onChange, eventTarget, event }) => {
+export const WithCommon: FC<PropsWithChildren<IConfig>> = ({
+  children,
+  onChange,
+  eventTarget,
+  event,
+}) => {
   const { series, delayTime, delayType } = eventTarget || {};
 
   const needDelay = [EEventAction.ON_CLICK, EEventAction.VALUE_CHANGE].includes(
@@ -24,6 +23,7 @@ export const WithCommon: FC<
         React.cloneElement<any>(children, {
           onChange,
           eventTarget,
+          event,
         })}
       <div>
         串联
