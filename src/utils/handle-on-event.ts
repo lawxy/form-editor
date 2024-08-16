@@ -7,7 +7,7 @@ import {
   type IBaseElement,
 } from '@/types';
 import { dynamicGetStore } from '.';
-import { triggerService, appendUrl } from './trigger-service';
+import { triggerService } from './trigger-service';
 import type { TEmitData } from './handle-emit-event';
 
 // 设置组件值
@@ -23,20 +23,21 @@ export const triggerSettingValue = (params: TEmitData) => {
 };
 
 // 更新服务
-export const triggerRefreshService = async (params: TEmitData) => {
-  const { targetServiceId, updateField, targetPayload, value, refreshFlag } =
-    params;
+export const triggerRefreshService = async (serviceParams: TEmitData) => {
+  const { targetServiceId, updateField, targetPayload, value, refreshFlag, urlAppended } =
+  serviceParams;
   const store = dynamicGetStore();
 
   const servId = targetServiceId!;
   const currentService = store.getService(servId) as TFormSerive;
   // 拼接参数
   if (targetPayload === EChangeStatePayload.APPEND) {
-    let { url } = currentService;
-    if (updateField) {
-      url = appendUrl(url, { [updateField!]: value });
+    const { params = {} } = currentService;
+    const newParams = cloneDeep(params);
+    if (urlAppended) {
+      newParams[urlAppended!] = value;
     }
-    store.setService(servId, { url });
+    store.setService(servId, { params: newParams });
   }
   // 更新参数
   if (targetPayload === EChangeStatePayload.UPDATE) {
@@ -45,12 +46,11 @@ export const triggerRefreshService = async (params: TEmitData) => {
     if (updateField) {
       newData[updateField!] = value;
     }
-    console.log('newdata', newData);
     store.setService(servId, { data: newData });
   }
   // 清空参数
   if (targetPayload === EChangeStatePayload.CLEAR) {
-    store.setService(servId, { data: {} });
+    store.setService(servId, { data: {}, params: {} });
   }
   // 提交表单
   if (targetPayload === EChangeStatePayload.SUBMIT) {
@@ -68,33 +68,39 @@ export const triggerRefreshService = async (params: TEmitData) => {
       const { id } = item;
       store.setElementProp(id, 'linkLoading', true);
     });
-    const serviceRes: any = await triggerService(targetServiceId!);
-
-    linkingElements?.forEach((item) => {
-      const {
-        id,
-        customRefreshField,
-        linkRefreshType,
-        getFieldFromService = 'data',
-      } = item;
-      store.setElementProp(id, 'linkLoading', false);
-
-      const finalRes: any = result(serviceRes, getFieldFromService);
-
-      const element = store.getElement(id);
-      if (!element || !linkRefreshType) return;
-      if (linkRefreshType === ELinkRefreshType.FIELDVALUE) {
-        store.setFieldValue(id, finalRes);
-      } else {
-        const updateField =
-          linkRefreshType === ELinkRefreshType.VALUEOPTIONS
-            ? ELinkRefreshType.VALUEOPTIONS
-            : (customRefreshField as keyof IBaseElement);
-        if (updateField) {
-          store.setElementProp(id, updateField, finalRes);
+    try {
+      const serviceRes: any = await triggerService(targetServiceId!);
+      linkingElements?.forEach((item) => {
+        const {
+          id,
+          customRefreshField,
+          linkRefreshType,
+          getFieldFromService = 'data',
+        } = item;
+        store.setElementProp(id, 'linkLoading', false);
+  
+        const finalRes: any = result(serviceRes, getFieldFromService);
+  
+        const element = store.getElement(id);
+        if (!element || !linkRefreshType) return;
+        if (linkRefreshType === ELinkRefreshType.FIELDVALUE) {
+          store.setFieldValue(id, finalRes);
+        } else {
+          const updateField =
+            linkRefreshType === ELinkRefreshType.VALUEOPTIONS
+              ? ELinkRefreshType.VALUEOPTIONS
+              : (customRefreshField as keyof IBaseElement);
+          if (updateField) {
+            store.setElementProp(id, updateField, finalRes);
+          }
         }
-      }
-    });
+      });
+    }catch{
+      linkingElements?.forEach((item) => {
+        const { id } = item;
+        store.setElementProp(id, 'linkLoading', false);
+      });
+    }
   }
 };
 

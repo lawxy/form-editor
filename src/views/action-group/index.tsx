@@ -5,6 +5,7 @@ import { cloneDeep } from 'lodash-es';
 import { useEditorContext } from '@/context';
 import { prefixCls } from '@/const';
 import store from '@/store';
+import eventStore from '@/store/eventStore';
 import { PreviewJson } from './preview-json';
 import { InjectJson } from './inject-json';
 import { AntdStaticFunctions } from '@/components';
@@ -73,6 +74,8 @@ const ActionGroup = () => {
         onConfirm={() => {
           store.clearAllElements();
           store.setFieldsValues({});
+          store.setSelectedElement({});
+          eventStore.clearMap();
           store.formServices?.forEach((serv) => {
             if (serv?.linkingElements?.length) {
               store.setService(serv.id, { linkingElements: [] });

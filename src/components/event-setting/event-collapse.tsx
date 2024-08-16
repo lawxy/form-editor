@@ -41,7 +41,7 @@ export const EventCollapse: FC<{
 
   useEffect(() => {
     generateSortIns();
-  }, []);
+  }, [collopaseItems]);
 
   const items = collopaseItems.map((item, i) => ({
     key: i,
@@ -84,11 +84,11 @@ export const EventCollapse: FC<{
         expandIcon={({ isActive }) =>
           isActive ? <MinusSquareOutlined /> : <PlusSquareOutlined />
         }
-        onChange={() => {
-          setTimeout(() => {
-            generateSortIns();
-          });
-        }}
+        // onChange={() => {
+        //   setTimeout(() => {
+        //     generateSortIns();
+        //   });
+        // }}
       />
     </div>
   );

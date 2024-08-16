@@ -86,6 +86,10 @@ class EventStore {
       this.iterateEl(child);
     });
   }
+
+  clearMap() {
+    this.eventMap.clear();
+  }
 }
 
 export default new EventStore();

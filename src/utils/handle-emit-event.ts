@@ -72,7 +72,8 @@ export const emitSettingValue = (params: IParams) => {
 // 更新服务
 export const emitRefreshService = (params: IParams) => {
   const { emitter, eventType, target } = params;
-  const { targetServiceId, targetPayload, refreshFlag, updateField } = target;
+  const { targetServiceId, targetPayload, refreshFlag, updateField, urlAppended } = target;
+  console.log('targetPayload', targetPayload)
   const validate = validateParams([targetServiceId, targetPayload]);
   if (!validate) return;
   const store = dynamicGetStore();
@@ -88,6 +89,7 @@ export const emitRefreshService = (params: IParams) => {
         targetPayload,
         value,
         refreshFlag,
+        urlAppended
       } as TEmitData),
     target,
   );

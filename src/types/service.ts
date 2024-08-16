@@ -18,6 +18,7 @@ export type TFormSerive = {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   previewData?: Record<string, any>;
   data?: Record<string, any>;
+  params?: Record<string, any>;
   interceptors?: string;
   /**
    * 关联服务的组件id

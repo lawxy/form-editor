@@ -8,6 +8,7 @@ import {
   changeStateActions,
   EChangeStatePayload,
   refreshOptions,
+  type IEventTarget,
 } from '@/types';
 import type { IConfig } from '.';
 
@@ -16,9 +17,11 @@ const actions = changeStateActions([
   EChangeStatePayload.UPDATE,
   EChangeStatePayload.APPEND,
   EChangeStatePayload.CLEAR,
+  EChangeStatePayload.NULL,
 ]);
 
 const generateActionInput = (
+  field: string,
   defaultValue?: string,
   onChange?: IConfig['onChange'],
 ) => {
@@ -27,7 +30,7 @@ const generateActionInput = (
       className={prefixCls('event-input')}
       defaultValue={defaultValue}
       onChange={(e) => {
-        onChange?.({ updateField: e.target.value });
+        onChange?.({ [field]: e.target.value });
       }}
     />
   );
@@ -41,20 +44,21 @@ const generateActionSelect = (
     <Select
       className={prefixCls('event-input')}
       options={actions}
-      defaultValue={defaultValue}
+      defaultValue={defaultValue ?? EChangeStatePayload.NULL}
       onChange={(v) => {
         onChange?.({ targetPayload: v as EChangeStatePayload });
       }}
     />
-  );
+  ); 
 };
 
 const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
-  const { targetServiceId, targetPayload, refreshFlag, updateField } =
+  const { targetServiceId, targetPayload, refreshFlag, updateField, urlAppended } =
     eventTarget || {};
 
   const actionSelect = generateActionSelect(targetPayload, onChange);
-  const actionInput = generateActionInput(updateField, onChange);
+  const actionFieldInput = generateActionInput('updateField', updateField, onChange);
+  const actionUrlInput = generateActionInput('urlAppended', urlAppended, onChange);
   const renderAction = () => {
     switch (targetPayload) {
       case EChangeStatePayload.UPDATE:
@@ -63,7 +67,7 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
             传入组件元素值&nbsp;
             {actionSelect}
             &nbsp;
-            {actionInput}
+            {actionFieldInput}
             &nbsp;字段
           </>
         );
@@ -73,7 +77,7 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
             传入组件元素值&nbsp;
             {actionSelect}
             &nbsp;
-            {actionInput}
+            {actionUrlInput}
             &nbsp;字段到url上
           </>
         );
@@ -82,11 +86,12 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
           <>
             {actionSelect}
             &nbsp;, 将schema赋值于&nbsp;
-            {actionInput}
+            {actionFieldInput}
             &nbsp;字段
           </>
         );
-      default:
+      case EChangeStatePayload.CLEAR:
+
         return (
           <>
             {actionSelect}
@@ -95,6 +100,12 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
             )}
           </>
         );
+      default:
+        return (
+          <>
+            {actionSelect}
+          </>
+        )
     }
   };
 
@@ -110,7 +121,11 @@ const RefreshService: React.FC<IConfig> = ({ onChange, eventTarget }) => {
           style={{ width: 200 }}
           defaultValue={targetServiceId}
           onChange={(v) => {
-            onChange?.({ targetServiceId: v });
+            const data: Partial<IEventTarget> = { targetServiceId: v }
+            if(!targetPayload) {
+              data.targetPayload = EChangeStatePayload.NULL
+            }
+            onChange?.(data);
           }}
         />
       </div>

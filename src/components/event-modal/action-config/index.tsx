@@ -7,7 +7,7 @@ import { arrayMoveImmutable } from 'array-move';
 
 import { MinusIcon, PlusIcon, QuestionPopover } from '@/components';
 import { prefixCls } from '@/const';
-import { TCustomEvent, EEventType, IEventTarget, EChangeType } from '@/types';
+import { TCustomEvent, EEventType, IEventTarget, EChangeType, EChangeStatePayload } from '@/types';
 import { idCreator } from '@/utils';
 import { WithCommon } from './with-common';
 

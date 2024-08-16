@@ -87,6 +87,7 @@ export enum EChangeStatePayload {
   NOT_REFRESH = 'not_refresh',
   CUSTOM = 'custom',
   SUBMIT = 'submit',
+  NULL = 'null'
 }
 
 export const changeStatePayloadInChinese = {
@@ -98,6 +99,7 @@ export const changeStatePayloadInChinese = {
   [EChangeStatePayload.REFRESH]: '刷新',
   [EChangeStatePayload.NOT_REFRESH]: '不刷新',
   [EChangeStatePayload.SUBMIT]: '提交表单',
+  [EChangeStatePayload.NULL]: '无',
 };
 
 export const changeStateActions = (fields: Array<EChangeStatePayload>) => {
@@ -176,7 +178,7 @@ export interface IEventTarget {
   /**
    * 服务url拼接参数
    * */
-  appendUrl?: Record<string, any>;
+  urlAppended?: string;
   /**
    * 设置组件值
    */
