@@ -10,22 +10,31 @@ import { dynamicGetStore } from '.';
 import { triggerService } from './trigger-service';
 import type { TEmitData } from './handle-emit-event';
 
-// 设置组件值
+// 设置组件
 export const triggerSettingValue = (params: TEmitData) => {
   const { setValue, value, targetPayload, targetElementId } = params;
   const store = dynamicGetStore();
   if (!store.getElement(targetElementId!)) return;
-  if (targetPayload === EChangeStatePayload.SYNC) {
-    store.setFieldValue(targetElementId!, value);
-  } else {
-    store.setFieldValue(targetElementId!, setValue);
+  switch (targetPayload) {
+    case EChangeStatePayload.SYNC:
+      return store.setFieldValue(targetElementId!, value);
+    case EChangeStatePayload.CUSTOM:
+      return store.setFieldValue(targetElementId!, setValue);
+    case EChangeStatePayload.RESET_PAGE:
+      return store.setElementProp(targetElementId!, 'currentPage', 1);
   }
 };
 
 // 更新服务
 export const triggerRefreshService = async (serviceParams: TEmitData) => {
-  const { targetServiceId, updateField, targetPayload, value, refreshFlag, urlAppended } =
-  serviceParams;
+  const {
+    targetServiceId,
+    updateField,
+    targetPayload,
+    value,
+    refreshFlag,
+    urlAppended,
+  } = serviceParams;
   const store = dynamicGetStore();
 
   const servId = targetServiceId!;
@@ -78,9 +87,9 @@ export const triggerRefreshService = async (serviceParams: TEmitData) => {
           getFieldFromService = 'data',
         } = item;
         store.setElementProp(id, 'linkLoading', false);
-  
+
         const finalRes: any = result(serviceRes, getFieldFromService);
-  
+
         const element = store.getElement(id);
         if (!element || !linkRefreshType) return;
         if (linkRefreshType === ELinkRefreshType.FIELDVALUE) {
@@ -95,7 +104,7 @@ export const triggerRefreshService = async (serviceParams: TEmitData) => {
           }
         }
       });
-    }catch{
+    } catch {
       linkingElements?.forEach((item) => {
         const { id } = item;
         store.setElementProp(id, 'linkLoading', false);

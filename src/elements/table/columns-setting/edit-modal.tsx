@@ -62,7 +62,7 @@ export const EditModal: FC<
         >
           <Form.Item
             label="列标题"
-            name="name"
+            name="title"
             required
             rules={[{ required: true, message: '必填' }]}
           >
@@ -70,7 +70,7 @@ export const EditModal: FC<
           </Form.Item>
           <Form.Item
             label="字段"
-            name="field"
+            name="dataIndex"
             required
             rules={[{ required: true, message: '必填' }]}
           >

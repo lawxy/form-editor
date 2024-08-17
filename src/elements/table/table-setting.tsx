@@ -54,9 +54,6 @@ export const SettingTable: TElementSetting = ({ element, setElementProp }) => {
           checked={element.pagination}
           onChange={(checked) => {
             setElementProp('pagination', checked);
-            if (checked && !pageSize) {
-              setElementProp('pageSize', 10);
-            }
           }}
         />
       </SettingItem>

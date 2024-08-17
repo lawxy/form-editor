@@ -43,43 +43,50 @@ const SetElementValue: React.FC<IConfig> = ({ onChange, eventTarget }) => {
           className={prefixCls('event-input')}
           options={getComponentsOptions()}
           style={{ width: 200 }}
-          defaultValue={targetElementId}
+          value={targetElementId}
           onChange={(v) => {
             onChange?.({ targetElementId: v });
           }}
         />
       </div>
-      {/* <div>事件发生时,&nbsp;{renderChangeVal()}</div> */}
       <div>
         事件发生时,&nbsp;
         <Select
           className={prefixCls('event-input')}
-          options={changeStateActions([
-            EChangeStatePayload.SYNC,
-            EChangeStatePayload.CUSTOM,
-          ])}
+          options={changeStateActions(
+            // @ts-ignore
+            [
+              EChangeStatePayload.SYNC,
+              EChangeStatePayload.CUSTOM,
+              EChangeStatePayload.RESET_PAGE,
+            ].filter(Boolean),
+          )}
           key="action"
-          defaultValue={targetPayload}
+          value={targetPayload}
           onChange={(v) => {
             const prop: Partial<IEventTarget> = { targetPayload: v };
             onChange?.(prop);
           }}
         />
-        &nbsp;目标组件值为
-        {targetPayload === EChangeStatePayload.SYNC ? (
-          <> &nbsp;事件源组件值</>
-        ) : (
+        {targetPayload && targetPayload !== EChangeStatePayload.RESET_PAGE && (
           <>
-            &nbsp;
-            <QuestionPopover content="按照基本数据类型填写, 比如 true 或 1 或 '1'" />
-            &nbsp;
-            <Input
-              className={prefixCls('event-input')}
-              defaultValue={setValue}
-              onChange={(e) => {
-                onChange?.({ setValue: e.target.value });
-              }}
-            />
+            &nbsp;目标表单值为
+            {targetPayload === EChangeStatePayload.SYNC ? (
+              <> &nbsp;事件源表单值</>
+            ) : (
+              <>
+                &nbsp;
+                <QuestionPopover content="按照基本数据类型填写, 比如 true 或 1 或 '1'" />
+                &nbsp;
+                <Input
+                  className={prefixCls('event-input')}
+                  defaultValue={setValue}
+                  onChange={(e) => {
+                    onChange?.({ setValue: e.target.value });
+                  }}
+                />
+              </>
+            )}
           </>
         )}
       </div>

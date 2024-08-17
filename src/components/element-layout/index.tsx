@@ -131,9 +131,19 @@ export const RenderElementWithLayout: FC<{
     return RenderComponent;
   }, [element.type, ElementsMap]);
 
-  const setFieldValue = useCallback((value: any) => {
-    store.setFieldValue(element.id!, value)
-  }, [element.id])
+  const setFieldValue = useCallback(
+    (value: any) => {
+      store.setFieldValue(element.id!, value);
+    },
+    [element.id],
+  );
+
+  const setElementProp = useCallback(
+    <T extends keyof IBaseElement>(field: T, value: IBaseElement[T]) => {
+      store.setElementProp(element.id!, field, value);
+    },
+    [element.id],
+  );
 
   if (!Component) return null;
 
@@ -142,6 +152,7 @@ export const RenderElementWithLayout: FC<{
       <Component
         fieldValue={store.fieldValues[element.id as string]}
         setFieldValue={setFieldValue}
+        setElementProp={setElementProp}
         element={element}
       />
     </ElementLayout>

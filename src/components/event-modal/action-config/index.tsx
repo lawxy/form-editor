@@ -26,7 +26,7 @@ import { EventModalContext } from '../context';
 export interface IConfig {
   onChange?: (v: Omit<IEventTarget, 'id' | 'sourceId'>) => void;
   eventTarget?: IEventTarget;
-  event: TCustomEvent;
+  event?: TCustomEvent;
 }
 
 const ActionItem: React.FC<

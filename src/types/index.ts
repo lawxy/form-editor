@@ -28,8 +28,8 @@ export type TMode = 'design' | 'form';
 export type TOption = { label: string; value: string | number; id?: string };
 export type TColumn = {
   id: string;
-  name: string;
-  field: string;
+  title: string;
+  dataIndex: string;
   fixed: '' | 'left' | 'right';
   width?: number;
   align: 'left' | 'right' | 'center';
@@ -222,12 +222,15 @@ export interface IBaseElement {
   /**
    * 分页条数
    */
-
   pageSize?: number;
   /**
    * 表格数据总条数
    */
   total?: number;
+  /**
+   * 当前页数
+   */
+  currentPage?: number;
 }
 export interface IFormAttributesProps {
   formName?: string;
@@ -251,6 +254,10 @@ export type TElementProps = {
   customStyle: CSSProperties;
   fieldValue: any;
   setFieldValue: (value: any) => void;
+  setElementProp: <T extends keyof IBaseElement>(
+    field: T,
+    value: IBaseElement[T],
+  ) => void;
 };
 export type TElementRender = FC<TElementProps>;
 export type TElementSetting = FC<{

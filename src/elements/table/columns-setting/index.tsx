@@ -10,12 +10,7 @@ import { EditModal } from './edit-modal';
 import './style.less';
 
 import store from '@/store';
-import {
-  AttributesSetting,
-  SettingItem,
-  SettingWrap,
-  QuestionPopover,
-} from '@/components';
+import { SettingItem } from '@/components';
 import type { TColumn } from '@/types';
 import { idCreator } from '@/utils';
 
@@ -46,7 +41,7 @@ export const ColumnsSetting = observer(() => {
               }}
               style={{ width: 200 }}
             >
-              <Input value={column.name} readOnly />
+              <Input value={column.title} readOnly />
             </Typography.Text>
             <EditModal
               onChange={(values) => {

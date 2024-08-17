@@ -54,7 +54,7 @@ export enum EEventType {
   // 显示/隐藏
   // CHANGE_VISIBILITY = 'changeVisibility',
   /**
-   * 设置组件值
+   * 设置组件
    */
   SETTING_VALUE = 'settingValue',
   /**
@@ -69,7 +69,7 @@ export enum EEventType {
 
 export const eventTypeChinese = {
   [EEventType.UPDATE_SERVICE]: '更新服务',
-  [EEventType.SETTING_VALUE]: '设置组件值',
+  [EEventType.SETTING_VALUE]: '设置组件',
   [EEventType.LINK_SERVICE]: '关联服务',
   [EEventType.VALIDATE]: '表单校验',
   [EEventType.JMUP]: '跳转链接',
@@ -91,6 +91,7 @@ export enum EChangeStatePayload {
   CUSTOM = 'custom',
   SUBMIT = 'submit',
   NULL = 'null',
+  RESET_PAGE = 'reset_page',
 }
 
 export const changeStatePayloadInChinese = {
@@ -98,6 +99,7 @@ export const changeStatePayloadInChinese = {
   [EChangeStatePayload.CLEAR]: '清空',
   [EChangeStatePayload.APPEND]: '拼接',
   [EChangeStatePayload.SYNC]: '同步',
+  [EChangeStatePayload.RESET_PAGE]: '重置页码',
   [EChangeStatePayload.CUSTOM]: '自定义',
   [EChangeStatePayload.REFRESH]: '刷新',
   [EChangeStatePayload.NOT_REFRESH]: '不刷新',
@@ -183,7 +185,7 @@ export interface IEventTarget {
    * */
   urlAppended?: string;
   /**
-   * 设置组件值
+   * 设置组件
    */
   setValue?: any;
   /**

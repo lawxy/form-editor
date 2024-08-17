@@ -1,6 +1,7 @@
-import type { ColumnType } from 'antd/es/table';
-
-export interface IColoumnProp extends ColumnType<{[key: string]: any;}> {
-  dataIndex?: string; // 列字段
-  title?: string; // 列名
+export interface ITableEdit {
+  type?: 'edit' | 'delete';
+  editData?: Record<string, any>;
+  editId?: string;
+  deleteData?: Record<string, any>;
+  deleteId?: string;
 }

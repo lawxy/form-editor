@@ -80,10 +80,12 @@ const RefreshService: React.FC<IConfig> = ({
     onChange,
   );
 
-  const { eventAction } = event;
+  const { eventAction } = event!;
 
   const useNameInChinese =
-    eventAction === EEventAction.PAGINATION_CHANGE ? '页码' : '组件表单值';
+    eventAction === EEventAction.PAGINATION_CHANGE
+      ? '页码及每条页数'
+      : '组件表单值';
 
   const renderAction = () => {
     switch (targetPayload) {

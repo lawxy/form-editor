@@ -49,7 +49,7 @@ const withConfig = (fn: (v: IParams) => Promise<any>, target: IEventTarget) => {
   return fn;
 };
 
-// 设置组件值
+// 设置组件
 export const emitSettingValue = (params: IParams) => {
   const { emitter, eventType, target } = params;
   const { targetElementId, setValue, targetPayload } = target;
@@ -72,8 +72,13 @@ export const emitSettingValue = (params: IParams) => {
 // 更新服务
 export const emitRefreshService = (params: IParams) => {
   const { emitter, eventType, target } = params;
-  const { targetServiceId, targetPayload, refreshFlag, updateField, urlAppended } = target;
-  console.log('targetPayload', targetPayload)
+  const {
+    targetServiceId,
+    targetPayload,
+    refreshFlag,
+    updateField,
+    urlAppended,
+  } = target;
   const validate = validateParams([targetServiceId, targetPayload]);
   if (!validate) return;
   const store = dynamicGetStore();
@@ -89,7 +94,7 @@ export const emitRefreshService = (params: IParams) => {
         targetPayload,
         value,
         refreshFlag,
-        urlAppended
+        urlAppended,
       } as TEmitData),
     target,
   );

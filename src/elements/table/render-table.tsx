@@ -1,29 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { EditableProTable } from '@ant-design/pro-components';
-import { Popconfirm } from 'antd';
+import React, { useEffect, useState, useRef } from 'react';
+import { EditableProTable, type ProColumns } from '@ant-design/pro-components';
 
 import { EEventAction } from '@/types';
 import type { TElementRender } from '@/types';
 import { idCreator } from '@/utils';
 import { useFormUpdate, useRegisterEvents } from '@/hooks';
-import { cloneDeep } from 'lodash-es';
-
-const tableData = Array.from({ length: 20 }, (_, idx) => {
-  return {
-    id: `${idx}`,
-    select: `select${idx}`,
-    radio: `radio${idx}`,
-    checkbox: `checkbox${idx}`,
-    input: `input${idx}`,
-    number: `number${idx}`,
-  };
-});
+import type { ITableEdit } from './type';
 
 export const RenderTable: TElementRender = ({
-  fieldValue = tableData,
+  fieldValue = [],
   element,
   customStyle,
   setFieldValue,
+  setElementProp,
 }) => {
   const {
     columns = [],
@@ -35,41 +24,32 @@ export const RenderTable: TElementRender = ({
     pageSize,
     pagination,
     total,
+    currentPage,
   } = element;
 
-  const [tableColumns, setColumns] = useState([]);
+  const [tableColumns, setColumns] = useState<ProColumns[]>([]);
 
   const { eventFunctions } = useRegisterEvents(element);
+
+  const editData = useRef<ITableEdit>({});
 
   useFormUpdate(() => {
     eventFunctions[EEventAction.ON_LOADED]?.();
   }, [eventFunctions[EEventAction.ON_LOADED]]);
 
   useFormUpdate(() => {
-    eventFunctions[EEventAction.VALUE_CHANGE]?.(fieldValue);
-  }, [fieldValue]);
+    eventFunctions[EEventAction.PAGINATION_CHANGE]?.(
+      `${currentPage},${pageSize}`,
+    );
+  }, [currentPage, pageSize]);
 
   // 使用useMemo会有bug，列展示不是预期效果
   useEffect(() => {
     const newColumns = [
       ...columns.map((column) => {
-        const {
-          name,
-          field,
-          fixed,
-          width,
-          align,
-          valueType,
-          options,
-          required,
-        } = column;
+        const { options, required, ...rest } = column;
         return {
-          title: name,
-          dataIndex: field,
-          fixed,
-          width,
-          align,
-          valueType,
+          ...rest,
           fieldProps: {
             options,
           },
@@ -94,22 +74,10 @@ export const RenderTable: TElementRender = ({
           >
             编辑
           </a>,
-          <Popconfirm
-            key="delete"
-            title="确认删除"
-            onConfirm={() => {
-              const newValue = cloneDeep(fieldValue);
-              newValue.splice(idx, 1);
-              setFieldValue(newValue);
-            }}
-          >
-            <a>删除</a>
-          </Popconfirm>,
         ],
       },
     ].filter(Boolean);
-    //@ts-ignore
-    setColumns(newColumns);
+    setColumns(newColumns as ProColumns[]);
   }, [columns, readonly]);
 
   return (
@@ -121,8 +89,34 @@ export const RenderTable: TElementRender = ({
       style={customStyle}
       onChange={(v) => {
         setFieldValue(v);
+        eventFunctions[EEventAction.VALUE_CHANGE]?.({
+          ...editData.current,
+          page: currentPage,
+          pageSize,
+          tableData: v,
+        });
       }}
       scroll={{ y: scrollY, x: scrollX }}
+      editable={{
+        async onSave(key, row) {
+          delete editData.current?.deleteData;
+          delete editData.current?.deleteId;
+          Object.assign(editData.current, {
+            type: 'edit',
+            editId: key,
+            editData: row,
+          });
+        },
+        async onDelete(key, row) {
+          delete editData.current?.editData;
+          delete editData.current?.editId;
+          Object.assign(editData.current, {
+            type: 'delete',
+            deleteId: key,
+            deleteData: row,
+          });
+        },
+      }}
       recordCreatorProps={{
         record: () => ({ id: idCreator('row') }),
         creatorButtonText: '新增一行',
@@ -134,9 +128,10 @@ export const RenderTable: TElementRender = ({
         pagination && {
           total: total ?? fieldValue?.length,
           pageSize,
+          current: currentPage,
           showTotal: () => null,
           onChange(currentPage) {
-            eventFunctions[EEventAction.PAGINATION_CHANGE]?.(currentPage);
+            setElementProp('currentPage', currentPage);
           },
         }
       }

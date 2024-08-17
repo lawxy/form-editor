@@ -16,6 +16,8 @@ export const initialData: Partial<IBaseElement> = {
   lineAdd: true,
   columns: [],
   pagination: false,
+  pageSize: 10,
+  currentPage: 1,
 };
 
 export const valueTypeList = [
