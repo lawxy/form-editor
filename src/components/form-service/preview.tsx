@@ -49,6 +49,12 @@ export const Preview: FC<
         onCancel={() => {
           setOpen(false);
         }}
+        styles={{
+          body: {
+            height: 500,
+            overflow: 'auto',
+          },
+        }}
         okButtonProps={{
           style: { display: 'none' },
         }}

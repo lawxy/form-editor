@@ -14,7 +14,7 @@ export const WithCommon: FC<PropsWithChildren<IConfig>> = ({
   const { series, delayTime, delayType } = eventTarget || {};
 
   const needDelay = [EEventAction.ON_CLICK, EEventAction.VALUE_CHANGE].includes(
-    event.eventAction!,
+    event!.eventAction!,
   );
 
   return (

@@ -7,7 +7,6 @@
       "gridLayout": true,
       "readonly": false,
       "lineAdd": true,
-      "currentPage": 1,
       "columns": [
         {
           "title": "下拉",
@@ -15,7 +14,7 @@
           "valueType": "text",
           "align": "left",
           "fixed": "",
-          "id": "col-iquf9eovtg8"
+          "id": "col-359218fgua"
         },
         {
           "title": "单选",
@@ -23,103 +22,57 @@
           "valueType": "text",
           "align": "left",
           "fixed": "",
-          "id": "col-ebshmk0n42g"
-        },
-        {
-          "title": "多选",
-          "dataIndex": "checkbox",
-          "valueType": "text",
-          "align": "left",
-          "fixed": "",
-          "id": "col-n1i8dhtvf58"
-        },
-        {
-          "title": "input",
-          "dataIndex": "input",
-          "valueType": "text",
-          "align": "left",
-          "fixed": "",
-          "id": "col-h46h7qvcfjo"
-        },
-        {
-          "title": "number",
-          "dataIndex": "number",
-          "valueType": "text",
-          "align": "left",
-          "fixed": "",
-          "id": "col-94mn36mhcc8"
+          "id": "col-6b2k59mu9cg"
         }
       ],
       "pagination": true,
-      "id": "el-km3qgr3v1do",
-      "parentId": "form-rcv0ddurdd",
       "pageSize": 10,
-      "scrollY": 300,
+      "currentPage": 1,
+      "id": "el-ro3lj0hlhko",
+      "parentId": "form-rcv0ddurdd",
+      "linkServices": [
+        "service-sc8kob8db8"
+      ],
       "events": [
         {
-          "id": "event-t0p2ufq1oe8",
+          "id": "event-5osns47sn2",
           "eventAction": "valueChange",
           "eventTargets": [
             {
-              "id": "event-target-1h0mfs9tmi",
-              "sourceId": "el-km3qgr3v1do",
-              "targetServiceId": "service-jo4o8bhhdvo",
+              "id": "event-target-0pjo4mcf22g",
+              "sourceId": "el-ro3lj0hlhko",
+              "targetServiceId": "service-n1ps9esfu48",
               "targetPayload": "update",
-              "updateField": "table",
+              "refreshFlag": 1,
+              "updateField": "data",
+              "series": true
+            },
+            {
+              "id": "event-target-7qpjfrh4qhg",
+              "sourceId": "el-ro3lj0hlhko",
+              "targetServiceId": "service-sc8kob8db8",
+              "targetPayload": "null",
               "refreshFlag": 1
             }
           ],
           "eventType": "refreshService"
         },
         {
-          "id": "event-uj50grc9oc8",
-          "eventAction": "paginationChange",
+          "id": "event-qfq0jqdf34",
+          "eventAction": "onLoaded",
           "eventTargets": [
             {
-              "id": "event-target-avjnjivkplo",
-              "sourceId": "el-km3qgr3v1do",
-              "targetServiceId": "service-jo4o8bhhdvo",
-              "targetPayload": "update",
-              "updateField": "pageSize",
-              "refreshFlag": 1
+              "id": "event-target-49qd0giojro",
+              "sourceId": "el-ro3lj0hlhko",
+              "targetServiceId": "service-sc8kob8db8",
+              "linkRefreshType": "fieldValue"
             }
           ],
-          "eventType": "refreshService"
+          "eventType": "linkService"
         }
-      ]
-    },
-    {
-      "btnText": "按钮",
-      "elementName": "按钮",
-      "gridSpan": 2,
-      "type": "fe-button",
-      "id": "el-214mkcfh4n",
-      "parentId": "form-rcv0ddurdd",
-      "events": [
-        {
-          "id": "event-0cfkqlam8bg",
-          "eventAction": "onClick",
-          "eventTargets": [
-            {
-              "id": "event-target-088dfi9rbk8",
-              "sourceId": "el-214mkcfh4n",
-              "targetElementId": "el-km3qgr3v1do",
-              "targetPayload": "reset_page"
-            }
-          ],
-          "eventType": "settingValue"
-        }
-      ]
-    },
-    {
-      "elementName": "输入框",
-      "textType": "single",
-      "gridSpan": 4,
-      "autoSize": true,
-      "placeholder": "请输入",
-      "type": "fe-input",
-      "id": "el-vni1ongjmjo",
-      "parentId": "form-rcv0ddurdd"
+      ],
+      "scrollY": 400,
+      "customCss": "/* 组件样式 */\n#el{\n\t\n} \n /* 容器样式 */\n#container{\n\t\n}"
     }
   ],
   "fieldValues": {},
@@ -127,15 +80,51 @@
     "id": "form-rcv0ddurdd",
     "horizontalGap": 8,
     "verticalGap": 8,
-    "customCss": "#form {\n\tpadding: 10px;\n}"
+    "customCss": "#form {\n\tpadding: 10px;\n}",
+    "events": [
+      {
+        "id": "event-mrt7oh8dcfg",
+        "eventAction": "formLoaded",
+        "eventTargets": [
+          {
+            "id": "event-target-dpoll8e2gu8",
+            "sourceId": "form-rcv0ddurdd",
+            "targetServiceId": "service-sc8kob8db8",
+            "targetPayload": "null",
+            "refreshFlag": 1
+          }
+        ],
+        "eventType": "refreshService"
+      }
+    ]
   },
   "formServices": [
     {
       "name": "参数测试",
-      "url": "http://localhost:8888/paraTest",
+      "url": "http://localhost:8888/getParam",
       "method": "POST",
       "interceptors": "axios.interceptors.request.use(config =>{\n  return config\n})\n\nconst DEFAULT_ERROR_MESSAGE = '请求服务报错';\n\nconst HttpStatusCode = { Ok: 200 };\n\naxios.interceptors.response.use(function (res) {\n  try {\n    const { code } = res.data || {};\n    if (HttpStatusCode.Ok === code) {\n      return res.data;\n    }\n    message.error(errMsg || DEFAULT_ERROR_MESSAGE);\n  } catch (e) {\n    message.error(DEFAULT_ERROR_MESSAGE);\n  }\n},\nfunction (err) {\n  message.error(err?.message || DEFAULT_ERROR_MESSAGE);\n  return Promise.reject(err);\n})\n",
-      "id": "service-jo4o8bhhdvo"
+      "id": "service-susq46e3eng"
+    },
+    {
+      "name": "表格数据-不分页",
+      "url": "http://localhost:8888/getTableData",
+      "method": "POST",
+      "interceptors": "axios.interceptors.request.use(config =>{\n  return config\n})\n\nconst DEFAULT_ERROR_MESSAGE = '请求服务报错';\n\nconst HttpStatusCode = { Ok: 200 };\n\naxios.interceptors.response.use(function (res) {\n  try {\n    const { code } = res.data || {};\n    if (HttpStatusCode.Ok === code) {\n      return res.data;\n    }\n    message.error(errMsg || DEFAULT_ERROR_MESSAGE);\n  } catch (e) {\n    message.error(DEFAULT_ERROR_MESSAGE);\n  }\n},\nfunction (err) {\n  message.error(err?.message || DEFAULT_ERROR_MESSAGE);\n  return Promise.reject(err);\n})\n",
+      "id": "service-sc8kob8db8",
+      "linkingElements": [
+        {
+          "id": "el-ro3lj0hlhko",
+          "linkRefreshType": "fieldValue"
+        }
+      ]
+    },
+    {
+      "name": "设置数据",
+      "url": "http://localhost:8888/setTableData",
+      "method": "POST",
+      "interceptors": "axios.interceptors.request.use(config =>{\n  return config\n})\n\nconst DEFAULT_ERROR_MESSAGE = '请求服务报错';\n\nconst HttpStatusCode = { Ok: 200 };\n\naxios.interceptors.response.use(function (res) {\n  try {\n    const { code } = res.data || {};\n    if (HttpStatusCode.Ok === code) {\n      message.success(res.data.data)\n      return res.data;\n    }\n    message.error(errMsg || DEFAULT_ERROR_MESSAGE);\n  } catch (e) {\n    message.error(DEFAULT_ERROR_MESSAGE);\n  }\n},\nfunction (err) {\n  message.error(err?.message || DEFAULT_ERROR_MESSAGE);\n  return Promise.reject(err);\n})\n",
+      "id": "service-n1ps9esfu48"
     }
   ]
 }
