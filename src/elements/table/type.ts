@@ -4,4 +4,6 @@ export interface ITableEdit {
   editId?: string;
   deleteData?: Record<string, any>;
   deleteId?: string;
+  page?: number;
+  pageSize?: number;
 }

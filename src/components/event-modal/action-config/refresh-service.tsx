@@ -7,7 +7,6 @@ import store from '@/store';
 import {
   changeStateActions,
   EChangeStatePayload,
-  EEventAction,
   refreshOptions,
   type IEventTarget,
 } from '@/types';
@@ -56,7 +55,6 @@ const generateActionSelect = (
 const RefreshService: React.FC<IConfig> = ({
   onChange,
   eventTarget,
-  event,
 }) => {
   const {
     targetServiceId,
@@ -80,19 +78,12 @@ const RefreshService: React.FC<IConfig> = ({
     onChange,
   );
 
-  const { eventAction } = event!;
-
-  const useNameInChinese =
-    eventAction === EEventAction.PAGINATION_CHANGE
-      ? '页码及每条页数'
-      : '组件表单值';
-
   const renderAction = () => {
     switch (targetPayload) {
       case EChangeStatePayload.UPDATE:
         return (
           <>
-            传入{useNameInChinese}&nbsp;
+            传入相关值&nbsp;
             {actionSelect}
             &nbsp;
             {actionFieldInput}
@@ -102,7 +93,7 @@ const RefreshService: React.FC<IConfig> = ({
       case EChangeStatePayload.APPEND:
         return (
           <>
-            传入{useNameInChinese}&nbsp;
+            传入相关值&nbsp;
             {actionSelect}
             &nbsp;
             {actionUrlInput}
