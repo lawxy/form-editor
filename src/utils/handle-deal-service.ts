@@ -1,6 +1,7 @@
 import { cloneDeep } from 'lodash-es';
 import { EEventType } from '@/types';
 import type { TCustomEvent, TFormSerive, TLinkElement } from '@/types';
+import eventStore from '@/store/eventStore';
 import { dynamicGetStore } from '.';
 
 const handleDealService = (type: 'link' | 'unlink', event: TCustomEvent) => {

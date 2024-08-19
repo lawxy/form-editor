@@ -32,21 +32,18 @@ export const RenderTable: TElementRender = ({
   const { eventFunctions } = useRegisterEvents(element);
 
   const editData = useRef<ITableEdit>({});
-  
+
   useEffect(() => {
     Object.assign(editData.current, {
-      page: currentPage!, 
-      pageSize: pageSize!
-    })
-  }, [pageSize, currentPage])
+      page: currentPage!,
+      pageSize: pageSize!,
+    });
+  }, [pageSize, currentPage]);
 
   useFormUpdate(() => {
+    console.log('editData.current', editData.current);
     eventFunctions[EEventAction.ON_LOADED]?.(editData.current);
   }, [eventFunctions[EEventAction.ON_LOADED]]);
-
-  useFormUpdate(() => {
-    eventFunctions[EEventAction.ON_LOADED]?.();
-  }, [eventFunctions[EEventAction.VALUE_CHANGE], fieldValue]);
 
   useFormUpdate(() => {
     eventFunctions[EEventAction.PAGINATION_CHANGE]?.(

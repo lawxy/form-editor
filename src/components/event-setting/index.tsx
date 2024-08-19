@@ -65,6 +65,7 @@ export const EventSetting: React.FC<{
       handleLinkService(event);
     } else {
       const idx = current?.events?.findIndex((evt) => event.id === evt.id);
+      console.log('events[idx!]', events[idx!]);
       handleUnLinkService(events[idx!]);
       events[idx!] = event;
       if (event?.eventTargets?.length) {

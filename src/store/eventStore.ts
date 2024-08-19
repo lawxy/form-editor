@@ -21,6 +21,12 @@ class EventStore {
     this.eventMap.set(targetId, set);
   }
 
+  deleteRelation(targetId: string, sourceId: string) {
+    const set = this.eventMap.get(targetId) ?? new Set();
+    set.delete(sourceId);
+    this.eventMap.set(targetId, set);
+  }
+
   getSetsFromId(targetId: string) {
     const sets: Array<Set<string>> = [];
     const set = this.eventMap.get(targetId);
