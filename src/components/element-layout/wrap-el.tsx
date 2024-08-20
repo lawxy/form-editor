@@ -41,9 +41,12 @@ const WrapDesignEl: React.FC<
   }>
 > = observer(({ children, el }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const prevEvents = useRef<TCustomEvents>([]);
 
   useDesignEffect(() => {
+    eventStore.clearEvents(prevEvents.current);
     eventStore.iterateEl(el);
+    prevEvents.current = el.events ?? [];
   }, [el.events]);
 
   const handleSelect = useCallback(() => {

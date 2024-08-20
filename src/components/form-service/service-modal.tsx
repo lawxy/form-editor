@@ -124,16 +124,16 @@ const ServiceModal: FC<
             rules={[
               {
                 required: true,
-                validator(_, val) {
-                  if (
-                    val.match(
-                      /^https?:\/\/((localhost:\d{1,5})|([\w\-_]+(\.[\w\-_]+)+))([\w\-.,@?^=%&amp;:/~+#]*[\w\-@?^=%&amp;/~+#])?$/,
-                    )
-                  ) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject('格式不正确, 请以http或者https开头');
-                },
+                // validator(_, val) {
+                //   if (
+                //     val.match(
+                //       /^https?:\/\/((localhost:\d{1,5})|([\w\-_]+(\.[\w\-_]+)+))([\w\-.,@?^=%&amp;:/~+#]*[\w\-@?^=%&amp;/~+#])?$/,
+                //     )
+                //   ) {
+                //     return Promise.resolve();
+                //   }
+                //   return Promise.reject('格式不正确, 请以http或者https开头');
+                // },
               },
             ]}
           >

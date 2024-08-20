@@ -74,23 +74,31 @@ class EventStore {
     });
   }
 
-  iterate(events: TCustomEvents = []) {
+  iterate(events: TCustomEvents = [], type: 'add' | 'delete') {
+    const handleFn =
+      type === 'add'
+        ? this.addRelation.bind(this)
+        : this.deleteRelation.bind(this);
     events.forEach((event) => {
       const { eventTargets } = event;
       eventTargets?.forEach((target) => {
         const { targetElementId, targetServiceId, sourceId } = target;
-        if (targetElementId) this.addRelation(targetElementId, sourceId);
-        if (targetServiceId) this.addRelation(targetServiceId, sourceId);
+        if (targetElementId) handleFn(targetElementId, sourceId);
+        if (targetServiceId) handleFn(targetServiceId, sourceId);
       });
     });
   }
 
   iterateEl(el: IBaseElement) {
     const { events } = el;
-    this.iterate(events);
+    this.iterate(events, 'add');
     baseStore.dfsEl(el, (child) => {
       this.iterateEl(child);
     });
+  }
+
+  clearEvents(events: TCustomEvents = []) {
+    this.iterate(events, 'delete');
   }
 
   clearMap() {
