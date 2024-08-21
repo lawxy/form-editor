@@ -24,7 +24,7 @@ const ActionItem: React.FC<
 };
 
 const ActionGroup = () => {
-  const { onSave } = useEditorContext();
+  const { actionProp } = useEditorContext();
   const { message } = AntdStaticFunctions;
 
   const handleSave = useCallback(() => {
@@ -42,16 +42,19 @@ const ActionGroup = () => {
     //   message.error('表单校验失败')
     //   return;
     // }
-    onSave?.(cloneDeep(store.getSchema()));
+    actionProp?.onSave?.(cloneDeep(store.getSchema()));
     localStorage.setItem('schema', JSON.stringify(store.getSchema()));
     message.success('保存成功');
   }, []);
 
   const handlePreview = async () => {
+    if(!actionProp?.previewUrl){
+      return message.error('请设置预览url');
+    }
     await handleSave();
     setTimeout(() => {
       window.open(
-        `${process.env.PUBLIC_PATH}~demos/docs-preview-demo-demo-preview`,
+        actionProp?.previewUrl,
         'preview',
       );
     }, 200);

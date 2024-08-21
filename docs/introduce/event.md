@@ -87,7 +87,7 @@ async getTable2Data(@Body() filterDto: any = {}) {
 }
 ```
 
-<b>表格</b>组件只有新增<b>保存</b>或<b>删除</b>行数据才会触发 值变化事件，表格内元素编辑时不会触发。
+<b>表格</b>组件只有新增<b>保存</b>或<b>删除</b>行数据才会触发值变化事件，表格内元素编辑时不会触发。
 
 <video width="640" height="360" controls>
   <source src="https://roddan.cn/editor-assets/setTable.mp4" type="video/mp4">

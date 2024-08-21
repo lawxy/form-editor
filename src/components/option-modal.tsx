@@ -36,7 +36,7 @@ export const OptionModal: FC<
 
   const addOption = () => {
     if (judgeOptionsInvalid()) {
-      message.error('属性或值不为空, 补充完成再新增或保存');
+      message.error('属性或值不为空, 填写完整后再新增或保存');
       return;
     }
     const newOptions = cloneDeep(valueOptions);
@@ -127,7 +127,7 @@ export const OptionModal: FC<
         }}
         onOk={() => {
           if (judgeOptionsInvalid()) {
-            message.error('属性或值不为空, 补充完成再新增或保存');
+            message.error('属性或值不为空, 填写完整后再新增或保存');
             return;
           }
           onChange(valueOptions);

@@ -22,6 +22,7 @@ export * from './views';
 export * from './const';
 export * from './utils';
 export * from './hooks';
+export * from './components';
 
 export interface IEditorInstance {
   form: FormInstance;
@@ -35,7 +36,7 @@ export interface IFormProps extends IEditorContext {
 const FormEditorContent: React.ForwardRefRenderFunction<
   IEditorInstance,
   PropsWithChildren<IFormProps>
-> = ({ mode, defaultValue, onSave, customElements, children }, ref) => {
+> = ({ mode, defaultValue, actionProp, customElements, children }, ref) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -44,12 +45,16 @@ const FormEditorContent: React.ForwardRefRenderFunction<
 
   useEffect(() => {
     let schema: IFormSchema = {};
-    if (defaultValue) {
-      schema = defaultValue;
-    } else if (localStorage.getItem('schema')) {
-      try {
+    try {
+      if (defaultValue) {
+        if(typeof defaultValue === 'string') {
+          schema = JSON.parse(defaultValue);
+        }
+      } else if (localStorage.getItem('schema')) {
         schema = JSON.parse(localStorage.getItem('schema')!);
-      } catch (e) {}
+      }
+    } catch (e) {
+      schema = {};
     }
     injectSchema(schema);
   }, [defaultValue]);
@@ -69,20 +74,24 @@ const FormEditorContent: React.ForwardRefRenderFunction<
 
     return {
       mode,
-      onSave,
+      actionProp,
       ElementsMap,
     };
-  }, [mode, onSave, customElements, ElementsMap]);
+  }, [mode, actionProp, customElements, ElementsMap]);
 
   return (
     <EditorContext.Provider value={contextValue}>
       <ConfigProvider locale={locale}>
         <AntdStaticApp>
           <Form form={form}>
-            <div className={c({
-              [prefixCls('form')]: true,
-              [prefixCls('form-design')]: mode === 'design',
-            })}>{children}</div>
+            <div
+              className={c({
+                [prefixCls('form')]: true,
+                [prefixCls('form-design')]: mode === 'design',
+              })}
+            >
+              {children}
+            </div>
           </Form>
         </AntdStaticApp>
       </ConfigProvider>

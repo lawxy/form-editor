@@ -3,7 +3,10 @@ import type { TMode, IFormSchema, TDragElementObject } from './types';
 
 export interface IEditorContext {
   mode: TMode;
-  onSave?: (param: IFormSchema) => any;
+  actionProp?: {
+    previewUrl?: string;
+    onSave?: (param: IFormSchema) => any;
+  }
   ElementsMap: TDragElementObject;
 }
 

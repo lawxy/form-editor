@@ -5,7 +5,7 @@ import {
   Settings,
   FormCanvas,
 } from '@roddan/form-editor';
-import { customElement, type } from '../common/customEl';
+import { customElement } from '../common/customEl';
 
 const Comp = () => {
   const ref = useRef();
@@ -13,9 +13,13 @@ const Comp = () => {
     <FormEditor
       mode="design"
       ref={ref}
-      onSave={(schema) => {
-        console.log('schema');
-        console.log(schema);
+      // 预览url和保存回调
+      actionProp={{
+        previewUrl: `${process.env.PUBLIC_PATH}~demos/docs-preview-demo-demo-preview`,
+        onSave(schema) {
+          console.log('schema');
+          console.log(schema);
+        }
       }}
       customElements={[customElement]}
     >

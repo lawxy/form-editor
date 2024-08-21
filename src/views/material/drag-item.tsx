@@ -1,4 +1,5 @@
 import React from 'react';
+import { Typography } from 'antd';
 import { prefixCls } from '@/const';
 import type { IDragElementProp } from '@/types';
 
@@ -8,7 +9,10 @@ const DragItem: React.FC<{
   const { text, type, Icon } = item;
   return (
     <div className={prefixCls('drag-item')} data-type={type}>
-      {Icon} {text}
+      {Icon}
+      <Typography.Text style={{ maxWidth: 80, fontSize: 12 }} ellipsis={{ tooltip: true }}>
+        {text}
+      </Typography.Text>
     </div>
   );
 };

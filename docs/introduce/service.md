@@ -4,7 +4,7 @@ group:
 order: 2
 ---
 # 服务
-接口和服务一一对应，在<b>表单服务</b>标签页中进行设置编辑，默认接口返回{ code: 200, data: xxx }形式。axios拦截器设置中可以使用console打印日志，antd的message方法全局提示。例如设置token:
+接口和服务一一对应，在<b>表单服务</b>标签页中进行设置编辑，默认接口返回{ code: 200, data: xxx }形式。拦截器设置中可用console打印日志，也可以用antd的message方法进行全局提示。例如设置token:
 ```javascript
 axios.interceptors.request.use(config =>{
   console.log(config)

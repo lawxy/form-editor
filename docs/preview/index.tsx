@@ -1,14 +1,12 @@
 import React from 'react';
 import { FormEditor, FormCanvas } from '@roddan/form-editor';
-import { customElement, type } from '../common/customEl';
+import { customElement } from '../common/customEl';
 
 const Comp = () => {
   return (
     <FormEditor
       mode="form"
-      customElements={{
-        [type]: customElement,
-      }}
+      customElements={[customElement]}
     >
       <FormCanvas />
     </FormEditor>

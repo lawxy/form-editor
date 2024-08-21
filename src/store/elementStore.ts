@@ -28,6 +28,7 @@ export default {
 
   clearAllElements() {
     this.formElements = [];
+    this.formElementMap.clear();
   },
 
   /**
