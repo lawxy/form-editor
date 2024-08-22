@@ -28,14 +28,15 @@ export interface IEditorInstance {
   form: FormInstance;
   getSchema: () => void;
 }
-export interface IFormProps extends IEditorContext {
+
+export type TFormProps =  {
   defaultValue?: IFormSchema;
   customElements?: TDragElement;
-}
+} & Pick<IEditorContext, 'mode' | 'actionProp'>
 
 const FormEditorContent: React.ForwardRefRenderFunction<
   IEditorInstance,
-  PropsWithChildren<IFormProps>
+  PropsWithChildren<TFormProps>
 > = ({ mode, defaultValue, actionProp, customElements, children }, ref) => {
   const [form] = Form.useForm();
 
@@ -101,5 +102,5 @@ const FormEditorContent: React.ForwardRefRenderFunction<
 
 export const FormEditor = React.forwardRef<
   IEditorInstance,
-  PropsWithChildren<IFormProps>
+  PropsWithChildren<TFormProps>
 >(FormEditorContent);
