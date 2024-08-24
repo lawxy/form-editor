@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { Popconfirm } from 'antd';
 import { observer } from 'mobx-react-lite';
+import axios from 'axios';
 import { cloneDeep } from 'lodash-es';
 import { useEditorContext } from '@/context';
 import { prefixCls } from '@/const';
@@ -48,16 +49,39 @@ const ActionGroup = () => {
   }, []);
 
   const handlePreview = async () => {
-    if(!actionProp?.previewUrl){
+    if (!actionProp?.previewUrl) {
       return message.error('请设置预览url');
     }
     await handleSave();
     setTimeout(() => {
-      window.open(
-        actionProp?.previewUrl,
-        'preview',
-      );
+      window.open(actionProp?.previewUrl, 'preview');
     }, 200);
+  };
+
+  const handleDownload = async () => {
+    actionProp?.download?.(cloneDeep(store.getSchema()));
+
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'http://localhost:8888/download',
+        data: cloneDeep(store.getSchema()), // 发送的 schema 数据
+        responseType: 'blob',
+      });
+      // 创建一个 URL 链接来下载文件
+      const blob = new Blob([response.data], { type: 'application/zip' });
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = 'download.zip'; // 你可以指定下载的文件名
+      document.body.appendChild(link);
+      link.click();
+      // 清除链接对象
+      window.URL.revokeObjectURL(downloadUrl);
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+    }
   };
 
   return (
@@ -65,6 +89,7 @@ const ActionGroup = () => {
       {/* {contextHolder} */}
 
       <ActionItem text="预览" onClick={handlePreview} />
+      <ActionItem text="下载" onClick={handleDownload} />
       <PreviewJson>
         <ActionItem text="查看Schema" />
       </PreviewJson>

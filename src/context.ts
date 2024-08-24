@@ -6,7 +6,8 @@ export interface IEditorContext {
   actionProp?: {
     previewUrl?: string;
     onSave?: (param: IFormSchema) => any;
-  }
+    download?: (param: IFormSchema) => any;
+  };
   ElementsMap: TDragElementObject;
 }
 
