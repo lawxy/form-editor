@@ -29,10 +29,10 @@ export interface IEditorInstance {
   getSchema: () => void;
 }
 
-export type TFormProps =  {
+export type TFormProps = {
   defaultValue?: IFormSchema;
   customElements?: TDragElement;
-} & Pick<IEditorContext, 'mode' | 'actionProp'>
+} & Pick<IEditorContext, 'mode' | 'actionProp'>;
 
 const FormEditorContent: React.ForwardRefRenderFunction<
   IEditorInstance,
@@ -48,7 +48,7 @@ const FormEditorContent: React.ForwardRefRenderFunction<
     let schema: IFormSchema = {};
     try {
       if (defaultValue) {
-        if(typeof defaultValue === 'string') {
+        if (typeof defaultValue === 'string') {
           schema = JSON.parse(defaultValue);
         }
       } else if (localStorage.getItem('schema')) {
