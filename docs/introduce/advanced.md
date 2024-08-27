@@ -45,7 +45,7 @@ const Editor = () => {
           console.log('schema');
           console.log(schema);
         },
-        // 下载按钮回调
+        // 下载按钮回调，不传不展示按钮
         download(schema) {
           console.log('schema');
           console.log(schema);
