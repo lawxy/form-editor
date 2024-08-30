@@ -5,7 +5,6 @@ import {
   Settings,
   FormCanvas,
 } from '@roddan/form-editor';
-import axios from 'axios';
 import { customElement } from '../common/customEl';
 
 const Comp = () => {

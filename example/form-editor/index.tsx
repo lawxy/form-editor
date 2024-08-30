@@ -5,7 +5,8 @@ import {
   Settings,
   FormCanvas,
 } from '@roddan/form-editor';
-import { customElement } from '../common/customEl';
+import axios from 'axios';
+import { customElement } from '../../docs/common/customEl';
 
 const Comp = () => {
   const ref = useRef();
@@ -17,12 +18,20 @@ const Comp = () => {
       actionProp={{
         previewUrl: `${process.env.PUBLIC_PATH}~demos/docs-preview-demo-demo-preview`,
         onSave(schema) {
-          console.log('onSave');
+          console.log('schema');
           console.log(schema);
         },
-        download(schema) {
-          console.log('download');
-          console.log(schema);
+        download() {
+          try {
+            const link = document.createElement('a');
+            link.href = 'https://roddan.cn/editor-assets/page.zip';
+            link.download = 'page'; 
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          } catch (error) {
+            console.error('Error downloading the file:', error);
+          }
         },
       }}
       customElements={[customElement]}
