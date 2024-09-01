@@ -1,4 +1,5 @@
 import { defineConfig } from 'dumi';
+import { webpackConfig } from './src/webpack-config';
 
 export default defineConfig({
   outputPath: 'docs-dist',
@@ -12,5 +13,16 @@ export default defineConfig({
   },
   alias: {
     '@': '/src',
+  },
+  ...webpackConfig,
+  analyze: {
+    analyzerMode: 'server',
+    analyzerPort: 9999,
+    openAnalyzer: true,
+    // generate stats file while ANALYZE_DUMP exist
+    generateStatsFile: false,
+    statsFilename: 'stats.json',
+    logLevel: 'info',
+    defaultSizes: 'parsed', // stat  // gzip
   },
 });

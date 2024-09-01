@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { Popconfirm } from 'antd';
 import { observer } from 'mobx-react-lite';
-import axios from 'axios';
 import { cloneDeep } from 'lodash-es';
 import { useEditorContext } from '@/context';
 import { prefixCls } from '@/const';
@@ -65,11 +64,9 @@ const ActionGroup = () => {
   return (
     <div className={prefixCls('action-group')}>
       <ActionItem text="预览" onClick={handlePreview} />
-      {
-        actionProp?.download && (
-          <ActionItem text="下载" onClick={handleDownload} />
-        )
-      }
+      {actionProp?.download && (
+        <ActionItem text="下载" onClick={handleDownload} />
+      )}
       <PreviewJson>
         <ActionItem text="查看Schema" />
       </PreviewJson>

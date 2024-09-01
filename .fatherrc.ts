@@ -7,4 +7,7 @@ export default defineConfig({
     output: 'lib',
     platform: 'browser', // 设置 platform 为 'browser'
   },
+  // umd: {
+  //   output: 'umd',
+  // },
 });

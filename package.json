@@ -1,6 +1,6 @@
 {
   "name": "@roddan/form-editor",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "低代码",
   "keywords": [
     "react"
@@ -28,6 +28,7 @@
     "es"
   ],
   "scripts": {
+    "analyze": "cross-env ANALYZE=1 dumi build",
     "build": "father build",
     "build:watch": "father dev",
     "dev": "dumi dev",
@@ -90,6 +91,7 @@
     "@types/sortablejs": "^1.15.8",
     "@umijs/lint": "^4.0.0",
     "chalk": "^4.1.2",
+    "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.3",
     "dumi": "^2.2.0",
     "eslint": "^8.23.0",
@@ -106,8 +108,8 @@
     "stylelint": "^14.9.1"
   },
   "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
+    "react": "^18",
+    "react-dom": "^18"
   },
   "publishConfig": {
     "access": "public",
