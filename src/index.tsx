@@ -50,6 +50,8 @@ const FormEditorContent: React.ForwardRefRenderFunction<
       if (defaultValue) {
         if (typeof defaultValue === 'string') {
           schema = JSON.parse(defaultValue);
+        }else if(typeof defaultValue === 'object') {
+          schema = defaultValue
         }
       } else if (localStorage.getItem('schema')) {
         schema = JSON.parse(localStorage.getItem('schema')!);
