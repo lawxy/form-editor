@@ -38,8 +38,10 @@ export const Material = observer(() => {
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      const item = e.target as HTMLElement;
-      if (item?.classList?.contains(prefixCls('drag-item'))) {
+      const itemMask = e.target as HTMLElement;
+      console.log('123', itemMask);
+      if (itemMask?.classList?.contains(prefixCls('drag-item-mask'))) {
+        const item = itemMask.parentElement as HTMLElement;
         const { type } = item.dataset;
         const { initialData } = ElementsMap[type!];
         store.appendEl({
@@ -51,7 +53,7 @@ export const Material = observer(() => {
       }
     };
 
-    wrapEl.current?.addEventListener('click', handleClick);
+    wrapEl.current?.addEventListener('click', handleClick, { capture: true });
     return () => {
       wrapEl.current?.removeEventListener('click', handleClick);
     };

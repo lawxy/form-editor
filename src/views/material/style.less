@@ -39,6 +39,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding-left: 35px;
+    position: relative;
     &:hover {
       border: 1px dashed #409eff;
     }
@@ -47,6 +48,10 @@
       margin-right: 8px;
       fill: #999;
       color: #999;
+    }
+    &-mask {
+      position: absolute;
+      inset: 0;
     }
   }
 }

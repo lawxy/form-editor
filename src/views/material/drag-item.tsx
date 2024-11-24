@@ -9,8 +9,12 @@ const DragItem: React.FC<{
   const { text, type, Icon } = item;
   return (
     <div className={prefixCls('drag-item')} data-type={type}>
+      <div className={prefixCls('drag-item-mask')} />
       {Icon}
-      <Typography.Text style={{ maxWidth: 80, fontSize: 12 }} ellipsis={{ tooltip: true }}>
+      <Typography.Text
+        style={{ maxWidth: 80, fontSize: 12 }}
+        ellipsis={{ tooltip: true }}
+      >
         {text}
       </Typography.Text>
     </div>
